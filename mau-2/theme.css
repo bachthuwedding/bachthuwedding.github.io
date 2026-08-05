@@ -1,0 +1,107 @@
+:root {
+  --paper: #fff5e7;
+  --ink: #45352e;
+  --accent: #951d19;
+  --accent-2: #c49a5a;
+  --muted: #6d5d54;
+  --line: rgba(149, 29, 25, .24);
+  --card: #fff7ea;
+  --page-background: #681915;
+  --site-background: #7e1d18;
+  --site-shadow: 0 0 80px rgba(32, 6, 4, .35);
+  --opening-background:
+    radial-gradient(circle at 70% 20%, rgba(211,151,80,.16), transparent 28%),
+    linear-gradient(145deg, #6f1714, #9d2821);
+  --envelope: #8f1d19;
+  --radius: 12px;
+}
+
+.mau-2 .section {
+  padding-block: clamp(14px, 4vw, 26px);
+}
+
+.mau-2 .hero {
+  min-height: 92svh;
+  margin: 0;
+  color: var(--paper);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(198,150,83,.16), transparent 24%),
+    radial-gradient(circle at 86% 72%, rgba(198,150,83,.14), transparent 22%),
+    linear-gradient(150deg, #741815, #a62921);
+}
+
+.mau-2 .hero .lead,
+.mau-2 .hero .eyebrow {
+  color: #f8e8cf;
+}
+
+.mau-2 .hero__names,
+.mau-2 .hero__date {
+  color: #fff4df;
+}
+
+.mau-2 .hero-cloud--one { top: 11%; left: -3%; color: #e0b46f; opacity: .45; }
+.mau-2 .hero-cloud--two { right: -3%; bottom: 18%; color: #e0b46f; opacity: .45; }
+.mau-2 .hero-lotus--one { right: -4%; bottom: -3%; width: 47%; color: #f0c4a0; opacity: .48; }
+.mau-2 .opening-cloud--one { top: 8%; right: 0; color: #ddb06e; opacity: .42; }
+.mau-2 .opening-lotus--one { right: -4%; bottom: -3%; width: 35%; color: #f2d2b7; opacity: .44; }
+.mau-2 .section-lotus--right { right: -7%; bottom: -6%; opacity: .24; }
+.mau-2 .thanks-lotus--left { left: -9%; bottom: 0; width: 42%; opacity: .35; }
+.mau-2 .thanks-lotus--right { right: -8%; top: 5%; width: 40%; opacity: .28; }
+
+.mau-2 .card {
+  border: 2px solid rgba(111, 23, 19, .55);
+  box-shadow: 0 12px 34px rgba(35, 4, 3, .24);
+}
+
+.mau-2 .card::before,
+.mau-2 .card::after {
+  width: 26px;
+  height: 26px;
+}
+
+.mau-2 .venue-symbol {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  color: var(--accent);
+  opacity: .35;
+  transform: translate(-50%, -50%);
+}
+
+.mau-2 .venue-symbol svg { width: 110px; height: 110px; }
+
+.mau-2 .venue-art {
+  background:
+    linear-gradient(rgba(255,255,255,.05), rgba(255,255,255,.05)),
+    repeating-linear-gradient(45deg, rgba(149,29,25,.04) 0 2px, transparent 2px 10px);
+}
+
+.mau-2 .photo-placeholder {
+  --photo-rotate: 3deg;
+  border-color: #f9ead5;
+  background: linear-gradient(145deg, #c8af90, #8f7460);
+}
+
+.mau-2 .video-placeholder {
+  background: linear-gradient(145deg, #7a1715, #b63a2f);
+}
+
+.mau-2 .lucky-cloud { left: -4%; top: 8%; color: var(--accent-2); opacity: .25; }
+
+.mau-2 .thank-you {
+  color: #fff0db;
+  background: linear-gradient(145deg, #721714, #98251f);
+}
+
+.mau-2 .thank-you .heading,
+.mau-2 .thank-you .eyebrow {
+  color: #fff1dd;
+}
+
+.mau-2 .thank-you__copy {
+  color: #ebd3b9;
+}
+
+.mau-2 .footer {
+  color: #ead5be;
+}

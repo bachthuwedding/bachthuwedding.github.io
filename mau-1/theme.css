@@ -1,0 +1,67 @@
+:root {
+  --paper: #fff9ee;
+  --ink: #4b3d34;
+  --accent: #8e1f22;
+  --accent-2: #b78a4d;
+  --muted: #75675d;
+  --page-background: #f4ede3;
+  --site-background: linear-gradient(180deg, #f7f0e7, #fffaf1);
+  --site-shadow: 0 0 70px rgba(68, 40, 24, .12);
+  --opening-background: radial-gradient(circle at 50% 30%, #fffaf0, #eadfd3);
+  --envelope: #8d1f21;
+}
+
+.mau-1 .site-shell {
+  background-image:
+    linear-gradient(rgba(255,255,255,.14) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.mau-1 .hero {
+  background:
+    radial-gradient(circle at 50% 35%, rgba(255,255,255,.94), transparent 44%),
+    linear-gradient(180deg, #fffaf1, #f5e9dd);
+}
+
+.mau-1 .hero::before {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  border: 1px solid var(--line);
+  pointer-events: none;
+}
+
+.mau-1 .hero-cloud--one { top: 13%; left: -3%; }
+.mau-1 .hero-cloud--two { right: -4%; bottom: 22%; }
+.mau-1 .hero-lotus--one { left: -3%; bottom: -2%; width: 44%; opacity: .38; }
+.mau-1 .opening-cloud--one { top: 10%; left: 2%; }
+.mau-1 .opening-lotus--one { right: -2%; bottom: -1%; width: 30%; opacity: .3; }
+.mau-1 .section-lotus--right { right: -5%; bottom: -5%; }
+.mau-1 .thanks-lotus--left { left: -8%; bottom: 0; width: 42%; opacity: .35; }
+.mau-1 .thanks-lotus--right { right: -8%; top: 8%; width: 38%; opacity: .28; }
+
+.mau-1 .venue-art::after {
+  content: "WHITE PALACE";
+  position: absolute;
+  left: 50%;
+  bottom: 20%;
+  color: var(--accent);
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  letter-spacing: .08em;
+  transform: translateX(-50%);
+}
+
+.mau-1 .venue-symbol {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  color: var(--accent-2);
+  opacity: .5;
+  transform: translateX(-50%);
+}
+
+.mau-1 .venue-symbol svg { width: 84px; height: 84px; }
+.mau-1 .photo-placeholder { --photo-rotate: -3deg; }
+.mau-1 .lucky-cloud { right: -3%; top: 10%; }

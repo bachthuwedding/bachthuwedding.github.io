@@ -1,0 +1,138 @@
+:root {
+  --paper: #fff8e8;
+  --ink: #3f4b3a;
+  --accent: #9c2620;
+  --accent-2: #c18b45;
+  --muted: #596451;
+  --line: rgba(117, 91, 49, .23);
+  --card: rgba(255, 249, 232, .93);
+  --page-background: #eee5d2;
+  --site-background:
+    linear-gradient(rgba(255,255,255,.15), rgba(255,255,255,.15)),
+    repeating-linear-gradient(0deg, rgba(91,70,42,.025) 0 1px, transparent 1px 5px),
+    #f8efd9;
+  --site-shadow: 0 0 70px rgba(70, 50, 28, .16);
+  --opening-background:
+    radial-gradient(circle at 50% 12%, rgba(255,255,255,.55), transparent 28%),
+    linear-gradient(180deg, #f9eed8, #eadcc0);
+  --envelope: #9b211d;
+  --radius: 4px;
+}
+
+.mau-4 .section {
+  padding-block: clamp(48px, 8vw, 76px);
+}
+
+.mau-4 .hero {
+  min-height: 98svh;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255,255,255,.58), transparent 38%),
+    linear-gradient(180deg, #f8efd9, #f4e8cf);
+}
+
+.mau-4 .hero::before,
+.mau-4 .hero::after {
+  content: "";
+  position: absolute;
+  left: -8%;
+  width: 116%;
+  height: 120px;
+  bottom: -20px;
+  background:
+    radial-gradient(ellipse at 12% 78%, transparent 30%, #266f78 31% 35%, transparent 36%),
+    radial-gradient(ellipse at 32% 78%, transparent 30%, #3d8790 31% 35%, transparent 36%),
+    radial-gradient(ellipse at 52% 78%, transparent 30%, #266f78 31% 35%, transparent 36%),
+    radial-gradient(ellipse at 72% 78%, transparent 30%, #3d8790 31% 35%, transparent 36%),
+    radial-gradient(ellipse at 92% 78%, transparent 30%, #266f78 31% 35%, transparent 36%);
+  opacity: .72;
+}
+
+.mau-4 .hero::after {
+  bottom: 4px;
+  transform: scaleX(-1);
+  opacity: .35;
+}
+
+.mau-4 .hero-cloud--one { top: 10%; left: -2%; }
+.mau-4 .hero-cloud--two { right: -2%; top: 26%; }
+.mau-4 .hero-lotus--one { right: -3%; bottom: 2%; width: 38%; opacity: .38; z-index: 1; }
+.mau-4 .opening-cloud--one { right: 1%; top: 8%; }
+.mau-4 .opening-lotus--one { right: -6%; bottom: -2%; width: 36%; opacity: .35; }
+.mau-4 .section-lotus--right { right: -4%; bottom: -5%; opacity: .28; }
+.mau-4 .thanks-lotus--left { left: -7%; bottom: 0; width: 42%; opacity: .35; }
+.mau-4 .thanks-lotus--right { right: -7%; top: 6%; width: 38%; opacity: .3; }
+
+.mau-4 .hero__names .hero__ampersand {
+  color: #4f704c;
+}
+
+.mau-4 .card {
+  border-width: 1px;
+  box-shadow: none;
+}
+
+.mau-4 .card::before,
+.mau-4 .card::after {
+  width: 42px;
+  height: 42px;
+}
+
+.mau-4 .venue-art {
+  background:
+    radial-gradient(circle at 70% 18%, rgba(255,255,255,.65), transparent 18%),
+    linear-gradient(145deg, #f5e7c9, #e9d7ac);
+}
+
+.mau-4 .venue-art::before {
+  content: "亭";
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  color: #a33b27;
+  font-family: serif;
+  font-size: 8rem;
+  opacity: .35;
+  transform: translate(-50%, -50%);
+}
+
+.mau-4 .venue-symbol {
+  position: absolute;
+  right: 12%;
+  top: 12%;
+  color: #396f5f;
+  opacity: .36;
+}
+
+.mau-4 .venue-symbol svg { width: 58px; height: 58px; }
+
+.mau-4 .photo-placeholder {
+  --photo-rotate: -1deg;
+  border-width: 0;
+  background: linear-gradient(145deg, #d8c8a6, #8d856d);
+}
+
+.mau-4 .lucky-envelope {
+  background: #7e6f4f;
+}
+
+.mau-4 .lucky-envelope::before {
+  background: #8e7f5c;
+}
+
+.mau-4 .video-placeholder {
+  background:
+    radial-gradient(circle at 30% 40%, rgba(226,185,97,.3), transparent 28%),
+    linear-gradient(145deg, #3b6d5b, #1e5050);
+}
+
+.mau-4 .lucky-cloud { left: -3%; top: 8%; opacity: .25; }
+
+.mau-4 .section-title {
+  color: #526b4e;
+  text-transform: uppercase;
+}
+
+.mau-4 .venue-name,
+.mau-4 .heading {
+  color: var(--accent);
+}
