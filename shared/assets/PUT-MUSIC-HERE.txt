@@ -1,1 +1,1 @@
-Đổi tên file nhạc của bạn thành music.mp3 và đặt trong thư mục này.
+Đặt file nhạc tại đây với tên music.mp3.

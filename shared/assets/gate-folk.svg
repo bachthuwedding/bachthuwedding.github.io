@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 520">
+<defs><linearGradient id="roof" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#b24631"/><stop offset="1" stop-color="#7c211f"/></linearGradient></defs>
+<circle cx="350" cy="270" r="210" fill="#ead7ad" opacity=".45"/>
+<g stroke="#5a4939" stroke-width="6" stroke-linejoin="round">
+ <path d="M145 412h410V244H145z" fill="#d6b172"/>
+ <path d="M114 252h472l-76-89H190z" fill="url(#roof)"/>
+ <path d="M177 163h346l-58-68H235z" fill="#9e2e25"/>
+ <path d="M176 252v160M524 252v160M246 252v160M454 252v160" fill="none"/>
+ <path d="M301 412V270h98v142" fill="#4f735f"/>
+ <path d="M125 413h450M205 163h290M143 252h414" fill="none"/>
+</g>
+<g fill="#c8a15a" stroke="#5a4939" stroke-width="4">
+ <circle cx="350" cy="205" r="28"/><path d="M335 193h13v11h-9v11h9v11h-13m30-33h-13v11h9v11h-9v11h13" fill="none"/>
+</g>
+<g stroke="#4f735f" stroke-width="7" stroke-linecap="round">
+ <path d="M86 440c8-109 13-189 25-278M614 440c-4-120-1-199 18-292" fill="none"/>
+ <path d="M101 337l-38-28m42-17 39-28m-47 111-45-8m567-42 39-28m-42-17-39-28m47 111 45-8" fill="none"/>
+</g>
+</svg>

@@ -1,139 +1,189 @@
 (() => {
   "use strict";
 
-  const qs = (selector, parent = document) => parent.querySelector(selector);
-  const qsa = (selector, parent = document) => [...parent.querySelectorAll(selector)];
+  const qs = (selector, root = document) => root.querySelector(selector);
+  const qsa = (selector, root = document) => [...root.querySelectorAll(selector)];
 
-  // Personalize guest name through ?guest=Nguyen%20Van%20A
-  const params = new URLSearchParams(window.location.search);
+  const iconHref = "../shared/assets/icons.svg";
+
+  // Guest personalization: ?guest=Nguyễn%20Văn%20An
+  const params = new URLSearchParams(location.search);
   const guest = (params.get("guest") || "").trim();
   if (guest) {
-    qsa("[data-guest]").forEach((element) => {
-      element.textContent = guest;
+    qsa("[data-guest]").forEach((node) => {
+      node.textContent = guest;
     });
   }
 
-  // Opening envelope
+  // Opening scene.
   const opening = qs("[data-opening]");
-  const openButton = qs("[data-open-invitation]");
+  const openButtons = qsa("[data-open-invitation]");
+  let openingDone = false;
+
   const openInvitation = () => {
-    if (!opening) return;
-    opening.classList.add("is-opening");
-    document.body.classList.add("invitation-is-open");
+    if (!opening || openingDone) return;
+    openingDone = true;
+    opening.classList.add("is-open");
+    document.body.classList.remove("is-locked");
     window.setTimeout(() => {
       opening.hidden = true;
       qs("main")?.focus({ preventScroll: true });
-    }, 950);
+    }, 1100);
   };
 
-  openButton?.addEventListener("click", openInvitation);
+  openButtons.forEach((button) => button.addEventListener("click", openInvitation));
   opening?.addEventListener("keydown", (event) => {
-    if ((event.key === "Enter" || event.key === " ") && !event.target.closest("button")) {
+    if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       openInvitation();
     }
   });
 
-  // Scroll reveal
-  const revealElements = qsa("[data-reveal]");
+  // Scroll reveal.
+  const revealNodes = qsa("[data-reveal]");
   if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      (entries, currentObserver) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-visible");
-          currentObserver.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.14, rootMargin: "0px 0px -7% 0px" }
-    );
-    revealElements.forEach((element) => observer.observe(element));
+    const observer = new IntersectionObserver((entries, activeObserver) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        activeObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.14, rootMargin: "0px 0px -6% 0px" });
+    revealNodes.forEach((node) => observer.observe(node));
   } else {
-    revealElements.forEach((element) => element.classList.add("is-visible"));
+    revealNodes.forEach((node) => node.classList.add("is-visible"));
   }
 
-  // Gentle pointer parallax for marked decorations
-  const parallaxItems = qsa("[data-parallax]");
-  let pointerFrame;
+  // Subtle pointer parallax for desktop/tablet.
+  const parallaxNodes = qsa("[data-parallax]");
+  let pointerFrame = 0;
   window.addEventListener("pointermove", (event) => {
-    if (!parallaxItems.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!parallaxNodes.length || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     cancelAnimationFrame(pointerFrame);
     pointerFrame = requestAnimationFrame(() => {
-      const x = (event.clientX / window.innerWidth - 0.5) * 2;
-      const y = (event.clientY / window.innerHeight - 0.5) * 2;
-      parallaxItems.forEach((item) => {
-        const depth = Number(item.dataset.parallax || 8);
-        item.style.setProperty("--parallax-x", `${x * depth}px`);
-        item.style.setProperty("--parallax-y", `${y * depth}px`);
+      const x = (event.clientX / innerWidth - 0.5) * 2;
+      const y = (event.clientY / innerHeight - 0.5) * 2;
+      parallaxNodes.forEach((node) => {
+        const depth = Number(node.dataset.parallax || 5);
+        node.style.setProperty("--px", `${x * depth}px`);
+        node.style.setProperty("--py", `${y * depth}px`);
       });
     });
   });
 
-  // Lucky message dialog
-  const luckyDialog = qs("#lucky-dialog");
-  const luckyResult = qs("[data-lucky-result]");
-  const luckyMessages = [
-    "Một năm thật nhiều niềm vui và bình an.",
-    "May mắn sẽ đến từ những cuộc gặp gỡ chân thành.",
-    "Tình yêu, sức khỏe và những hành trình đáng nhớ.",
-    "Một bất ngờ dịu dàng đang chờ bạn phía trước.",
-    "Niềm vui nhỏ hôm nay sẽ thành kỷ niệm thật lâu."
-  ];
-
-  qsa("[data-open-lucky]").forEach((button) => {
-    button.addEventListener("click", () => {
-      if (luckyResult) {
-        luckyResult.textContent = luckyMessages[Math.floor(Math.random() * luckyMessages.length)];
-      }
-      if (luckyDialog?.showModal) {
-        luckyDialog.showModal();
-      } else if (luckyDialog) {
-        luckyDialog.setAttribute("open", "");
-      }
-    });
-  });
-
+  // Modal helpers.
+  const showDialog = (dialog) => {
+    if (!dialog) return;
+    if (typeof dialog.showModal === "function") dialog.showModal();
+    else dialog.setAttribute("open", "");
+  };
   qsa("[data-close-dialog]").forEach((button) => {
     button.addEventListener("click", () => button.closest("dialog")?.close());
   });
+  qsa("dialog").forEach((dialog) => {
+    dialog.addEventListener("click", (event) => {
+      const rect = dialog.getBoundingClientRect();
+      const outside = event.clientX < rect.left || event.clientX > rect.right ||
+        event.clientY < rect.top || event.clientY > rect.bottom;
+      if (outside) dialog.close();
+    });
+  });
 
-  // Demo wish form — static GitHub Pages cannot store submissions by itself.
+  // Lucky game.
+  const luckyDialog = qs("#lucky-dialog");
+  const luckyResult = qs("[data-lucky-result]");
+  const luckyMessages = [
+    "Số may mắn của bạn là 08 — viên mãn và đủ đầy.",
+    "Số may mắn của bạn là 18 — khởi đầu cho những niềm vui mới.",
+    "Số may mắn của bạn là 25 — bình an, yêu thương và nhiều chuyến đi.",
+    "Số may mắn của bạn là 68 — lộc đến, duyên lành và thật nhiều tiếng cười.",
+    "Món quà của bạn là một lời chúc: mọi điều dịu dàng sẽ tìm đến đúng lúc."
+  ];
+
+  qsa("[data-lucky]").forEach((button) => {
+    button.addEventListener("click", () => {
+      button.classList.remove("is-shaking");
+      void button.offsetWidth;
+      button.classList.add("is-shaking");
+      window.setTimeout(() => {
+        if (luckyResult) {
+          luckyResult.textContent = luckyMessages[Math.floor(Math.random() * luckyMessages.length)];
+        }
+        showDialog(luckyDialog);
+      }, 430);
+    });
+  });
+
+  // Folk gift selection.
+  let selectedGift = null;
+  qsa("[data-gift]").forEach((gift) => {
+    gift.addEventListener("click", () => {
+      qsa("[data-gift]").forEach((item) => item.classList.remove("is-selected"));
+      gift.classList.add("is-selected");
+      selectedGift = gift.dataset.gift;
+    });
+  });
+  qs("[data-open-selected-gift]")?.addEventListener("click", () => {
+    if (!selectedGift) {
+      alert("Bạn hãy chọn một phong bao trước nhé.");
+      return;
+    }
+    if (luckyResult) {
+      const giftCopy = {
+        red: "Phong bao đỏ gửi bạn lời chúc: rực rỡ, may mắn và nhiều niềm vui.",
+        green: "Phong bao xanh gửi bạn lời chúc: bình an, bền bỉ và luôn có người đồng hành.",
+        cream: "Phong bao kem gửi bạn lời chúc: dịu dàng, đủ đầy và những điều tốt lành."
+      };
+      luckyResult.textContent = giftCopy[selectedGift];
+    }
+    showDialog(luckyDialog);
+  });
+
+  // Wish form demo.
   qsa("[data-wish-form]").forEach((form) => {
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      const message = qs("[data-form-message]", form);
-      if (message) {
-        message.textContent = "Cảm ơn bạn! Đây là bản demo. Hãy nối form với Google Form hoặc Apps Script để lưu lời chúc.";
+      const status = qs("[data-form-status]", form);
+      if (status) {
+        status.textContent = "Cảm ơn bạn! Bản demo chưa lưu dữ liệu; hãy nối form với Google Form hoặc Apps Script.";
       }
       form.reset();
     });
   });
 
-  // Demo RSVP action
-  qsa("[data-rsvp-demo]").forEach((button) => {
+  // Video modal.
+  const videoDialog = qs("#video-dialog");
+  qsa("[data-open-video]").forEach((button) => {
     button.addEventListener("click", (event) => {
-      const href = button.getAttribute("href");
-      if (!href || href === "#") {
-        event.preventDefault();
-        alert("Hãy thay liên kết nút này bằng đường dẫn Google Form xác nhận tham dự.");
-      }
+      event.preventDefault();
+      showDialog(videoDialog);
     });
   });
 
-  // Video placeholder
-  qsa("[data-video-demo]").forEach((button) => {
+  // RSVP.
+  const rsvpDialog = qs("#rsvp-dialog");
+  qsa("[data-open-rsvp]").forEach((button) => {
     button.addEventListener("click", (event) => {
-      const href = button.getAttribute("href");
-      if (!href || href === "#") {
-        event.preventDefault();
-        alert("Hãy thay liên kết này bằng video YouTube, Vimeo hoặc Google Drive của cô dâu chú rể.");
+      event.preventDefault();
+      showDialog(rsvpDialog);
+    });
+  });
+  qsa("[data-rsvp-choice]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const choice = button.dataset.rsvpChoice;
+      const message = qs("[data-rsvp-status]");
+      if (message) {
+        message.textContent = choice === "yes"
+          ? "Cảm ơn bạn đã xác nhận tham dự. Hẹn gặp bạn trong ngày vui!"
+          : "Cảm ơn bạn đã phản hồi. Bách & Thư rất trân trọng tình cảm của bạn.";
       }
+      try { localStorage.setItem("wedding-rsvp", choice); } catch {}
     });
   });
 
-  // Music toggle — only works after shared/assets/music.mp3 is added.
-  const musicButton = qs("[data-music-toggle]");
+  // Optional background music.
   const music = qs("#wedding-music");
+  const musicButton = qs("[data-music]");
   musicButton?.addEventListener("click", async () => {
     if (!music) return;
     try {
@@ -147,12 +197,12 @@
         musicButton.setAttribute("aria-label", "Bật nhạc");
       }
     } catch {
-      alert("Chưa có file nhạc. Hãy thêm shared/assets/music.mp3.");
+      alert("Chưa có file nhạc. Hãy đặt file music.mp3 trong shared/assets.");
     }
   });
 
-  // Update copyright year
-  qsa("[data-current-year]").forEach((element) => {
-    element.textContent = new Date().getFullYear();
+  // Current year.
+  qsa("[data-year]").forEach((node) => {
+    node.textContent = String(new Date().getFullYear());
   });
 })();

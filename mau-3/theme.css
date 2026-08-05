@@ -1,91 +1,267 @@
 :root {
-  --paper: #fffdf5;
-  --ink: #505148;
-  --accent: #687150;
-  --accent-2: #a6976e;
-  --muted: #727267;
-  --line: rgba(104, 113, 80, .23);
-  --card: rgba(255, 253, 245, .94);
-  --page-background: #eee9dd;
-  --site-background:
-    radial-gradient(circle at 10% 8%, rgba(121,132,88,.08), transparent 24%),
-    linear-gradient(180deg, #f6f1e7, #fbf8f0);
-  --site-shadow: 0 0 70px rgba(55, 58, 40, .12);
-  --opening-background:
-    radial-gradient(circle at 20% 10%, rgba(126,139,92,.14), transparent 30%),
-    linear-gradient(150deg, #f7f2e9, #e9e4d7);
-  --envelope: #788062;
-  --radius: 26px;
+  --paper: #f5f0e7;
+  --paper-2: #fbf8f2;
+  --ink: #3f4d3b;
+  --muted: #66705f;
+  --accent: #60664d;
+  --accent-2: #8a9276;
+  --gold: #9a946a;
+  --line: rgba(96,102,77,.28);
+  --outside: #e4dfd3;
+  --page-bg:
+    radial-gradient(circle at 10% 5%,rgba(187,192,168,.24),transparent 24%),
+    linear-gradient(180deg,#f3eee5,#fbf8f2 48%,#f1ece2);
+  --opening-bg:
+    radial-gradient(circle at 50% 18%,rgba(255,255,255,.8),transparent 30%),
+    linear-gradient(145deg,#f7f2e9,#e8e3d8);
+  --envelope: #60664d;
+  --envelope-front: #697158;
+  --envelope-flap: #747b61;
+  --seal: #60664d;
+  --seal-ink: #eee9d9;
+  --letter: #fbf8f2;
+  --letter-ink: #60664d;
+  --letter-line: rgba(96,102,77,.4);
+  --card-radius: 12px;
+  --card-shadow: 0 14px 34px rgba(64,75,56,.12);
+  --button-bg: #60664d;
+  --button-border: #60664d;
+  --button-color: #fbf8f2;
+  --button-radius: 999px;
 }
 
-.mau-3 .hero {
-  background:
-    radial-gradient(circle at 50% 36%, rgba(255,255,255,.9), transparent 45%),
-    linear-gradient(180deg, #f5f0e6, #fbf9f2);
+.theme-3 .opening__scene { min-height: min(800px,96svh); }
+.theme-3 .sage-opening-lotus {
+  left: -125px;
+  bottom: 22px;
+  width: 335px;
+  opacity: .86;
 }
-
-.mau-3 .hero::after {
-  content: "";
+.theme-3 .sage-opening-calla {
+  right: -72px;
+  top: -5px;
+  width: 230px;
+  opacity: .9;
+}
+.theme-3 .sage-envelope { margin-top: 20px; }
+.theme-3 .sage-liner {
   position: absolute;
-  inset: 18px;
-  border: 1px solid var(--line);
-  border-radius: 30px;
+  inset: 0;
+  clip-path: polygon(0 0,100% 0,50% 58%);
+  overflow: hidden;
+  z-index: 1;
 }
-
-.mau-3 .hero-cloud--one { top: 8%; right: -3%; }
-.mau-3 .hero-cloud--two { left: -3%; bottom: 20%; }
-.mau-3 .hero-lotus--one { left: -7%; bottom: -3%; width: 52%; opacity: .31; }
-.mau-3 .opening-cloud--one { left: 2%; top: 8%; }
-.mau-3 .opening-lotus--one { left: -5%; bottom: -1%; width: 38%; opacity: .28; }
-.mau-3 .section-lotus--right { right: -4%; bottom: -4%; opacity: .24; }
-.mau-3 .thanks-lotus--left { left: -8%; bottom: 0; width: 43%; opacity: .31; }
-.mau-3 .thanks-lotus--right { right: -8%; top: 4%; width: 40%; opacity: .26; }
-
-.mau-3 .card {
-  backdrop-filter: blur(8px);
-}
-
-.mau-3 .venue-art {
-  background:
-    radial-gradient(circle at 75% 28%, rgba(255,255,255,.9), transparent 18%),
-    radial-gradient(circle at 30% 75%, rgba(104,113,80,.15), transparent 35%),
-    linear-gradient(145deg, #f0ece1, #d8decb);
-}
-
-.mau-3 .venue-symbol {
+.theme-3 .sage-liner img {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  width: 130%;
+  left: -15%;
+  top: -27%;
+  opacity: .9;
+}
+.theme-3 .sage-seal span {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-style: italic;
+}
+.theme-3 .opening .btn--outline {
+  --button-color: #60664d;
+  --button-border: #8a9276;
+  --button-bg: #f7f2e9;
+}
+.theme-3 .page {
+  background-image:
+    radial-gradient(circle at 16% 8%,rgba(187,192,168,.19),transparent 24%),
+    radial-gradient(circle at 85% 35%,rgba(217,185,181,.12),transparent 22%),
+    linear-gradient(180deg,#f3eee5,#fbf8f2 48%,#f1ece2);
+}
+.theme-3 .section { padding-block: 18px; }
+.theme-3 .sage-card {
+  border-color: rgba(96,102,77,.25);
+  background: rgba(251,248,242,.95);
+  box-shadow: 0 14px 34px rgba(64,75,56,.1);
+}
+.theme-3 .sage-card::before,
+.theme-3 .sage-card::after { color: #8a9276; opacity: .48; }
+.theme-3 .sage-hero-card {
+  min-height: 650px;
+  display: grid;
+  align-items: center;
+}
+.theme-3 .sage-hero-lotus {
+  left: -112px;
+  bottom: -24px;
+  width: 340px;
+  opacity: .83;
+}
+.theme-3 .sage-hero-calla {
+  right: -82px;
+  top: -22px;
+  width: 240px;
+  opacity: .92;
+}
+.theme-3 .sage-hero-card .hero-copy {
+  width: 76%;
+  margin: auto;
+  padding: 70px 0 130px;
+}
+.theme-3 .sage-hero-card .names { font-size: 54px; }
+.theme-3 .sage-leaf-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin: 20px auto;
+  color: var(--accent-2);
+}
+.theme-3 .sage-leaf-divider span {
+  width: 58px;
+  height: 1px;
+  background: currentColor;
+  opacity: .45;
+}
+.theme-3 .sage-leaf-divider svg { width: 20px; height: 20px; }
+.theme-3 .sage-timeline::before { background: rgba(96,102,77,.28); }
+.theme-3 .sage-timeline .timeline-icon {
+  color: #60664d;
+  background: #fbf8f2;
+}
+.theme-3 .sage-venue-art {
+  margin-inline: -8px;
+  border-radius: 18px;
+  overflow: visible;
+}
+.theme-3 .sage-venue-art > img:first-child {
+  border-radius: 18px;
+  box-shadow: 0 12px 28px rgba(63,77,59,.1);
+}
+.theme-3 .sage-venue-calla {
+  left: -88px;
+  bottom: -70px;
+  width: 210px;
+  opacity: .85;
+}
+.theme-3 .sage-venue { padding-bottom: 72px; }
+.theme-3 .sage-story { padding-bottom: 105px; }
+.theme-3 .sage-story-copy {
+  margin: 0 auto;
+  color: var(--muted);
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.6;
+  text-align: center;
+}
+.theme-3 .sage-note {
+  margin: 18px 0 0;
   color: var(--accent);
-  opacity: .35;
-  transform: translate(-50%, -50%);
+  font-family: var(--serif);
+  font-size: 18px;
+  text-align: center;
 }
-
-.mau-3 .venue-symbol svg { width: 100px; height: 100px; }
-
-.mau-3 .photo-placeholder {
-  --photo-rotate: 2deg;
-  background: linear-gradient(145deg, #cbd0b9, #8e9574);
+.theme-3 .sage-heart-divider {
+  width: 78px;
+  margin: 13px auto 24px;
+  color: #9a946a;
 }
-
-.mau-3 .lucky-envelope {
-  background: #788062;
+.theme-3 .sage-heart-divider svg {
+  width: 22px;
+  height: 22px;
+  margin: auto;
 }
-
-.mau-3 .lucky-envelope::before {
-  background: #8b9373;
+.theme-3 .sage-polaroid {
+  --rotate: 2deg;
+  width: 280px;
+  padding-bottom: 48px;
 }
-
-.mau-3 .video-placeholder {
-  background: linear-gradient(145deg, #939a79, #697153);
+.theme-3 .sage-tape {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  width: 72px;
+  height: 30px;
+  background: rgba(96,102,77,.35);
+  transform: translateX(-50%) rotate(-2deg);
+  z-index: 2;
 }
-
-.mau-3 .lucky-cloud { right: -3%; top: 9%; opacity: .22; }
-
-.mau-3 .section-title {
-  text-transform: none;
+.theme-3 .sage-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 7px;
 }
-
-.mau-3 .button {
-  color: #fffdf5;
+.theme-3 .sage-dots i {
+  width: 7px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #bbc0a8;
+}
+.theme-3 .sage-dots i:first-child { background: #60664d; }
+.theme-3 .sage-story-flowers {
+  right: -90px;
+  bottom: -52px;
+  width: 205px;
+  opacity: .78;
+}
+.theme-3 .sage-lucky {
+  padding-inline: 30px;
+}
+.theme-3 .sage-lucky .lucky-object {
+  width: 270px;
+}
+.theme-3 .sage-wishes .wish-form {
+  padding: 18px;
+  border: 1px solid rgba(96,102,77,.2);
+  border-radius: 10px;
+}
+.theme-3 .sage-block-title {
+  margin: 0 0 6px;
+  color: var(--accent);
+  font-family: var(--serif);
+  font-size: 19px;
+  text-align: center;
+}
+.theme-3 .sage-flower-divider {
+  width: 105px;
+  height: 96px;
+  margin: 8px auto -6px;
+  overflow: hidden;
+}
+.theme-3 .sage-flower-divider img {
+  width: 105px;
+  transform: translateY(-34px);
+}
+.theme-3 .sage-video {
+  margin-top: 0;
+}
+.theme-3 .sage-thanks {
+  min-height: 690px;
+  padding: 30px 18px;
+}
+.theme-3 .thanks-card {
+  min-height: 500px;
+  display: grid;
+  align-items: center;
+  padding-inline: 38px;
+  z-index: 2;
+}
+.theme-3 .sage-thanks-lotus {
+  left: -130px;
+  bottom: 0;
+  width: 335px;
+  z-index: 3;
+}
+.theme-3 .sage-thanks-calla {
+  right: -75px;
+  top: 18px;
+  width: 205px;
+  z-index: 3;
+}
+.theme-3 .thanks-card .title {
+  font-size: 51px;
+}
+.theme-3 .music-btn {
+  --button-bg: #60664d;
+  --button-color: #fbf8f2;
 }

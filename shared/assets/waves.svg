@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 180" preserveAspectRatio="none">
+<g fill="none" stroke-linecap="round">
+ <path d="M-30 120C55 32 140 208 225 120S395 32 480 120s170 88 255 0 170-88 255 0" stroke="#2f7c80" stroke-width="16"/>
+ <path d="M-10 150C75 62 160 238 245 150s170-88 255 0 170 88 255 0 170-88 255 0" stroke="#4f9a97" stroke-width="9" opacity=".75"/>
+ <path d="M-35 90C50 2 135 178 220 90S390 2 475 90s170 88 255 0 170-88 255 0" stroke="#8db5a9" stroke-width="7" opacity=".55"/>
+</g>
+</svg>
