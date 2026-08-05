@@ -1,0 +1,10 @@
+{
+  "name": "bach-thu-wedding-invitation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node tools/server.mjs",
+    "screenshot": "node tools/screenshot.mjs"
+  }
+}
