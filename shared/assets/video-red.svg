@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520">
-<defs><linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4a0d11"/><stop offset=".55" stop-color="#8d2020"/><stop offset="1" stop-color="#b86451"/></linearGradient></defs>
-<rect width="900" height="520" rx="24" fill="url(#b)"/>
-<g fill="#bd6d5f" opacity=".55"><circle cx="140" cy="120" r="92"/><circle cx="770" cy="390" r="130"/><circle cx="670" cy="88" r="55"/></g>
-<g fill="none" stroke="#e7b7a2" stroke-width="4" opacity=".65"><path d="M0 440c180-130 320-90 450 0 130-90 270-130 450 0"/><path d="M70 470c130-100 250-73 380 10 130-83 250-110 380-10"/></g>
-<text x="450" y="206" text-anchor="middle" fill="#f8eadc" font-family="serif" font-size="72">Bách &amp; Thư</text>
-<text x="450" y="260" text-anchor="middle" fill="#d8b88d" font-family="sans-serif" font-size="22" letter-spacing="8">SAVE THE DATE</text>
-</svg>

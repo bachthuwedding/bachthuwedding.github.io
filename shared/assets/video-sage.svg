@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520">
-<defs><linearGradient id="b" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4f5940"/><stop offset=".6" stop-color="#87906f"/><stop offset="1" stop-color="#d8d2bd"/></linearGradient></defs>
-<rect width="900" height="520" rx="24" fill="url(#b)"/>
-<g fill="#f3eee2" opacity=".3"><circle cx="130" cy="100" r="100"/><circle cx="760" cy="410" r="155"/><circle cx="670" cy="98" r="60"/></g>
-<path d="M0 440c175-120 310-100 450 0 140-100 275-120 450 0" fill="none" stroke="#e7e1d5" stroke-width="5" opacity=".55"/>
-<text x="450" y="215" text-anchor="middle" fill="#fffaf0" font-family="serif" font-size="72">Bách &amp; Thư</text>
-<text x="450" y="270" text-anchor="middle" fill="#f0e9d5" font-family="sans-serif" font-size="22" letter-spacing="8">OUR MOMENTS</text>
-</svg>
