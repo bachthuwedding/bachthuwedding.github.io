@@ -79,7 +79,7 @@ button {
     CŨ: top 16.2%, width 76%
     MỚI: thiệp lớn và nổi bật hơn
   */
-  top: 25%;
+  top: calc(8.5% + 20px);
   left: 50%;
 
   width: 91%;
