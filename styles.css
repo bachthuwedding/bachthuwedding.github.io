@@ -1,0 +1,163 @@
+:root {
+  --paper: #ead5ad;
+  --vermilion: #b5150f;
+  --gold: #d7a84a;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  background: #d8c59f;
+  overflow: hidden;
+  font-family: Georgia, "Times New Roman", serif;
+  -webkit-tap-highlight-color: transparent;
+}
+button { font: inherit; }
+
+.site-shell {
+  width: min(100vw, 430px);
+  height: 100dvh;
+  min-height: 100svh;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  background: var(--paper);
+  box-shadow: 0 0 40px rgba(80, 46, 24, .12);
+}
+
+.opening-page {
+  position: absolute;
+  inset: 0;
+  background-image: url("./assets/page01-bg.webp");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.envelope-button {
+  position: absolute;
+  top: 16.2%;
+  left: 50%;
+  width: 76%;
+  aspect-ratio: 2 / 3;
+  transform: translateX(-50%);
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  perspective: 1200px;
+  touch-action: manipulation;
+}
+
+.envelope-stage {
+  position: absolute;
+  inset: 0;
+  display: block;
+  transform: translateZ(0);
+  transition: transform .65s cubic-bezier(.22,.75,.22,1), filter .65s ease;
+}
+
+.envelope-base,
+.envelope-flap-layer,
+.envelope-flap-layer img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.envelope-base,
+.envelope-flap-layer img {
+  object-fit: contain;
+  user-select: none;
+  pointer-events: none;
+}
+
+.envelope-interior {
+  position: absolute;
+  z-index: 0;
+  left: 8.5%;
+  right: 8.5%;
+  top: 8%;
+  height: 28%;
+  border-radius: 8px 8px 24% 24%;
+  background:
+    radial-gradient(circle at 50% 90%, rgba(88,0,0,.42), transparent 60%),
+    linear-gradient(180deg, #8d0d0a, #b21510 72%, #8f0d0b);
+  box-shadow: inset 0 12px 26px rgba(60,0,0,.32);
+  opacity: 0;
+  transition: opacity .18s linear .12s;
+}
+
+.envelope-base {
+  z-index: 1;
+  clip-path: inset(0 0 0 0);
+  transition: clip-path .12s linear .10s;
+  filter: drop-shadow(0 11px 8px rgba(62, 24, 14, .18));
+}
+
+.envelope-flap-layer {
+  z-index: 2;
+  clip-path: inset(0 0 70.5% 0);
+  transform-origin: 50% 8%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition: transform .68s cubic-bezier(.2,.68,.2,1);
+  pointer-events: none;
+}
+
+.monogram-pulse {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 60.5%;
+  width: 34%;
+  aspect-ratio: 1;
+  border: 1px solid rgba(224, 181, 82, 0);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: invitationPulse 2.6s ease-in-out infinite;
+}
+
+.envelope-button:hover .envelope-stage,
+.envelope-button:focus-visible .envelope-stage {
+  transform: translateY(-4px) scale(1.012);
+}
+.envelope-button:focus-visible { outline: none; }
+.envelope-button:focus-visible .monogram-pulse {
+  border-color: rgba(235, 198, 102, .6);
+}
+
+.envelope-button.is-open .envelope-stage {
+  transform: translateY(-7px) scale(1.018);
+  filter: saturate(1.02);
+}
+.envelope-button.is-open .envelope-base {
+  clip-path: inset(24.5% 0 0 0);
+}
+.envelope-button.is-open .envelope-interior { opacity: 1; }
+.envelope-button.is-open .envelope-flap-layer {
+  transform: rotateX(-86deg) translateY(-1px);
+}
+.envelope-button.is-open .monogram-pulse { animation: none; opacity: 0; }
+
+@keyframes invitationPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(.82); box-shadow: 0 0 0 0 rgba(222,174,72,0); }
+  45% { border-color: rgba(230,190,92,.30); box-shadow: 0 0 0 8px rgba(222,174,72,.08); }
+  70% { transform: translate(-50%, -50%) scale(1); border-color: rgba(230,190,92,0); box-shadow: 0 0 0 15px rgba(222,174,72,0); }
+}
+
+@media (max-aspect-ratio: 375/812) {
+  .opening-page { background-size: auto 100%; }
+}
+
+@media (min-width: 431px) {
+  body { display: grid; place-items: center; }
+  .site-shell { height: min(100dvh, 932px); aspect-ratio: 375 / 812; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}

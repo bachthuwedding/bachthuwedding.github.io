@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#ead5ad" />
+  <meta name="description" content="Thiệp cưới Bách & Thư" />
+  <title>Bách & Thư</title>
+  <link rel="preload" href="./assets/page01-bg.webp" as="image" type="image/webp" />
+  <link rel="preload" href="./assets/envelope-closed.png" as="image" type="image/png" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="site-shell">
+    <section class="opening-page" id="opening" aria-label="Mở thiệp cưới Bách và Thư">
+      <button class="envelope-button" id="envelopeButton" type="button" aria-label="Mở thiệp" aria-expanded="false">
+        <span class="envelope-stage" aria-hidden="true">
+          <span class="envelope-interior"></span>
+          <img class="envelope-base" src="./assets/envelope-closed.png" alt="" draggable="false" />
+          <span class="envelope-flap-layer">
+            <img src="./assets/envelope-closed.png" alt="" draggable="false" />
+          </span>
+          <span class="monogram-pulse"></span>
+        </span>
+      </button>
+    </section>
+  </main>
+  <script src="./script.js"></script>
+</body>
+</html>

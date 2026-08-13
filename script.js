@@ -1,0 +1,10 @@
+const envelopeButton = document.getElementById('envelopeButton');
+
+envelopeButton.addEventListener('click', () => {
+  const isOpen = envelopeButton.classList.toggle('is-open');
+  envelopeButton.setAttribute('aria-expanded', String(isOpen));
+
+  if (isOpen) {
+    window.dispatchEvent(new CustomEvent('wedding-invitation-opened'));
+  }
+});
