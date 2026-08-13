@@ -134,7 +134,7 @@ button {
   */
   animation:
     idleTapCue
-    3.4s
+    2.7s
     cubic-bezier(.22, .75, .22, 1)
     infinite;
 
