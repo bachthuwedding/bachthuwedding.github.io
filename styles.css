@@ -57,19 +57,16 @@ button {
   position: relative;
 
   width: min(100vw, 430px);
-
   height: 100dvh;
   min-height: 100svh;
 
   margin: 0 auto;
-
   overflow: hidden;
 
   background: var(--paper);
 
   box-shadow:
-    0 0 40px
-    rgba(80, 46, 24, .12);
+    0 0 40px rgba(80, 46, 24, .12);
 }
 
 
@@ -83,17 +80,10 @@ button {
 
   overflow: hidden;
 
-  background-image:
-    url("./assets/page01-bg.webp");
-
-  background-repeat:
-    no-repeat;
-
-  background-position:
-    center center;
-
-  background-size:
-    cover;
+  background-image: url("./assets/page01-bg.webp");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 
 
@@ -105,18 +95,14 @@ button {
   position: absolute;
 
   left: 50%;
-
-  top:
-    calc(14.5% + 18px);
+  top: calc(14.5% + 18px);
 
   width: 82%;
-
   max-width: 352px;
 
   aspect-ratio: 2 / 3;
 
-  transform:
-    translateX(-50%);
+  transform: translateX(-50%);
 
   padding: 0;
   margin: 0;
@@ -125,7 +111,6 @@ button {
   background: transparent;
 
   cursor: pointer;
-
   touch-action: manipulation;
 
   overflow: visible;
@@ -141,14 +126,10 @@ button {
   inset: 0;
 
   display: block;
-
   overflow: visible;
 
-  transform:
-    translateZ(0);
-
-  transform-origin:
-    50% 58%;
+  transform: translateZ(0);
+  transform-origin: 50% 58%;
 
   filter:
     drop-shadow(
@@ -170,13 +151,10 @@ button {
 .envelope-open-front,
 .envelope-open-flap {
   position: absolute;
-
   display: block;
 
   user-select: none;
-
   pointer-events: none;
-
   -webkit-user-drag: none;
 }
 
@@ -189,7 +167,6 @@ button {
   z-index: 30;
 
   inset: 0;
-
   width: 100%;
   height: 100%;
 
@@ -198,26 +175,19 @@ button {
   opacity: 1;
 
   transform:
-    translate3d(
-      0,
-      var(--body-offset-closed),
-      0
-    )
+    translate3d(0, var(--body-offset-closed), 0)
     scale(1);
 
-  transform-origin:
-    50% 50%;
+  transform-origin: 50% 50%;
 
   animation:
-    closedEnvelopeCue
-    2.6s
+    closedEnvelopeCue 2.6s
     cubic-bezier(.22, .75, .22, 1)
     infinite;
 
   transition:
     opacity .22s ease,
-    transform .56s
-    cubic-bezier(.22, .61, .36, 1);
+    transform .56s cubic-bezier(.22, .61, .36, 1);
 }
 
 
@@ -227,7 +197,6 @@ button {
 
 .envelope-open {
   position: absolute;
-
   inset: 0;
 
   z-index: 10;
@@ -238,7 +207,6 @@ button {
   overflow: visible;
 
   opacity: 0;
-
   pointer-events: none;
 
   transition:
@@ -254,17 +222,14 @@ button {
   z-index: 9;
 
   left: 50%;
-
   width: 68%;
-
   height: auto;
 
   bottom: 80%;
 
   opacity: 0;
 
-  transform-origin:
-    50% 100%;
+  transform-origin: 50% 100%;
 
   transform:
     translateX(-50%)
@@ -273,9 +238,7 @@ button {
     scaleY(.035);
 
   transition:
-    transform .52s
-    cubic-bezier(.22, .61, .36, 1),
-
+    transform .52s cubic-bezier(.22, .61, .36, 1),
     opacity .12s ease;
 
   will-change:
@@ -292,25 +255,18 @@ button {
   z-index: 11;
 
   inset: 0;
-
   width: 100%;
   height: 100%;
 
   object-fit: contain;
 
   transform:
-    translate3d(
-      0,
-      var(--body-offset-closed),
-      0
-    );
+    translate3d(0, var(--body-offset-closed), 0);
 
-  transform-origin:
-    50% 50%;
+  transform-origin: 50% 50%;
 
   transition:
-    transform .56s
-    cubic-bezier(.22, .61, .36, 1);
+    transform .56s cubic-bezier(.22, .61, .36, 1);
 }
 
 
@@ -324,29 +280,16 @@ button {
   z-index: 13;
 
   top: 0;
+  left: calc((100% - var(--card-width)) / 2);
 
-  left:
-    calc(
-      (100% - var(--card-width)) / 2
-    );
+  width: var(--card-width);
+  height: 67%;
 
-  width:
-    var(--card-width);
-
-  height:
-    67%;
-
-  /*
-    Giấy nằm sâu hơn trong phong bao
-    ở trạng thái ban đầu.
-  */
-
+  /* giấy nằm sâu trong phong bao khi chưa mở */
   transform:
     translate3d(
       0,
-      calc(
-        var(--body-offset-open) + 128px
-      ),
+      calc(var(--body-offset-open) + 128px),
       0
     );
 
@@ -355,9 +298,7 @@ button {
   pointer-events: none;
 
   transition:
-    transform .62s
-    cubic-bezier(.16, .78, .18, 1),
-
+    transform .62s cubic-bezier(.16, .78, .18, 1),
     opacity .16s ease;
 
   will-change:
@@ -372,13 +313,11 @@ button {
 
 .invitation-card-paper {
   position: absolute;
-
   inset: 0;
 
   overflow: hidden;
 
-  border-radius:
-    14px 14px 7px 7px;
+  border-radius: 14px 14px 7px 7px;
 
   background:
     radial-gradient(
@@ -386,13 +325,11 @@ button {
       rgba(255, 255, 255, .18),
       transparent 28%
     ),
-
     radial-gradient(
       circle at 75% 68%,
       rgba(173, 129, 65, .05),
       transparent 33%
     ),
-
     linear-gradient(
       180deg,
       #f4e7ca 0%,
@@ -401,24 +338,15 @@ button {
     );
 
   box-shadow:
-    0 6px 18px
-    rgba(74, 33, 16, .15),
-
-    inset 0 0 0 1px
-    rgba(180, 135, 60, .18),
-
-    inset 0 0 28px
-    rgba(125, 88, 42, .05);
+    0 6px 18px rgba(74, 33, 16, .15),
+    inset 0 0 0 1px rgba(180, 135, 60, .18),
+    inset 0 0 28px rgba(125, 88, 42, .05);
 }
-
-
-/* texture giấy nhẹ */
 
 .invitation-card-paper::after {
   content: "";
 
   position: absolute;
-
   inset: 0;
 
   opacity: .12;
@@ -432,8 +360,7 @@ button {
       transparent 5px
     );
 
-  mix-blend-mode:
-    multiply;
+  mix-blend-mode: multiply;
 }
 
 
@@ -453,26 +380,17 @@ button {
   object-fit: contain;
 
   transform:
-    translate3d(
-      0,
-      var(--body-offset-closed),
-      0
-    );
+    translate3d(0, var(--body-offset-closed), 0);
 
-  transform-origin:
-    50% 50%;
+  transform-origin: 50% 50%;
 
   transition:
-    transform .56s
-    cubic-bezier(.22, .61, .36, 1);
+    transform .56s cubic-bezier(.22, .61, .36, 1);
 
-  will-change:
-    transform;
+  will-change: transform;
 
   user-select: none;
-
   pointer-events: none;
-
   -webkit-user-drag: none;
 }
 
@@ -487,21 +405,14 @@ button {
   z-index: 40;
 
   left: 50%;
-
-  top:
-    calc(
-      60.5% +
-      var(--body-offset-closed)
-    );
+  top: calc(60.5% + var(--body-offset-closed));
 
   width: 31%;
-
   aspect-ratio: 1;
 
   border-radius: 50%;
 
-  transform:
-    translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 
   pointer-events: none;
 
@@ -509,34 +420,24 @@ button {
     opacity .24s ease;
 }
 
-
 .monogram-pulse::before,
 .monogram-pulse::after {
   content: "";
 
   position: absolute;
-
   inset: 0;
 
-  border:
-    1.5px solid
-    rgba(237, 196, 96, .52);
-
+  border: 1.5px solid rgba(237, 196, 96, .52);
   border-radius: 50%;
 
   opacity: 0;
 
   animation:
-    tapRing
-    2.4s
-    ease-out
-    infinite;
+    tapRing 2.4s ease-out infinite;
 }
 
-
 .monogram-pulse::after {
-  animation-delay:
-    1.2s;
+  animation-delay: 1.2s;
 }
 
 
@@ -544,11 +445,8 @@ button {
    HOVER / FOCUS — CLOSED
 ========================================= */
 
-.envelope-button:not(.is-open):hover
-.envelope-stage,
-
-.envelope-button:not(.is-open):focus-visible
-.envelope-stage {
+.envelope-button:not(.is-open):hover .envelope-stage,
+.envelope-button:not(.is-open):focus-visible .envelope-stage {
   filter:
     drop-shadow(
       0 16px 12px
@@ -556,23 +454,12 @@ button {
     );
 }
 
-
-.envelope-button:not(.is-open):hover
-.envelope-closed,
-
-.envelope-button:not(.is-open):focus-visible
-.envelope-closed {
-  animation-play-state:
-    paused;
+.envelope-button:not(.is-open):hover .envelope-closed,
+.envelope-button:not(.is-open):focus-visible .envelope-closed {
+  animation-play-state: paused;
 
   transform:
-    translate3d(
-      0,
-      calc(
-        var(--body-offset-closed) - 4px
-      ),
-      0
-    )
+    translate3d(0, calc(var(--body-offset-closed) - 4px), 0)
     scale(1.01);
 }
 
@@ -581,19 +468,11 @@ button {
    ACTIVE
 ========================================= */
 
-.envelope-button:not(.is-open):active
-.envelope-closed {
+.envelope-button:not(.is-open):active .envelope-closed {
   transform:
-    translate3d(
-      0,
-      calc(
-        var(--body-offset-closed) - 1px
-      ),
-      0
-    )
+    translate3d(0, calc(var(--body-offset-closed) - 1px), 0)
     scale(.997);
 }
-
 
 .envelope-button:focus-visible {
   outline: none;
@@ -604,8 +483,7 @@ button {
    OPEN STATE — STAGE
 ========================================= */
 
-.envelope-button.is-open
-.envelope-stage {
+.envelope-button.is-open .envelope-stage {
   filter:
     drop-shadow(
       0 14px 10px
@@ -618,10 +496,8 @@ button {
    SHOW OPEN GROUP
 ========================================= */
 
-.envelope-button.is-open
-.envelope-open {
+.envelope-button.is-open .envelope-open {
   opacity: 1;
-
   transition-delay: 0s;
 }
 
@@ -630,18 +506,13 @@ button {
    HIDE CLOSED
 ========================================= */
 
-.envelope-button.is-open
-.envelope-closed {
+.envelope-button.is-open .envelope-closed {
   animation: none;
 
   opacity: 0;
 
   transform:
-    translate3d(
-      0,
-      var(--body-offset-open),
-      0
-    )
+    translate3d(0, var(--body-offset-open), 0)
     scale(1);
 }
 
@@ -650,14 +521,9 @@ button {
    BODY BACK MOVES DOWN
 ========================================= */
 
-.envelope-button.is-open
-.envelope-open-body-back {
+.envelope-button.is-open .envelope-open-body-back {
   transform:
-    translate3d(
-      0,
-      var(--body-offset-open),
-      0
-    );
+    translate3d(0, var(--body-offset-open), 0);
 }
 
 
@@ -665,14 +531,9 @@ button {
    FRONT OVERLAY MOVES DOWN
 ========================================= */
 
-.envelope-button.is-open
-.envelope-open-front {
+.envelope-button.is-open .envelope-open-front {
   transform:
-    translate3d(
-      0,
-      var(--body-offset-open),
-      0
-    );
+    translate3d(0, var(--body-offset-open), 0);
 }
 
 
@@ -680,16 +541,13 @@ button {
    OPEN FLAP
 ========================================= */
 
-.envelope-button.is-open
-.envelope-open-flap {
+.envelope-button.is-open .envelope-open-flap {
   opacity: 1;
 
   transform:
     translateX(-50%)
     translateY(0)
-    scaleX(
-      var(--open-flap-scale-x)
-    )
+    scaleX(var(--open-flap-scale-x))
     scaleY(1);
 
   transition-delay: 0s;
@@ -700,26 +558,21 @@ button {
    PAPER SLIDES OUT
 ========================================= */
 
-.envelope-button.is-open
-.invitation-card {
+.envelope-button.is-open .invitation-card {
   opacity: 1;
 
   /*
-    Hạ giấy xuống so với bản trước
-    để nhìn thấy nắp phong bao rõ hơn.
+    Hạ giấy xuống thêm một chút nữa
+    để lộ nắp thiệp rõ hơn
   */
-
   transform:
     translate3d(
       0,
-      calc(
-        var(--body-offset-open) - 56px
-      ),
+      calc(var(--body-offset-open) - 36px),
       0
     );
 
-  transition-delay:
-    .16s;
+  transition-delay: .16s;
 }
 
 
@@ -727,8 +580,7 @@ button {
    HIDE TAP CUE
 ========================================= */
 
-.envelope-button.is-open
-.monogram-pulse {
+.envelope-button.is-open .monogram-pulse {
   opacity: 0;
 }
 
@@ -738,74 +590,42 @@ button {
 ========================================= */
 
 @keyframes closedEnvelopeCue {
-
   0%,
   60%,
   100% {
     transform:
-      translate3d(
-        0,
-        var(--body-offset-closed),
-        0
-      )
+      translate3d(0, var(--body-offset-closed), 0)
       scale(1)
       rotate(0deg);
   }
 
-
   70% {
     transform:
-      translate3d(
-        0,
-        calc(
-          var(--body-offset-closed) - 4px
-        ),
-        0
-      )
+      translate3d(0, calc(var(--body-offset-closed) - 4px), 0)
       scale(1.012)
       rotate(0deg);
   }
 
-
   78% {
     transform:
-      translate3d(
-        0,
-        calc(
-          var(--body-offset-closed) - 4px
-        ),
-        0
-      )
+      translate3d(0, calc(var(--body-offset-closed) - 4px), 0)
       scale(1.012)
       rotate(-.35deg);
   }
 
-
   86% {
     transform:
-      translate3d(
-        0,
-        calc(
-          var(--body-offset-closed) - 4px
-        ),
-        0
-      )
+      translate3d(0, calc(var(--body-offset-closed) - 4px), 0)
       scale(1.012)
       rotate(.35deg);
   }
 
-
   94% {
     transform:
-      translate3d(
-        0,
-        var(--body-offset-closed),
-        0
-      )
+      translate3d(0, var(--body-offset-closed), 0)
       scale(1)
       rotate(0deg);
   }
-
 }
 
 
@@ -814,28 +634,23 @@ button {
 ========================================= */
 
 @keyframes tapRing {
-
   0% {
     transform: scale(.52);
     opacity: 0;
   }
 
-
   18% {
     opacity: .5;
   }
-
 
   72% {
     opacity: .14;
   }
 
-
   100% {
     transform: scale(1.18);
     opacity: 0;
   }
-
 }
 
 
@@ -843,14 +658,10 @@ button {
    MOBILE ASPECT
 ========================================= */
 
-@media
-(max-aspect-ratio: 375/812) {
-
+@media (max-aspect-ratio: 375/812) {
   .opening-page {
-    background-size:
-      auto 100%;
+    background-size: auto 100%;
   }
-
 }
 
 
@@ -858,24 +669,16 @@ button {
    DESKTOP PREVIEW
 ========================================= */
 
-@media
-(min-width: 431px) {
-
+@media (min-width: 431px) {
   body {
     display: grid;
-
     place-items: center;
   }
 
-
   .site-shell {
-    height:
-      min(100dvh, 932px);
-
-    aspect-ratio:
-      375 / 812;
+    height: min(100dvh, 932px);
+    aspect-ratio: 375 / 812;
   }
-
 }
 
 
@@ -883,20 +686,12 @@ button {
    REDUCED MOTION
 ========================================= */
 
-@media
-(prefers-reduced-motion: reduce) {
-
+@media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    animation-duration:
-      .001ms !important;
-
-    animation-iteration-count:
-      1 !important;
-
-    transition-duration:
-      .001ms !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
   }
-
 }
