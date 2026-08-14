@@ -2,39 +2,52 @@ const envelopeButton =
   document.getElementById("envelopeButton");
 
 
-envelopeButton.addEventListener(
-  "click",
-  () => {
+if (envelopeButton) {
 
-    const isOpen =
-      envelopeButton.classList.toggle(
-        "is-open"
+  envelopeButton.addEventListener(
+    "click",
+    () => {
+
+      const isOpen =
+        envelopeButton.classList.toggle(
+          "is-open"
+        );
+
+
+      envelopeButton.setAttribute(
+        "aria-expanded",
+        String(isOpen)
       );
 
 
-    envelopeButton.setAttribute(
-      "aria-expanded",
-      String(isOpen)
-    );
-
-
-    envelopeButton.setAttribute(
-      "aria-label",
-      isOpen
-        ? "Đóng thiệp"
-        : "Mở thiệp"
-    );
-
-
-    if (isOpen) {
-
-      window.dispatchEvent(
-        new CustomEvent(
-          "wedding-invitation-opened"
-        )
+      envelopeButton.setAttribute(
+        "aria-label",
+        isOpen
+          ? "Đóng thiệp"
+          : "Mở thiệp"
       );
+
+
+      /*
+        Event này để sẵn cho bước sau.
+
+        Sau này khi có tờ giấy / Page 02,
+        chúng ta sẽ bắt event này để:
+        - trượt card lên
+        - transition sang Page 02
+      */
+
+      if (isOpen) {
+
+        window.dispatchEvent(
+          new CustomEvent(
+            "wedding-invitation-opened"
+          )
+        );
+
+      }
 
     }
+  );
 
-  }
-);
+}
