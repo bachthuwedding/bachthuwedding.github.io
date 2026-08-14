@@ -3,20 +3,17 @@
   --vermilion: #b5150f;
   --vermilion-dark: #8f0d0b;
   --gold: #d7a84a;
-  
-  /*
-    Các thông số bạn đã chốt
-  */
 
+  /* vị trí thân thiệp khi đóng */
   --body-offset-closed: 24px;
+
+  /* vị trí thân thiệp khi mở */
   --body-offset-open: 50px;
 
+  /* nắp mở bung ngang */
   --open-flap-scale-x: 1.09;
 
-  /*
-    Tờ giấy
-  */
-
+  /* kích thước tờ giấy */
   --card-width: 66%;
 }
 
@@ -311,10 +308,6 @@ button {
   height:
     auto;
 
-  /*
-    Vị trí bạn đang dùng hiện tại
-  */
-
   bottom:
     80%;
 
@@ -401,17 +394,12 @@ button {
   width:
     var(--card-width);
 
-  /*
-    Tạm thời giữ chiều cao này
-    để review animation.
-  */
-
   height:
     67%;
 
   /*
-    Ban đầu tờ giấy nằm sâu
-    bên trong phong bao.
+    Ban đầu giấy nằm sâu
+    trong phong bao.
   */
 
   transform:
@@ -490,9 +478,7 @@ button {
 }
 
 
-/*
-  Texture giấy rất nhẹ
-*/
+/* texture giấy nhẹ */
 
 .invitation-card-paper::after {
   content:
@@ -522,31 +508,24 @@ button {
 
 
 /* =========================================
-   NEW FRONT OVERLAY
+   FRONT OVERLAY
+   lớp trên cùng che tờ giấy
 ========================================= */
 
 .envelope-open-front {
-  /*
-    Đây là element mới bạn vừa đưa.
-    Nó nằm TRÊN tờ giấy.
-  */
-
   z-index:
     14;
+
+  /*
+    QUAN TRỌNG:
+    căn đúng cùng canvas với body.
+  */
 
   top:
     0;
 
-  /*
-    Hai PNG đều 1024 × 1536,
-    nhưng vùng alpha của front hơi lệch
-    so với body gốc.
-
-    Tôi bù lại khoảng lệch này.
-  */
-
   left:
-    -3.42%;
+    0;
 
   width:
     100%;
@@ -557,13 +536,20 @@ button {
   object-fit:
     contain;
 
+  /*
+    Không còn:
+    left: -3.42%
+    scaleX(.985)
+
+    để tránh lệch sang trái.
+  */
+
   transform:
     translate3d(
       0,
       var(--body-offset-closed),
       0
-    )
-    scaleX(.985);
+    );
 
   transform-origin:
     50% 50%;
@@ -574,6 +560,15 @@ button {
 
   will-change:
     transform;
+
+  user-select:
+    none;
+
+  pointer-events:
+    none;
+
+  -webkit-user-drag:
+    none;
 }
 
 
@@ -653,7 +648,7 @@ button {
 
 
 /* =========================================
-   HOVER / FOCUS
+   HOVER / FOCUS — CLOSED
 ========================================= */
 
 .envelope-button:not(.is-open):hover
@@ -780,7 +775,7 @@ button {
 
 /* =========================================
    FRONT OVERLAY MOVES DOWN
-   exactly cùng nhịp với body
+   cùng vị trí với body
 ========================================= */
 
 .envelope-button.is-open
@@ -790,8 +785,7 @@ button {
       0,
       var(--body-offset-open),
       0
-    )
-    scaleX(.985);
+    );
 }
 
 
@@ -834,11 +828,6 @@ button {
       ),
       0
     );
-
-  /*
-    Nắp mở trước một chút,
-    giấy mới bắt đầu nhô lên.
-  */
 
   transition-delay:
     .16s;
@@ -946,15 +935,18 @@ button {
       0;
   }
 
+
   18% {
     opacity:
       .5;
   }
 
+
   72% {
     opacity:
       .14;
   }
+
 
   100% {
     transform:
