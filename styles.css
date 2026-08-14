@@ -4,16 +4,19 @@
   --vermilion-dark: #8f0d0b;
   --gold: #d7a84a;
 
-  /* vị trí thân khi đóng */
-  --body-offset-closed: 24px;
+  /*
+    Các thông số bạn đã chốt
+  */
 
-  /* vị trí thân khi mở */
+  --body-offset-closed: 24px;
   --body-offset-open: 50px;
 
-  /* scale ngang nắp bạn đã chốt */
   --open-flap-scale-x: 1.09;
 
-  /* card */
+  /*
+    Tờ giấy
+  */
+
   --card-width: 66%;
 }
 
@@ -41,7 +44,8 @@ body {
     "Times New Roman",
     serif;
 
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color:
+    transparent;
 }
 
 button {
@@ -56,16 +60,23 @@ button {
 .site-shell {
   position: relative;
 
-  width: min(100vw, 430px);
+  width:
+    min(100vw, 430px);
 
-  height: 100dvh;
-  min-height: 100svh;
+  height:
+    100dvh;
 
-  margin: 0 auto;
+  min-height:
+    100svh;
 
-  overflow: hidden;
+  margin:
+    0 auto;
 
-  background: var(--paper);
+  overflow:
+    hidden;
+
+  background:
+    var(--paper);
 
   box-shadow:
     0 0 40px
@@ -86,9 +97,14 @@ button {
   background-image:
     url("./assets/page01-bg.webp");
 
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
+  background-repeat:
+    no-repeat;
+
+  background-position:
+    center center;
+
+  background-size:
+    cover;
 }
 
 
@@ -99,30 +115,44 @@ button {
 .envelope-button {
   position: absolute;
 
-  left: 50%;
+  left:
+    50%;
 
   top:
     calc(14.5% + 18px);
 
-  width: 82%;
-  max-width: 352px;
+  width:
+    82%;
 
-  aspect-ratio: 2 / 3;
+  max-width:
+    352px;
+
+  aspect-ratio:
+    2 / 3;
 
   transform:
     translateX(-50%);
 
-  padding: 0;
-  margin: 0;
-  border: 0;
+  padding:
+    0;
 
-  background: transparent;
+  margin:
+    0;
 
-  cursor: pointer;
+  border:
+    0;
 
-  touch-action: manipulation;
+  background:
+    transparent;
 
-  overflow: visible;
+  cursor:
+    pointer;
+
+  touch-action:
+    manipulation;
+
+  overflow:
+    visible;
 }
 
 
@@ -134,9 +164,11 @@ button {
   position: absolute;
   inset: 0;
 
-  display: block;
+  display:
+    block;
 
-  overflow: visible;
+  overflow:
+    visible;
 
   transform:
     translateZ(0);
@@ -156,20 +188,27 @@ button {
 
 
 /* =========================================
-   COMMON ASSET RULES
+   COMMON IMAGE RULES
 ========================================= */
 
 .envelope-closed,
-.envelope-open-body,
+.envelope-open-body-back,
+.envelope-open-front,
 .envelope-open-flap {
-  position: absolute;
+  position:
+    absolute;
 
-  display: block;
+  display:
+    block;
 
-  user-select: none;
-  pointer-events: none;
+  user-select:
+    none;
 
-  -webkit-user-drag: none;
+  pointer-events:
+    none;
+
+  -webkit-user-drag:
+    none;
 }
 
 
@@ -178,16 +217,23 @@ button {
 ========================================= */
 
 .envelope-closed {
-  z-index: 30;
+  z-index:
+    30;
 
-  inset: 0;
+  inset:
+    0;
 
-  width: 100%;
-  height: 100%;
+  width:
+    100%;
 
-  object-fit: contain;
+  height:
+    100%;
 
-  opacity: 1;
+  object-fit:
+    contain;
+
+  opacity:
+    1;
 
   transform:
     translate3d(
@@ -218,20 +264,29 @@ button {
 ========================================= */
 
 .envelope-open {
-  position: absolute;
+  position:
+    absolute;
 
-  inset: 0;
+  inset:
+    0;
 
-  z-index: 10;
+  z-index:
+    10;
 
-  width: 100%;
-  height: 100%;
+  width:
+    100%;
 
-  overflow: visible;
+  height:
+    100%;
 
-  opacity: 0;
+  overflow:
+    visible;
 
-  pointer-events: none;
+  opacity:
+    0;
+
+  pointer-events:
+    none;
 
   transition:
     opacity .18s ease;
@@ -239,122 +294,32 @@ button {
 
 
 /* =========================================
-   OPEN BODY — COMMON
-========================================= */
-
-.envelope-open-body {
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-
-  transform:
-    translate3d(
-      0,
-      var(--body-offset-closed),
-      0
-    );
-
-  transform-origin:
-    50% 50%;
-
-  transition:
-    transform .56s
-    cubic-bezier(.22, .61, .36, 1);
-}
-
-
-/* =========================================
-   BODY BACK
-========================================= */
-
-.envelope-open-body-back {
-  /*
-    layer nền phía sau card
-  */
-
-  z-index: 11;
-}
-
-
-/* =========================================
-   BODY FRONT MASK
-========================================= */
-
-.envelope-open-body-front {
-  /*
-    layer nằm trước card
-  */
-
-  z-index: 14;
-
-  /*
-    Cắt bỏ phần đỏ đậm phía trong,
-    chỉ giữ mặt trước của phong bao.
-
-    Polygon này mô phỏng đường hõm
-    của asset hiện tại.
-  */
-
-  clip-path:
-    polygon(
-      0% 0%,
-      10% 3%,
-      18% 8%,
-      26% 14%,
-      36% 18%,
-      43% 22%,
-      50% 24%,
-      57% 22%,
-      64% 18%,
-      74% 14%,
-      82% 8%,
-      90% 3%,
-      100% 0%,
-
-      100% 100%,
-      0% 100%
-    );
-
-  -webkit-clip-path:
-    polygon(
-      0% 0%,
-      10% 3%,
-      18% 8%,
-      26% 14%,
-      36% 18%,
-      43% 22%,
-      50% 24%,
-      57% 22%,
-      64% 18%,
-      74% 14%,
-      82% 8%,
-      90% 3%,
-      100% 0%,
-
-      100% 100%,
-      0% 100%
-    );
-}
-
-
-/* =========================================
    OPEN FLAP
+   nằm sau tất cả
 ========================================= */
 
 .envelope-open-flap {
-  z-index: 9;
+  z-index:
+    9;
 
-  left: 50%;
+  left:
+    50%;
 
-  width: 68%;
-  height: auto;
+  width:
+    68%;
 
-  bottom: 80%;
+  height:
+    auto;
 
-  opacity: 0;
+  /*
+    Vị trí bạn đang dùng hiện tại
+  */
+
+  bottom:
+    80%;
+
+  opacity:
+    0;
 
   transform-origin:
     50% 100%;
@@ -378,15 +343,55 @@ button {
 
 
 /* =========================================
-   INNER CARD
+   OPEN BODY BACK
+   phần lòng phong bao phía sau giấy
+========================================= */
+
+.envelope-open-body-back {
+  z-index:
+    11;
+
+  inset:
+    0;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    contain;
+
+  transform:
+    translate3d(
+      0,
+      var(--body-offset-closed),
+      0
+    );
+
+  transform-origin:
+    50% 50%;
+
+  transition:
+    transform .56s
+    cubic-bezier(.22, .61, .36, 1);
+}
+
+
+/* =========================================
+   INVITATION CARD
 ========================================= */
 
 .invitation-card {
-  position: absolute;
+  position:
+    absolute;
 
-  z-index: 13;
+  z-index:
+    13;
 
-  top: 0;
+  top:
+    0;
 
   left:
     calc(
@@ -396,66 +401,73 @@ button {
   width:
     var(--card-width);
 
+  /*
+    Tạm thời giữ chiều cao này
+    để review animation.
+  */
+
   height:
     67%;
 
   /*
-    trạng thái ban đầu:
-    giấy nằm sâu trong phong bao
+    Ban đầu tờ giấy nằm sâu
+    bên trong phong bao.
   */
 
   transform:
     translate3d(
       0,
-      calc(var(--body-offset-open) + 112px),
+      calc(
+        var(--body-offset-open) + 112px
+      ),
       0
     );
 
-  opacity: 0;
+  opacity:
+    0;
+
+  pointer-events:
+    none;
 
   transition:
-    transform .68s
+    transform .62s
     cubic-bezier(.16, .78, .18, 1),
 
-    opacity .18s ease;
+    opacity .16s ease;
 
   will-change:
     transform,
     opacity;
-
-  pointer-events: none;
 }
 
 
 /* =========================================
-   PAPER DESIGN — TEMPORARY
+   PAPER
 ========================================= */
 
 .invitation-card-paper {
-  position: absolute;
+  position:
+    absolute;
 
-  inset: 0;
+  inset:
+    0;
 
-  overflow: hidden;
+  overflow:
+    hidden;
 
   border-radius:
-    15px 15px 8px 8px;
-
-  /*
-    Kem giấy dó,
-    tạm thời chưa có typography.
-  */
+    14px 14px 7px 7px;
 
   background:
     radial-gradient(
       circle at 22% 17%,
-      rgba(255, 255, 255, .20),
+      rgba(255, 255, 255, .18),
       transparent 28%
     ),
 
     radial-gradient(
       circle at 75% 68%,
-      rgba(173, 129, 65, .055),
+      rgba(173, 129, 65, .05),
       transparent 33%
     ),
 
@@ -468,34 +480,38 @@ button {
 
   box-shadow:
     0 6px 18px
-    rgba(74, 33, 16, .16),
+    rgba(74, 33, 16, .15),
 
     inset 0 0 0 1px
-    rgba(180, 135, 60, .20),
+    rgba(180, 135, 60, .18),
 
     inset 0 0 28px
-    rgba(125, 88, 42, .055);
+    rgba(125, 88, 42, .05);
 }
 
 
 /*
-  grain nhẹ giả giấy dó
+  Texture giấy rất nhẹ
 */
 
 .invitation-card-paper::after {
-  content: "";
+  content:
+    "";
 
-  position: absolute;
+  position:
+    absolute;
 
-  inset: 0;
+  inset:
+    0;
 
-  opacity: .16;
+  opacity:
+    .12;
 
   background-image:
     repeating-linear-gradient(
       12deg,
-      rgba(120, 90, 55, .08) 0,
-      rgba(120, 90, 55, .08) 1px,
+      rgba(120, 90, 55, .07) 0,
+      rgba(120, 90, 55, .07) 1px,
       transparent 1px,
       transparent 5px
     );
@@ -506,15 +522,74 @@ button {
 
 
 /* =========================================
+   NEW FRONT OVERLAY
+========================================= */
+
+.envelope-open-front {
+  /*
+    Đây là element mới bạn vừa đưa.
+    Nó nằm TRÊN tờ giấy.
+  */
+
+  z-index:
+    14;
+
+  top:
+    0;
+
+  /*
+    Hai PNG đều 1024 × 1536,
+    nhưng vùng alpha của front hơi lệch
+    so với body gốc.
+
+    Tôi bù lại khoảng lệch này.
+  */
+
+  left:
+    -3.42%;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  object-fit:
+    contain;
+
+  transform:
+    translate3d(
+      0,
+      var(--body-offset-closed),
+      0
+    )
+    scaleX(.985);
+
+  transform-origin:
+    50% 50%;
+
+  transition:
+    transform .56s
+    cubic-bezier(.22, .61, .36, 1);
+
+  will-change:
+    transform;
+}
+
+
+/* =========================================
    TAP HINT
 ========================================= */
 
 .monogram-pulse {
-  position: absolute;
+  position:
+    absolute;
 
-  z-index: 40;
+  z-index:
+    40;
 
-  left: 50%;
+  left:
+    50%;
 
   top:
     calc(
@@ -522,16 +597,20 @@ button {
       var(--body-offset-closed)
     );
 
-  width: 31%;
+  width:
+    31%;
 
-  aspect-ratio: 1;
+  aspect-ratio:
+    1;
 
-  border-radius: 50%;
+  border-radius:
+    50%;
 
   transform:
     translate(-50%, -50%);
 
-  pointer-events: none;
+  pointer-events:
+    none;
 
   transition:
     opacity .24s ease;
@@ -540,19 +619,24 @@ button {
 
 .monogram-pulse::before,
 .monogram-pulse::after {
-  content: "";
+  content:
+    "";
 
-  position: absolute;
+  position:
+    absolute;
 
-  inset: 0;
+  inset:
+    0;
 
   border:
     1.5px solid
     rgba(237, 196, 96, .52);
 
-  border-radius: 50%;
+  border-radius:
+    50%;
 
-  opacity: 0;
+  opacity:
+    0;
 
   animation:
     tapRing
@@ -569,7 +653,7 @@ button {
 
 
 /* =========================================
-   HOVER / FOCUS — CLOSED
+   HOVER / FOCUS
 ========================================= */
 
 .envelope-button:not(.is-open):hover
@@ -577,7 +661,6 @@ button {
 
 .envelope-button:not(.is-open):focus-visible
 .envelope-stage {
-
   filter:
     drop-shadow(
       0 16px 12px
@@ -591,7 +674,6 @@ button {
 
 .envelope-button:not(.is-open):focus-visible
 .envelope-closed {
-
   animation-play-state:
     paused;
 
@@ -613,7 +695,6 @@ button {
 
 .envelope-button:not(.is-open):active
 .envelope-closed {
-
   transform:
     translate3d(
       0,
@@ -627,7 +708,8 @@ button {
 
 
 .envelope-button:focus-visible {
-  outline: none;
+  outline:
+    none;
 }
 
 
@@ -637,7 +719,6 @@ button {
 
 .envelope-button.is-open
 .envelope-stage {
-
   filter:
     drop-shadow(
       0 14px 10px
@@ -652,8 +733,8 @@ button {
 
 .envelope-button.is-open
 .envelope-open {
-
-  opacity: 1;
+  opacity:
+    1;
 
   transition-delay:
     0s;
@@ -666,10 +747,11 @@ button {
 
 .envelope-button.is-open
 .envelope-closed {
+  animation:
+    none;
 
-  animation: none;
-
-  opacity: 0;
+  opacity:
+    0;
 
   transform:
     translate3d(
@@ -682,12 +764,11 @@ button {
 
 
 /* =========================================
-   OPEN BODY POSITION
+   BODY BACK MOVES DOWN
 ========================================= */
 
 .envelope-button.is-open
-.envelope-open-body {
-
+.envelope-open-body-back {
   transform:
     translate3d(
       0,
@@ -698,13 +779,30 @@ button {
 
 
 /* =========================================
+   FRONT OVERLAY MOVES DOWN
+   exactly cùng nhịp với body
+========================================= */
+
+.envelope-button.is-open
+.envelope-open-front {
+  transform:
+    translate3d(
+      0,
+      var(--body-offset-open),
+      0
+    )
+    scaleX(.985);
+}
+
+
+/* =========================================
    OPEN FLAP
 ========================================= */
 
 .envelope-button.is-open
 .envelope-open-flap {
-
-  opacity: 1;
+  opacity:
+    1;
 
   transform:
     translateX(-50%)
@@ -720,18 +818,13 @@ button {
 
 
 /* =========================================
-   CARD SLIDES OUT
+   PAPER SLIDES OUT
 ========================================= */
 
 .envelope-button.is-open
 .invitation-card {
-
-  opacity: 1;
-
-  /*
-    Giấy nhô lên khoảng 35–40%
-    để mình review trước.
-  */
+  opacity:
+    1;
 
   transform:
     translate3d(
@@ -743,11 +836,12 @@ button {
     );
 
   /*
-    đợi nắp bắt đầu mở rồi giấy mới lên
+    Nắp mở trước một chút,
+    giấy mới bắt đầu nhô lên.
   */
 
   transition-delay:
-    .24s;
+    .16s;
 }
 
 
@@ -757,8 +851,8 @@ button {
 
 .envelope-button.is-open
 .monogram-pulse {
-
-  opacity: 0;
+  opacity:
+    0;
 }
 
 
@@ -771,7 +865,6 @@ button {
   0%,
   60%,
   100% {
-
     transform:
       translate3d(
         0,
@@ -784,7 +877,6 @@ button {
 
 
   70% {
-
     transform:
       translate3d(
         0,
@@ -799,7 +891,6 @@ button {
 
 
   78% {
-
     transform:
       translate3d(
         0,
@@ -814,7 +905,6 @@ button {
 
 
   86% {
-
     transform:
       translate3d(
         0,
@@ -829,7 +919,6 @@ button {
 
 
   94% {
-
     transform:
       translate3d(
         0,
@@ -850,21 +939,29 @@ button {
 @keyframes tapRing {
 
   0% {
-    transform: scale(.52);
-    opacity: 0;
+    transform:
+      scale(.52);
+
+    opacity:
+      0;
   }
 
   18% {
-    opacity: .5;
+    opacity:
+      .5;
   }
 
   72% {
-    opacity: .14;
+    opacity:
+      .14;
   }
 
   100% {
-    transform: scale(1.18);
-    opacity: 0;
+    transform:
+      scale(1.18);
+
+    opacity:
+      0;
   }
 
 }
@@ -893,13 +990,15 @@ button {
 (min-width: 431px) {
 
   body {
-    display: grid;
-    place-items: center;
+    display:
+      grid;
+
+    place-items:
+      center;
   }
 
 
   .site-shell {
-
     height:
       min(100dvh, 932px);
 
@@ -920,7 +1019,6 @@ button {
   *,
   *::before,
   *::after {
-
     animation-duration:
       .001ms !important;
 
