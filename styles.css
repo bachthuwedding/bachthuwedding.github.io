@@ -57,7 +57,7 @@ button {
 
   box-shadow:
     0 0 40px
-    rgba(80, 46, 24, .12);
+    rgba(80, 46, 24, 0.12);
 }
 
 
@@ -88,7 +88,8 @@ button {
   position: absolute;
 
   /*
-    Giữ đúng vị trí bạn đã chốt.
+    Vị trí phong bao khi đóng
+    bạn đã tự tinh chỉnh và chốt.
   */
 
   top: calc(14.5% + 15px);
@@ -137,8 +138,12 @@ button {
   filter:
     drop-shadow(
       0 12px 9px
-      rgba(62, 24, 14, .16)
+      rgba(62, 24, 14, 0.16)
     );
+
+  /*
+    Idle animation
+  */
 
   animation:
     idleTapCue
@@ -228,7 +233,8 @@ button {
 
 .envelope-open-body {
   /*
-    Body giữ nguyên đúng canvas 2:3.
+    Body open dùng đúng cùng stage
+    với ảnh closed.
   */
 
   z-index: 12;
@@ -249,6 +255,9 @@ button {
 
 /* =========================================
    FUTURE CARD SLOT
+
+   Chưa dùng ở bước này.
+   Sau này tờ giấy sẽ nằm ở đây.
 ========================================= */
 
 .invitation-card-slot {
@@ -273,12 +282,7 @@ button {
 
 .envelope-open-flap {
   /*
-    Asset flap có canvas ngang 3:2
-    và gần như chạm hai mép canvas.
-
-    Body lại có transparent padding.
-
-    Vì vậy KHÔNG thể để flap width 100%.
+    Nắp nằm SAU body.
   */
 
   z-index: 10;
@@ -286,31 +290,34 @@ button {
   left: 50%;
 
   /*
-    76% là tỷ lệ khớp gần sát
-    chiều rộng đỏ thật của body.
+    Asset flap có canvas ngang 3:2
+    và gần như chiếm toàn canvas.
+
+    Body có transparent padding,
+    vì vậy flap cần nhỏ hơn 100%.
   */
 
-  width: 76%;
+  width: 68%;
   height: auto;
 
   /*
-    Mép dưới flap được neo gần mép trên
-    của thân phong bao.
-
-    96% = mép dưới flap nằm khoảng
-    4% chiều cao stage tính từ phía trên.
+    Neo cạnh dưới flap vào vùng
+    nếp gấp phía trên body.
   */
 
-  bottom: 96%;
+  bottom: 89%;
 
   opacity: 0;
+
+  /*
+    Bản lề nằm ở cạnh dưới flap.
+  */
 
   transform-origin:
     50% 100%;
 
   /*
-    Trạng thái trước khi mở:
-    ép nắp sát nếp gấp.
+    Trạng thái trước khi bung.
   */
 
   transform:
@@ -410,6 +417,10 @@ button {
 }
 
 
+/* =========================================
+   CLICK FEEDBACK
+========================================= */
+
 .envelope-button:not(.is-open):active
 .envelope-stage {
   transform:
@@ -424,15 +435,24 @@ button {
 
 
 /* =========================================
-   OPEN STATE
+   OPEN STATE — STAGE
 ========================================= */
 
 .envelope-button.is-open
 .envelope-stage {
+  /*
+    Dừng idle animation
+  */
+
   animation: none;
 
+  /*
+    Khi mở, cả phong bao trượt xuống
+    để tạo khoảng trống cho nắp bung lên.
+  */
+
   transform:
-    translate3d(0, 0, 0);
+    translate3d(0, 34px, 0);
 
   filter:
     drop-shadow(
@@ -443,7 +463,7 @@ button {
 
 
 /* =========================================
-   SHOW OPEN GROUP
+   OPEN STATE — SHOW OPEN GROUP
 ========================================= */
 
 .envelope-button.is-open
@@ -453,7 +473,7 @@ button {
 
 
 /* =========================================
-   HIDE CLOSED IMAGE
+   OPEN STATE — HIDE CLOSED IMAGE
 ========================================= */
 
 .envelope-button.is-open
@@ -466,7 +486,7 @@ button {
 
 
 /* =========================================
-   OPEN FLAP FINAL POSITION
+   OPEN STATE — OPEN FLAP
 ========================================= */
 
 .envelope-button.is-open
@@ -484,7 +504,7 @@ button {
 
 
 /* =========================================
-   HIDE TAP CUE
+   OPEN STATE — HIDE TAP CUE
 ========================================= */
 
 .envelope-button.is-open
@@ -494,7 +514,7 @@ button {
 
 
 /* =========================================
-   LOCK HOVER AFTER OPEN
+   OPEN STATE — LOCK HOVER POSITION
 ========================================= */
 
 .envelope-button.is-open:hover
@@ -506,7 +526,7 @@ button {
 .envelope-button.is-open:active
 .envelope-stage {
   transform:
-    translate3d(0, 0, 0);
+    translate3d(0, 34px, 0);
 }
 
 
@@ -581,30 +601,38 @@ button {
 
 
 /* =========================================
-   TAP RING
+   TAP RING ANIMATION
 ========================================= */
 
 @keyframes tapRing {
 
   0% {
-    transform: scale(.48);
-    opacity: 0;
+    transform:
+      scale(.48);
+
+    opacity:
+      0;
   }
 
 
   15% {
-    opacity: .58;
+    opacity:
+      .58;
   }
 
 
   68% {
-    opacity: .16;
+    opacity:
+      .16;
   }
 
 
   100% {
-    transform: scale(1.22);
-    opacity: 0;
+    transform:
+      scale(1.22);
+
+    opacity:
+      0;
   }
 
 }
@@ -651,7 +679,7 @@ button {
 
 
 /* =========================================
-   REDUCED MOTION
+   ACCESSIBILITY — REDUCED MOTION
 ========================================= */
 
 @media
