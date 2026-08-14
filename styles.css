@@ -281,8 +281,8 @@ button {
     scaleY(.035);
 
   transition:
-    transform .62s cubic-bezier(.22, .61, .36, 1),
-    opacity .16s ease;
+    transform .52s cubic-bezier(.22, .61, .36, 1),
+    opacity .12s ease;
 
   will-change:
     transform,
