@@ -8,7 +8,7 @@
   --body-offset-closed: 24px;
 
   /* vị trí thân thiệp khi mở: thấp hơn một chút để tạo cảm giác trượt xuống */
-  --body-offset-open: 34px;
+  --body-offset-open: 42px;
 
   /* nắp mở bung ngang nhẹ */
   --open-flap-scale-x: 1.06;
