@@ -88,15 +88,14 @@ button {
   position: absolute;
 
   /*
-    Vị trí phong bao khi đóng
-    bạn đã tự tinh chỉnh và chốt.
+    Thu nhỏ đồng bộ cả trạng thái đóng và mở
   */
 
-  top: calc(14.5% + 15px);
+  top: calc(14.5% + 18px);
   left: 50%;
 
-  width: 91%;
-  max-width: 392px;
+  width: 82%;
+  max-width: 352px;
 
   aspect-ratio: 2 / 3;
 
@@ -141,10 +140,6 @@ button {
       rgba(62, 24, 14, 0.16)
     );
 
-  /*
-    Idle animation
-  */
-
   animation:
     idleTapCue
     2.3s
@@ -154,7 +149,6 @@ button {
   transition:
     transform .5s
     cubic-bezier(.22, .75, .22, 1),
-
     filter .5s ease;
 }
 
@@ -232,11 +226,6 @@ button {
 ========================================= */
 
 .envelope-open-body {
-  /*
-    Body open dùng đúng cùng stage
-    với ảnh closed.
-  */
-
   z-index: 12;
 
   inset: 0;
@@ -255,9 +244,6 @@ button {
 
 /* =========================================
    FUTURE CARD SLOT
-
-   Chưa dùng ở bước này.
-   Sau này tờ giấy sẽ nằm ở đây.
 ========================================= */
 
 .invitation-card-slot {
@@ -281,44 +267,27 @@ button {
 ========================================= */
 
 .envelope-open-flap {
-  /*
-    Nắp nằm SAU body.
-  */
-
   z-index: 10;
 
   left: 50%;
 
   /*
-    Asset flap có canvas ngang 3:2
-    và gần như chiếm toàn canvas.
-
-    Body có transparent padding,
-    vì vậy flap cần nhỏ hơn 100%.
+    Giữ nắp nhỏ hơn body để khớp canvas
   */
 
   width: 68%;
   height: auto;
 
   /*
-    Neo cạnh dưới flap vào vùng
-    nếp gấp phía trên body.
+    Neo nắp vào nếp gấp
   */
 
   bottom: 89%;
 
   opacity: 0;
 
-  /*
-    Bản lề nằm ở cạnh dưới flap.
-  */
-
   transform-origin:
     50% 100%;
-
-  /*
-    Trạng thái trước khi bung.
-  */
 
   transform:
     translateX(-50%)
@@ -328,7 +297,6 @@ button {
   transition:
     transform .64s
     cubic-bezier(.16, .82, .18, 1),
-
     opacity .08s linear;
 
   will-change:
@@ -364,7 +332,6 @@ button {
     opacity .18s ease;
 }
 
-
 .monogram-pulse::before,
 .monogram-pulse::after {
   content: "";
@@ -387,7 +354,6 @@ button {
     ease-out
     infinite;
 }
-
 
 .monogram-pulse::after {
   animation-delay: 1.1s;
@@ -428,7 +394,6 @@ button {
     scale(.995);
 }
 
-
 .envelope-button:focus-visible {
   outline: none;
 }
@@ -440,19 +405,16 @@ button {
 
 .envelope-button.is-open
 .envelope-stage {
-  /*
-    Dừng idle animation
-  */
-
   animation: none;
 
   /*
-    Khi mở, cả phong bao trượt xuống
-    để tạo khoảng trống cho nắp bung lên.
+    Chỉ trượt xuống nhẹ khi mở,
+    không scale riêng nữa
+    vì cả cụm đã được thu từ đầu
   */
 
   transform:
-    translate3d(0, 34px, 0);
+    translate3d(0, 20px, 0);
 
   filter:
     drop-shadow(
@@ -526,7 +488,7 @@ button {
 .envelope-button.is-open:active
 .envelope-stage {
   transform:
-    translate3d(0, 34px, 0);
+    translate3d(0, 20px, 0);
 }
 
 
@@ -535,7 +497,6 @@ button {
 ========================================= */
 
 @keyframes idleTapCue {
-
   0%,
   58%,
   100% {
@@ -551,7 +512,6 @@ button {
       );
   }
 
-
   68% {
     transform:
       translateY(-7px)
@@ -565,14 +525,12 @@ button {
       );
   }
 
-
   74% {
     transform:
       translateY(-6px)
       scale(1.022)
       rotate(-.7deg);
   }
-
 
   80% {
     transform:
@@ -581,7 +539,6 @@ button {
       rotate(.7deg);
   }
 
-
   86% {
     transform:
       translateY(-5px)
@@ -589,14 +546,12 @@ button {
       rotate(0deg);
   }
 
-
   94% {
     transform:
       translateY(0)
       scale(1)
       rotate(0deg);
   }
-
 }
 
 
@@ -605,7 +560,6 @@ button {
 ========================================= */
 
 @keyframes tapRing {
-
   0% {
     transform:
       scale(.48);
@@ -614,18 +568,15 @@ button {
       0;
   }
 
-
   15% {
     opacity:
       .58;
   }
 
-
   68% {
     opacity:
       .16;
   }
-
 
   100% {
     transform:
@@ -634,7 +585,6 @@ button {
     opacity:
       0;
   }
-
 }
 
 
@@ -644,12 +594,10 @@ button {
 
 @media
 (max-aspect-ratio: 375/812) {
-
   .opening-page {
     background-size:
       auto 100%;
   }
-
 }
 
 
@@ -659,13 +607,10 @@ button {
 
 @media
 (min-width: 431px) {
-
   body {
     display: grid;
-
     place-items: center;
   }
-
 
   .site-shell {
     height:
@@ -674,7 +619,6 @@ button {
     aspect-ratio:
       375 / 812;
   }
-
 }
 
 
@@ -684,7 +628,6 @@ button {
 
 @media
 (prefers-reduced-motion: reduce) {
-
   *,
   *::before,
   *::after {
@@ -697,5 +640,4 @@ button {
     transition-duration:
       .001ms !important;
   }
-
 }
