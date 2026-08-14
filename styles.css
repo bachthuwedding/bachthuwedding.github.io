@@ -4,8 +4,11 @@
   --vermilion-dark: #8f0d0b;
   --gold: #d7a84a;
 
-  /* đẩy phần thân phong bao xuống */
-  --envelope-body-offset: 24px;
+  /* vị trí thân thiệp chung cho cả đóng và mở */
+  --body-offset: 24px;
+
+  /* nắp mở bung ngang nhẹ */
+  --open-flap-scale-x: 1.06;
 }
 
 
@@ -48,19 +51,16 @@ button {
   position: relative;
 
   width: min(100vw, 430px);
-
   height: 100dvh;
   min-height: 100svh;
 
   margin: 0 auto;
-
   overflow: hidden;
 
   background: var(--paper);
 
   box-shadow:
-    0 0 40px
-    rgba(80, 46, 24, 0.12);
+    0 0 40px rgba(80, 46, 24, 0.12);
 }
 
 
@@ -74,9 +74,7 @@ button {
 
   overflow: hidden;
 
-  background-image:
-    url("./assets/page01-bg.webp");
-
+  background-image: url("./assets/page01-bg.webp");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -98,8 +96,7 @@ button {
 
   aspect-ratio: 2 / 3;
 
-  transform:
-    translateX(-50%);
+  transform: translateX(-50%);
 
   padding: 0;
   margin: 0;
@@ -108,7 +105,6 @@ button {
   background: transparent;
 
   cursor: pointer;
-
   touch-action: manipulation;
 
   overflow: visible;
@@ -116,7 +112,7 @@ button {
 
 
 /* =========================================
-   ENVELOPE STAGE
+   STAGE
 ========================================= */
 
 .envelope-stage {
@@ -126,11 +122,8 @@ button {
   display: block;
   overflow: visible;
 
-  transform:
-    translateZ(0);
-
-  transform-origin:
-    50% 58%;
+  transform: translateZ(0);
+  transform-origin: 50% 58%;
 
   filter:
     drop-shadow(
@@ -138,14 +131,8 @@ button {
       rgba(62, 24, 14, 0.16)
     );
 
-  animation:
-    idleTapCue 2.6s
-    cubic-bezier(.22, .75, .22, 1)
-    infinite;
-
   transition:
-    transform .72s cubic-bezier(.22, .61, .36, 1),
-    filter .72s ease;
+    filter .7s ease;
 }
 
 
@@ -161,7 +148,6 @@ button {
 
   user-select: none;
   pointer-events: none;
-
   -webkit-user-drag: none;
 }
 
@@ -174,7 +160,6 @@ button {
   z-index: 20;
 
   inset: 0;
-
   width: 100%;
   height: 100%;
 
@@ -182,14 +167,21 @@ button {
 
   opacity: 1;
 
-  /* đẩy thiệp đóng xuống dưới */
+  /* cùng mốc vị trí với open body */
   transform:
-    translateY(var(--envelope-body-offset))
+    translate3d(0, var(--body-offset), 0)
     scale(1);
 
+  transform-origin: 50% 50%;
+
+  animation:
+    closedEnvelopeCue 2.6s
+    cubic-bezier(.22, .75, .22, 1)
+    infinite;
+
   transition:
-    opacity .26s ease,
-    transform .72s cubic-bezier(.22, .61, .36, 1);
+    opacity .34s ease,
+    transform .82s cubic-bezier(.22, .61, .36, 1);
 }
 
 
@@ -199,10 +191,9 @@ button {
 
 .envelope-open {
   position: absolute;
+  inset: 0;
 
   z-index: 10;
-
-  inset: 0;
 
   width: 100%;
   height: 100%;
@@ -210,11 +201,10 @@ button {
   overflow: visible;
 
   opacity: 0;
-
   pointer-events: none;
 
   transition:
-    opacity .24s ease;
+    opacity .28s ease;
 }
 
 
@@ -226,7 +216,6 @@ button {
   z-index: 12;
 
   inset: 0;
-
   width: 100%;
   height: 100%;
 
@@ -234,13 +223,16 @@ button {
 
   opacity: 1;
 
-  /* đẩy phần thân thiệp mở xuống dưới */
+  /* khớp đúng vị trí với closed */
   transform:
-    translate3d(0, var(--envelope-body-offset), 0);
+    translate3d(0, var(--body-offset), 0)
+    scale(1);
+
+  transform-origin: 50% 50%;
 
   transition:
-    transform .72s cubic-bezier(.22, .61, .36, 1),
-    opacity .24s ease;
+    transform .82s cubic-bezier(.22, .61, .36, 1),
+    opacity .28s ease;
 }
 
 
@@ -257,7 +249,6 @@ button {
   right: 12%;
 
   top: 2%;
-
   height: 72%;
 
   pointer-events: none;
@@ -272,7 +263,6 @@ button {
   z-index: 10;
 
   left: 50%;
-
   width: 68%;
   height: auto;
 
@@ -281,17 +271,18 @@ button {
 
   opacity: 0;
 
-  transform-origin:
-    50% 100%;
+  transform-origin: 50% 100%;
 
+  /* trạng thái trước khi mở */
   transform:
     translateX(-50%)
-    translateY(4px)
+    translateY(6px)
+    scaleX(.96)
     scaleY(.035);
 
   transition:
-    transform .82s cubic-bezier(.22, .61, .36, 1),
-    opacity .18s ease;
+    transform .9s cubic-bezier(.22, .61, .36, 1),
+    opacity .22s ease;
 
   will-change:
     transform,
@@ -309,9 +300,7 @@ button {
   z-index: 30;
 
   left: 50%;
-
-  /* pulse đi cùng phần thiệp đóng */
-  top: calc(60.5% + var(--envelope-body-offset));
+  top: calc(60.5% + var(--body-offset));
 
   width: 31%;
   aspect-ratio: 1;
@@ -324,7 +313,7 @@ button {
   pointer-events: none;
 
   transition:
-    opacity .22s ease;
+    opacity .24s ease;
 }
 
 .monogram-pulse::before,
@@ -335,17 +324,14 @@ button {
   inset: 0;
 
   border:
-    1.5px solid
-    rgba(237, 196, 96, .52);
+    1.5px solid rgba(237, 196, 96, .52);
 
   border-radius: 50%;
 
   opacity: 0;
 
   animation:
-    tapRing 2.4s
-    ease-out
-    infinite;
+    tapRing 2.4s ease-out infinite;
 }
 
 .monogram-pulse::after {
@@ -354,20 +340,11 @@ button {
 
 
 /* =========================================
-   CLOSED HOVER
+   HOVER / FOCUS (CLOSED ONLY)
 ========================================= */
 
-.envelope-button:not(.is-open):hover
-.envelope-stage,
-
-.envelope-button:not(.is-open):focus-visible
-.envelope-stage {
-  animation-play-state: paused;
-
-  transform:
-    translateY(-4px)
-    scale(1.012);
-
+.envelope-button:not(.is-open):hover .envelope-stage,
+.envelope-button:not(.is-open):focus-visible .envelope-stage {
   filter:
     drop-shadow(
       0 16px 12px
@@ -375,15 +352,23 @@ button {
     );
 }
 
+.envelope-button:not(.is-open):hover .envelope-closed,
+.envelope-button:not(.is-open):focus-visible .envelope-closed {
+  animation-play-state: paused;
+
+  transform:
+    translate3d(0, calc(var(--body-offset) - 4px), 0)
+    scale(1.01);
+}
+
 
 /* =========================================
-   CLICK FEEDBACK
+   ACTIVE / PRESS (CLOSED ONLY)
 ========================================= */
 
-.envelope-button:not(.is-open):active
-.envelope-stage {
+.envelope-button:not(.is-open):active .envelope-closed {
   transform:
-    translateY(-1px)
+    translate3d(0, calc(var(--body-offset) - 1px), 0)
     scale(.997);
 }
 
@@ -396,14 +381,7 @@ button {
    OPEN STATE — STAGE
 ========================================= */
 
-.envelope-button.is-open
-.envelope-stage {
-  animation: none;
-
-  /* không kéo cả cụm xuống nữa để nắp giữ nguyên */
-  transform:
-    translate3d(0, 0, 0);
-
+.envelope-button.is-open .envelope-stage {
   filter:
     drop-shadow(
       0 14px 10px
@@ -413,38 +391,40 @@ button {
 
 
 /* =========================================
-   OPEN STATE — SHOW OPEN GROUP
+   OPEN STATE — OPEN GROUP
 ========================================= */
 
-.envelope-button.is-open
-.envelope-open {
+.envelope-button.is-open .envelope-open {
   opacity: 1;
-  transition-delay: .04s;
+  transition-delay: .02s;
 }
 
 
 /* =========================================
-   OPEN STATE — HIDE CLOSED IMAGE
+   OPEN STATE — HIDE CLOSED
 ========================================= */
 
-.envelope-button.is-open
-.envelope-closed {
+.envelope-button.is-open .envelope-closed {
+  animation: none;
+
   opacity: 0;
 
+  /* giữ nguyên đúng mốc thân thiệp */
   transform:
-    translateY(var(--envelope-body-offset))
-    scale(.992);
+    translate3d(0, var(--body-offset), 0)
+    scale(1);
 }
 
 
 /* =========================================
-   OPEN STATE — KEEP BODY OFFSET
+   OPEN STATE — KEEP BODY STABLE
 ========================================= */
 
-.envelope-button.is-open
-.envelope-open-body {
+.envelope-button.is-open .envelope-open-body {
+  /* giữ nguyên vị trí, không giật */
   transform:
-    translate3d(0, var(--envelope-body-offset), 0);
+    translate3d(0, var(--body-offset), 0)
+    scale(1);
 }
 
 
@@ -452,17 +432,17 @@ button {
    OPEN STATE — OPEN FLAP
 ========================================= */
 
-.envelope-button.is-open
-.envelope-open-flap {
+.envelope-button.is-open .envelope-open-flap {
   opacity: 1;
 
+  /* bung ra mềm hơn và ngang hơn một chút */
   transform:
     translateX(-50%)
     translateY(0)
+    scaleX(var(--open-flap-scale-x))
     scaleY(1);
 
-  transition-delay:
-    .06s;
+  transition-delay: .04s;
 }
 
 
@@ -470,79 +450,49 @@ button {
    OPEN STATE — HIDE TAP CUE
 ========================================= */
 
-.envelope-button.is-open
-.monogram-pulse {
+.envelope-button.is-open .monogram-pulse {
   opacity: 0;
 }
 
 
 /* =========================================
-   OPEN STATE — LOCK HOVER POSITION
+   IDLE CUE FOR CLOSED ENVELOPE
 ========================================= */
 
-.envelope-button.is-open:hover
-.envelope-stage,
-
-.envelope-button.is-open:focus-visible
-.envelope-stage,
-
-.envelope-button.is-open:active
-.envelope-stage {
-  transform:
-    translate3d(0, 0, 0);
-}
-
-
-/* =========================================
-   IDLE TAP ANIMATION
-========================================= */
-
-@keyframes idleTapCue {
+@keyframes closedEnvelopeCue {
   0%,
   60%,
   100% {
     transform:
-      translateY(0)
+      translate3d(0, var(--body-offset), 0)
       scale(1)
       rotate(0deg);
-
-    filter:
-      drop-shadow(
-        0 12px 9px
-        rgba(62, 24, 14, .16)
-      );
   }
 
   70% {
     transform:
-      translateY(-5px)
-      scale(1.015)
+      translate3d(0, calc(var(--body-offset) - 4px), 0)
+      scale(1.012)
       rotate(0deg);
-
-    filter:
-      drop-shadow(
-        0 16px 12px
-        rgba(62, 24, 14, .21)
-      );
   }
 
   78% {
     transform:
-      translateY(-4px)
-      scale(1.015)
-      rotate(-.45deg);
+      translate3d(0, calc(var(--body-offset) - 4px), 0)
+      scale(1.012)
+      rotate(-.35deg);
   }
 
   86% {
     transform:
-      translateY(-4px)
-      scale(1.015)
-      rotate(.45deg);
+      translate3d(0, calc(var(--body-offset) - 4px), 0)
+      scale(1.012)
+      rotate(.35deg);
   }
 
   94% {
     transform:
-      translateY(0)
+      translate3d(0, var(--body-offset), 0)
       scale(1)
       rotate(0deg);
   }
@@ -550,13 +500,12 @@ button {
 
 
 /* =========================================
-   TAP RING ANIMATION
+   TAP RING
 ========================================= */
 
 @keyframes tapRing {
   0% {
-    transform:
-      scale(.52);
+    transform: scale(.52);
     opacity: 0;
   }
 
@@ -569,8 +518,7 @@ button {
   }
 
   100% {
-    transform:
-      scale(1.18);
+    transform: scale(1.18);
     opacity: 0;
   }
 }
@@ -582,8 +530,7 @@ button {
 
 @media (max-aspect-ratio: 375/812) {
   .opening-page {
-    background-size:
-      auto 100%;
+    background-size: auto 100%;
   }
 }
 
@@ -599,11 +546,8 @@ button {
   }
 
   .site-shell {
-    height:
-      min(100dvh, 932px);
-
-    aspect-ratio:
-      375 / 812;
+    height: min(100dvh, 932px);
+    aspect-ratio: 375 / 812;
   }
 }
 
@@ -616,11 +560,8 @@ button {
   *,
   *::before,
   *::after {
-    animation-duration:
-      .001ms !important;
-    animation-iteration-count:
-      1 !important;
-    transition-duration:
-      .001ms !important;
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
   }
 }
