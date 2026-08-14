@@ -1,84 +1,191 @@
 <!doctype html>
+
 <html lang="vi">
+
 <head>
+
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#ead5ad" />
-  <meta name="description" content="Thiệp cưới Bách & Thư" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
+
+  <meta
+    name="theme-color"
+    content="#ead5ad"
+  />
+
+  <meta
+    name="description"
+    content="Thiệp cưới Bách & Thư"
+  />
+
   <title>Bách & Thư</title>
-  <link rel="preload" href="./assets/page01-bg.webp" as="image" type="image/webp" />
-<link rel="preload" href="./assets/envelope-closed.png" as="image" type="image/png" />
-<link rel="preload" href="./assets/envelope-open-body.png" as="image" type="image/png" />
-<link rel="preload" href="./assets/envelope-open-flap.png" as="image" type="image/png" />
-  <link rel="stylesheet" href="./styles.css" />
+
+
+  <!-- =========================
+       PRELOAD PAGE 01 ASSETS
+  ========================== -->
+
+  <link
+    rel="preload"
+    href="./assets/page01-bg.webp"
+    as="image"
+    type="image/webp"
+  />
+
+  <link
+    rel="preload"
+    href="./assets/envelope-closed.png"
+    as="image"
+    type="image/png"
+  />
+
+  <link
+    rel="preload"
+    href="./assets/envelope-open-body.png"
+    as="image"
+    type="image/png"
+  />
+
+  <link
+    rel="preload"
+    href="./assets/envelope-open-flap.png"
+    as="image"
+    type="image/png"
+  />
+
+
+  <link
+    rel="stylesheet"
+    href="./styles.css"
+  />
+
 </head>
+
+
 <body>
+
   <main class="site-shell">
-    <section class="opening-page" id="opening" aria-label="Mở thiệp cưới Bách và Thư">
+
+
+    <!-- =========================
+         PAGE 01 — OPENING
+    ========================== -->
+
+    <section
+      class="opening-page"
+      id="opening"
+      aria-label="Mở thiệp cưới Bách và Thư"
+    >
+
+
       <button
-  class="envelope-button"
-  id="envelopeButton"
-  type="button"
-  aria-label="Mở thiệp"
-  aria-expanded="false"
->
-
-  <span class="envelope-stage" aria-hidden="true">
+        class="envelope-button"
+        id="envelopeButton"
+        type="button"
+        aria-label="Mở thiệp"
+        aria-expanded="false"
+      >
 
 
-    <!-- =========================
-         OPEN STATE
-    ========================== -->
-
-    <span class="envelope-open">
-
-      <!--
-        Nắp nằm phía SAU thân phong bao
-      -->
-
-      <img
-        class="envelope-open-flap"
-        src="./assets/envelope-open-flap.png"
-        alt=""
-        draggable="false"
-      />
+        <span
+          class="envelope-stage"
+          aria-hidden="true"
+        >
 
 
-      <!--
-        Thân phong bao nằm phía TRƯỚC
-      -->
+          <!-- =====================
+               OPEN STATE
+          ====================== -->
 
-      <img
-        class="envelope-open-body"
-        src="./assets/envelope-open-body.png"
-        alt=""
-        draggable="false"
-      />
-
-    </span>
+          <span class="envelope-open">
 
 
-    <!-- =========================
-         CLOSED STATE
-    ========================== -->
+            <!--
+              OPEN FLAP
 
-    <img
-      class="envelope-closed"
-      src="./assets/envelope-closed.png"
-      alt=""
-      draggable="false"
-    />
+              Nằm phía sau body.
+              Sau này card sẽ được đặt
+              giữa flap và body.
+            -->
+
+            <img
+              class="envelope-open-flap"
+              src="./assets/envelope-open-flap.png"
+              alt=""
+              draggable="false"
+            />
 
 
-    <!-- TAP HINT -->
+            <!--
+              PLACEHOLDER CARD LAYER
 
-    <span class="monogram-pulse"></span>
+              Chưa có card ở bước này.
+              Sau này card sẽ được chèn
+              vào chính vị trí này.
+            -->
 
-  </span>
+            <span
+              class="invitation-card-slot"
+              aria-hidden="true"
+            ></span>
 
-</button>
+
+            <!--
+              OPEN BODY
+
+              Nằm phía trước cùng.
+            -->
+
+            <img
+              class="envelope-open-body"
+              src="./assets/envelope-open-body.png"
+              alt=""
+              draggable="false"
+            />
+
+
+          </span>
+
+
+          <!-- =====================
+               CLOSED STATE
+          ====================== -->
+
+          <img
+            class="envelope-closed"
+            src="./assets/envelope-closed.png"
+            alt=""
+            draggable="false"
+          />
+
+
+          <!-- =====================
+               TAP HINT
+          ====================== -->
+
+          <span
+            class="monogram-pulse"
+            aria-hidden="true"
+          ></span>
+
+
+        </span>
+
+
+      </button>
+
+
     </section>
+
+
   </main>
+
+
   <script src="./script.js"></script>
+
 </body>
+
 </html>
