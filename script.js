@@ -28,15 +28,6 @@ if (envelopeButton) {
       );
 
 
-      /*
-        Event này để sẵn cho bước sau.
-
-        Sau này khi có tờ giấy / Page 02,
-        chúng ta sẽ bắt event này để:
-        - trượt card lên
-        - transition sang Page 02
-      */
-
       if (isOpen) {
 
         window.dispatchEvent(
