@@ -3,6 +3,9 @@
   --vermilion: #b5150f;
   --vermilion-dark: #8f0d0b;
   --gold: #d7a84a;
+
+  /* đẩy phần thân phong bao xuống */
+  --envelope-body-offset: 24px;
 }
 
 
@@ -87,12 +90,8 @@ button {
 .envelope-button {
   position: absolute;
 
-  /*
-    Thu nhỏ đồng bộ cả trạng thái đóng và mở
-  */
-
-  top: calc(14.5% + 18px);
   left: 50%;
+  top: calc(14.5% + 18px);
 
   width: 82%;
   max-width: 352px;
@@ -125,7 +124,6 @@ button {
   inset: 0;
 
   display: block;
-
   overflow: visible;
 
   transform:
@@ -141,15 +139,13 @@ button {
     );
 
   animation:
-    idleTapCue
-    2.3s
+    idleTapCue 2.6s
     cubic-bezier(.22, .75, .22, 1)
     infinite;
 
   transition:
-    transform .5s
-    cubic-bezier(.22, .75, .22, 1),
-    filter .5s ease;
+    transform .72s cubic-bezier(.22, .61, .36, 1),
+    filter .72s ease;
 }
 
 
@@ -161,7 +157,6 @@ button {
 .envelope-open-body,
 .envelope-open-flap {
   position: absolute;
-
   display: block;
 
   user-select: none;
@@ -187,12 +182,14 @@ button {
 
   opacity: 1;
 
+  /* đẩy thiệp đóng xuống dưới */
   transform:
+    translateY(var(--envelope-body-offset))
     scale(1);
 
   transition:
-    opacity .18s ease,
-    transform .25s ease;
+    opacity .26s ease,
+    transform .72s cubic-bezier(.22, .61, .36, 1);
 }
 
 
@@ -217,7 +214,7 @@ button {
   pointer-events: none;
 
   transition:
-    opacity .10s linear;
+    opacity .24s ease;
 }
 
 
@@ -237,8 +234,13 @@ button {
 
   opacity: 1;
 
+  /* đẩy phần thân thiệp mở xuống dưới */
   transform:
-    translate3d(0, 0, 0);
+    translate3d(0, var(--envelope-body-offset), 0);
+
+  transition:
+    transform .72s cubic-bezier(.22, .61, .36, 1),
+    opacity .24s ease;
 }
 
 
@@ -271,17 +273,10 @@ button {
 
   left: 50%;
 
-  /*
-    Giữ nắp nhỏ hơn body để khớp canvas
-  */
-
   width: 68%;
   height: auto;
 
-  /*
-    Neo nắp vào nếp gấp
-  */
-
+  /* giữ nguyên vị trí nắp mở */
   bottom: 89%;
 
   opacity: 0;
@@ -291,13 +286,12 @@ button {
 
   transform:
     translateX(-50%)
-    translateY(2px)
-    scaleY(.04);
+    translateY(4px)
+    scaleY(.035);
 
   transition:
-    transform .64s
-    cubic-bezier(.16, .82, .18, 1),
-    opacity .08s linear;
+    transform .82s cubic-bezier(.22, .61, .36, 1),
+    opacity .18s ease;
 
   will-change:
     transform,
@@ -315,10 +309,11 @@ button {
   z-index: 30;
 
   left: 50%;
-  top: 60.5%;
+
+  /* pulse đi cùng phần thiệp đóng */
+  top: calc(60.5% + var(--envelope-body-offset));
 
   width: 31%;
-
   aspect-ratio: 1;
 
   border-radius: 50%;
@@ -329,7 +324,7 @@ button {
   pointer-events: none;
 
   transition:
-    opacity .18s ease;
+    opacity .22s ease;
 }
 
 .monogram-pulse::before,
@@ -337,7 +332,6 @@ button {
   content: "";
 
   position: absolute;
-
   inset: 0;
 
   border:
@@ -349,14 +343,13 @@ button {
   opacity: 0;
 
   animation:
-    tapRing
-    2.2s
+    tapRing 2.4s
     ease-out
     infinite;
 }
 
 .monogram-pulse::after {
-  animation-delay: 1.1s;
+  animation-delay: 1.2s;
 }
 
 
@@ -372,13 +365,13 @@ button {
   animation-play-state: paused;
 
   transform:
-    translateY(-6px)
-    scale(1.018);
+    translateY(-4px)
+    scale(1.012);
 
   filter:
     drop-shadow(
-      0 18px 13px
-      rgba(62, 24, 14, .22)
+      0 16px 12px
+      rgba(62, 24, 14, .20)
     );
 }
 
@@ -390,8 +383,8 @@ button {
 .envelope-button:not(.is-open):active
 .envelope-stage {
   transform:
-    translateY(-2px)
-    scale(.995);
+    translateY(-1px)
+    scale(.997);
 }
 
 .envelope-button:focus-visible {
@@ -407,14 +400,9 @@ button {
 .envelope-stage {
   animation: none;
 
-  /*
-    Chỉ trượt xuống nhẹ khi mở,
-    không scale riêng nữa
-    vì cả cụm đã được thu từ đầu
-  */
-
+  /* không kéo cả cụm xuống nữa để nắp giữ nguyên */
   transform:
-    translate3d(0, 20px, 0);
+    translate3d(0, 0, 0);
 
   filter:
     drop-shadow(
@@ -431,6 +419,7 @@ button {
 .envelope-button.is-open
 .envelope-open {
   opacity: 1;
+  transition-delay: .04s;
 }
 
 
@@ -443,7 +432,19 @@ button {
   opacity: 0;
 
   transform:
-    scale(.998);
+    translateY(var(--envelope-body-offset))
+    scale(.992);
+}
+
+
+/* =========================================
+   OPEN STATE — KEEP BODY OFFSET
+========================================= */
+
+.envelope-button.is-open
+.envelope-open-body {
+  transform:
+    translate3d(0, var(--envelope-body-offset), 0);
 }
 
 
@@ -461,7 +462,7 @@ button {
     scaleY(1);
 
   transition-delay:
-    .04s;
+    .06s;
 }
 
 
@@ -488,7 +489,7 @@ button {
 .envelope-button.is-open:active
 .envelope-stage {
   transform:
-    translate3d(0, 20px, 0);
+    translate3d(0, 0, 0);
 }
 
 
@@ -498,7 +499,7 @@ button {
 
 @keyframes idleTapCue {
   0%,
-  58%,
+  60%,
   100% {
     transform:
       translateY(0)
@@ -512,38 +513,31 @@ button {
       );
   }
 
-  68% {
+  70% {
     transform:
-      translateY(-7px)
-      scale(1.022)
+      translateY(-5px)
+      scale(1.015)
       rotate(0deg);
 
     filter:
       drop-shadow(
-        0 18px 12px
-        rgba(62, 24, 14, .22)
+        0 16px 12px
+        rgba(62, 24, 14, .21)
       );
   }
 
-  74% {
+  78% {
     transform:
-      translateY(-6px)
-      scale(1.022)
-      rotate(-.7deg);
-  }
-
-  80% {
-    transform:
-      translateY(-6px)
-      scale(1.022)
-      rotate(.7deg);
+      translateY(-4px)
+      scale(1.015)
+      rotate(-.45deg);
   }
 
   86% {
     transform:
-      translateY(-5px)
-      scale(1.016)
-      rotate(0deg);
+      translateY(-4px)
+      scale(1.015)
+      rotate(.45deg);
   }
 
   94% {
@@ -562,28 +556,22 @@ button {
 @keyframes tapRing {
   0% {
     transform:
-      scale(.48);
-
-    opacity:
-      0;
+      scale(.52);
+    opacity: 0;
   }
 
-  15% {
-    opacity:
-      .58;
+  18% {
+    opacity: .5;
   }
 
-  68% {
-    opacity:
-      .16;
+  72% {
+    opacity: .14;
   }
 
   100% {
     transform:
-      scale(1.22);
-
-    opacity:
-      0;
+      scale(1.18);
+    opacity: 0;
   }
 }
 
@@ -592,8 +580,7 @@ button {
    MOBILE ASPECT
 ========================================= */
 
-@media
-(max-aspect-ratio: 375/812) {
+@media (max-aspect-ratio: 375/812) {
   .opening-page {
     background-size:
       auto 100%;
@@ -605,8 +592,7 @@ button {
    DESKTOP PREVIEW
 ========================================= */
 
-@media
-(min-width: 431px) {
+@media (min-width: 431px) {
   body {
     display: grid;
     place-items: center;
@@ -626,17 +612,14 @@ button {
    ACCESSIBILITY — REDUCED MOTION
 ========================================= */
 
-@media
-(prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration:
       .001ms !important;
-
     animation-iteration-count:
       1 !important;
-
     transition-duration:
       .001ms !important;
   }
