@@ -41,8 +41,7 @@ body {
     "Times New Roman",
     serif;
 
-  -webkit-tap-highlight-color:
-    transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button {
@@ -57,23 +56,16 @@ button {
 .site-shell {
   position: relative;
 
-  width:
-    min(100vw, 430px);
+  width: min(100vw, 430px);
 
-  height:
-    100dvh;
+  height: 100dvh;
+  min-height: 100svh;
 
-  min-height:
-    100svh;
+  margin: 0 auto;
 
-  margin:
-    0 auto;
+  overflow: hidden;
 
-  overflow:
-    hidden;
-
-  background:
-    var(--paper);
+  background: var(--paper);
 
   box-shadow:
     0 0 40px
@@ -112,44 +104,31 @@ button {
 .envelope-button {
   position: absolute;
 
-  left:
-    50%;
+  left: 50%;
 
   top:
     calc(14.5% + 18px);
 
-  width:
-    82%;
+  width: 82%;
 
-  max-width:
-    352px;
+  max-width: 352px;
 
-  aspect-ratio:
-    2 / 3;
+  aspect-ratio: 2 / 3;
 
   transform:
     translateX(-50%);
 
-  padding:
-    0;
+  padding: 0;
+  margin: 0;
+  border: 0;
 
-  margin:
-    0;
+  background: transparent;
 
-  border:
-    0;
+  cursor: pointer;
 
-  background:
-    transparent;
+  touch-action: manipulation;
 
-  cursor:
-    pointer;
-
-  touch-action:
-    manipulation;
-
-  overflow:
-    visible;
+  overflow: visible;
 }
 
 
@@ -161,11 +140,9 @@ button {
   position: absolute;
   inset: 0;
 
-  display:
-    block;
+  display: block;
 
-  overflow:
-    visible;
+  overflow: visible;
 
   transform:
     translateZ(0);
@@ -192,20 +169,15 @@ button {
 .envelope-open-body-back,
 .envelope-open-front,
 .envelope-open-flap {
-  position:
-    absolute;
+  position: absolute;
 
-  display:
-    block;
+  display: block;
 
-  user-select:
-    none;
+  user-select: none;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
-  -webkit-user-drag:
-    none;
+  -webkit-user-drag: none;
 }
 
 
@@ -214,23 +186,16 @@ button {
 ========================================= */
 
 .envelope-closed {
-  z-index:
-    30;
+  z-index: 30;
 
-  inset:
-    0;
+  inset: 0;
 
-  width:
-    100%;
+  width: 100%;
+  height: 100%;
 
-  height:
-    100%;
+  object-fit: contain;
 
-  object-fit:
-    contain;
-
-  opacity:
-    1;
+  opacity: 1;
 
   transform:
     translate3d(
@@ -261,29 +226,20 @@ button {
 ========================================= */
 
 .envelope-open {
-  position:
-    absolute;
+  position: absolute;
 
-  inset:
-    0;
+  inset: 0;
 
-  z-index:
-    10;
+  z-index: 10;
 
-  width:
-    100%;
+  width: 100%;
+  height: 100%;
 
-  height:
-    100%;
+  overflow: visible;
 
-  overflow:
-    visible;
+  opacity: 0;
 
-  opacity:
-    0;
-
-  pointer-events:
-    none;
+  pointer-events: none;
 
   transition:
     opacity .18s ease;
@@ -292,27 +248,20 @@ button {
 
 /* =========================================
    OPEN FLAP
-   nằm sau tất cả
 ========================================= */
 
 .envelope-open-flap {
-  z-index:
-    9;
+  z-index: 9;
 
-  left:
-    50%;
+  left: 50%;
 
-  width:
-    68%;
+  width: 68%;
 
-  height:
-    auto;
+  height: auto;
 
-  bottom:
-    80%;
+  bottom: 80%;
 
-  opacity:
-    0;
+  opacity: 0;
 
   transform-origin:
     50% 100%;
@@ -337,24 +286,17 @@ button {
 
 /* =========================================
    OPEN BODY BACK
-   phần lòng phong bao phía sau giấy
 ========================================= */
 
 .envelope-open-body-back {
-  z-index:
-    11;
+  z-index: 11;
 
-  inset:
-    0;
+  inset: 0;
 
-  width:
-    100%;
+  width: 100%;
+  height: 100%;
 
-  height:
-    100%;
-
-  object-fit:
-    contain;
+  object-fit: contain;
 
   transform:
     translate3d(
@@ -377,14 +319,11 @@ button {
 ========================================= */
 
 .invitation-card {
-  position:
-    absolute;
+  position: absolute;
 
-  z-index:
-    13;
+  z-index: 13;
 
-  top:
-    0;
+  top: 0;
 
   left:
     calc(
@@ -398,24 +337,22 @@ button {
     67%;
 
   /*
-    Ban đầu giấy nằm sâu
-    trong phong bao.
+    Giấy nằm sâu hơn trong phong bao
+    ở trạng thái ban đầu.
   */
 
   transform:
     translate3d(
       0,
       calc(
-        var(--body-offset-open) + 112px
+        var(--body-offset-open) + 128px
       ),
       0
     );
 
-  opacity:
-    0;
+  opacity: 0;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
   transition:
     transform .62s
@@ -434,14 +371,11 @@ button {
 ========================================= */
 
 .invitation-card-paper {
-  position:
-    absolute;
+  position: absolute;
 
-  inset:
-    0;
+  inset: 0;
 
-  overflow:
-    hidden;
+  overflow: hidden;
 
   border-radius:
     14px 14px 7px 7px;
@@ -481,17 +415,13 @@ button {
 /* texture giấy nhẹ */
 
 .invitation-card-paper::after {
-  content:
-    "";
+  content: "";
 
-  position:
-    absolute;
+  position: absolute;
 
-  inset:
-    0;
+  inset: 0;
 
-  opacity:
-    .12;
+  opacity: .12;
 
   background-image:
     repeating-linear-gradient(
@@ -509,40 +439,18 @@ button {
 
 /* =========================================
    FRONT OVERLAY
-   lớp trên cùng che tờ giấy
 ========================================= */
 
 .envelope-open-front {
-  z-index:
-    14;
+  z-index: 14;
 
-  /*
-    QUAN TRỌNG:
-    căn đúng cùng canvas với body.
-  */
+  top: 0;
+  left: 0;
 
-  top:
-    0;
+  width: 100%;
+  height: 100%;
 
-  left:
-    0;
-
-  width:
-    100%;
-
-  height:
-    100%;
-
-  object-fit:
-    contain;
-
-  /*
-    Không còn:
-    left: -3.42%
-    scaleX(.985)
-
-    để tránh lệch sang trái.
-  */
+  object-fit: contain;
 
   transform:
     translate3d(
@@ -561,14 +469,11 @@ button {
   will-change:
     transform;
 
-  user-select:
-    none;
+  user-select: none;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
-  -webkit-user-drag:
-    none;
+  -webkit-user-drag: none;
 }
 
 
@@ -577,14 +482,11 @@ button {
 ========================================= */
 
 .monogram-pulse {
-  position:
-    absolute;
+  position: absolute;
 
-  z-index:
-    40;
+  z-index: 40;
 
-  left:
-    50%;
+  left: 50%;
 
   top:
     calc(
@@ -592,20 +494,16 @@ button {
       var(--body-offset-closed)
     );
 
-  width:
-    31%;
+  width: 31%;
 
-  aspect-ratio:
-    1;
+  aspect-ratio: 1;
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 
   transform:
     translate(-50%, -50%);
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
   transition:
     opacity .24s ease;
@@ -614,24 +512,19 @@ button {
 
 .monogram-pulse::before,
 .monogram-pulse::after {
-  content:
-    "";
+  content: "";
 
-  position:
-    absolute;
+  position: absolute;
 
-  inset:
-    0;
+  inset: 0;
 
   border:
     1.5px solid
     rgba(237, 196, 96, .52);
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 
-  opacity:
-    0;
+  opacity: 0;
 
   animation:
     tapRing
@@ -703,8 +596,7 @@ button {
 
 
 .envelope-button:focus-visible {
-  outline:
-    none;
+  outline: none;
 }
 
 
@@ -728,11 +620,9 @@ button {
 
 .envelope-button.is-open
 .envelope-open {
-  opacity:
-    1;
+  opacity: 1;
 
-  transition-delay:
-    0s;
+  transition-delay: 0s;
 }
 
 
@@ -742,11 +632,9 @@ button {
 
 .envelope-button.is-open
 .envelope-closed {
-  animation:
-    none;
+  animation: none;
 
-  opacity:
-    0;
+  opacity: 0;
 
   transform:
     translate3d(
@@ -775,7 +663,6 @@ button {
 
 /* =========================================
    FRONT OVERLAY MOVES DOWN
-   cùng vị trí với body
 ========================================= */
 
 .envelope-button.is-open
@@ -795,8 +682,7 @@ button {
 
 .envelope-button.is-open
 .envelope-open-flap {
-  opacity:
-    1;
+  opacity: 1;
 
   transform:
     translateX(-50%)
@@ -806,8 +692,7 @@ button {
     )
     scaleY(1);
 
-  transition-delay:
-    0s;
+  transition-delay: 0s;
 }
 
 
@@ -817,14 +702,18 @@ button {
 
 .envelope-button.is-open
 .invitation-card {
-  opacity:
-    1;
+  opacity: 1;
+
+  /*
+    Hạ giấy xuống so với bản trước
+    để nhìn thấy nắp phong bao rõ hơn.
+  */
 
   transform:
     translate3d(
       0,
       calc(
-        var(--body-offset-open) - 82px
+        var(--body-offset-open) - 56px
       ),
       0
     );
@@ -840,8 +729,7 @@ button {
 
 .envelope-button.is-open
 .monogram-pulse {
-  opacity:
-    0;
+  opacity: 0;
 }
 
 
@@ -928,32 +816,24 @@ button {
 @keyframes tapRing {
 
   0% {
-    transform:
-      scale(.52);
-
-    opacity:
-      0;
+    transform: scale(.52);
+    opacity: 0;
   }
 
 
   18% {
-    opacity:
-      .5;
+    opacity: .5;
   }
 
 
   72% {
-    opacity:
-      .14;
+    opacity: .14;
   }
 
 
   100% {
-    transform:
-      scale(1.18);
-
-    opacity:
-      0;
+    transform: scale(1.18);
+    opacity: 0;
   }
 
 }
@@ -982,11 +862,9 @@ button {
 (min-width: 431px) {
 
   body {
-    display:
-      grid;
+    display: grid;
 
-    place-items:
-      center;
+    place-items: center;
   }
 
 
