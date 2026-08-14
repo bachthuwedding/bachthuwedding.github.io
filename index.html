@@ -24,6 +24,10 @@
   <title>Bách & Thư</title>
 
 
+  <!-- =========================================
+       PRELOAD PAGE 01 ASSETS
+  ========================================== -->
+
   <link
     rel="preload"
     href="./assets/page01-bg.webp"
@@ -52,10 +56,17 @@
     type="image/png"
   />
 
+  <link
+    rel="preload"
+    href="./assets/envelope-open-front.png"
+    as="image"
+    type="image/png"
+  />
+
 
   <link
     rel="stylesheet"
-    href="./styles.css?v=20260814-08"
+    href="./styles.css?v=20260814-09"
   />
 
 </head>
@@ -96,7 +107,8 @@
 
 
             <!--
-              Nắp mở nằm sau cùng
+              LAYER 1
+              Nắp mở nằm sau tất cả
             -->
 
             <img
@@ -108,22 +120,22 @@
 
 
             <!--
-              Body nền:
-              giữ phần đỏ đậm phía trong
-              phía sau tờ giấy
+              LAYER 2
+              Lòng phong bao / phần nền phía sau giấy
             -->
 
             <img
-              class="envelope-open-body envelope-open-body-back"
+              class="envelope-open-body-back"
               src="./assets/envelope-open-body.png"
               alt=""
               draggable="false"
             />
 
 
-            <!-- =================================
-                 INNER CARD / PAPER
-            ================================== -->
+            <!--
+              LAYER 3
+              Tờ giấy bên trong
+            -->
 
             <span class="invitation-card">
 
@@ -133,14 +145,14 @@
 
 
             <!--
-              Body mặt trước:
-              nằm phía trên tờ giấy
-              để tạo cảm giác giấy nằm trong phong bao
+              LAYER 4
+              Element mới:
+              mặt trước phong bao che tờ giấy
             -->
 
             <img
-              class="envelope-open-body envelope-open-body-front"
-              src="./assets/envelope-open-body.png"
+              class="envelope-open-front"
+              src="./assets/envelope-open-front.png"
               alt=""
               draggable="false"
             />
@@ -183,7 +195,7 @@
   </main>
 
 
-  <script src="./script.js?v=20260814-08"></script>
+  <script src="./script.js?v=20260814-09"></script>
 
 </body>
 
