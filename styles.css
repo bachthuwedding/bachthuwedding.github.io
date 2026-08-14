@@ -568,7 +568,7 @@ button {
   transform:
     translate3d(
       0,
-      calc(var(--body-offset-open) - 36px),
+      calc(var(--body-offset-open) - 40px),
       0
     );
 
