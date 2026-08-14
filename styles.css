@@ -57,7 +57,7 @@ button {
 
   box-shadow:
     0 0 40px
-    rgba(80, 46, 24, 0.12);
+    rgba(80, 46, 24, .12);
 }
 
 
@@ -88,8 +88,7 @@ button {
   position: absolute;
 
   /*
-    Giữ nguyên thông số
-    bạn đã tự chốt.
+    Giữ đúng vị trí bạn đã chốt.
   */
 
   top: calc(14.5% + 15px);
@@ -138,7 +137,7 @@ button {
   filter:
     drop-shadow(
       0 12px 9px
-      rgba(62, 24, 14, 0.16)
+      rgba(62, 24, 14, .16)
     );
 
   animation:
@@ -156,7 +155,7 @@ button {
 
 
 /* =========================================
-   COMMON IMAGE RULES
+   COMMON ASSET RULES
 ========================================= */
 
 .envelope-closed,
@@ -174,7 +173,7 @@ button {
 
 
 /* =========================================
-   CLOSED STATE IMAGE
+   CLOSED ENVELOPE
 ========================================= */
 
 .envelope-closed {
@@ -193,7 +192,7 @@ button {
     scale(1);
 
   transition:
-    opacity .20s ease,
+    opacity .18s ease,
     transform .25s ease;
 }
 
@@ -219,7 +218,7 @@ button {
   pointer-events: none;
 
   transition:
-    opacity .12s linear;
+    opacity .10s linear;
 }
 
 
@@ -229,13 +228,7 @@ button {
 
 .envelope-open-body {
   /*
-    QUAN TRỌNG:
-
-    Body luôn chiếm chính xác
-    cùng box với envelope-closed.
-
-    Vì cả hai đều tỷ lệ 2:3,
-    chúng sẽ khớp 1:1.
+    Body giữ nguyên đúng canvas 2:3.
   */
 
   z-index: 12;
@@ -255,8 +248,7 @@ button {
 
 
 /* =========================================
-   CARD SLOT
-   Chưa sử dụng
+   FUTURE CARD SLOT
 ========================================= */
 
 .invitation-card-slot {
@@ -281,7 +273,12 @@ button {
 
 .envelope-open-flap {
   /*
-    FLAP nằm phía SAU body.
+    Asset flap có canvas ngang 3:2
+    và gần như chạm hai mép canvas.
+
+    Body lại có transparent padding.
+
+    Vì vậy KHÔNG thể để flap width 100%.
   */
 
   z-index: 10;
@@ -289,57 +286,43 @@ button {
   left: 50%;
 
   /*
-    Width đúng bằng width thân thiệp.
-
-    Asset flap là 3:2 nên browser
-    tự tính chiều cao theo tỷ lệ gốc.
+    76% là tỷ lệ khớp gần sát
+    chiều rộng đỏ thật của body.
   */
 
-  width: 100%;
+  width: 76%;
   height: auto;
 
   /*
-    Mấu chốt ở đây.
+    Mép dưới flap được neo gần mép trên
+    của thân phong bao.
 
-    Không dùng top nữa.
-
-    Mép dưới của flap được neo vào
-    khoảng 20% từ đầu body.
-
-    Đây chính là vùng nếp gấp /
-    phần đỏ đậm của envelope-open-body.
+    96% = mép dưới flap nằm khoảng
+    4% chiều cao stage tính từ phía trên.
   */
 
-  bottom: 80%;
+  bottom: 96%;
 
   opacity: 0;
-
-  /*
-    Hinge nằm ở chính giữa
-    cạnh dưới của flap.
-  */
 
   transform-origin:
     50% 100%;
 
   /*
-    Khi chưa mở:
-    ép flap xuống sát đường gấp.
-
-    Không rotateX để tránh
-    distortion khổng lồ như trước.
+    Trạng thái trước khi mở:
+    ép nắp sát nếp gấp.
   */
 
   transform:
     translateX(-50%)
     translateY(2px)
-    scaleY(.045);
+    scaleY(.04);
 
   transition:
-    transform .68s
+    transform .64s
     cubic-bezier(.16, .82, .18, 1),
 
-    opacity .10s ease;
+    opacity .08s linear;
 
   will-change:
     transform,
@@ -446,16 +429,7 @@ button {
 
 .envelope-button.is-open
 .envelope-stage {
-  /*
-    Dừng idle animation.
-  */
-
   animation: none;
-
-  /*
-    Không dịch cả phong bao.
-    Body open sẽ nằm y hệt closed.
-  */
 
   transform:
     translate3d(0, 0, 0);
@@ -469,7 +443,7 @@ button {
 
 
 /* =========================================
-   SHOW OPEN BODY
+   SHOW OPEN GROUP
 ========================================= */
 
 .envelope-button.is-open
@@ -479,7 +453,7 @@ button {
 
 
 /* =========================================
-   HIDE CLOSED
+   HIDE CLOSED IMAGE
 ========================================= */
 
 .envelope-button.is-open
@@ -492,23 +466,12 @@ button {
 
 
 /* =========================================
-   OPEN THE FLAP
+   OPEN FLAP FINAL POSITION
 ========================================= */
 
 .envelope-button.is-open
 .envelope-open-flap {
   opacity: 1;
-
-  /*
-    Final position.
-
-    Không đổi width.
-    Không translate theo Y.
-    Không rotate.
-
-    Vì thế flap không thể
-    tự phóng to nữa.
-  */
 
   transform:
     translateX(-50%)
@@ -516,7 +479,7 @@ button {
     scaleY(1);
 
   transition-delay:
-    .05s;
+    .04s;
 }
 
 
@@ -548,7 +511,7 @@ button {
 
 
 /* =========================================
-   IDLE TAP CUE
+   IDLE TAP ANIMATION
 ========================================= */
 
 @keyframes idleTapCue {
