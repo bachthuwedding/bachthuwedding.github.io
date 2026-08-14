@@ -24,10 +24,6 @@
   <title>Bách & Thư</title>
 
 
-  <!-- =========================
-       PRELOAD PAGE 01 ASSETS
-  ========================== -->
-
   <link
     rel="preload"
     href="./assets/page01-bg.webp"
@@ -59,7 +55,7 @@
 
   <link
     rel="stylesheet"
-    href="./styles.css"
+    href="./styles.css?v=20260814-08"
   />
 
 </head>
@@ -69,10 +65,6 @@
 
   <main class="site-shell">
 
-
-    <!-- =========================
-         PAGE 01 — OPENING
-    ========================== -->
 
     <section
       class="opening-page"
@@ -96,19 +88,15 @@
         >
 
 
-          <!-- =====================
+          <!-- =================================
                OPEN STATE
-          ====================== -->
+          ================================== -->
 
           <span class="envelope-open">
 
 
             <!--
-              OPEN FLAP
-
-              Nằm phía sau body.
-              Sau này card sẽ được đặt
-              giữa flap và body.
+              Nắp mở nằm sau cùng
             -->
 
             <img
@@ -120,27 +108,38 @@
 
 
             <!--
-              PLACEHOLDER CARD LAYER
-
-              Chưa có card ở bước này.
-              Sau này card sẽ được chèn
-              vào chính vị trí này.
-            -->
-
-            <span
-              class="invitation-card-slot"
-              aria-hidden="true"
-            ></span>
-
-
-            <!--
-              OPEN BODY
-
-              Nằm phía trước cùng.
+              Body nền:
+              giữ phần đỏ đậm phía trong
+              phía sau tờ giấy
             -->
 
             <img
-              class="envelope-open-body"
+              class="envelope-open-body envelope-open-body-back"
+              src="./assets/envelope-open-body.png"
+              alt=""
+              draggable="false"
+            />
+
+
+            <!-- =================================
+                 INNER CARD / PAPER
+            ================================== -->
+
+            <span class="invitation-card">
+
+              <span class="invitation-card-paper"></span>
+
+            </span>
+
+
+            <!--
+              Body mặt trước:
+              nằm phía trên tờ giấy
+              để tạo cảm giác giấy nằm trong phong bao
+            -->
+
+            <img
+              class="envelope-open-body envelope-open-body-front"
               src="./assets/envelope-open-body.png"
               alt=""
               draggable="false"
@@ -150,9 +149,9 @@
           </span>
 
 
-          <!-- =====================
+          <!-- =================================
                CLOSED STATE
-          ====================== -->
+          ================================== -->
 
           <img
             class="envelope-closed"
@@ -162,9 +161,9 @@
           />
 
 
-          <!-- =====================
+          <!-- =================================
                TAP HINT
-          ====================== -->
+          ================================== -->
 
           <span
             class="monogram-pulse"
@@ -184,7 +183,7 @@
   </main>
 
 
-  <script src="./script.js"></script>
+  <script src="./script.js?v=20260814-08"></script>
 
 </body>
 
