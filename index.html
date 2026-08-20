@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="vi">
+
 <head>
   <meta charset="utf-8" />
 
@@ -14,8 +15,8 @@
   <title>Bách & Thư</title>
 
   <!-- =====================================
-       FIRST SCREEN ONLY
-       Chỉ preload 2 asset thực sự cần ngay
+       FIRST SCREEN PRELOAD
+       Chỉ tải 2 asset cần nhìn thấy ngay
   ====================================== -->
 
   <link
@@ -34,12 +35,19 @@
     fetchpriority="high"
   />
 
-  <link rel="stylesheet" href="./styles.css" />
+  <link
+    rel="stylesheet"
+    href="./styles.css"
+  />
 </head>
+
 
 <body>
 
-  <main class="site-shell" id="siteShell">
+  <main
+    class="site-shell"
+    id="siteShell"
+  >
 
     <!-- =====================================
          PAGE 01
@@ -67,29 +75,37 @@
           <!-- =========================
                OPEN STATE
 
-               QUAN TRỌNG:
-               Không có src lúc tải trang.
-               JS sẽ nạp sau first screen.
+               Không có src ban đầu.
+               JS sẽ tải sau first screen.
           ========================== -->
 
           <span class="envelope-open">
 
+            <!-- NẮP MỞ PHÍA SAU -->
             <img
               class="envelope-open-flap deferred-opening-asset"
               data-src="./assets/envelope-open-flap.png"
               alt=""
               draggable="false"
               decoding="async"
+              width="900"
+              height="600"
             />
 
+
+            <!-- THÂN PHONG BÌ PHÍA SAU -->
             <img
               class="envelope-open-body deferred-opening-asset"
               data-src="./assets/envelope-open-body.png"
               alt=""
               draggable="false"
               decoding="async"
+              width="800"
+              height="1200"
             />
 
+
+            <!-- TỜ THIỆP -->
             <img
               class="invitation-card deferred-opening-asset"
               id="invitationCard"
@@ -97,16 +113,20 @@
               alt=""
               draggable="false"
               decoding="async"
-              width="900"
-              height="1200"
+              width="720"
+              height="960"
             />
 
+
+            <!-- MẶT TRƯỚC PHONG BÌ -->
             <img
               class="envelope-open-front deferred-opening-asset"
               data-src="./assets/envelope-open-front.png"
               alt=""
               draggable="false"
               decoding="async"
+              width="800"
+              height="1200"
             />
 
           </span>
@@ -114,7 +134,7 @@
 
           <!-- =========================
                CLOSED STATE
-               Đây mới là asset cần ngay
+               Asset cần tải ngay
           ========================== -->
 
           <img
@@ -123,7 +143,10 @@
             alt=""
             draggable="false"
             loading="eager"
+            decoding="async"
             fetchpriority="high"
+            width="800"
+            height="1200"
           />
 
 
@@ -140,6 +163,8 @@
 
     <!-- =====================================
          PAGE 02
+         Tạm để trống.
+         Mình sẽ thiết kế riêng sau.
     ====================================== -->
 
     <section
@@ -155,4 +180,5 @@
   <script src="./script.js"></script>
 
 </body>
+
 </html>
