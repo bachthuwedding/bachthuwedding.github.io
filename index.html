@@ -14,14 +14,10 @@
 
   <title>Bách & Thư</title>
 
-  <!-- =====================================
-       FIRST SCREEN PRELOAD
-       Chỉ tải 2 asset cần nhìn thấy ngay
-  ====================================== -->
-
+  <!-- Chỉ preload những asset cần nhìn thấy ngay -->
   <link
     rel="preload"
-    href="./assets/page01-bg.webp"
+    href="./assets/page01-bg-optimized.webp"
     as="image"
     type="image/webp"
     fetchpriority="high"
@@ -29,16 +25,13 @@
 
   <link
     rel="preload"
-    href="./assets/envelope-closed.png"
+    href="./assets/envelope-closed-optimized.png"
     as="image"
     type="image/png"
     fetchpriority="high"
   />
 
-  <link
-    rel="stylesheet"
-    href="./styles.css"
-  />
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 
 
@@ -74,17 +67,15 @@
 
           <!-- =========================
                OPEN STATE
-
-               Không có src ban đầu.
-               JS sẽ tải sau first screen.
+               Các ảnh này tải sau
           ========================== -->
 
           <span class="envelope-open">
 
-            <!-- NẮP MỞ PHÍA SAU -->
+            <!-- Nắp phía sau -->
             <img
               class="envelope-open-flap deferred-opening-asset"
-              data-src="./assets/envelope-open-flap.png"
+              data-src="./assets/envelope-open-flap-optimized.png"
               alt=""
               draggable="false"
               decoding="async"
@@ -93,10 +84,10 @@
             />
 
 
-            <!-- THÂN PHONG BÌ PHÍA SAU -->
+            <!-- Thân phía sau -->
             <img
               class="envelope-open-body deferred-opening-asset"
-              data-src="./assets/envelope-open-body.png"
+              data-src="./assets/envelope-open-body-optimized.png"
               alt=""
               draggable="false"
               decoding="async"
@@ -105,11 +96,11 @@
             />
 
 
-            <!-- TỜ THIỆP -->
+            <!-- Tờ giấy -->
             <img
               class="invitation-card deferred-opening-asset"
               id="invitationCard"
-              data-src="./assets/invitation-card.png"
+              data-src="./assets/invitation-card-optimized.png"
               alt=""
               draggable="false"
               decoding="async"
@@ -118,10 +109,10 @@
             />
 
 
-            <!-- MẶT TRƯỚC PHONG BÌ -->
+            <!-- Mặt trước phong bì -->
             <img
               class="envelope-open-front deferred-opening-asset"
-              data-src="./assets/envelope-open-front.png"
+              data-src="./assets/envelope-open-front-optimized.png"
               alt=""
               draggable="false"
               decoding="async"
@@ -134,12 +125,11 @@
 
           <!-- =========================
                CLOSED STATE
-               Asset cần tải ngay
           ========================== -->
 
           <img
             class="envelope-closed"
-            src="./assets/envelope-closed.png"
+            src="./assets/envelope-closed-optimized.png"
             alt=""
             draggable="false"
             loading="eager"
@@ -151,7 +141,6 @@
 
 
           <!-- TAP HINT -->
-
           <span class="monogram-pulse"></span>
 
         </span>
@@ -163,8 +152,6 @@
 
     <!-- =====================================
          PAGE 02
-         Tạm để trống.
-         Mình sẽ thiết kế riêng sau.
     ====================================== -->
 
     <section
