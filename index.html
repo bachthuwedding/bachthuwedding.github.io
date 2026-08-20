@@ -2,22 +2,74 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
+
   <meta name="theme-color" content="#ead5ad" />
   <meta name="description" content="Thiệp cưới Bách & Thư" />
+
   <title>Bách & Thư</title>
 
-  <link rel="preload" href="./assets/page01-bg.webp" as="image" type="image/webp" />
-  <link rel="preload" href="./assets/envelope-closed.png" as="image" type="image/png" />
-  <link rel="preload" href="./assets/envelope-open-body.png" as="image" type="image/png" />
-  <link rel="preload" href="./assets/envelope-open-flap.png" as="image" type="image/png" />
-  <link rel="preload" href="./assets/envelope-open-front.png" as="image" type="image/png" />
+  <!-- Preload các asset của Page 01 -->
+  <link
+    rel="preload"
+    href="./assets/page01-bg.webp"
+    as="image"
+    type="image/webp"
+  />
+
+  <link
+    rel="preload"
+    href="./assets/envelope-closed.png"
+    as="image"
+    type="image/png"
+  />
+
+  <link
+    rel="preload"
+    href="./assets/envelope-open-body.png"
+    as="image"
+    type="image/png"
+  />
+
+  <link
+    rel="preload"
+    href="./assets/envelope-open-flap.png"
+    as="image"
+    type="image/png"
+  />
+
+  <link
+    rel="preload"
+    href="./assets/envelope-open-front.png"
+    as="image"
+    type="image/png"
+  />
+
+  <!-- preload tờ giấy để khi bấm mở không phải chờ -->
+  <link
+    rel="preload"
+    href="./assets/invitation-card.png"
+    as="image"
+    type="image/png"
+  />
 
   <link rel="stylesheet" href="./styles.css" />
 </head>
+
 <body>
+
   <main class="site-shell">
-    <section class="opening-page" id="opening" aria-label="Mở thiệp cưới Bách và Thư">
+
+    <section
+      class="opening-page"
+      id="opening"
+      aria-label="Mở thiệp cưới Bách và Thư"
+    >
+
       <button
         class="envelope-button"
         id="envelopeButton"
@@ -25,11 +77,16 @@
         aria-label="Mở thiệp"
         aria-expanded="false"
       >
-        <span class="envelope-stage" aria-hidden="true">
+
+        <span
+          class="envelope-stage"
+          aria-hidden="true"
+        >
 
           <!-- =========================
                OPEN STATE
           ========================== -->
+
           <span class="envelope-open">
 
             <!-- Nắp phía sau -->
@@ -38,53 +95,69 @@
               src="./assets/envelope-open-flap.png"
               alt=""
               draggable="false"
+              decoding="async"
             />
 
-            <!-- Thân mở phía sau -->
+            <!-- Thân phong bì phía sau -->
             <img
               class="envelope-open-body"
               src="./assets/envelope-open-body.png"
               alt=""
               draggable="false"
+              decoding="async"
             />
 
-            <!-- Tờ giấy -->
-            <span class="invitation-card-slot" aria-hidden="true">
-  <article class="invitation-card">
-    <div class="invitation-card-frame">
-      <p class="invitation-names">Bách &amp; Thư</p>
-      <p class="invitation-date">24.11.2026</p>
-    </div>
-  </article>
-</span>
+            <!-- TỜ GIẤY PNG -->
+            <img
+              class="invitation-card"
+              src="./assets/invitation-card.png"
+              alt=""
+              draggable="false"
+              decoding="async"
+              fetchpriority="high"
+              width="900"
+              height="1200"
+            />
 
-            <!-- Lớp thiệp phía trước để che giấy -->
+            <!-- Mặt trước phong bì
+                 nằm trên tờ giấy -->
             <img
               class="envelope-open-front"
               src="./assets/envelope-open-front.png"
               alt=""
               draggable="false"
+              decoding="async"
             />
+
           </span>
+
 
           <!-- =========================
                CLOSED STATE
           ========================== -->
+
           <img
             class="envelope-closed"
             src="./assets/envelope-closed.png"
             alt=""
             draggable="false"
+            decoding="async"
           />
 
+
           <!-- TAP HINT -->
+
           <span class="monogram-pulse"></span>
 
         </span>
+
       </button>
+
     </section>
+
   </main>
 
   <script src="./script.js"></script>
+
 </body>
 </html>
