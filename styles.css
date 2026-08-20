@@ -1,20 +1,18 @@
 :root {
   --paper: #ead5ad;
-  --vermilion: #b5150f;
-  --vermilion-dark: #8f0d0b;
-  --gold: #d7a84a;
+  --card-paper: #f3ead3;
+  --card-paper-border: #dbcdb2;
+  --card-text: #8f3a2c;
+  --card-text-soft: #9d6d58;
 
-  /* vị trí thân thiệp khi đóng */
   --body-offset-closed: 24px;
-
-  /* vị trí thân thiệp khi mở */
   --body-offset-open: 50px;
 
-  /* nắp mở bung ngang */
   --open-flap-scale-x: 1.09;
 
-  /* kích thước tờ giấy */
-  --card-width: 66%;
+  /* chỉnh giấy thấp xuống thêm một chút */
+  --card-offset-closed: 118px;
+  --card-offset-open: 68px;
 }
 
 
@@ -66,7 +64,7 @@ button {
   background: var(--paper);
 
   box-shadow:
-    0 0 40px rgba(80, 46, 24, .12);
+    0 0 40px rgba(80, 46, 24, 0.12);
 }
 
 
@@ -132,22 +130,19 @@ button {
   transform-origin: 50% 58%;
 
   filter:
-    drop-shadow(
-      0 12px 9px
-      rgba(62, 24, 14, .16)
-    );
+    drop-shadow(0 12px 9px rgba(62, 24, 14, 0.16));
 
   transition:
-    filter .6s ease;
+    filter .62s ease;
 }
 
 
 /* =========================================
-   COMMON IMAGE RULES
+   COMMON ASSET RULES
 ========================================= */
 
 .envelope-closed,
-.envelope-open-body-back,
+.envelope-open-body,
 .envelope-open-front,
 .envelope-open-flap {
   position: absolute;
@@ -171,7 +166,6 @@ button {
   height: 100%;
 
   object-fit: contain;
-
   opacity: 1;
 
   transform:
@@ -186,7 +180,7 @@ button {
     infinite;
 
   transition:
-    opacity .22s ease,
+    opacity .28s ease,
     transform .56s cubic-bezier(.22, .61, .36, 1);
 }
 
@@ -205,12 +199,158 @@ button {
   height: 100%;
 
   overflow: visible;
-
   opacity: 0;
   pointer-events: none;
 
+  transition: opacity .22s ease;
+}
+
+
+/* =========================================
+   OPEN BODY (BACK)
+========================================= */
+
+.envelope-open-body {
+  z-index: 10;
+
+  left: 50%;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+  opacity: 1;
+
+  transform:
+    translateX(-50%)
+    translateY(var(--body-offset-closed));
+
+  transform-origin: 50% 50%;
+
   transition:
-    opacity .18s ease;
+    transform .54s cubic-bezier(.22, .61, .36, 1),
+    opacity .22s ease;
+}
+
+
+/* =========================================
+   OPEN FRONT (TOP FRONT LAYER)
+========================================= */
+
+.envelope-open-front {
+  z-index: 16;
+
+  left: 50%;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+  opacity: 1;
+
+  transform:
+    translateX(-50%)
+    translateY(var(--body-offset-closed));
+
+  transform-origin: 50% 50%;
+
+  transition:
+    transform .54s cubic-bezier(.22, .61, .36, 1),
+    opacity .22s ease;
+}
+
+
+/* =========================================
+   INVITATION CARD SLOT
+========================================= */
+
+.invitation-card-slot {
+  position: absolute;
+  z-index: 14;
+
+  left: 13%;
+  right: 13%;
+  top: 2%;
+  height: 72%;
+
+  overflow: visible;
+  pointer-events: none;
+}
+
+
+/* =========================================
+   INVITATION CARD
+========================================= */
+
+.invitation-card {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 18px;
+  overflow: hidden;
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.18), rgba(0,0,0,.02)),
+    var(--card-paper);
+
+  border: 1.5px solid var(--card-paper-border);
+
+  box-shadow:
+    0 10px 22px rgba(83, 53, 33, 0.10);
+
+  opacity: 0;
+
+  transform:
+    translate3d(0, var(--card-offset-closed), 0);
+
+  transition:
+    transform .54s cubic-bezier(.22, .61, .36, 1),
+    opacity .24s ease;
+}
+
+.invitation-card-frame {
+  position: absolute;
+  inset: 12px;
+
+  border: 1px solid rgba(204, 187, 155, 0.85);
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding-top: 28px;
+  text-align: center;
+}
+
+.invitation-names {
+  margin: 0;
+  line-height: 1.15;
+
+  font-size: clamp(1.5rem, 4.8vw, 2rem);
+  font-weight: 400;
+  color: var(--card-text);
+
+  letter-spacing: 0.02em;
+}
+
+.invitation-date {
+  margin: 8px 0 0;
+  line-height: 1.2;
+
+  font-size: clamp(0.8rem, 2.8vw, 1rem);
+  font-weight: 400;
+  color: var(--card-text-soft);
+
+  letter-spacing: 0.14em;
 }
 
 
@@ -219,7 +359,7 @@ button {
 ========================================= */
 
 .envelope-open-flap {
-  z-index: 9;
+  z-index: 11;
 
   left: 50%;
   width: 68%;
@@ -234,164 +374,16 @@ button {
   transform:
     translateX(-50%)
     translateY(6px)
-    scaleX(.96)
-    scaleY(.035);
+    scaleX(.97)
+    scaleY(.03);
 
   transition:
-    transform .52s cubic-bezier(.22, .61, .36, 1),
-    opacity .12s ease;
+    transform .38s cubic-bezier(.22, .61, .36, 1),
+    opacity .10s ease;
 
   will-change:
     transform,
     opacity;
-}
-
-
-/* =========================================
-   OPEN BODY BACK
-========================================= */
-
-.envelope-open-body-back {
-  z-index: 11;
-
-  inset: 0;
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-
-  transform:
-    translate3d(0, var(--body-offset-closed), 0);
-
-  transform-origin: 50% 50%;
-
-  transition:
-    transform .56s cubic-bezier(.22, .61, .36, 1);
-}
-
-
-/* =========================================
-   INVITATION CARD
-========================================= */
-
-.invitation-card {
-  position: absolute;
-
-  z-index: 13;
-
-  top: 0;
-  left: calc((100% - var(--card-width)) / 2);
-
-  width: var(--card-width);
-  height: 67%;
-
-  /* giấy nằm sâu trong phong bao khi chưa mở */
-  transform:
-    translate3d(
-      0,
-      calc(var(--body-offset-open) + 128px),
-      0
-    );
-
-  opacity: 0;
-
-  pointer-events: none;
-
-  transition:
-    transform .62s cubic-bezier(.16, .78, .18, 1),
-    opacity .16s ease;
-
-  will-change:
-    transform,
-    opacity;
-}
-
-
-/* =========================================
-   PAPER
-========================================= */
-
-.invitation-card-paper {
-  position: absolute;
-  inset: 0;
-
-  overflow: hidden;
-
-  border-radius: 14px 14px 7px 7px;
-
-  background:
-    radial-gradient(
-      circle at 22% 17%,
-      rgba(255, 255, 255, .18),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at 75% 68%,
-      rgba(173, 129, 65, .05),
-      transparent 33%
-    ),
-    linear-gradient(
-      180deg,
-      #f4e7ca 0%,
-      #efdebb 48%,
-      #ead6ae 100%
-    );
-
-  box-shadow:
-    0 6px 18px rgba(74, 33, 16, .15),
-    inset 0 0 0 1px rgba(180, 135, 60, .18),
-    inset 0 0 28px rgba(125, 88, 42, .05);
-}
-
-.invitation-card-paper::after {
-  content: "";
-
-  position: absolute;
-  inset: 0;
-
-  opacity: .12;
-
-  background-image:
-    repeating-linear-gradient(
-      12deg,
-      rgba(120, 90, 55, .07) 0,
-      rgba(120, 90, 55, .07) 1px,
-      transparent 1px,
-      transparent 5px
-    );
-
-  mix-blend-mode: multiply;
-}
-
-
-/* =========================================
-   FRONT OVERLAY
-========================================= */
-
-.envelope-open-front {
-  z-index: 14;
-
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-
-  transform:
-    translate3d(0, var(--body-offset-closed), 0);
-
-  transform-origin: 50% 50%;
-
-  transition:
-    transform .56s cubic-bezier(.22, .61, .36, 1);
-
-  will-change: transform;
-
-  user-select: none;
-  pointer-events: none;
-  -webkit-user-drag: none;
 }
 
 
@@ -413,11 +405,11 @@ button {
   border-radius: 50%;
 
   transform: translate(-50%, -50%);
-
   pointer-events: none;
 
   transition:
-    opacity .24s ease;
+    opacity .22s ease,
+    transform .22s ease;
 }
 
 .monogram-pulse::before,
@@ -442,16 +434,13 @@ button {
 
 
 /* =========================================
-   HOVER / FOCUS — CLOSED
+   HOVER / FOCUS (CLOSED ONLY)
 ========================================= */
 
 .envelope-button:not(.is-open):hover .envelope-stage,
 .envelope-button:not(.is-open):focus-visible .envelope-stage {
   filter:
-    drop-shadow(
-      0 16px 12px
-      rgba(62, 24, 14, .20)
-    );
+    drop-shadow(0 16px 12px rgba(62, 24, 14, .20));
 }
 
 .envelope-button:not(.is-open):hover .envelope-closed,
@@ -465,7 +454,7 @@ button {
 
 
 /* =========================================
-   ACTIVE
+   ACTIVE / PRESS (CLOSED ONLY)
 ========================================= */
 
 .envelope-button:not(.is-open):active .envelope-closed {
@@ -485,30 +474,26 @@ button {
 
 .envelope-button.is-open .envelope-stage {
   filter:
-    drop-shadow(
-      0 14px 10px
-      rgba(62, 24, 14, .18)
-    );
+    drop-shadow(0 14px 10px rgba(62, 24, 14, .18));
 }
 
 
 /* =========================================
-   SHOW OPEN GROUP
+   OPEN STATE — OPEN GROUP
 ========================================= */
 
 .envelope-button.is-open .envelope-open {
   opacity: 1;
-  transition-delay: 0s;
+  transition-delay: .02s;
 }
 
 
 /* =========================================
-   HIDE CLOSED
+   OPEN STATE — HIDE CLOSED
 ========================================= */
 
 .envelope-button.is-open .envelope-closed {
   animation: none;
-
   opacity: 0;
 
   transform:
@@ -518,27 +503,41 @@ button {
 
 
 /* =========================================
-   BODY BACK MOVES DOWN
+   OPEN STATE — BODY
 ========================================= */
 
-.envelope-button.is-open .envelope-open-body-back {
+.envelope-button.is-open .envelope-open-body {
   transform:
-    translate3d(0, var(--body-offset-open), 0);
+    translateX(-50%)
+    translateY(var(--body-offset-open));
 }
 
 
 /* =========================================
-   FRONT OVERLAY MOVES DOWN
+   OPEN STATE — FRONT
 ========================================= */
 
 .envelope-button.is-open .envelope-open-front {
   transform:
-    translate3d(0, var(--body-offset-open), 0);
+    translateX(-50%)
+    translateY(var(--body-offset-open));
 }
 
 
 /* =========================================
-   OPEN FLAP
+   OPEN STATE — CARD
+========================================= */
+
+.envelope-button.is-open .invitation-card {
+  opacity: 1;
+
+  transform:
+    translate3d(0, var(--card-offset-open), 0);
+}
+
+
+/* =========================================
+   OPEN STATE — FLAP
 ========================================= */
 
 .envelope-button.is-open .envelope-open-flap {
@@ -555,38 +554,17 @@ button {
 
 
 /* =========================================
-   PAPER SLIDES OUT
-========================================= */
-
-.envelope-button.is-open .invitation-card {
-  opacity: 1;
-
-  /*
-    Hạ giấy xuống thêm một chút nữa
-    để lộ nắp thiệp rõ hơn
-  */
-  transform:
-    translate3d(
-      0,
-      calc(var(--body-offset-open) - 45px),
-      0
-    );
-
-  transition-delay: .16s;
-}
-
-
-/* =========================================
-   HIDE TAP CUE
+   OPEN STATE — HIDE TAP CUE
 ========================================= */
 
 .envelope-button.is-open .monogram-pulse {
   opacity: 0;
+  transform: translate(-50%, -50%);
 }
 
 
 /* =========================================
-   CLOSED IDLE CUE
+   IDLE CUE FOR CLOSED ENVELOPE
 ========================================= */
 
 @keyframes closedEnvelopeCue {
@@ -683,7 +661,7 @@ button {
 
 
 /* =========================================
-   REDUCED MOTION
+   ACCESSIBILITY — REDUCED MOTION
 ========================================= */
 
 @media (prefers-reduced-motion: reduce) {
