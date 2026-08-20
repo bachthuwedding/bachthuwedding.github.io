@@ -1,28 +1,17 @@
-/* =========================================================
-   BÁCH & THƯ
-   PAGE 01 INTERACTION
-   ========================================================= */
-
-
 const siteShell =
   document.getElementById("siteShell");
-
 
 const openingPage =
   document.getElementById("opening");
 
-
 const envelopeButton =
   document.getElementById("envelopeButton");
-
 
 const invitationCard =
   document.getElementById("invitationCard");
 
-
 const page02 =
   document.getElementById("page02");
-
 
 const deferredOpeningAssets =
   Array.from(
@@ -32,55 +21,33 @@ const deferredOpeningAssets =
   );
 
 
-let envelopeIsOpen =
-  false;
+let envelopeIsOpen = false;
+let envelopeIsPreparing = false;
+let page02IsOpen = false;
+
+let openingAssetsPromise = null;
 
 
-let envelopeIsPreparing =
-  false;
-
-
-let page02IsOpen =
-  false;
-
-
-let openingAssetsPromise =
-  null;
-
-
-/* =========================================================
-   LOAD ONE DEFERRED IMAGE
-========================================================= */
+/* =========================================
+   LOAD ONE IMAGE
+========================================= */
 
 function loadDeferredImage(image) {
 
   const source =
     image.dataset.src;
 
-
   if (!source) {
     return Promise.resolve();
   }
 
-
-  /*
-    Browser chỉ bắt đầu request file
-    khi src được gán ở đây.
-  */
-
   image.src =
     source;
-
 
   image.removeAttribute(
     "data-src"
   );
 
-
-  /*
-    Nếu browser hỗ trợ decode(),
-    chuẩn bị pixel trước animation.
-  */
 
   if (
     typeof image.decode === "function"
@@ -88,47 +55,29 @@ function loadDeferredImage(image) {
 
     return image
       .decode()
-      .catch(() => {
-        /*
-          Không block website nếu decode
-          thất bại trên một browser nào đó.
-        */
-      });
+      .catch(() => {});
 
   }
 
-
-  /*
-    Fallback.
-  */
 
   return new Promise(
     (resolve) => {
 
       if (image.complete) {
-
         resolve();
-
         return;
-
       }
-
 
       image.addEventListener(
         "load",
         resolve,
-        {
-          once: true
-        }
+        { once: true }
       );
-
 
       image.addEventListener(
         "error",
         resolve,
-        {
-          once: true
-        }
+        { once: true }
       );
 
     }
@@ -137,16 +86,15 @@ function loadDeferredImage(image) {
 }
 
 
-/* =========================================================
-   LOAD OPEN STATE ASSETS
-========================================================= */
+/* =========================================
+   LOAD OPEN ASSETS
+========================================= */
 
 function loadOpeningAssets() {
 
   if (openingAssetsPromise) {
     return openingAssetsPromise;
   }
-
 
   openingAssetsPromise =
     Promise.all(
@@ -155,35 +103,22 @@ function loadOpeningAssets() {
       )
     );
 
-
   return openingAssetsPromise;
 
 }
 
 
-/* =========================================================
-   BACKGROUND PRELOAD
-   AFTER FIRST SCREEN
-========================================================= */
+/* =========================================
+   LOAD AFTER FIRST SCREEN
+========================================= */
 
 function scheduleOpeningAssets() {
 
   const startLoading =
     () => {
-
       loadOpeningAssets();
-
     };
 
-
-  /*
-    requestIdleCallback:
-    đợi browser rảnh rồi tải asset mở.
-
-    timeout:
-    vẫn đảm bảo chúng được preload
-    nếu browser không idle lâu.
-  */
 
   if (
     "requestIdleCallback" in window
@@ -208,10 +143,6 @@ function scheduleOpeningAssets() {
 }
 
 
-/* =========================================================
-   FIRST SCREEN COMPLETE
-========================================================= */
-
 window.addEventListener(
   "load",
   scheduleOpeningAssets,
@@ -221,14 +152,9 @@ window.addEventListener(
 );
 
 
-/* =========================================================
-   POINTER DOWN
-
-   Nếu khách bấm rất nhanh,
-   bắt đầu tải asset ngay từ lúc
-   ngón tay chạm màn hình,
-   trước sự kiện click.
-========================================================= */
+/* =========================================
+   START LOADING ON TOUCH
+========================================= */
 
 envelopeButton.addEventListener(
   "pointerdown",
@@ -251,9 +177,9 @@ envelopeButton.addEventListener(
 );
 
 
-/* =========================================================
+/* =========================================
    OPEN ENVELOPE
-========================================================= */
+========================================= */
 
 async function openEnvelope() {
 
@@ -262,9 +188,7 @@ async function openEnvelope() {
     envelopeIsPreparing ||
     page02IsOpen
   ) {
-
     return;
-
   }
 
 
@@ -277,16 +201,6 @@ async function openEnvelope() {
     "true"
   );
 
-
-  /*
-    Đợi asset mở tải + decode xong
-    rồi mới chạy animation.
-
-    Điều này tránh:
-    - pop-in
-    - flash ảnh
-    - animation giật giữa chừng
-  */
 
   await loadOpeningAssets();
 
@@ -303,7 +217,6 @@ async function openEnvelope() {
 
   envelopeIsPreparing =
     false;
-
 
   envelopeIsOpen =
     true;
@@ -333,9 +246,9 @@ async function openEnvelope() {
 }
 
 
-/* =========================================================
+/* =========================================
    OPEN PAGE 02
-========================================================= */
+========================================= */
 
 function openPage02() {
 
@@ -343,9 +256,7 @@ function openPage02() {
     !envelopeIsOpen ||
     page02IsOpen
   ) {
-
     return;
-
   }
 
 
@@ -378,18 +289,13 @@ function openPage02() {
 }
 
 
-/* =========================================================
+/* =========================================
    ENVELOPE CLICK
-========================================================= */
+========================================= */
 
 envelopeButton.addEventListener(
   "click",
   (event) => {
-
-    /*
-      Click đầu tiên:
-      mở phong bì.
-    */
 
     if (!envelopeIsOpen) {
 
@@ -402,21 +308,15 @@ envelopeButton.addEventListener(
     }
 
 
-    /*
-      Sau khi mở:
-      click vùng đỏ không đóng lại.
-    */
-
     event.preventDefault();
 
   }
 );
 
 
-/* =========================================================
-   CARD CLICK
-   -> PAGE 02
-========================================================= */
+/* =========================================
+   PAPER CLICK -> PAGE 02
+========================================= */
 
 invitationCard.addEventListener(
   "click",
@@ -426,9 +326,7 @@ invitationCard.addEventListener(
       !envelopeIsOpen ||
       page02IsOpen
     ) {
-
       return;
-
     }
 
 
