@@ -6,10 +6,7 @@
 
   --open-flap-scale-x: 1.09;
 
-  /*
-    Vị trí tờ giấy.
-    Không dùng card-slot hay layout text nữa.
-  */
+  /* ĐÃ CHỐT */
   --card-width: 80%;
 }
 
@@ -25,12 +22,16 @@
 html,
 body {
   margin: 0;
+  width: 100%;
   min-height: 100%;
+}
+
+html {
+  background: #d8c59f;
 }
 
 body {
   background: #d8c59f;
-
   overflow: hidden;
 
   font-family:
@@ -65,18 +66,20 @@ button {
   background: var(--paper);
 
   box-shadow:
-    0 0 40px rgba(80, 46, 24, 0.12);
+    0 0 40px rgba(80, 46, 24, .12);
 }
 
 
 /* =========================================
-   BACKGROUND
+   PAGE 01
 ========================================= */
 
 .opening-page {
   position: absolute;
 
   inset: 0;
+
+  z-index: 2;
 
   overflow: hidden;
 
@@ -91,6 +94,80 @@ button {
 
   background-size:
     cover;
+
+  opacity: 1;
+
+  transform:
+    translate3d(0, 0, 0);
+
+  transition:
+    opacity .48s ease,
+    transform .58s
+      cubic-bezier(.22, .61, .36, 1);
+
+  will-change:
+    opacity,
+    transform;
+}
+
+
+/* =========================================
+   PAGE 02
+========================================= */
+
+.page-02 {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
+
+  background:
+    #ead5ad;
+
+  opacity: 0;
+
+  transform:
+    translate3d(0, 24px, 0);
+
+  pointer-events:
+    none;
+
+  transition:
+    opacity .48s ease,
+    transform .58s
+      cubic-bezier(.22, .61, .36, 1);
+
+  will-change:
+    opacity,
+    transform;
+}
+
+
+/* =========================================
+   PAGE 01 -> PAGE 02
+========================================= */
+
+.site-shell.is-page-02 .opening-page {
+  opacity: 0;
+
+  transform:
+    translate3d(0, -18px, 0);
+
+  pointer-events:
+    none;
+}
+
+.site-shell.is-page-02 .page-02 {
+  z-index: 3;
+
+  opacity: 1;
+
+  transform:
+    translate3d(0, 0, 0);
+
+  pointer-events:
+    auto;
 }
 
 
@@ -102,9 +179,7 @@ button {
   position: absolute;
 
   left: 50%;
-
-  top:
-    calc(14.5% + 18px);
+  top: calc(14.5% + 18px);
 
   width: 82%;
   max-width: 352px;
@@ -156,7 +231,7 @@ button {
   filter:
     drop-shadow(
       0 12px 9px
-      rgba(62, 24, 14, 0.16)
+      rgba(62, 24, 14, .16)
     );
 
   transition:
@@ -179,9 +254,8 @@ button {
 
   user-select: none;
 
-  pointer-events: none;
-
-  -webkit-user-drag: none;
+  -webkit-user-drag:
+    none;
 }
 
 
@@ -199,6 +273,9 @@ button {
 
   object-fit:
     contain;
+
+  pointer-events:
+    none;
 
   opacity: 1;
 
@@ -240,11 +317,13 @@ button {
   width: 100%;
   height: 100%;
 
-  overflow: visible;
+  overflow:
+    visible;
 
   opacity: 0;
 
-  pointer-events: none;
+  pointer-events:
+    none;
 
   transition:
     opacity .18s ease;
@@ -253,7 +332,6 @@ button {
 
 /* =========================================
    OPEN FLAP
-   BACK LAYER
 ========================================= */
 
 .envelope-open-flap {
@@ -262,10 +340,12 @@ button {
   left: 50%;
 
   width: 68%;
-
   height: auto;
 
   bottom: 80%;
+
+  pointer-events:
+    none;
 
   opacity: 0;
 
@@ -290,7 +370,7 @@ button {
 
 
 /* =========================================
-   OPEN BODY — BACK
+   OPEN BODY
 ========================================= */
 
 .envelope-open-body {
@@ -304,6 +384,9 @@ button {
 
   object-fit:
     contain;
+
+  pointer-events:
+    none;
 
   opacity: 1;
 
@@ -346,6 +429,9 @@ button {
 
   opacity: 0;
 
+  pointer-events:
+    none;
+
   transform:
     translate3d(
       0,
@@ -376,8 +462,21 @@ button {
 
 
 /* =========================================
+   CARD IS CLICKABLE ONLY AFTER OPEN
+========================================= */
+
+.envelope-button.is-open
+.invitation-card {
+  pointer-events:
+    auto;
+
+  cursor:
+    pointer;
+}
+
+
+/* =========================================
    OPEN FRONT
-   ABOVE THE PAPER
 ========================================= */
 
 .envelope-open-front {
@@ -392,14 +491,10 @@ button {
   object-fit:
     contain;
 
-  opacity: 1;
+  pointer-events:
+    none;
 
-  /*
-    QUAN TRỌNG:
-    Không scaleX.
-    Không left âm.
-    Không chỉnh ngang.
-  */
+  opacity: 1;
 
   transform:
     translate3d(
@@ -485,7 +580,7 @@ button {
 
 
 /* =========================================
-   CLOSED HOVER / FOCUS
+   CLOSED HOVER
 ========================================= */
 
 .envelope-button:not(.is-open):hover
@@ -549,7 +644,7 @@ button {
 
 
 /* =========================================
-   OPEN STATE — STAGE
+   OPEN STATE
 ========================================= */
 
 .envelope-button.is-open
@@ -563,23 +658,16 @@ button {
 }
 
 
-/* =========================================
-   OPEN STATE — OPEN GROUP
-========================================= */
-
 .envelope-button.is-open
 .envelope-open {
 
-  opacity: 1;
+  opacity:
+    1;
 
   transition-delay:
     .02s;
 }
 
-
-/* =========================================
-   OPEN STATE — CLOSED DISAPPEARS
-========================================= */
 
 .envelope-button.is-open
 .envelope-closed {
@@ -599,10 +687,6 @@ button {
     scale(1);
 }
 
-
-/* =========================================
-   OPEN STATE — BODY
-========================================= */
 
 .envelope-button.is-open
 .envelope-open-body {
@@ -640,10 +724,6 @@ button {
 }
 
 
-/* =========================================
-   OPEN STATE — FRONT
-========================================= */
-
 .envelope-button.is-open
 .envelope-open-front {
 
@@ -655,10 +735,6 @@ button {
     );
 }
 
-
-/* =========================================
-   OPEN STATE — FLAP
-========================================= */
 
 .envelope-button.is-open
 .envelope-open-flap {
@@ -678,10 +754,6 @@ button {
     0s;
 }
 
-
-/* =========================================
-   OPEN STATE — HIDE TAP CUE
-========================================= */
 
 .envelope-button.is-open
 .monogram-pulse {
