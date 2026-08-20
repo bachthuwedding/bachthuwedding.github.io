@@ -1,14 +1,28 @@
+/* =========================================================
+   BÁCH & THƯ
+   PAGE 01 INTERACTION
+   ========================================================= */
+
+
 const siteShell =
   document.getElementById("siteShell");
+
+
+const openingPage =
+  document.getElementById("opening");
+
 
 const envelopeButton =
   document.getElementById("envelopeButton");
 
+
 const invitationCard =
   document.getElementById("invitationCard");
 
+
 const page02 =
   document.getElementById("page02");
+
 
 const deferredOpeningAssets =
   Array.from(
@@ -18,32 +32,45 @@ const deferredOpeningAssets =
   );
 
 
-let envelopeIsOpen = false;
-let envelopeIsPreparing = false;
-let page02IsOpen = false;
-
-let openingAssetsPromise = null;
+let envelopeIsOpen =
+  false;
 
 
-/* =========================================
+let envelopeIsPreparing =
+  false;
+
+
+let page02IsOpen =
+  false;
+
+
+let openingAssetsPromise =
+  null;
+
+
+/* =========================================================
    LOAD ONE DEFERRED IMAGE
-========================================= */
+========================================================= */
 
 function loadDeferredImage(image) {
 
   const source =
     image.dataset.src;
 
+
   if (!source) {
     return Promise.resolve();
   }
 
+
   /*
-    Chỉ lúc này browser mới thực sự
-    nhận URL và bắt đầu tải file.
+    Browser chỉ bắt đầu request file
+    khi src được gán ở đây.
   */
 
-  image.src = source;
+  image.src =
+    source;
+
 
   image.removeAttribute(
     "data-src"
@@ -51,8 +78,8 @@ function loadDeferredImage(image) {
 
 
   /*
-    decode() giúp ảnh được giải mã
-    trước khi animation cần render nó.
+    Nếu browser hỗ trợ decode(),
+    chuẩn bị pixel trước animation.
   */
 
   if (
@@ -63,52 +90,63 @@ function loadDeferredImage(image) {
       .decode()
       .catch(() => {
         /*
-          Nếu decode() reject nhưng ảnh
-          vẫn tải được thì không làm
-          hỏng interaction.
+          Không block website nếu decode
+          thất bại trên một browser nào đó.
         */
       });
+
   }
 
 
   /*
-    Fallback cho browser cũ.
+    Fallback.
   */
 
   return new Promise(
     (resolve) => {
 
       if (image.complete) {
+
         resolve();
+
         return;
+
       }
+
 
       image.addEventListener(
         "load",
         resolve,
-        { once: true }
+        {
+          once: true
+        }
       );
+
 
       image.addEventListener(
         "error",
         resolve,
-        { once: true }
+        {
+          once: true
+        }
       );
 
     }
   );
+
 }
 
 
-/* =========================================
-   LOAD ALL OPENING ASSETS
-========================================= */
+/* =========================================================
+   LOAD OPEN STATE ASSETS
+========================================================= */
 
 function loadOpeningAssets() {
 
   if (openingAssetsPromise) {
     return openingAssetsPromise;
   }
+
 
   openingAssetsPromise =
     Promise.all(
@@ -117,40 +155,52 @@ function loadOpeningAssets() {
       )
     );
 
+
   return openingAssetsPromise;
+
 }
 
 
-/* =========================================
-   LOAD OPEN ASSETS AFTER FIRST SCREEN
-
-   First screen xuất hiện trước.
-   Sau đó browser rảnh mới tải phần mở.
-========================================= */
+/* =========================================================
+   BACKGROUND PRELOAD
+   AFTER FIRST SCREEN
+========================================================= */
 
 function scheduleOpeningAssets() {
 
-  const startLoading = () => {
-    loadOpeningAssets();
-  };
+  const startLoading =
+    () => {
 
+      loadOpeningAssets();
+
+    };
+
+
+  /*
+    requestIdleCallback:
+    đợi browser rảnh rồi tải asset mở.
+
+    timeout:
+    vẫn đảm bảo chúng được preload
+    nếu browser không idle lâu.
+  */
 
   if (
     "requestIdleCallback" in window
   ) {
 
-    requestIdleCallback(
+    window.requestIdleCallback(
       startLoading,
       {
-        timeout: 1200
+        timeout: 1400
       }
     );
 
   } else {
 
-    setTimeout(
+    window.setTimeout(
       startLoading,
-      350
+      500
     );
 
   }
@@ -158,25 +208,27 @@ function scheduleOpeningAssets() {
 }
 
 
-/*
-  Chỉ schedule sau khi các tài nguyên
-  của first screen đã hoàn thành.
-*/
+/* =========================================================
+   FIRST SCREEN COMPLETE
+========================================================= */
 
 window.addEventListener(
   "load",
   scheduleOpeningAssets,
-  { once: true }
+  {
+    once: true
+  }
 );
 
 
-/* =========================================
-   USER TOUCHES ENVELOPE
+/* =========================================================
+   POINTER DOWN
 
-   Nếu user thao tác rất nhanh,
-   bắt đầu download ngay từ pointerdown,
-   trước cả click.
-========================================= */
+   Nếu khách bấm rất nhanh,
+   bắt đầu tải asset ngay từ lúc
+   ngón tay chạm màn hình,
+   trước sự kiện click.
+========================================================= */
 
 envelopeButton.addEventListener(
   "pointerdown",
@@ -184,9 +236,12 @@ envelopeButton.addEventListener(
 
     if (
       !envelopeIsOpen &&
-      !envelopeIsPreparing
+      !envelopeIsPreparing &&
+      !page02IsOpen
     ) {
+
       loadOpeningAssets();
+
     }
 
   },
@@ -196,9 +251,9 @@ envelopeButton.addEventListener(
 );
 
 
-/* =========================================
+/* =========================================================
    OPEN ENVELOPE
-========================================= */
+========================================================= */
 
 async function openEnvelope() {
 
@@ -207,11 +262,15 @@ async function openEnvelope() {
     envelopeIsPreparing ||
     page02IsOpen
   ) {
+
     return;
+
   }
 
 
-  envelopeIsPreparing = true;
+  envelopeIsPreparing =
+    true;
+
 
   envelopeButton.setAttribute(
     "aria-busy",
@@ -220,20 +279,34 @@ async function openEnvelope() {
 
 
   /*
-    Đợi body / flap / front / paper
-    tải + decode xong.
+    Đợi asset mở tải + decode xong
+    rồi mới chạy animation.
 
-    Nhờ vậy animation không bị:
-    - trắng ảnh
+    Điều này tránh:
     - pop-in
-    - giật giữa chừng
+    - flash ảnh
+    - animation giật giữa chừng
   */
 
   await loadOpeningAssets();
 
 
-  envelopeIsPreparing = false;
-  envelopeIsOpen = true;
+  if (page02IsOpen) {
+
+    envelopeIsPreparing =
+      false;
+
+    return;
+
+  }
+
+
+  envelopeIsPreparing =
+    false;
+
+
+  envelopeIsOpen =
+    true;
 
 
   envelopeButton.removeAttribute(
@@ -260,9 +333,9 @@ async function openEnvelope() {
 }
 
 
-/* =========================================
-   PAGE 02
-========================================= */
+/* =========================================================
+   OPEN PAGE 02
+========================================================= */
 
 function openPage02() {
 
@@ -270,11 +343,14 @@ function openPage02() {
     !envelopeIsOpen ||
     page02IsOpen
   ) {
+
     return;
+
   }
 
 
-  page02IsOpen = true;
+  page02IsOpen =
+    true;
 
 
   siteShell.classList.add(
@@ -288,6 +364,12 @@ function openPage02() {
   );
 
 
+  openingPage.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+
   envelopeButton.setAttribute(
     "tabindex",
     "-1"
@@ -296,15 +378,22 @@ function openPage02() {
 }
 
 
-/* =========================================
+/* =========================================================
    ENVELOPE CLICK
-========================================= */
+========================================================= */
 
 envelopeButton.addEventListener(
   "click",
   (event) => {
 
+    /*
+      Click đầu tiên:
+      mở phong bì.
+    */
+
     if (!envelopeIsOpen) {
+
+      event.preventDefault();
 
       openEnvelope();
 
@@ -324,20 +413,27 @@ envelopeButton.addEventListener(
 );
 
 
-/* =========================================
-   PAPER CLICK -> PAGE 02
-========================================= */
+/* =========================================================
+   CARD CLICK
+   -> PAGE 02
+========================================================= */
 
 invitationCard.addEventListener(
   "click",
   (event) => {
 
-    if (!envelopeIsOpen) {
+    if (
+      !envelopeIsOpen ||
+      page02IsOpen
+    ) {
+
       return;
+
     }
 
 
     event.preventDefault();
+
     event.stopPropagation();
 
 
