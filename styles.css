@@ -1,10 +1,3 @@
-/* =========================================================
-   BÁCH & THƯ
-   PAGE 01 — FINAL CLEAN BASELINE
-   Optimized assets / deferred opening assets
-   ========================================================= */
-
-
 :root {
   --paper: #ead5ad;
   --page-background: #d8c59f;
@@ -19,118 +12,88 @@
 }
 
 
-/* =========================================================
+/* =========================================
    RESET
-========================================================= */
+========================================= */
 
 * {
   box-sizing: border-box;
 }
 
-
 html,
 body {
   width: 100%;
   min-height: 100%;
-
   margin: 0;
   padding: 0;
 }
 
-
 html {
-  background:
-    var(--page-background);
+  background: var(--page-background);
 }
-
 
 body {
   overflow: hidden;
-
-  background:
-    var(--page-background);
+  background: var(--page-background);
 
   font-family:
     Georgia,
     "Times New Roman",
     serif;
 
-  -webkit-tap-highlight-color:
-    transparent;
-
-  text-rendering:
-    optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
 }
-
 
 button {
   font: inherit;
 }
 
 
-/* =========================================================
+/* =========================================
    SITE SHELL
-   Master viewport = 375 × 812
-========================================================= */
+========================================= */
 
 .site-shell {
   position: relative;
 
-  width:
-    min(100vw, 430px);
+  width: min(100vw, 430px);
 
-  height:
-    100dvh;
+  height: 100dvh;
+  min-height: 100svh;
 
-  min-height:
-    100svh;
+  margin: 0 auto;
 
-  margin:
-    0 auto;
+  overflow: hidden;
 
-  overflow:
-    hidden;
-
-  background:
-    var(--paper);
+  background: var(--paper);
 
   box-shadow:
-    0 0 40px
-    rgba(80, 46, 24, .12);
+    0 0 40px rgba(80, 46, 24, .12);
 
-  isolation:
-    isolate;
+  isolation: isolate;
 }
 
 
-/* =========================================================
+/* =========================================
    PAGE 01
-========================================================= */
+========================================= */
 
 .opening-page {
   position: absolute;
-
   inset: 0;
 
   z-index: 2;
 
-  overflow:
-    hidden;
+  overflow: hidden;
 
-  background-color:
-    #ead5ad;
+  background-color: #ead5ad;
 
   background-image:
-    url("./assets/page01-bg.webp");
+    url("./assets/page01-bg-optimized.webp");
 
-  background-repeat:
-    no-repeat;
-
-  background-position:
-    center center;
-
-  background-size:
-    cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 
   opacity: 1;
 
@@ -148,27 +111,24 @@ button {
 }
 
 
-/* =========================================================
+/* =========================================
    PAGE 02
-========================================================= */
+========================================= */
 
 .page-02 {
   position: absolute;
-
   inset: 0;
 
   z-index: 1;
 
-  background:
-    #ead5ad;
+  background: #ead5ad;
 
   opacity: 0;
 
   transform:
     translate3d(0, 24px, 0);
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
   transition:
     opacity .48s ease,
@@ -181,24 +141,20 @@ button {
 }
 
 
-/* =========================================================
+/* =========================================
    PAGE 01 -> PAGE 02
-========================================================= */
+========================================= */
 
-.site-shell.is-page-02
-.opening-page {
+.site-shell.is-page-02 .opening-page {
   opacity: 0;
 
   transform:
     translate3d(0, -18px, 0);
 
-  pointer-events:
-    none;
+  pointer-events: none;
 }
 
-
-.site-shell.is-page-02
-.page-02 {
+.site-shell.is-page-02 .page-02 {
   z-index: 3;
 
   opacity: 1;
@@ -206,31 +162,24 @@ button {
   transform:
     translate3d(0, 0, 0);
 
-  pointer-events:
-    auto;
+  pointer-events: auto;
 }
 
 
-/* =========================================================
-   ENVELOPE BUTTON
-========================================================= */
+/* =========================================
+   ENVELOPE POSITION
+========================================= */
 
 .envelope-button {
   position: absolute;
 
   left: 50%;
+  top: calc(14.5% + 18px);
 
-  top:
-    calc(14.5% + 18px);
+  width: 82%;
+  max-width: 352px;
 
-  width:
-    82%;
-
-  max-width:
-    352px;
-
-  aspect-ratio:
-    2 / 3;
+  aspect-ratio: 2 / 3;
 
   transform:
     translateX(-50%);
@@ -241,34 +190,27 @@ button {
   border: 0;
   outline: none;
 
-  background:
-    transparent;
+  background: transparent;
 
-  cursor:
-    pointer;
+  cursor: pointer;
 
-  touch-action:
-    manipulation;
+  touch-action: manipulation;
 
-  overflow:
-    visible;
+  overflow: visible;
 }
 
 
-/* =========================================================
+/* =========================================
    ENVELOPE STAGE
-========================================================= */
+========================================= */
 
 .envelope-stage {
   position: absolute;
-
   inset: 0;
 
-  display:
-    block;
+  display: block;
 
-  overflow:
-    visible;
+  overflow: visible;
 
   transform:
     translateZ(0);
@@ -287,9 +229,9 @@ button {
 }
 
 
-/* =========================================================
+/* =========================================
    COMMON IMAGE RULES
-========================================================= */
+========================================= */
 
 .envelope-closed,
 .envelope-open-body,
@@ -298,43 +240,32 @@ button {
 .invitation-card {
   position: absolute;
 
-  display:
-    block;
+  display: block;
 
-  max-width:
-    none;
+  max-width: none;
 
-  user-select:
-    none;
+  user-select: none;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
-  -webkit-user-select:
-    none;
-
-  -webkit-user-drag:
-    none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
 }
 
 
-/* =========================================================
+/* =========================================
    CLOSED ENVELOPE
-========================================================= */
+========================================= */
 
 .envelope-closed {
   z-index: 30;
 
   inset: 0;
 
-  width:
-    100%;
+  width: 100%;
+  height: 100%;
 
-  height:
-    100%;
-
-  object-fit:
-    contain;
+  object-fit: contain;
 
   opacity: 1;
 
@@ -366,66 +297,46 @@ button {
 }
 
 
-/* =========================================================
+/* =========================================
    OPEN GROUP
-========================================================= */
+========================================= */
 
 .envelope-open {
   position: absolute;
-
   inset: 0;
 
   z-index: 10;
 
-  width:
-    100%;
+  width: 100%;
+  height: 100%;
 
-  height:
-    100%;
-
-  overflow:
-    visible;
+  overflow: visible;
 
   opacity: 0;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
   transition:
     opacity .18s ease;
 }
 
-
-/* Khi mở:
-   subtree được phép nhận interaction,
-   nhưng chỉ card có pointer-events auto.
-*/
-
-.envelope-button.is-open
-.envelope-open {
-  pointer-events:
-    auto;
+.envelope-button.is-open .envelope-open {
+  pointer-events: auto;
 }
 
 
-/* =========================================================
+/* =========================================
    OPEN FLAP
-   BACK LAYER
-========================================================= */
+========================================= */
 
 .envelope-open-flap {
   z-index: 9;
 
   left: 50%;
+  bottom: 80%;
 
-  bottom:
-    80%;
-
-  width:
-    68%;
-
-  height:
-    auto;
+  width: 68%;
+  height: auto;
 
   opacity: 0;
 
@@ -449,10 +360,9 @@ button {
 }
 
 
-/* =========================================================
+/* =========================================
    OPEN BODY
-   REAR BODY
-========================================================= */
+========================================= */
 
 .envelope-open-body {
   z-index: 11;
@@ -460,14 +370,10 @@ button {
   left: 0;
   top: 0;
 
-  width:
-    100%;
+  width: 100%;
+  height: 100%;
 
-  height:
-    100%;
-
-  object-fit:
-    contain;
+  object-fit: contain;
 
   opacity: 1;
 
@@ -491,9 +397,9 @@ button {
 }
 
 
-/* =========================================================
-   INVITATION CARD PNG
-========================================================= */
+/* =========================================
+   INVITATION CARD
+========================================= */
 
 .invitation-card {
   z-index: 13;
@@ -541,23 +447,15 @@ button {
     opacity;
 }
 
-
-/* Sau khi mở mới được click tờ giấy */
-
-.envelope-button.is-open
-.invitation-card {
-  pointer-events:
-    auto;
-
-  cursor:
-    pointer;
+.envelope-button.is-open .invitation-card {
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 
-/* =========================================================
+/* =========================================
    OPEN FRONT
-   FRONT LAYER ABOVE PAPER
-========================================================= */
+========================================= */
 
 .envelope-open-front {
   z-index: 14;
@@ -565,23 +463,12 @@ button {
   left: 0;
   top: 0;
 
-  width:
-    100%;
+  width: 100%;
+  height: 100%;
 
-  height:
-    100%;
-
-  object-fit:
-    contain;
+  object-fit: contain;
 
   opacity: 1;
-
-  /*
-    QUAN TRỌNG:
-    Không left âm.
-    Không scaleX.
-    Không dịch ngang.
-  */
 
   transform:
     translate3d(
@@ -603,9 +490,9 @@ button {
 }
 
 
-/* =========================================================
+/* =========================================
    TAP HINT
-========================================================= */
+========================================= */
 
 .monogram-pulse {
   position: absolute;
@@ -620,41 +507,34 @@ button {
       var(--body-offset-closed)
     );
 
-  width:
-    31%;
+  width: 31%;
 
-  aspect-ratio:
-    1;
+  aspect-ratio: 1;
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 
   transform:
     translate(-50%, -50%);
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
   transition:
     opacity .22s ease,
     transform .22s ease;
 }
 
-
 .monogram-pulse::before,
 .monogram-pulse::after {
   content: "";
 
   position: absolute;
-
   inset: 0;
 
   border:
     1.5px solid
     rgba(237, 196, 96, .52);
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 
   opacity: 0;
 
@@ -665,16 +545,14 @@ button {
     infinite;
 }
 
-
 .monogram-pulse::after {
-  animation-delay:
-    1.2s;
+  animation-delay: 1.2s;
 }
 
 
-/* =========================================================
-   CLOSED — HOVER / FOCUS
-========================================================= */
+/* =========================================
+   CLOSED HOVER
+========================================= */
 
 .envelope-button:not(.is-open):hover
 .envelope-stage,
@@ -688,14 +566,12 @@ button {
     );
 }
 
-
 .envelope-button:not(.is-open):hover
 .envelope-closed,
 
 .envelope-button:not(.is-open):focus-visible
 .envelope-closed {
-  animation-play-state:
-    paused;
+  animation-play-state: paused;
 
   transform:
     translate3d(
@@ -709,9 +585,9 @@ button {
 }
 
 
-/* =========================================================
-   CLOSED — PRESS
-========================================================= */
+/* =========================================
+   CLOSED PRESS
+========================================= */
 
 .envelope-button:not(.is-open):active
 .envelope-closed {
@@ -726,16 +602,14 @@ button {
     scale(.997);
 }
 
-
 .envelope-button:focus-visible {
-  outline:
-    none;
+  outline: none;
 }
 
 
-/* =========================================================
-   OPEN STATE — STAGE
-========================================================= */
+/* =========================================
+   OPEN STATE
+========================================= */
 
 .envelope-button.is-open
 .envelope-stage {
@@ -747,31 +621,23 @@ button {
 }
 
 
-/* =========================================================
-   OPEN STATE — GROUP
-========================================================= */
+/* OPEN GROUP */
 
 .envelope-button.is-open
 .envelope-open {
-  opacity:
-    1;
+  opacity: 1;
 
-  transition-delay:
-    .02s;
+  transition-delay: .02s;
 }
 
 
-/* =========================================================
-   OPEN STATE — HIDE CLOSED
-========================================================= */
+/* HIDE CLOSED */
 
 .envelope-button.is-open
 .envelope-closed {
-  animation:
-    none;
+  animation: none;
 
-  opacity:
-    0;
+  opacity: 0;
 
   transform:
     translate3d(
@@ -783,9 +649,7 @@ button {
 }
 
 
-/* =========================================================
-   OPEN STATE — BODY
-========================================================= */
+/* BODY */
 
 .envelope-button.is-open
 .envelope-open-body {
@@ -798,15 +662,11 @@ button {
 }
 
 
-/* =========================================================
-   OPEN STATE — PAPER
-   ĐÃ CHỐT POSITION
-========================================================= */
+/* PAPER */
 
 .envelope-button.is-open
 .invitation-card {
-  opacity:
-    1;
+  opacity: 1;
 
   transform:
     translate3d(
@@ -822,9 +682,7 @@ button {
 }
 
 
-/* =========================================================
-   OPEN STATE — FRONT
-========================================================= */
+/* FRONT */
 
 .envelope-button.is-open
 .envelope-open-front {
@@ -837,14 +695,11 @@ button {
 }
 
 
-/* =========================================================
-   OPEN STATE — FLAP
-========================================================= */
+/* FLAP */
 
 .envelope-button.is-open
 .envelope-open-flap {
-  opacity:
-    1;
+  opacity: 1;
 
   transform:
     translateX(-50%)
@@ -854,28 +709,24 @@ button {
     )
     scaleY(1);
 
-  transition-delay:
-    0s;
+  transition-delay: 0s;
 }
 
 
-/* =========================================================
-   OPEN STATE — HIDE TAP CUE
-========================================================= */
+/* HIDE TAP CUE */
 
 .envelope-button.is-open
 .monogram-pulse {
-  opacity:
-    0;
+  opacity: 0;
 
   transform:
     translate(-50%, -50%);
 }
 
 
-/* =========================================================
+/* =========================================
    CLOSED IDLE ANIMATION
-========================================================= */
+========================================= */
 
 @keyframes closedEnvelopeCue {
 
@@ -892,7 +743,6 @@ button {
       rotate(0deg);
   }
 
-
   70% {
     transform:
       translate3d(
@@ -905,7 +755,6 @@ button {
       scale(1.012)
       rotate(0deg);
   }
-
 
   78% {
     transform:
@@ -920,7 +769,6 @@ button {
       rotate(-.35deg);
   }
 
-
   86% {
     transform:
       translate3d(
@@ -933,7 +781,6 @@ button {
       scale(1.012)
       rotate(.35deg);
   }
-
 
   94% {
     transform:
@@ -948,46 +795,35 @@ button {
 }
 
 
-/* =========================================================
+/* =========================================
    TAP RING
-========================================================= */
+========================================= */
 
 @keyframes tapRing {
 
   0% {
-    transform:
-      scale(.52);
-
-    opacity:
-      0;
+    transform: scale(.52);
+    opacity: 0;
   }
-
 
   18% {
-    opacity:
-      .5;
+    opacity: .5;
   }
-
 
   72% {
-    opacity:
-      .14;
+    opacity: .14;
   }
 
-
   100% {
-    transform:
-      scale(1.18);
-
-    opacity:
-      0;
+    transform: scale(1.18);
+    opacity: 0;
   }
 }
 
 
-/* =========================================================
-   MOBILE MASTER RATIO
-========================================================= */
+/* =========================================
+   MOBILE
+========================================= */
 
 @media (max-aspect-ratio: 375/812) {
 
@@ -999,35 +835,28 @@ button {
 }
 
 
-/* =========================================================
+/* =========================================
    DESKTOP PREVIEW
-========================================================= */
+========================================= */
 
 @media (min-width: 431px) {
 
   body {
-    display:
-      grid;
-
-    place-items:
-      center;
+    display: grid;
+    place-items: center;
   }
 
-
   .site-shell {
-    height:
-      min(100dvh, 932px);
-
-    aspect-ratio:
-      375 / 812;
+    height: min(100dvh, 932px);
+    aspect-ratio: 375 / 812;
   }
 
 }
 
 
-/* =========================================================
+/* =========================================
    REDUCED MOTION
-========================================================= */
+========================================= */
 
 @media (prefers-reduced-motion: reduce) {
 
