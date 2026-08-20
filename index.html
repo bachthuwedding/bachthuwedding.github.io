@@ -13,7 +13,11 @@
 
   <title>Bách & Thư</title>
 
-  <!-- Chỉ preload những gì cần cho first screen -->
+  <!-- =====================================
+       FIRST SCREEN ONLY
+       Chỉ preload 2 asset thực sự cần ngay
+  ====================================== -->
+
   <link
     rel="preload"
     href="./assets/page01-bg.webp"
@@ -62,51 +66,47 @@
 
           <!-- =========================
                OPEN STATE
+
+               QUAN TRỌNG:
+               Không có src lúc tải trang.
+               JS sẽ nạp sau first screen.
           ========================== -->
 
           <span class="envelope-open">
 
-            <!-- Nắp phía sau -->
             <img
-              class="envelope-open-flap"
-              src="./assets/envelope-open-flap.png"
+              class="envelope-open-flap deferred-opening-asset"
+              data-src="./assets/envelope-open-flap.png"
               alt=""
               draggable="false"
               decoding="async"
-              fetchpriority="low"
             />
 
-            <!-- Thân phía sau -->
             <img
-              class="envelope-open-body"
-              src="./assets/envelope-open-body.png"
+              class="envelope-open-body deferred-opening-asset"
+              data-src="./assets/envelope-open-body.png"
               alt=""
               draggable="false"
               decoding="async"
-              fetchpriority="low"
             />
 
-            <!-- TỜ GIẤY PNG -->
             <img
-              class="invitation-card"
+              class="invitation-card deferred-opening-asset"
               id="invitationCard"
-              src="./assets/invitation-card.png"
+              data-src="./assets/invitation-card.png"
               alt=""
               draggable="false"
               decoding="async"
-              fetchpriority="low"
               width="900"
               height="1200"
             />
 
-            <!-- Mặt trước phong bì -->
             <img
-              class="envelope-open-front"
-              src="./assets/envelope-open-front.png"
+              class="envelope-open-front deferred-opening-asset"
+              data-src="./assets/envelope-open-front.png"
               alt=""
               draggable="false"
               decoding="async"
-              fetchpriority="low"
             />
 
           </span>
@@ -114,6 +114,7 @@
 
           <!-- =========================
                CLOSED STATE
+               Đây mới là asset cần ngay
           ========================== -->
 
           <img
@@ -121,7 +122,7 @@
             src="./assets/envelope-closed.png"
             alt=""
             draggable="false"
-            decoding="async"
+            loading="eager"
             fetchpriority="high"
           />
 
@@ -139,7 +140,6 @@
 
     <!-- =====================================
          PAGE 02
-         Tạm để trống, sẽ design tiếp sau
     ====================================== -->
 
     <section
