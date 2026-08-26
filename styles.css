@@ -9,6 +9,12 @@
 
   /* ĐÃ CHỐT */
   --card-width: 80%;
+
+  /* PAGE 02 */
+  --invitation-paper: #f0ddb8;
+  --invitation-green: #284f3c;
+  --invitation-red: #9d2e18;
+  --invitation-gold: #a57a35;
 }
 
 
@@ -112,7 +118,7 @@ button {
 
 
 /* =========================================
-   PAGE 02
+   PAGE 02 WRAPPER
 ========================================= */
 
 .page-02 {
@@ -121,7 +127,15 @@ button {
 
   z-index: 1;
 
-  background: #ead5ad;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  overscroll-behavior-y: contain;
+
+  scrollbar-width: none;
+
+  background:
+    var(--invitation-paper);
 
   opacity: 0;
 
@@ -138,6 +152,589 @@ button {
   will-change:
     opacity,
     transform;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.page-02::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* =========================================
+   INVITATION FLOW
+
+   Page 03 / Page 04...
+   sẽ nằm tiếp trong flow này.
+========================================= */
+
+.invitation-flow {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 100%;
+
+  overflow: hidden;
+
+  background:
+    var(--invitation-paper);
+
+  isolation: isolate;
+}
+
+
+/* =========================================
+   SHARED FRAME
+
+   Không thuộc riêng Page 02.
+
+   Border-image giúp giữ ornament ở đầu/cuối,
+   trong khi cạnh dọc có thể kéo dài khi
+   invitation-flow có nhiều page hơn.
+========================================= */
+
+.shared-invitation-frame {
+  position: absolute;
+  inset: 0;
+
+  z-index: 50;
+
+  border:
+    34px solid transparent;
+
+  border-image-slice: 78;
+
+  border-image-width:
+    34px;
+
+  border-image-repeat:
+    stretch;
+
+  border-image-source:
+    none;
+
+  pointer-events: none;
+}
+
+.page-02.is-assets-ready
+.shared-invitation-frame {
+  border-image-source:
+    url("./assets/shared-frame.png");
+}
+
+
+/* =========================================
+   GENERIC INVITATION PAGE
+
+   375 × 812 là master ratio.
+========================================= */
+
+.invitation-page {
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio:
+    375 / 812;
+
+  overflow: hidden;
+}
+
+
+/* =========================================
+   PAGE 02
+========================================= */
+
+.page02-layout {
+  z-index: 1;
+
+  container-type:
+    inline-size;
+
+  background:
+    var(--invitation-paper);
+}
+
+
+/* =========================================
+   PAGE 02 COMMON ASSET
+========================================= */
+
+.p02-asset,
+.p02-cloud-sprite {
+  display: block;
+
+  position: absolute;
+
+  max-width: none;
+
+  height: auto;
+
+  user-select: none;
+
+  pointer-events: none;
+
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+
+  transform:
+    translateZ(0);
+}
+
+
+/* =========================================
+   PAGE 02 CLOUDS
+========================================= */
+
+.p02-cloud {
+  position: absolute;
+
+  z-index: 3;
+
+  display: block;
+
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+
+/* LARGE LEFT CLOUD */
+
+.p02-cloud--01 {
+  left: 1.5%;
+  top: 21.2%;
+
+  width: 23%;
+
+  aspect-ratio:
+    593 / 369;
+}
+
+.p02-cloud--01
+.p02-cloud-sprite {
+  left: -3.9%;
+  top: -67.5%;
+
+  width: 211.5%;
+}
+
+
+/* LARGE RIGHT CLOUD */
+
+.p02-cloud--02 {
+  right: 0;
+  top: 22.8%;
+
+  width: 24%;
+
+  aspect-ratio:
+    607 / 397;
+}
+
+.p02-cloud--02
+.p02-cloud-sprite {
+  left: -105.1%;
+  top: -72.3%;
+
+  width: 206.6%;
+}
+
+
+/* SMALL LEFT CLOUD */
+
+.p02-cloud--03 {
+  left: 3.8%;
+  top: 31.8%;
+
+  width: 17.5%;
+
+  aspect-ratio:
+    466 / 249;
+}
+
+.p02-cloud--03
+.p02-cloud-sprite {
+  left: -10.3%;
+  top: -314.5%;
+
+  width: 269.1%;
+}
+
+
+/* SMALL RIGHT CLOUD */
+
+.p02-cloud--04 {
+  right: 10.5%;
+  top: 42.5%;
+
+  width: 16.5%;
+
+  aspect-ratio:
+    458 / 239;
+}
+
+.p02-cloud--04
+.p02-cloud-sprite {
+  left: -164.6%;
+  top: -349.4%;
+
+  width: 273.8%;
+}
+
+
+/* =========================================
+   PAGE 02 BAMBOO
+========================================= */
+
+.p02-bamboo {
+  z-index: 4;
+}
+
+
+/* LEFT */
+
+.p02-bamboo-left {
+  left: -5.5%;
+  bottom: -1%;
+
+  width: 43%;
+}
+
+
+/* RIGHT */
+
+.p02-bamboo-right {
+  right: -4.5%;
+  bottom: -1%;
+
+  width: 43%;
+}
+
+
+/* =========================================
+   PAGE 02 TEXT
+========================================= */
+
+.p02-invite,
+.p02-to,
+.p02-wedding-title,
+.p02-couple-names,
+.p02-date {
+  position: absolute;
+
+  z-index: 10;
+
+  left: 50%;
+
+  width: 80%;
+
+  margin: 0;
+
+  text-align: center;
+
+  transform:
+    translateX(-50%);
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-weight: 400;
+
+  color:
+    var(--invitation-green);
+}
+
+
+/* TRÂN TRỌNG KÍNH MỜI */
+
+.p02-invite {
+  top: 10.8%;
+
+  font-size:
+    3.25cqw;
+
+  line-height: 1.2;
+
+  letter-spacing:
+    .015em;
+}
+
+
+/* DIVIDER */
+
+.p02-divider {
+  position: absolute;
+
+  z-index: 10;
+
+  left: 50%;
+  top: 20.25%;
+
+  width: 56%;
+
+  height: 1px;
+
+  transform:
+    translateX(-50%);
+
+  background:
+    rgba(150, 108, 46, .78);
+}
+
+.p02-divider::after {
+  content: "•••";
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  padding:
+    0 4px;
+
+  transform:
+    translate(-50%, -56%);
+
+  background:
+    var(--invitation-paper);
+
+  color:
+    var(--invitation-gold);
+
+  font-size:
+    2.2cqw;
+
+  line-height: 1;
+
+  letter-spacing:
+    .02em;
+}
+
+
+/* TỚI */
+
+.p02-to {
+  top: 23.7%;
+
+  font-size:
+    4.55cqw;
+
+  line-height: 1;
+}
+
+
+/* LỄ THÀNH HÔN */
+
+.p02-wedding-title {
+  top: 29.1%;
+
+  font-size:
+    4.05cqw;
+
+  line-height: 1;
+
+  letter-spacing:
+    .01em;
+}
+
+
+/* BÁCH & THƯ */
+
+.p02-couple-names {
+  top: 34.5%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  font-weight: 400;
+
+  line-height: .92;
+
+  color:
+    var(--invitation-red);
+}
+
+.p02-name {
+  display: block;
+
+  font-size:
+    12.7cqw;
+}
+
+.p02-ampersand {
+  display: block;
+
+  margin:
+    .7cqw 0 1.2cqw;
+
+  font-size:
+    8.9cqw;
+
+  line-height: .9;
+
+  color:
+    var(--invitation-green);
+}
+
+
+/* DATE */
+
+.p02-date {
+  top: 50.9%;
+
+  font-size:
+    4.25cqw;
+
+  line-height: 1;
+
+  color:
+    var(--invitation-red);
+
+  letter-spacing:
+    .025em;
+}
+
+
+/* DATE ORNAMENT */
+
+.p02-date-divider {
+  position: absolute;
+
+  z-index: 10;
+
+  left: 50%;
+  top: 54.15%;
+
+  width: 13.5%;
+
+  height: 1px;
+
+  transform:
+    translateX(-50%);
+
+  background:
+    rgba(150, 108, 46, .60);
+}
+
+.p02-date-divider::after {
+  content: "◇";
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  padding:
+    0 3px;
+
+  transform:
+    translate(-50%, -51%);
+
+  background:
+    var(--invitation-paper);
+
+  color:
+    var(--invitation-gold);
+
+  font-size:
+    2.4cqw;
+
+  line-height: 1;
+}
+
+
+/* =========================================
+   PAGE 02 FLOWERS
+========================================= */
+
+.p02-flowers {
+  z-index: 5;
+
+  left: 13%;
+  top: 54.5%;
+
+  width: 74%;
+
+  opacity: .92;
+}
+
+
+/* =========================================
+   PAGE 02 PROCESSION
+========================================= */
+
+.p02-flag-bearer,
+.p02-couple,
+.p02-lion-dance,
+.p02-drummer {
+  z-index: 20;
+
+  transform-origin:
+    50% 100%;
+}
+
+
+/* FLAG */
+
+.p02-flag-bearer {
+  left: 2.2%;
+  bottom: 7.5%;
+
+  width: 27.5%;
+}
+
+
+/* COUPLE */
+
+.p02-couple {
+  left: 20.5%;
+  bottom: 6.8%;
+
+  width: 28.5%;
+}
+
+
+/* LION */
+
+.p02-lion-dance {
+  left: 48%;
+  bottom: 8.2%;
+
+  width: 37%;
+}
+
+
+/* DRUMMER */
+
+.p02-drummer {
+  right: 1.8%;
+  bottom: 8%;
+
+  width: 18.5%;
+}
+
+
+/* =========================================
+   PAGE 02 BOTTOM ORNAMENT
+========================================= */
+
+.p02-bottom-ornament {
+  z-index: 60;
+
+  left: 50%;
+  bottom: -4.2%;
+
+  width: 73%;
+
+  transform:
+    translateX(-50%);
 }
 
 
@@ -145,7 +742,8 @@ button {
    PAGE 01 -> PAGE 02
 ========================================= */
 
-.site-shell.is-page-02 .opening-page {
+.site-shell.is-page-02
+.opening-page {
   opacity: 0;
 
   transform:
@@ -154,7 +752,8 @@ button {
   pointer-events: none;
 }
 
-.site-shell.is-page-02 .page-02 {
+.site-shell.is-page-02
+.page-02 {
   z-index: 3;
 
   opacity: 1;
@@ -320,7 +919,8 @@ button {
     opacity .18s ease;
 }
 
-.envelope-button.is-open .envelope-open {
+.envelope-button.is-open
+.envelope-open {
   pointer-events: auto;
 }
 
@@ -447,7 +1047,8 @@ button {
     opacity;
 }
 
-.envelope-button.is-open .invitation-card {
+.envelope-button.is-open
+.invitation-card {
   pointer-events: auto;
   cursor: pointer;
 }
@@ -849,6 +1450,50 @@ button {
   .site-shell {
     height: min(100dvh, 932px);
     aspect-ratio: 375 / 812;
+  }
+
+}
+
+
+/* =========================================
+   CQU FALLBACK
+
+   Nếu browser quá cũ không hỗ trợ
+   container query units.
+========================================= */
+
+@supports not (font-size: 1cqw) {
+
+  .p02-invite {
+    font-size: 12px;
+  }
+
+  .p02-divider::after {
+    font-size: 8px;
+  }
+
+  .p02-to {
+    font-size: 17px;
+  }
+
+  .p02-wedding-title {
+    font-size: 15px;
+  }
+
+  .p02-name {
+    font-size: 48px;
+  }
+
+  .p02-ampersand {
+    font-size: 33px;
+  }
+
+  .p02-date {
+    font-size: 16px;
+  }
+
+  .p02-date-divider::after {
+    font-size: 9px;
   }
 
 }
