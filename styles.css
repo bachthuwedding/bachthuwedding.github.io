@@ -7,14 +7,22 @@
 
   --open-flap-scale-x: 1.09;
 
-  /* ĐÃ CHỐT */
+  /* ĐÃ CHỐT PAGE 01 */
   --card-width: 80%;
 
   /* PAGE 02 */
-  --invitation-paper: #f0ddb8;
-  --invitation-green: #284f3c;
+  --invitation-paper: #f3dfc1;
+  --invitation-green: #28513f;
   --invitation-red: #9d2e18;
-  --invitation-gold: #a57a35;
+  --invitation-gold: #a77e3e;
+
+  /*
+    Page 02 là một viewport.
+
+    Đây là điểm sửa quan trọng nhất:
+    không lấy chiều cao page từ width nữa.
+  */
+  --invitation-page-height: 100dvh;
 }
 
 
@@ -40,14 +48,17 @@ html {
 
 body {
   overflow: hidden;
-  background: var(--page-background);
+
+  background:
+    var(--page-background);
 
   font-family:
     Georgia,
     "Times New Roman",
     serif;
 
-  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color:
+    transparent;
 }
 
 button {
@@ -62,21 +73,30 @@ button {
 .site-shell {
   position: relative;
 
-  width: min(100vw, 430px);
+  width:
+    min(100vw, 430px);
 
-  height: 100dvh;
-  min-height: 100svh;
+  height:
+    100dvh;
 
-  margin: 0 auto;
+  min-height:
+    100svh;
 
-  overflow: hidden;
+  margin:
+    0 auto;
 
-  background: var(--paper);
+  overflow:
+    hidden;
+
+  background:
+    var(--paper);
 
   box-shadow:
-    0 0 40px rgba(80, 46, 24, .12);
+    0 0 40px
+    rgba(80, 46, 24, .12);
 
-  isolation: isolate;
+  isolation:
+    isolate;
 }
 
 
@@ -92,14 +112,20 @@ button {
 
   overflow: hidden;
 
-  background-color: #ead5ad;
+  background-color:
+    #ead5ad;
 
   background-image:
     url("./assets/page01-bg-optimized.webp");
 
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
+  background-repeat:
+    no-repeat;
+
+  background-position:
+    center center;
+
+  background-size:
+    cover;
 
   opacity: 1;
 
@@ -127,12 +153,11 @@ button {
 
   z-index: 1;
 
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow-x:
+    hidden;
 
-  overscroll-behavior-y: contain;
-
-  scrollbar-width: none;
+  overflow-y:
+    auto;
 
   background:
     var(--invitation-paper);
@@ -142,7 +167,8 @@ button {
   transform:
     translate3d(0, 24px, 0);
 
-  pointer-events: none;
+  pointer-events:
+    none;
 
   transition:
     opacity .48s ease,
@@ -153,7 +179,14 @@ button {
     opacity,
     transform;
 
-  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y:
+    contain;
+
+  -webkit-overflow-scrolling:
+    touch;
+
+  scrollbar-width:
+    none;
 }
 
 .page-02::-webkit-scrollbar {
@@ -164,8 +197,8 @@ button {
 /* =========================================
    INVITATION FLOW
 
-   Page 03 / Page 04...
-   sẽ nằm tiếp trong flow này.
+   Page 03, 04... sẽ tiếp tục nằm
+   trong flow này.
 ========================================= */
 
 .invitation-flow {
@@ -173,61 +206,62 @@ button {
 
   width: 100%;
 
-  min-height: 100%;
+  min-height:
+    var(--invitation-page-height);
 
-  overflow: hidden;
+  overflow:
+    hidden;
 
   background:
     var(--invitation-paper);
 
-  isolation: isolate;
+  isolation:
+    isolate;
 }
 
 
-/* =========================================
-   SHARED FRAME
+/*
+  Hai rail đỏ này kéo xuyên invitation-flow.
 
-   Không thuộc riêng Page 02.
+  Khi thêm Page 03, Page 04,
+  chúng tự kéo dài xuống dưới.
+*/
+.invitation-flow::before,
+.invitation-flow::after {
+  content: "";
 
-   Border-image giúp giữ ornament ở đầu/cuối,
-   trong khi cạnh dọc có thể kéo dài khi
-   invitation-flow có nhiều page hơn.
-========================================= */
-
-.shared-invitation-frame {
   position: absolute;
-  inset: 0;
 
-  z-index: 50;
+  top: 0;
+  bottom: 0;
 
-  border:
-    34px solid transparent;
+  z-index: 72;
 
-  border-image-slice: 78;
+  width: 1px;
 
-  border-image-width:
-    34px;
+  background:
+    rgba(128, 42, 25, .68);
 
-  border-image-repeat:
-    stretch;
-
-  border-image-source:
+  pointer-events:
     none;
-
-  pointer-events: none;
 }
 
-.page-02.is-assets-ready
-.shared-invitation-frame {
-  border-image-source:
-    url("./assets/shared-frame.png");
+.invitation-flow::before {
+  left: 2.4%;
+}
+
+.invitation-flow::after {
+  right: 2.4%;
 }
 
 
 /* =========================================
-   GENERIC INVITATION PAGE
+   INVITATION PAGE
 
-   375 × 812 là master ratio.
+   QUAN TRỌNG:
+   Không còn aspect-ratio: 375 / 812.
+
+   Page luôn fit theo viewport.
 ========================================= */
 
 .invitation-page {
@@ -235,10 +269,14 @@ button {
 
   width: 100%;
 
-  aspect-ratio:
-    375 / 812;
+  height:
+    var(--invitation-page-height);
 
-  overflow: hidden;
+  min-height:
+    620px;
+
+  overflow:
+    hidden;
 }
 
 
@@ -258,17 +296,50 @@ button {
 
 
 /* =========================================
-   PAGE 02 COMMON ASSET
+   FRAME
+
+   Dùng asset thật trực tiếp.
 ========================================= */
 
-.p02-asset,
-.p02-cloud-sprite {
+.shared-invitation-frame {
+  position: absolute;
+
+  z-index: 80;
+
+  inset: 0;
+
   display: block;
 
-  position: absolute;
+  width: 100%;
+  height: 100%;
 
   max-width: none;
 
+  object-fit: fill;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================
+   COMMON PAGE 02 IMAGE
+========================================= */
+
+.p02-asset,
+.p02-cloud-sprite,
+.p02-procession-item {
+  position: absolute;
+
+  display: block;
+
+  max-width: none;
+
+  width: auto;
   height: auto;
 
   user-select: none;
@@ -277,20 +348,19 @@ button {
 
   -webkit-user-select: none;
   -webkit-user-drag: none;
-
-  transform:
-    translateZ(0);
 }
 
 
 /* =========================================
-   PAGE 02 CLOUDS
+   CLOUDS
+
+   Thu nhỏ nhẹ so với bản trước.
 ========================================= */
 
 .p02-cloud {
   position: absolute;
 
-  z-index: 3;
+  z-index: 7;
 
   display: block;
 
@@ -300,13 +370,13 @@ button {
 }
 
 
-/* LARGE LEFT CLOUD */
+/* LEFT LARGE */
 
 .p02-cloud--01 {
-  left: 1.5%;
-  top: 21.2%;
+  left: 1.7%;
+  top: 20.8%;
 
-  width: 23%;
+  width: 20.5%;
 
   aspect-ratio:
     593 / 369;
@@ -321,13 +391,13 @@ button {
 }
 
 
-/* LARGE RIGHT CLOUD */
+/* RIGHT LARGE */
 
 .p02-cloud--02 {
-  right: 0;
-  top: 22.8%;
+  right: -.5%;
+  top: 22.5%;
 
-  width: 24%;
+  width: 21.5%;
 
   aspect-ratio:
     607 / 397;
@@ -342,13 +412,13 @@ button {
 }
 
 
-/* SMALL LEFT CLOUD */
+/* LEFT SMALL */
 
 .p02-cloud--03 {
-  left: 3.8%;
-  top: 31.8%;
+  left: 3.5%;
+  top: 31.7%;
 
-  width: 17.5%;
+  width: 15%;
 
   aspect-ratio:
     466 / 249;
@@ -363,13 +433,13 @@ button {
 }
 
 
-/* SMALL RIGHT CLOUD */
+/* RIGHT SMALL */
 
 .p02-cloud--04 {
-  right: 10.5%;
-  top: 42.5%;
+  right: 10.8%;
+  top: 42.2%;
 
-  width: 16.5%;
+  width: 14.8%;
 
   aspect-ratio:
     458 / 239;
@@ -385,36 +455,49 @@ button {
 
 
 /* =========================================
-   PAGE 02 BAMBOO
+   BAMBOO
+
+   Không neo bottom nữa.
+   Dùng top để bố cục không bị tụt.
 ========================================= */
 
 .p02-bamboo {
-  z-index: 4;
+  z-index: 12;
+
+  height: auto;
+
+  transform:
+    translateZ(0);
 }
 
 
 /* LEFT */
 
 .p02-bamboo-left {
-  left: -5.5%;
-  bottom: -1%;
+  left: -4.5%;
 
-  width: 43%;
+  top: 36.5%;
+
+  width: 36.5%;
 }
 
 
 /* RIGHT */
 
 .p02-bamboo-right {
-  right: -4.5%;
-  bottom: -1%;
+  right: -3.8%;
 
-  width: 43%;
+  top: 32.5%;
+
+  width: 34.5%;
 }
 
 
 /* =========================================
-   PAGE 02 TEXT
+   TYPOGRAPHY
+
+   Times New Roman gần tỷ lệ chữ
+   reference hơn Georgia.
 ========================================= */
 
 .p02-invite,
@@ -424,11 +507,11 @@ button {
 .p02-date {
   position: absolute;
 
-  z-index: 10;
+  z-index: 30;
 
   left: 50%;
 
-  width: 80%;
+  width: 82%;
 
   margin: 0;
 
@@ -438,8 +521,8 @@ button {
     translateX(-50%);
 
   font-family:
-    Georgia,
     "Times New Roman",
+    Times,
     serif;
 
   font-weight: 400;
@@ -449,30 +532,34 @@ button {
 }
 
 
-/* TRÂN TRỌNG KÍNH MỜI */
+/* =========================================
+   INVITE
+========================================= */
 
 .p02-invite {
-  top: 10.8%;
+  top: 10.5%;
 
   font-size:
-    3.25cqw;
+    2.75cqw;
 
-  line-height: 1.2;
+  line-height: 1.15;
 
   letter-spacing:
     .015em;
 }
 
 
-/* DIVIDER */
+/* =========================================
+   TOP DIVIDER
+========================================= */
 
 .p02-divider {
   position: absolute;
 
-  z-index: 10;
+  z-index: 30;
 
   left: 50%;
-  top: 20.25%;
+  top: 19.7%;
 
   width: 56%;
 
@@ -482,7 +569,7 @@ button {
     translateX(-50%);
 
   background:
-    rgba(150, 108, 46, .78);
+    rgba(153, 111, 52, .72);
 }
 
 .p02-divider::after {
@@ -506,34 +593,38 @@ button {
     var(--invitation-gold);
 
   font-size:
-    2.2cqw;
+    1.8cqw;
 
   line-height: 1;
 
   letter-spacing:
-    .02em;
+    .04em;
 }
 
 
-/* TỚI */
+/* =========================================
+   TO
+========================================= */
 
 .p02-to {
-  top: 23.7%;
+  top: 23.5%;
 
   font-size:
-    4.55cqw;
+    3.75cqw;
 
   line-height: 1;
 }
 
 
-/* LỄ THÀNH HÔN */
+/* =========================================
+   WEDDING TITLE
+========================================= */
 
 .p02-wedding-title {
-  top: 29.1%;
+  top: 29%;
 
   font-size:
-    4.05cqw;
+    3.25cqw;
 
   line-height: 1;
 
@@ -542,10 +633,12 @@ button {
 }
 
 
-/* BÁCH & THƯ */
+/* =========================================
+   NAMES
+========================================= */
 
 .p02-couple-names {
-  top: 34.5%;
+  top: 34.6%;
 
   display: flex;
 
@@ -553,44 +646,48 @@ button {
 
   align-items: center;
 
-  font-weight: 400;
-
-  line-height: .92;
-
   color:
     var(--invitation-red);
+
+  line-height: .89;
 }
 
 .p02-name {
   display: block;
 
   font-size:
-    12.7cqw;
+    9.2cqw;
+
+  font-weight:
+    400;
 }
 
 .p02-ampersand {
   display: block;
 
   margin:
-    .7cqw 0 1.2cqw;
+    .45cqw 0 .65cqw;
 
   font-size:
-    8.9cqw;
+    6.3cqw;
 
-  line-height: .9;
+  line-height:
+    .92;
 
   color:
     var(--invitation-green);
 }
 
 
-/* DATE */
+/* =========================================
+   DATE
+========================================= */
 
 .p02-date {
-  top: 50.9%;
+  top: 50.7%;
 
   font-size:
-    4.25cqw;
+    3.3cqw;
 
   line-height: 1;
 
@@ -598,19 +695,21 @@ button {
     var(--invitation-red);
 
   letter-spacing:
-    .025em;
+    .035em;
 }
 
 
-/* DATE ORNAMENT */
+/* =========================================
+   DATE DIVIDER
+========================================= */
 
 .p02-date-divider {
   position: absolute;
 
-  z-index: 10;
+  z-index: 30;
 
   left: 50%;
-  top: 54.15%;
+  top: 53.2%;
 
   width: 13.5%;
 
@@ -620,7 +719,7 @@ button {
     translateX(-50%);
 
   background:
-    rgba(150, 108, 46, .60);
+    rgba(153, 111, 52, .56);
 }
 
 .p02-date-divider::after {
@@ -644,94 +743,285 @@ button {
     var(--invitation-gold);
 
   font-size:
-    2.4cqw;
+    1.85cqw;
 
   line-height: 1;
 }
 
 
 /* =========================================
-   PAGE 02 FLOWERS
+   FLOWER SOURCE
+
+   Chỉ dùng để preload file.
 ========================================= */
 
-.p02-flowers {
-  z-index: 5;
+.p02-flower-source {
+  position: absolute;
 
-  left: 13%;
-  top: 54.5%;
+  width: 1px;
+  height: 1px;
 
-  width: 74%;
+  left: -9999px;
+  top: -9999px;
 
-  opacity: .92;
+  opacity: 0;
+
+  pointer-events:
+    none;
 }
 
 
 /* =========================================
-   PAGE 02 PROCESSION
+   FLOWER DRIFT
+
+   Không dùng cả sprite.
+
+   Chỉ render 3 vùng crop nhỏ.
 ========================================= */
 
-.p02-flag-bearer,
-.p02-couple,
-.p02-lion-dance,
-.p02-drummer {
-  z-index: 20;
+.p02-flower-drift {
+  position: absolute;
+
+  z-index: 16;
+
+  inset: 0;
+
+  pointer-events:
+    none;
+}
+
+
+.p02-flower-crop {
+  position: absolute;
+
+  display: block;
+
+  overflow: hidden;
+
+  opacity: .31;
+
+  filter:
+    blur(.45px)
+    saturate(.86);
+
+  transform:
+    translateZ(0);
+
+  -webkit-mask-image:
+    linear-gradient(
+      to right,
+      transparent,
+      #000 13%,
+      #000 87%,
+      transparent
+    );
+
+  mask-image:
+    linear-gradient(
+      to right,
+      transparent,
+      #000 13%,
+      #000 87%,
+      transparent
+    );
+
+  background-repeat:
+    no-repeat;
+
+  background-color:
+    transparent;
+}
+
+
+/*
+  Chỉ apply background sau khi
+  source đã preload xong.
+*/
+
+.page-02.is-assets-ready
+.p02-flower-crop {
+  background-image:
+    url("./assets/page02-flowers.png");
+}
+
+
+/* FLOWER 01 */
+
+.p02-flower-crop--01 {
+  left: 18%;
+
+  top: 56.8%;
+
+  width: 25%;
+
+  height: 7.5%;
+
+  background-size:
+    285% auto;
+
+  background-position:
+    3% 2%;
+
+  transform:
+    rotate(-3deg);
+}
+
+
+/* FLOWER 02 */
+
+.p02-flower-crop--02 {
+  right: 13%;
+
+  top: 61.5%;
+
+  width: 27%;
+
+  height: 7.8%;
+
+  opacity: .27;
+
+  background-size:
+    310% auto;
+
+  background-position:
+    77% 37%;
+
+  transform:
+    rotate(4deg);
+}
+
+
+/* FLOWER 03 */
+
+.p02-flower-crop--03 {
+  left: 39%;
+
+  top: 66.3%;
+
+  width: 20%;
+
+  height: 6.5%;
+
+  opacity: .23;
+
+  background-size:
+    330% auto;
+
+  background-position:
+    52% 88%;
+
+  transform:
+    rotate(-5deg);
+}
+
+
+/* =========================================
+   PROCESSION GROUP
+
+   Đây là thay đổi lớn:
+
+   Các nhân vật scale theo chiều cao
+   của cùng một group thay vì mỗi cái
+   lấy một width khác nhau.
+========================================= */
+
+.p02-procession {
+  position: absolute;
+
+  z-index: 28;
+
+  left: 0;
+
+  bottom: 5.2%;
+
+  width: 100%;
+
+  height: 29%;
+
+  pointer-events:
+    none;
+}
+
+
+.p02-procession-item {
+  bottom: 0;
+
+  width: auto;
+
+  max-width:
+    none;
+
+  object-fit:
+    contain;
 
   transform-origin:
     50% 100%;
+
+  transform:
+    translateZ(0);
 }
 
 
 /* FLAG */
 
 .p02-flag-bearer {
-  left: 2.2%;
-  bottom: 7.5%;
+  z-index: 21;
 
-  width: 27.5%;
+  left: 2.2%;
+
+  height: 72%;
 }
 
 
 /* COUPLE */
 
 .p02-couple {
-  left: 20.5%;
-  bottom: 6.8%;
+  z-index: 24;
 
-  width: 28.5%;
+  left: 19%;
+
+  height: 76%;
 }
 
 
-/* LION */
+/* LION + UMBRELLA */
 
 .p02-lion-dance {
-  left: 48%;
-  bottom: 8.2%;
+  z-index: 23;
 
-  width: 37%;
+  left: 42%;
+
+  bottom: .5%;
+
+  height: 64%;
 }
 
 
 /* DRUMMER */
 
 .p02-drummer {
-  right: 1.8%;
-  bottom: 8%;
+  z-index: 22;
 
-  width: 18.5%;
+  right: 1.5%;
+
+  height: 66%;
 }
 
 
 /* =========================================
-   PAGE 02 BOTTOM ORNAMENT
+   BOTTOM ORNAMENT
 ========================================= */
 
 .p02-bottom-ornament {
-  z-index: 60;
+  z-index: 90;
 
   left: 50%;
-  bottom: -4.2%;
 
-  width: 73%;
+  bottom: -1.9%;
+
+  width: 48%;
+
+  height: auto;
 
   transform:
     translateX(-50%);
@@ -749,8 +1039,10 @@ button {
   transform:
     translate3d(0, -18px, 0);
 
-  pointer-events: none;
+  pointer-events:
+    none;
 }
+
 
 .site-shell.is-page-02
 .page-02 {
@@ -761,12 +1053,14 @@ button {
   transform:
     translate3d(0, 0, 0);
 
-  pointer-events: auto;
+  pointer-events:
+    auto;
 }
 
 
 /* =========================================
    ENVELOPE POSITION
+   GIỮ NGUYÊN
 ========================================= */
 
 .envelope-button {
@@ -789,13 +1083,17 @@ button {
   border: 0;
   outline: none;
 
-  background: transparent;
+  background:
+    transparent;
 
-  cursor: pointer;
+  cursor:
+    pointer;
 
-  touch-action: manipulation;
+  touch-action:
+    manipulation;
 
-  overflow: visible;
+  overflow:
+    visible;
 }
 
 
@@ -809,7 +1107,8 @@ button {
 
   display: block;
 
-  overflow: visible;
+  overflow:
+    visible;
 
   transform:
     translateZ(0);
@@ -864,7 +1163,8 @@ button {
   width: 100%;
   height: 100%;
 
-  object-fit: contain;
+  object-fit:
+    contain;
 
   opacity: 1;
 
@@ -909,19 +1209,23 @@ button {
   width: 100%;
   height: 100%;
 
-  overflow: visible;
+  overflow:
+    visible;
 
   opacity: 0;
 
-  pointer-events: none;
+  pointer-events:
+    none;
 
   transition:
     opacity .18s ease;
 }
 
+
 .envelope-button.is-open
 .envelope-open {
-  pointer-events: auto;
+  pointer-events:
+    auto;
 }
 
 
@@ -973,7 +1277,8 @@ button {
   width: 100%;
   height: 100%;
 
-  object-fit: contain;
+  object-fit:
+    contain;
 
   opacity: 1;
 
@@ -1017,7 +1322,8 @@ button {
   height:
     auto;
 
-  opacity: 0;
+  opacity:
+    0;
 
   transform:
     translate3d(
@@ -1047,10 +1353,14 @@ button {
     opacity;
 }
 
+
 .envelope-button.is-open
 .invitation-card {
-  pointer-events: auto;
-  cursor: pointer;
+  pointer-events:
+    auto;
+
+  cursor:
+    pointer;
 }
 
 
@@ -1067,7 +1377,8 @@ button {
   width: 100%;
   height: 100%;
 
-  object-fit: contain;
+  object-fit:
+    contain;
 
   opacity: 1;
 
@@ -1110,19 +1421,23 @@ button {
 
   width: 31%;
 
-  aspect-ratio: 1;
+  aspect-ratio:
+    1;
 
-  border-radius: 50%;
+  border-radius:
+    50%;
 
   transform:
     translate(-50%, -50%);
 
-  pointer-events: none;
+  pointer-events:
+    none;
 
   transition:
     opacity .22s ease,
     transform .22s ease;
 }
+
 
 .monogram-pulse::before,
 .monogram-pulse::after {
@@ -1135,7 +1450,8 @@ button {
     1.5px solid
     rgba(237, 196, 96, .52);
 
-  border-radius: 50%;
+  border-radius:
+    50%;
 
   opacity: 0;
 
@@ -1146,8 +1462,10 @@ button {
     infinite;
 }
 
+
 .monogram-pulse::after {
-  animation-delay: 1.2s;
+  animation-delay:
+    1.2s;
 }
 
 
@@ -1167,12 +1485,14 @@ button {
     );
 }
 
+
 .envelope-button:not(.is-open):hover
 .envelope-closed,
 
 .envelope-button:not(.is-open):focus-visible
 .envelope-closed {
-  animation-play-state: paused;
+  animation-play-state:
+    paused;
 
   transform:
     translate3d(
@@ -1203,8 +1523,10 @@ button {
     scale(.997);
 }
 
+
 .envelope-button:focus-visible {
-  outline: none;
+  outline:
+    none;
 }
 
 
@@ -1222,23 +1544,22 @@ button {
 }
 
 
-/* OPEN GROUP */
-
 .envelope-button.is-open
 .envelope-open {
   opacity: 1;
 
-  transition-delay: .02s;
+  transition-delay:
+    .02s;
 }
 
 
-/* HIDE CLOSED */
-
 .envelope-button.is-open
 .envelope-closed {
-  animation: none;
+  animation:
+    none;
 
-  opacity: 0;
+  opacity:
+    0;
 
   transform:
     translate3d(
@@ -1250,8 +1571,6 @@ button {
 }
 
 
-/* BODY */
-
 .envelope-button.is-open
 .envelope-open-body {
   transform:
@@ -1262,8 +1581,6 @@ button {
     );
 }
 
-
-/* PAPER */
 
 .envelope-button.is-open
 .invitation-card {
@@ -1283,8 +1600,6 @@ button {
 }
 
 
-/* FRONT */
-
 .envelope-button.is-open
 .envelope-open-front {
   transform:
@@ -1295,8 +1610,6 @@ button {
     );
 }
 
-
-/* FLAP */
 
 .envelope-button.is-open
 .envelope-open-flap {
@@ -1310,11 +1623,10 @@ button {
     )
     scaleY(1);
 
-  transition-delay: 0s;
+  transition-delay:
+    0s;
 }
 
-
-/* HIDE TAP CUE */
 
 .envelope-button.is-open
 .monogram-pulse {
@@ -1393,6 +1705,7 @@ button {
       scale(1)
       rotate(0deg);
   }
+
 }
 
 
@@ -1403,22 +1716,31 @@ button {
 @keyframes tapRing {
 
   0% {
-    transform: scale(.52);
-    opacity: 0;
+    transform:
+      scale(.52);
+
+    opacity:
+      0;
   }
 
   18% {
-    opacity: .5;
+    opacity:
+      .5;
   }
 
   72% {
-    opacity: .14;
+    opacity:
+      .14;
   }
 
   100% {
-    transform: scale(1.18);
-    opacity: 0;
+    transform:
+      scale(1.18);
+
+    opacity:
+      0;
   }
+
 }
 
 
@@ -1426,11 +1748,47 @@ button {
    MOBILE
 ========================================= */
 
-@media (max-aspect-ratio: 375/812) {
+@media
+(max-aspect-ratio: 375/812) {
 
   .opening-page {
     background-size:
       auto 100%;
+  }
+
+}
+
+
+/* =========================================
+   SHORT / WIDE MOBILE
+
+   Ví dụ viewport khoảng 430 × 730.
+
+   Không làm nhỏ asset riêng lẻ nữa,
+   vì toàn bộ layout đã dựa vào viewport.
+========================================= */
+
+@media
+(min-aspect-ratio: 9/17)
+and
+(max-width: 430px) {
+
+  .p02-procession {
+    bottom:
+      4.6%;
+
+    height:
+      30%;
+  }
+
+  .p02-bamboo-left {
+    top:
+      34.5%;
+  }
+
+  .p02-bamboo-right {
+    top:
+      30.5%;
   }
 
 }
@@ -1442,14 +1800,26 @@ button {
 
 @media (min-width: 431px) {
 
-  body {
-    display: grid;
-    place-items: center;
+  :root {
+    --invitation-page-height:
+      min(100dvh, 932px);
   }
 
+
+  body {
+    display: grid;
+
+    place-items:
+      center;
+  }
+
+
   .site-shell {
-    height: min(100dvh, 932px);
-    aspect-ratio: 375 / 812;
+    height:
+      min(100dvh, 932px);
+
+    aspect-ratio:
+      375 / 812;
   }
 
 }
@@ -1457,43 +1827,39 @@ button {
 
 /* =========================================
    CQU FALLBACK
-
-   Nếu browser quá cũ không hỗ trợ
-   container query units.
 ========================================= */
 
-@supports not (font-size: 1cqw) {
+@supports not
+(font-size: 1cqw) {
 
   .p02-invite {
-    font-size: 12px;
-  }
-
-  .p02-divider::after {
-    font-size: 8px;
+    font-size:
+      10px;
   }
 
   .p02-to {
-    font-size: 17px;
+    font-size:
+      14px;
   }
 
   .p02-wedding-title {
-    font-size: 15px;
+    font-size:
+      12px;
   }
 
   .p02-name {
-    font-size: 48px;
+    font-size:
+      35px;
   }
 
   .p02-ampersand {
-    font-size: 33px;
+    font-size:
+      24px;
   }
 
   .p02-date {
-    font-size: 16px;
-  }
-
-  .p02-date-divider::after {
-    font-size: 9px;
+    font-size:
+      12px;
   }
 
 }
@@ -1503,7 +1869,8 @@ button {
    REDUCED MOTION
 ========================================= */
 
-@media (prefers-reduced-motion: reduce) {
+@media
+(prefers-reduced-motion: reduce) {
 
   *,
   *::before,
