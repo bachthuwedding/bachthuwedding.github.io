@@ -30,11 +30,6 @@ const deferredPage02Assets =
   );
 
 
-const page02CssAssets = [
-  "./assets/shared-frame.png"
-];
-
-
 let envelopeIsOpen = false;
 let envelopeIsPreparing = false;
 
@@ -48,13 +43,14 @@ let page02AssetsScheduled = false;
 
 
 /* =========================================
-   LOAD ONE DEFERRED <img>
+   LOAD ONE IMAGE
 ========================================= */
 
 function loadDeferredImage(image) {
 
   const source =
     image.dataset.src;
+
 
   if (!source) {
     return Promise.resolve();
@@ -63,6 +59,7 @@ function loadDeferredImage(image) {
 
   image.src =
     source;
+
 
   image.removeAttribute(
     "data-src"
@@ -82,72 +79,6 @@ function loadDeferredImage(image) {
 
   return new Promise(
     (resolve) => {
-
-      if (image.complete) {
-        resolve();
-        return;
-      }
-
-
-      image.addEventListener(
-        "load",
-        resolve,
-        {
-          once: true
-        }
-      );
-
-
-      image.addEventListener(
-        "error",
-        resolve,
-        {
-          once: true
-        }
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================
-   PRELOAD IMAGE USED BY CSS
-
-   Dùng cho shared-frame.
-========================================= */
-
-function preloadImageSource(source) {
-
-  return new Promise(
-    (resolve) => {
-
-      const image =
-        new Image();
-
-
-      image.decoding =
-        "async";
-
-
-      image.src =
-        source;
-
-
-      if (
-        typeof image.decode === "function"
-      ) {
-
-        image
-          .decode()
-          .then(resolve)
-          .catch(resolve);
-
-        return;
-
-      }
-
 
       if (image.complete) {
         resolve();
@@ -213,26 +144,19 @@ function loadPage02Assets() {
   }
 
 
-  const htmlImagePromises =
-    deferredPage02Assets.map(
-      loadDeferredImage
-    );
-
-
-  const cssImagePromises =
-    page02CssAssets.map(
-      preloadImageSource
-    );
-
-
   page02AssetsPromise =
-    Promise.all([
-      ...htmlImagePromises,
-      ...cssImagePromises
-    ])
+    Promise.all(
+      deferredPage02Assets.map(
+        loadDeferredImage
+      )
+    )
       .then(
         () => {
 
+          /*
+            Sau khi hoa source đã load,
+            mới bật background crop.
+          */
           page02.classList.add(
             "is-assets-ready"
           );
@@ -248,17 +172,15 @@ function loadPage02Assets() {
 
 /* =========================================
    LOAD OPEN ASSETS AFTER FIRST SCREEN
-
-   GIỮ NGUYÊN CHIẾN LƯỢC PAGE 01:
-   - requestIdleCallback
-   - fallback setTimeout
 ========================================= */
 
 function scheduleOpeningAssets() {
 
   const startLoading =
     () => {
+
       loadOpeningAssets();
+
     };
 
 
@@ -295,11 +217,7 @@ window.addEventListener(
 
 
 /* =========================================
-   PAGE 02 LOAD SCHEDULER
-
-   Page 02 KHÔNG tải từ first screen.
-
-   Chỉ bắt đầu sau khi phong bì đã mở.
+   PAGE 02 DEFERRED LOAD
 ========================================= */
 
 function schedulePage02Assets() {
@@ -318,7 +236,9 @@ function schedulePage02Assets() {
 
   const startLoading =
     () => {
+
       loadPage02Assets();
+
     };
 
 
@@ -346,9 +266,7 @@ function schedulePage02Assets() {
 
 
 /* =========================================
-   START OPENING ASSET LOAD ON TOUCH
-
-   Nếu user bấm nhanh thì load ngay.
+   START OPENING LOAD ON TOUCH
 ========================================= */
 
 envelopeButton.addEventListener(
@@ -373,10 +291,7 @@ envelopeButton.addEventListener(
 
 
 /* =========================================
-   START PAGE 02 LOAD ON CARD TOUCH
-
-   Nếu user định chuyển ngay Page 02,
-   ưu tiên tải asset Page 02 ngay.
+   PAGE 02 LOAD ON CARD TOUCH
 ========================================= */
 
 invitationCard.addEventListener(
@@ -467,10 +382,8 @@ async function openEnvelope() {
 
 
   /*
-    Page 02 chỉ bắt đầu preload
-    SAU KHI Page 01 đã mở.
-
-    Vì vậy first screen vẫn nhẹ.
+    Page 02 chỉ preload
+    sau khi phong bì đã mở.
   */
   schedulePage02Assets();
 
@@ -503,8 +416,10 @@ async function openPage02() {
 
 
   /*
-    Chờ ảnh Page 02 decode trước khi transition.
-    Tránh hiện page rồi từng asset pop-in.
+    Bao gồm cả shared-frame.png.
+
+    Transition chỉ bắt đầu sau khi
+    frame + illustration decode xong.
   */
   await loadPage02Assets();
 
@@ -517,9 +432,11 @@ async function openPage02() {
     page02IsPreparing =
       false;
 
+
     envelopeButton.removeAttribute(
       "aria-busy"
     );
+
 
     return;
 
@@ -533,9 +450,6 @@ async function openPage02() {
     true;
 
 
-  /*
-    Luôn bắt đầu Page 02 ở đầu page.
-  */
   page02.scrollTop =
     0;
 
@@ -582,7 +496,9 @@ envelopeButton.addEventListener(
 
       event.preventDefault();
 
+
       openEnvelope();
+
 
       return;
 
