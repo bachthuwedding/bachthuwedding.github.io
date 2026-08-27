@@ -31,7 +31,10 @@
     fetchpriority="high"
   />
 
-  <link rel="stylesheet" href="./styles.css" />
+  <link
+    rel="stylesheet"
+    href="./styles.css"
+  />
 </head>
 
 
@@ -65,14 +68,10 @@
           aria-hidden="true"
         >
 
-          <!-- =========================
-               OPEN STATE
-               Các ảnh này tải sau
-          ========================== -->
+          <!-- OPEN STATE -->
 
           <span class="envelope-open">
 
-            <!-- Nắp phía sau -->
             <img
               class="envelope-open-flap deferred-opening-asset"
               data-src="./assets/envelope-open-flap-optimized.png"
@@ -84,7 +83,6 @@
             />
 
 
-            <!-- Thân phía sau -->
             <img
               class="envelope-open-body deferred-opening-asset"
               data-src="./assets/envelope-open-body-optimized.png"
@@ -96,7 +94,6 @@
             />
 
 
-            <!-- Tờ giấy -->
             <img
               class="invitation-card deferred-opening-asset"
               id="invitationCard"
@@ -109,7 +106,6 @@
             />
 
 
-            <!-- Mặt trước phong bì -->
             <img
               class="envelope-open-front deferred-opening-asset"
               data-src="./assets/envelope-open-front-optimized.png"
@@ -123,9 +119,7 @@
           </span>
 
 
-          <!-- =========================
-               CLOSED STATE
-          ========================== -->
+          <!-- CLOSED STATE -->
 
           <img
             class="envelope-closed"
@@ -140,7 +134,6 @@
           />
 
 
-          <!-- TAP HINT -->
           <span class="monogram-pulse"></span>
 
         </span>
@@ -152,7 +145,6 @@
 
     <!-- =====================================
          PAGE 02+
-         Scroll area chung cho invitation
     ====================================== -->
 
     <section
@@ -163,24 +155,9 @@
 
       <div class="invitation-flow">
 
-        <!--
-          KHUNG CHUNG
-
-          Khung này thuộc invitation-flow,
-          KHÔNG thuộc riêng Page 02.
-
-          Khi thêm Page 03, Page 04...
-          hãy đặt các section mới bên dưới
-          page02-layout trong invitation-flow.
-        -->
-        <div
-          class="shared-invitation-frame"
-          aria-hidden="true"
-        ></div>
-
 
         <!-- =================================
-             PAGE 02 CONTENT
+             PAGE 02
         ================================== -->
 
         <section
@@ -188,9 +165,30 @@
           aria-label="Lễ thành hôn Bách và Thư"
         >
 
+
+          <!-- =================================
+               FRAME
+
+               Render trực tiếp.
+               Không dùng border-image.
+          ================================== -->
+
+          <img
+            class="
+              shared-invitation-frame
+              deferred-page02-asset
+            "
+            data-src="./assets/shared-frame.png"
+            alt=""
+            draggable="false"
+            decoding="async"
+            width="852"
+            height="1845"
+          />
+
+
           <!-- =================================
                CLOUDS
-               4 cloud được crop từ 1 sprite
           ================================== -->
 
           <span
@@ -347,13 +345,16 @@
 
 
           <!-- =================================
-               FLOWERS / PETALS
+               FLOWER SOURCE
+
+               File chỉ load 1 lần.
+               Các vùng crop bên dưới dùng
+               chính asset này làm background.
           ================================== -->
 
           <img
             class="
-              p02-asset
-              p02-flowers
+              p02-flower-source
               deferred-page02-asset
             "
             data-src="./assets/page02-flowers.png"
@@ -366,70 +367,112 @@
 
 
           <!-- =================================
-               PROCESSION
+               FLOWER CROPS
+
+               Không dùng toàn bộ sprite.
           ================================== -->
 
-          <img
-            class="
-              p02-asset
-              p02-flag-bearer
-              deferred-page02-asset
-            "
-            data-src="./assets/page02-flag-bearer.png"
-            alt=""
-            draggable="false"
-            decoding="async"
-            width="1024"
-            height="1536"
-          />
+          <div
+            class="p02-flower-drift"
+            aria-hidden="true"
+          >
+
+            <span
+              class="
+                p02-flower-crop
+                p02-flower-crop--01
+              "
+            ></span>
+
+            <span
+              class="
+                p02-flower-crop
+                p02-flower-crop--02
+              "
+            ></span>
+
+            <span
+              class="
+                p02-flower-crop
+                p02-flower-crop--03
+              "
+            ></span>
+
+          </div>
 
 
-          <!--
-            CHỈ DÙNG ẢNH CÔ DÂU CHÚ RỂ ĐẦU TIÊN
-          -->
-          <img
-            class="
-              p02-asset
-              p02-couple
-              deferred-page02-asset
-            "
-            data-src="./assets/page02-couple.png"
-            alt=""
-            draggable="false"
-            decoding="async"
-            width="1024"
-            height="1536"
-          />
+          <!-- =================================
+               PROCESSION
+
+               Chung một hệ scale theo HEIGHT.
+          ================================== -->
+
+          <div
+            class="p02-procession"
+            aria-hidden="true"
+          >
+
+            <img
+              class="
+                p02-procession-item
+                p02-flag-bearer
+                deferred-page02-asset
+              "
+              data-src="./assets/page02-flag-bearer.png"
+              alt=""
+              draggable="false"
+              decoding="async"
+              width="1024"
+              height="1536"
+            />
 
 
-          <img
-            class="
-              p02-asset
-              p02-lion-dance
-              deferred-page02-asset
-            "
-            data-src="./assets/page02-lion-dance.png"
-            alt=""
-            draggable="false"
-            decoding="async"
-            width="1448"
-            height="1086"
-          />
+            <!-- ẢNH CÔ DÂU CHÚ RỂ ĐẦU TIÊN -->
+            <img
+              class="
+                p02-procession-item
+                p02-couple
+                deferred-page02-asset
+              "
+              data-src="./assets/page02-couple.png"
+              alt=""
+              draggable="false"
+              decoding="async"
+              width="1024"
+              height="1536"
+            />
 
 
-          <img
-            class="
-              p02-asset
-              p02-drummer
-              deferred-page02-asset
-            "
-            data-src="./assets/page02-drummer.png"
-            alt=""
-            draggable="false"
-            decoding="async"
-            width="1024"
-            height="1536"
-          />
+            <img
+              class="
+                p02-procession-item
+                p02-lion-dance
+                deferred-page02-asset
+              "
+              data-src="./assets/page02-lion-dance.png"
+              alt=""
+              draggable="false"
+              decoding="async"
+              width="1448"
+              height="1086"
+            />
+
+
+            <img
+              class="
+                p02-procession-item
+                p02-drummer
+                deferred-page02-asset
+              "
+              data-src="./assets/page02-drummer.png"
+              alt=""
+              draggable="false"
+              decoding="async"
+              width="1024"
+              height="1536"
+            />
+
+          </div>
 
 
           <!-- =================================
