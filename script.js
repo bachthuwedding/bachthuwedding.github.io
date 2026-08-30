@@ -31,15 +31,15 @@ const deferredPage02Assets =
 
 
 let envelopeIsOpen = false;
+
 let envelopeIsPreparing = false;
 
 let page02IsOpen = false;
-let page02IsPreparing = false;
+
 
 let openingAssetsPromise = null;
-let page02AssetsPromise = null;
 
-let page02AssetsScheduled = false;
+let page02AssetsPromise = null;
 
 
 /* =========================================
@@ -53,7 +53,9 @@ function loadDeferredImage(image) {
 
 
   if (!source) {
+
     return Promise.resolve();
+
   }
 
 
@@ -81,8 +83,11 @@ function loadDeferredImage(image) {
     (resolve) => {
 
       if (image.complete) {
+
         resolve();
+
         return;
+
       }
 
 
@@ -110,13 +115,15 @@ function loadDeferredImage(image) {
 
 
 /* =========================================
-   LOAD OPEN ASSETS
+   LOAD PAGE 01 OPENING ASSETS
 ========================================= */
 
 function loadOpeningAssets() {
 
   if (openingAssetsPromise) {
+
     return openingAssetsPromise;
+
   }
 
 
@@ -140,7 +147,9 @@ function loadOpeningAssets() {
 function loadPage02Assets() {
 
   if (page02AssetsPromise) {
+
     return page02AssetsPromise;
+
   }
 
 
@@ -154,9 +163,12 @@ function loadPage02Assets() {
         () => {
 
           /*
-            Sau khi hoa source đã load,
-            mới bật background crop.
+            Bật những element dùng
+            asset background CSS
+            sau khi toàn bộ Page 02
+            đã load/decode.
           */
+
           page02.classList.add(
             "is-assets-ready"
           );
@@ -171,7 +183,7 @@ function loadPage02Assets() {
 
 
 /* =========================================
-   LOAD OPEN ASSETS AFTER FIRST SCREEN
+   SCHEDULE PAGE 01 ASSETS
 ========================================= */
 
 function scheduleOpeningAssets() {
@@ -207,32 +219,13 @@ function scheduleOpeningAssets() {
 }
 
 
-window.addEventListener(
-  "load",
-  scheduleOpeningAssets,
-  {
-    once: true
-  }
-);
-
-
 /* =========================================
-   PAGE 02 DEFERRED LOAD
+   SCHEDULE PAGE 02 ASSETS
+
+   Chỉ gọi sau khi phong bì mở.
 ========================================= */
 
 function schedulePage02Assets() {
-
-  if (
-    page02AssetsScheduled ||
-    page02AssetsPromise
-  ) {
-    return;
-  }
-
-
-  page02AssetsScheduled =
-    true;
-
 
   const startLoading =
     () => {
@@ -249,7 +242,7 @@ function schedulePage02Assets() {
     window.requestIdleCallback(
       startLoading,
       {
-        timeout: 1100
+        timeout: 1200
       }
     );
 
@@ -257,7 +250,7 @@ function schedulePage02Assets() {
 
     window.setTimeout(
       startLoading,
-      380
+      280
     );
 
   }
@@ -266,7 +259,20 @@ function schedulePage02Assets() {
 
 
 /* =========================================
-   START OPENING LOAD ON TOUCH
+   FIRST SCREEN LOAD
+========================================= */
+
+window.addEventListener(
+  "load",
+  scheduleOpeningAssets,
+  {
+    once: true
+  }
+);
+
+
+/* =========================================
+   START PAGE 01 LOADING ON TOUCH
 ========================================= */
 
 envelopeButton.addEventListener(
@@ -291,7 +297,7 @@ envelopeButton.addEventListener(
 
 
 /* =========================================
-   PAGE 02 LOAD ON CARD TOUCH
+   START PAGE 02 LOADING ON CARD TOUCH
 ========================================= */
 
 invitationCard.addEventListener(
@@ -325,7 +331,9 @@ async function openEnvelope() {
     envelopeIsPreparing ||
     page02IsOpen
   ) {
+
     return;
+
   }
 
 
@@ -347,6 +355,12 @@ async function openEnvelope() {
     envelopeIsPreparing =
       false;
 
+
+    envelopeButton.removeAttribute(
+      "aria-busy"
+    );
+
+
     return;
 
   }
@@ -354,6 +368,7 @@ async function openEnvelope() {
 
   envelopeIsPreparing =
     false;
+
 
   envelopeIsOpen =
     true;
@@ -382,9 +397,18 @@ async function openEnvelope() {
 
 
   /*
-    Page 02 chỉ preload
-    sau khi phong bì đã mở.
+    Sau khi Page 01 đã mở,
+    mới âm thầm preload Page 02.
+
+    Bao gồm:
+    - background giấy
+    - frame
+    - tre
+    - mây
+    - hoa
+    - nhân vật
   */
+
   schedulePage02Assets();
 
 }
@@ -394,60 +418,30 @@ async function openEnvelope() {
    OPEN PAGE 02
 ========================================= */
 
-async function openPage02() {
-
-  if (
-    !envelopeIsOpen ||
-    page02IsOpen ||
-    page02IsPreparing
-  ) {
-    return;
-  }
-
-
-  page02IsPreparing =
-    true;
-
-
-  envelopeButton.setAttribute(
-    "aria-busy",
-    "true"
-  );
-
-
-  /*
-    Bao gồm cả shared-frame.png.
-
-    Transition chỉ bắt đầu sau khi
-    frame + illustration decode xong.
-  */
-  await loadPage02Assets();
-
+function openPage02() {
 
   if (
     !envelopeIsOpen ||
     page02IsOpen
   ) {
 
-    page02IsPreparing =
-      false;
-
-
-    envelopeButton.removeAttribute(
-      "aria-busy"
-    );
-
-
     return;
 
   }
 
 
-  page02IsPreparing =
-    false;
-
   page02IsOpen =
     true;
+
+
+  /*
+    Nếu Page 02 chưa preload xong
+    thì tiếp tục tải.
+
+    Không ảnh hưởng first screen.
+  */
+
+  loadPage02Assets();
 
 
   page02.scrollTop =
@@ -474,11 +468,6 @@ async function openPage02() {
   envelopeButton.setAttribute(
     "tabindex",
     "-1"
-  );
-
-
-  envelopeButton.removeAttribute(
-    "aria-busy"
   );
 
 }
@@ -521,10 +510,11 @@ invitationCard.addEventListener(
 
     if (
       !envelopeIsOpen ||
-      page02IsOpen ||
-      page02IsPreparing
+      page02IsOpen
     ) {
+
       return;
+
     }
 
 
