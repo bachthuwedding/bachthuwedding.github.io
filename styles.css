@@ -214,19 +214,13 @@ button {
   isolation:
     isolate;
 
-  /*
-    Fallback trong lúc ảnh nền giấy
-    chưa load xong.
-  */
   background:
     #f1dfbd;
 }
 
 
 /*
-  Hai line dọc dùng chung cho Page 02+.
-
-  Không chạy sát mép trên / dưới.
+  Rail dọc dùng chung cho các page sau.
 */
 
 .invitation-flow::before,
@@ -243,7 +237,7 @@ button {
   width: 1px;
 
   background:
-    rgba(135, 40, 23, .34);
+    rgba(135, 40, 23, .28);
 
   pointer-events:
     none;
@@ -286,7 +280,7 @@ button {
 
 
 /* =========================================
-   PAGE 02 PAPER BACKGROUND
+   PAPER BACKGROUND
 ========================================= */
 
 .p02-background {
@@ -324,10 +318,7 @@ button {
 
 
 /* =========================================
-   PAGE 02 FRAME
-
-   Gần background.
-   Các illustration nằm phía trên.
+   FRAME
 ========================================= */
 
 .p02-frame {
@@ -362,7 +353,7 @@ button {
 
 
 /* =========================================
-   HIDDEN IMAGE SOURCES
+   HIDDEN SPRITE SOURCES
 ========================================= */
 
 .p02-cloud-source,
@@ -395,17 +386,24 @@ button {
 
   max-width: none;
 
-  user-select: none;
+  user-select:
+    none;
 
-  pointer-events: none;
+  pointer-events:
+    none;
 
-  -webkit-user-select: none;
-  -webkit-user-drag: none;
+  -webkit-user-select:
+    none;
+
+  -webkit-user-drag:
+    none;
 }
 
 
 /* =========================================
    CLOUDS
+
+   Crop chính xác 4 cloud từ sprite.
 ========================================= */
 
 .p02-cloud {
@@ -415,7 +413,8 @@ button {
 
   display: block;
 
-  overflow: hidden;
+  overflow:
+    hidden;
 
   pointer-events:
     none;
@@ -425,91 +424,111 @@ button {
 }
 
 
-/*
-  Chỉ bật background cloud
-  sau khi asset đã tải xong.
-*/
-
 .page-02.is-assets-ready
 .p02-cloud {
   background-image:
     url("./assets/page02-clouds.png");
-
-  background-size:
-    200% 200%;
 }
 
 
-/* CLOUD 01 */
+/*
+  LARGE LEFT
+  Reference:
+  x ≈ 1.4%
+  y ≈ 21.6%
+*/
 
 .p02-cloud--01 {
-  left: 2%;
+  left: 1.4%;
 
-  top: 18.2%;
+  top: 21.6%;
 
-  width: 18.8%;
+  width: 22.3%;
 
   aspect-ratio:
-    593 / 369;
+    594 / 370;
+
+  background-size:
+    211.111% auto;
 
   background-position:
-    0% 0%;
+    3.485% 28.054%;
 }
 
 
-/* CLOUD 02 */
+/*
+  LARGE RIGHT
+*/
 
 .p02-cloud--02 {
-  right: -.8%;
+  right: 1.1%;
 
-  top: 19.5%;
+  top: 23.15%;
 
-  width: 20.5%;
+  width: 24.15%;
 
   aspect-ratio:
-    607 / 397;
+    608 / 340;
+
+  background-size:
+    206.25% auto;
 
   background-position:
-    100% 0%;
+    98.762% 31.400%;
 }
 
 
-/* CLOUD 03 */
+/*
+  SMALL LEFT
+*/
 
 .p02-cloud--03 {
-  left: 6.2%;
+  left: 3.9%;
 
-  top: 28.1%;
+  top: 30.5%;
 
-  width: 12.8%;
+  width: 8.7%;
 
   aspect-ratio:
     466 / 249;
 
+  background-size:
+    269.099% auto;
+
   background-position:
-    0% 100%;
+    6.091% 77.910%;
 }
 
 
-/* CLOUD 04 */
+/*
+  SMALL RIGHT
+*/
 
 .p02-cloud--04 {
-  right: 10.2%;
+  right: 14.8%;
 
-  top: 41%;
+  top: 45.65%;
 
-  width: 13.2%;
+  width: 8.6%;
 
   aspect-ratio:
-    458 / 239;
+    487 / 448;
+
+  background-size:
+    257.495% auto;
 
   background-position:
-    100% 100%;
+    96.741% 77.792%;
 }
 
 
 /* =========================================
    BAMBOO
+
+   Vòng trước tre nằm quá cao.
+   Ảnh mẫu đặt:
+   - tre trái bắt đầu khoảng 40%
+   - tre phải khoảng 34%
 ========================================= */
 
 .p02-bamboo-window {
@@ -517,37 +536,37 @@ button {
 
   z-index: 9;
 
-  overflow: hidden;
+  overflow:
+    hidden;
 
   pointer-events:
     none;
 }
 
 
-/*
-  Tre được đặt cao để phần dưới
-  không cạnh tranh với đoàn rước.
-*/
+/* LEFT BAMBOO */
 
 .p02-bamboo-window--left {
-  left: -3.8%;
+  left: -3.2%;
 
-  top: 21.5%;
+  top: 36.6%;
 
-  width: 35%;
+  width: 31.7%;
 
-  height: 48%;
+  height: 38.5%;
 }
 
+
+/* RIGHT BAMBOO */
 
 .p02-bamboo-window--right {
   right: -3.4%;
 
-  top: 21%;
+  top: 32.6%;
 
-  width: 33%;
+  width: 52%;
 
-  height: 47.5%;
+  height: 42%;
 }
 
 
@@ -560,7 +579,7 @@ button {
 
 
 /* =========================================
-   PAGE 02 TYPOGRAPHY
+   TYPOGRAPHY COMMON
 ========================================= */
 
 .p02-invite,
@@ -581,8 +600,8 @@ button {
   text-align:
     center;
 
-  transform:
-    translateX(-50%);
+  transform-origin:
+    50% 50%;
 
   font-family:
     "Times New Roman",
@@ -597,23 +616,33 @@ button {
 }
 
 
-/* INVITE */
+/* =========================================
+   TRÂN TRỌNG KÍNH MỜI
+
+   Reference nhỏ và hẹp hơn bản hiện tại.
+========================================= */
 
 .p02-invite {
-  top: 10.2%;
+  top: 10.98%;
 
   font-size:
-    3.15cqw;
+    2.95cqw;
 
   line-height:
     1.15;
 
   letter-spacing:
     .015em;
+
+  transform:
+    translateX(-50%)
+    scaleX(.94);
 }
 
 
-/* TOP DIVIDER */
+/* =========================================
+   TOP DIVIDER
+========================================= */
 
 .p02-divider {
   position: absolute;
@@ -622,9 +651,9 @@ button {
 
   left: 50%;
 
-  top: 19.1%;
+  top: 20.05%;
 
-  width: 58%;
+  width: 56.5%;
 
   height: 1px;
 
@@ -657,7 +686,7 @@ button {
     var(--invitation-gold);
 
   font-size:
-    1.95cqw;
+    1.85cqw;
 
   line-height:
     1;
@@ -667,39 +696,53 @@ button {
 }
 
 
-/* TỚI */
+/* =========================================
+   TỚI
+========================================= */
 
 .p02-to {
-  top: 23%;
+  top: 23.6%;
 
   font-size:
-    4.25cqw;
+    4.95cqw;
 
   line-height:
     1;
+
+  transform:
+    translateX(-50%)
+    scaleX(.80);
 }
 
 
-/* LỄ THÀNH HÔN */
+/* =========================================
+   LỄ THÀNH HÔN
+========================================= */
 
 .p02-wedding-title {
-  top: 28.3%;
+  top: 29.1%;
 
   font-size:
-    3.7cqw;
+    4.6cqw;
 
   line-height:
     1;
 
   letter-spacing:
     .01em;
+
+  transform:
+    translateX(-50%)
+    scaleX(.77);
 }
 
 
-/* BÁCH & THƯ */
+/* =========================================
+   BÁCH & THƯ
+========================================= */
 
 .p02-couple-names {
-  top: 33.3%;
+  top: 34.9%;
 
   display: flex;
 
@@ -714,6 +757,9 @@ button {
 
   line-height:
     .89;
+
+  transform:
+    translateX(-50%);
 }
 
 
@@ -721,10 +767,16 @@ button {
   display: block;
 
   font-size:
-    10.35cqw;
+    10.7cqw;
 
   font-weight:
     400;
+
+  transform:
+    scaleX(.76);
+
+  transform-origin:
+    50% 50%;
 }
 
 
@@ -732,26 +784,34 @@ button {
   display: block;
 
   margin:
-    .55cqw 0 .8cqw;
+    .9cqw 0 .8cqw;
 
   font-size:
-    6.95cqw;
+    8.45cqw;
 
   line-height:
     .92;
 
   color:
     var(--invitation-green);
+
+  transform:
+    scaleX(.92);
+
+  transform-origin:
+    50% 50%;
 }
 
 
-/* DATE */
+/* =========================================
+   DATE
+========================================= */
 
 .p02-date {
   top: 50.8%;
 
   font-size:
-    3.95cqw;
+    4.8cqw;
 
   line-height:
     1;
@@ -761,10 +821,16 @@ button {
 
   letter-spacing:
     .035em;
+
+  transform:
+    translateX(-50%)
+    scaleX(.90);
 }
 
 
-/* DATE DIVIDER */
+/* =========================================
+   DATE DIVIDER
+========================================= */
 
 .p02-date-divider {
   position: absolute;
@@ -773,9 +839,9 @@ button {
 
   left: 50%;
 
-  top: 53.45%;
+  top: 53.55%;
 
-  width: 14.3%;
+  width: 13.5%;
 
   height: 1px;
 
@@ -808,7 +874,7 @@ button {
     var(--invitation-gold);
 
   font-size:
-    1.95cqw;
+    1.9cqw;
 
   line-height:
     1;
@@ -816,7 +882,9 @@ button {
 
 
 /* =========================================
-   INDIVIDUAL PETALS
+   INDIVIDUAL FLOWER / PETAL SPRITES
+
+   Mỗi span crop một phần riêng.
 ========================================= */
 
 .p02-petals {
@@ -839,24 +907,20 @@ button {
   overflow:
     hidden;
 
-  border-radius:
-    48% 55% 46% 62%;
-
   pointer-events:
     none;
 
-  transform-origin:
-    center;
-
-  opacity:
-    0;
-
-  filter:
-    blur(.28px)
-    saturate(.96);
-
   background-repeat:
     no-repeat;
+
+  opacity: 0;
+
+  filter:
+    blur(.12px)
+    saturate(.98);
+
+  transform-origin:
+    50% 50%;
 }
 
 
@@ -865,282 +929,352 @@ button {
   background-image:
     url("./assets/page02-flowers.png");
 
-  background-size:
-    1180% 1180%;
-
   opacity:
-    var(--petal-opacity, .28);
+    var(--petal-opacity, .38);
 }
 
 
-/* PETAL 01 */
+/* 01 */
 
 .p02-petal--01 {
-  left: 27.2%;
-  top: 58.2%;
-
-  width: 8px;
-  height: 11px;
-
-  background-position:
-    2% 84%;
-
-  transform:
-    rotate(-28deg);
-
-  --petal-opacity: .26;
-}
-
-
-/* PETAL 02 */
-
-.p02-petal--02 {
-  left: 37.8%;
-  top: 60.9%;
-
-  width: 8px;
-  height: 10px;
-
-  background-position:
-    18% 82%;
-
-  transform:
-    rotate(32deg);
-
-  --petal-opacity: .29;
-}
-
-
-/* PETAL 03 */
-
-.p02-petal--03 {
-  left: 49%;
-  top: 57.9%;
+  left: 26%;
+  top: 58.3%;
 
   width: 9px;
-  height: 12px;
+
+  aspect-ratio:
+    32 / 26;
+
+  background-size:
+    3918.75% auto;
 
   background-position:
-    31% 86%;
+    15.794% 64.169%;
+
+  --petal-opacity: .42;
 
   transform:
-    rotate(-10deg);
-
-  --petal-opacity: .27;
+    rotate(-18deg);
 }
 
 
-/* PETAL 04 */
+/* 02 */
+
+.p02-petal--02 {
+  left: 49%;
+  top: 60.7%;
+
+  width: 10px;
+
+  aspect-ratio:
+    44 / 36;
+
+  background-size:
+    2850% auto;
+
+  background-position:
+    20.744% 60.920%;
+
+  --petal-opacity: .40;
+
+  transform:
+    rotate(21deg);
+}
+
+
+/* 03 */
+
+.p02-petal--03 {
+  left: 61%;
+  top: 63.3%;
+
+  width: 8px;
+
+  aspect-ratio:
+    35 / 43;
+
+  background-size:
+    3582.857% auto;
+
+  background-position:
+    47.170% 58.134%;
+
+  --petal-opacity: .36;
+
+  transform:
+    rotate(-37deg);
+}
+
+
+/* 04 */
 
 .p02-petal--04 {
-  left: 60.8%;
-  top: 60.6%;
+  left: 42%;
+  top: 65.7%;
 
   width: 8px;
-  height: 10px;
+
+  aspect-ratio:
+    39 / 59;
+
+  background-size:
+    3215.385% auto;
 
   background-position:
-    43% 79%;
+    62.634% 67.782%;
+
+  --petal-opacity: .38;
 
   transform:
-    rotate(48deg);
-
-  --petal-opacity: .31;
+    rotate(17deg);
 }
 
 
-/* PETAL 05 */
+/* 05 */
 
 .p02-petal--05 {
-  left: 69%;
-  top: 57.1%;
+  left: 32%;
+  top: 68.3%;
 
-  width: 8px;
-  height: 10px;
+  width: 9px;
+
+  aspect-ratio:
+    58 / 42;
+
+  background-size:
+    2162.069% auto;
 
   background-position:
-    57% 84%;
+    48.997% 70.710%;
+
+  --petal-opacity: .43;
 
   transform:
-    rotate(-44deg);
-
-  --petal-opacity: .25;
+    rotate(-26deg);
 }
 
 
-/* PETAL 06 */
+/* 06 */
 
 .p02-petal--06 {
-  left: 23%;
-  top: 64.4%;
+  left: 55%;
+  top: 69.6%;
 
   width: 7px;
-  height: 9px;
+
+  aspect-ratio:
+    27 / 20;
+
+  background-size:
+    4644.444% auto;
 
   background-position:
-    69% 88%;
+    59.250% 72.123%;
+
+  --petal-opacity: .35;
 
   transform:
-    rotate(18deg);
-
-  --petal-opacity: .24;
+    rotate(44deg);
 }
 
 
-/* PETAL 07 */
+/* 07 */
 
 .p02-petal--07 {
-  left: 33.5%;
-  top: 66.8%;
+  left: 71%;
+  top: 70.5%;
 
-  width: 8px;
-  height: 11px;
+  width: 9px;
+
+  aspect-ratio:
+    56 / 52;
+
+  background-size:
+    2239.286% auto;
 
   background-position:
-    81% 82%;
+    24.791% 79.035%;
+
+  --petal-opacity: .39;
 
   transform:
-    rotate(-55deg);
-
-  --petal-opacity: .33;
+    rotate(-14deg);
 }
 
 
-/* PETAL 08 */
+/* 08 */
 
 .p02-petal--08 {
-  left: 44.3%;
-  top: 64.1%;
+  left: 23%;
+  top: 72.3%;
 
-  width: 7px;
-  height: 9px;
+  width: 8px;
+
+  aspect-ratio:
+    55 / 61;
+
+  background-size:
+    2280% auto;
 
   background-position:
-    93% 86%;
+    43.620% 79.883%;
+
+  --petal-opacity: .34;
 
   transform:
-    rotate(18deg);
-
-  --petal-opacity: .24;
+    rotate(31deg);
 }
 
 
-/* PETAL 09 */
+/* 09 */
 
 .p02-petal--09 {
-  left: 55%;
-  top: 68%;
+  left: 47%;
+  top: 73.1%;
 
-  width: 8px;
-  height: 10px;
+  width: 7px;
+
+  aspect-ratio:
+    34 / 35;
+
+  background-size:
+    3688.235% auto;
 
   background-position:
-    8% 94%;
+    17.049% 81.706%;
+
+  --petal-opacity: .38;
 
   transform:
-    rotate(58deg);
-
-  --petal-opacity: .31;
+    rotate(-42deg);
 }
 
 
-/* PETAL 10 */
+/* 10 */
 
 .p02-petal--10 {
-  left: 64.7%;
-  top: 66.1%;
+  left: 64%;
+  top: 74.7%;
 
   width: 8px;
-  height: 10px;
+
+  aspect-ratio:
+    56 / 50;
+
+  background-size:
+    2239.286% auto;
 
   background-position:
-    28% 94%;
+    7.596% 84.967%;
 
-  transform:
-    rotate(-19deg);
-
-  --petal-opacity: .26;
-}
-
-
-/* PETAL 11 */
-
-.p02-petal--11 {
-  left: 73%;
-  top: 62.2%;
-
-  width: 7px;
-  height: 9px;
-
-  background-position:
-    53% 94%;
-
-  transform:
-    rotate(34deg);
-
-  --petal-opacity: .28;
-}
-
-
-/* PETAL 12 */
-
-.p02-petal--12 {
-  left: 50.6%;
-  top: 71.2%;
-
-  width: 7px;
-  height: 9px;
-
-  background-position:
-    77% 94%;
-
-  transform:
-    rotate(-43deg);
-
-  --petal-opacity: .24;
-}
-
-
-/* PETAL 13 */
-
-.p02-petal--13 {
-  left: 40.5%;
-  top: 72.1%;
-
-  width: 6px;
-  height: 8px;
-
-  background-position:
-    66% 94%;
+  --petal-opacity: .37;
 
   transform:
     rotate(26deg);
-
-  --petal-opacity: .22;
 }
 
 
-/* PETAL 14 */
+/* 11 */
 
-.p02-petal--14 {
-  left: 61.5%;
-  top: 72.5%;
+.p02-petal--11 {
+  left: 36%;
+  top: 76%;
 
-  width: 6px;
-  height: 8px;
+  width: 8px;
+
+  aspect-ratio:
+    59 / 44;
+
+  background-size:
+    2125.424% auto;
 
   background-position:
-    89% 94%;
+    50.293% 87.438%;
+
+  --petal-opacity: .32;
 
   transform:
-    rotate(-24deg);
+    rotate(-21deg);
+}
 
-  --petal-opacity: .22;
+
+/* 12 */
+
+.p02-petal--12 {
+  left: 53%;
+  top: 77.5%;
+
+  width: 7px;
+
+  aspect-ratio:
+    50 / 49;
+
+  background-size:
+    2508% auto;
+
+  background-position:
+    29.734% 93.444%;
+
+  --petal-opacity: .36;
+
+  transform:
+    rotate(39deg);
+}
+
+
+/* 13 */
+
+.p02-petal--13 {
+  left: 74%;
+  top: 78%;
+
+  width: 8px;
+
+  aspect-ratio:
+    57 / 47;
+
+  background-size:
+    2200% auto;
+
+  background-position:
+    63.241% 95.443%;
+
+  --petal-opacity: .35;
+
+  transform:
+    rotate(-33deg);
+}
+
+
+/* 14 */
+
+.p02-petal--14 {
+  left: 18%;
+  top: 76.5%;
+
+  width: 7px;
+
+  aspect-ratio:
+    55 / 44;
+
+  background-size:
+    2280% auto;
+
+  background-position:
+    50.125% 95.785%;
+
+  --petal-opacity: .30;
+
+  transform:
+    rotate(19deg);
 }
 
 
 /* =========================================
    PROCESSION
+
+   Reference được trải rộng hơn,
+   không tụ vào giữa như bản hiện tại.
 ========================================= */
 
 .p02-procession {
@@ -1150,7 +1284,7 @@ button {
 
   left: 0;
 
-  bottom: 5.8%;
+  bottom: 7.3%;
 
   width: 100%;
 
@@ -1164,7 +1298,8 @@ button {
 .p02-procession-item {
   bottom: 0;
 
-  width: auto;
+  width:
+    auto;
 
   max-width:
     none;
@@ -1180,49 +1315,62 @@ button {
 }
 
 
-/* FLAG BEARER */
+/* =========================================
+   FLAG BEARER
+
+   Kéo sát mép trái giống reference.
+========================================= */
 
 .p02-flag-bearer {
   z-index: 31;
 
-  left: 2.2%;
+  left: -2%;
 
-  height: 86%;
+  height: 83%;
 }
 
 
-/* COUPLE */
+/* =========================================
+   COUPLE
+
+   Reference couple nhỏ hơn bản hiện tại
+   và nằm khoảng 22-23% chiều ngang.
+========================================= */
 
 .p02-couple {
   z-index: 34;
 
-  left:
-    calc(19.5% + 4px);
+  left: 22.6%;
 
-  height: 73%;
+  height: 63%;
 }
 
 
-/* LION + UMBRELLA */
+/* =========================================
+   LION + UMBRELLA
+
+   Bản hiện tại đang lệch phải rất nhiều.
+========================================= */
 
 .p02-lion-dance {
   z-index: 33;
 
-  left:
-    calc(43.4% - 3px);
+  left: 32.5%;
 
-  bottom: .4%;
+  bottom: .3%;
 
-  height: 84%;
+  height: 89%;
 }
 
 
-/* DRUMMER */
+/* =========================================
+   DRUMMER
+========================================= */
 
 .p02-drummer {
   z-index: 32;
 
-  right: 1.2%;
+  right: -1.5%;
 
   height: 62%;
 }
@@ -1241,7 +1389,8 @@ button {
 
   width: 43%;
 
-  height: auto;
+  height:
+    auto;
 
   transform:
     translateX(-50%);
@@ -2005,9 +2154,7 @@ button {
 
 /* =========================================
    DESKTOP PREVIEW
-
-   Page 02 hơi rộng hơn mobile
-   như đã chỉnh ở vòng trước.
+   GIỮ NGUYÊN TỶ LỆ ĐÃ CHỐT TRƯỚC
 ========================================= */
 
 @media
@@ -2057,31 +2204,31 @@ button {
 
   .p02-to {
     font-size:
-      16px;
+      18px;
   }
 
 
   .p02-wedding-title {
     font-size:
-      14px;
+      17px;
   }
 
 
   .p02-name {
     font-size:
-      39px;
+      40px;
   }
 
 
   .p02-ampersand {
     font-size:
-      26px;
+      31px;
   }
 
 
   .p02-date {
     font-size:
-      14px;
+      18px;
   }
 
 }
