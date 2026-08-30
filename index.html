@@ -14,7 +14,7 @@
 
   <title>Bách & Thư</title>
 
-  <!-- Chỉ preload những asset cần nhìn thấy ngay ở Page 01 -->
+  <!-- Chỉ preload asset cần nhìn thấy ngay ở Page 01 -->
   <link
     rel="preload"
     href="./assets/page01-bg-optimized.webp"
@@ -65,9 +65,7 @@
           aria-hidden="true"
         >
 
-          <!-- =========================
-               OPEN STATE
-          ========================== -->
+          <!-- OPEN STATE -->
 
           <span class="envelope-open">
 
@@ -115,9 +113,7 @@
           </span>
 
 
-          <!-- =========================
-               CLOSED STATE
-          ========================== -->
+          <!-- CLOSED STATE -->
 
           <img
             class="envelope-closed"
@@ -131,8 +127,6 @@
             height="1200"
           />
 
-
-          <!-- TAP HINT -->
 
           <span class="monogram-pulse"></span>
 
@@ -161,7 +155,7 @@
         >
 
           <!-- =================================
-               PAPER BACKGROUND
+               BACKGROUND
           ================================== -->
 
           <img
@@ -191,43 +185,83 @@
 
 
           <!-- =================================
-               CLOUD SOURCE
+               CLOUD 01
+               LARGE LEFT
           ================================== -->
 
           <img
-            class="p02-cloud-source deferred-page02-asset"
-            data-src="./assets/page02-clouds.png"
+            class="
+              p02-cloud
+              p02-cloud--01
+              deferred-page02-asset
+            "
+            data-src="./assets/page02-cloud-01.png"
             alt=""
             draggable="false"
             decoding="async"
-            width="1254"
-            height="1254"
+            width="616"
+            height="391"
           />
 
 
           <!-- =================================
-               CLOUDS
+               CLOUD 02
+               LARGE RIGHT
           ================================== -->
 
-          <span
-            class="p02-cloud p02-cloud--01"
-            aria-hidden="true"
-          ></span>
+          <img
+            class="
+              p02-cloud
+              p02-cloud--02
+              deferred-page02-asset
+            "
+            data-src="./assets/page02-cloud-02.png"
+            alt=""
+            draggable="false"
+            decoding="async"
+            width="1448"
+            height="1086"
+          />
 
-          <span
-            class="p02-cloud p02-cloud--02"
-            aria-hidden="true"
-          ></span>
 
-          <span
-            class="p02-cloud p02-cloud--03"
-            aria-hidden="true"
-          ></span>
+          <!-- =================================
+               CLOUD 03
+               SMALL LEFT
+          ================================== -->
 
-          <span
-            class="p02-cloud p02-cloud--04"
-            aria-hidden="true"
-          ></span>
+          <img
+            class="
+              p02-cloud
+              p02-cloud--03
+              deferred-page02-asset
+            "
+            data-src="./assets/page02-cloud-03.png"
+            alt=""
+            draggable="false"
+            decoding="async"
+            width="490"
+            height="273"
+          />
+
+
+          <!-- =================================
+               CLOUD 04
+               SMALL RIGHT
+          ================================== -->
+
+          <img
+            class="
+              p02-cloud
+              p02-cloud--04
+              deferred-page02-asset
+            "
+            data-src="./assets/page02-cloud-04.png"
+            alt=""
+            draggable="false"
+            decoding="async"
+            width="479"
+            height="261"
+          />
 
 
           <!-- =================================
@@ -235,7 +269,10 @@
           ================================== -->
 
           <div
-            class="p02-bamboo-window p02-bamboo-window--left"
+            class="
+              p02-bamboo-window
+              p02-bamboo-window--left
+            "
             aria-hidden="true"
           >
 
@@ -257,7 +294,10 @@
           ================================== -->
 
           <div
-            class="p02-bamboo-window p02-bamboo-window--right"
+            class="
+              p02-bamboo-window
+              p02-bamboo-window--right
+            "
             aria-hidden="true"
           >
 
@@ -329,9 +369,6 @@
 
           <!-- =================================
                FLOWER SOURCE
-
-               Chỉ preload sprite.
-               Không render nguyên sheet.
           ================================== -->
 
           <img
@@ -346,7 +383,7 @@
 
 
           <!-- =================================
-               INDIVIDUAL PETALS
+               PETALS
           ================================== -->
 
           <div
@@ -381,8 +418,6 @@
             aria-hidden="true"
           >
 
-            <!-- FLAG -->
-
             <img
               class="
                 p02-procession-item
@@ -397,8 +432,6 @@
               height="1536"
             />
 
-
-            <!-- COUPLE -->
 
             <img
               class="
@@ -415,8 +448,6 @@
             />
 
 
-            <!-- LION + UMBRELLA -->
-
             <img
               class="
                 p02-procession-item
@@ -431,8 +462,6 @@
               height="1086"
             />
 
-
-            <!-- DRUMMER -->
 
             <img
               class="
