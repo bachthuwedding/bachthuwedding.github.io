@@ -14,7 +14,7 @@
 
   <title>Bách & Thư</title>
 
-  <!-- Chỉ preload asset cần nhìn thấy ngay ở Page 01 -->
+  <!-- PAGE 01: chỉ preload asset first screen -->
   <link
     rel="preload"
     href="./assets/page01-bg-optimized.webp"
@@ -41,13 +41,6 @@
     id="siteShell"
   >
 
-    <!--
-      MASTER ARTBOARD:
-      390 × 700
-
-      Chỉ .site-scale được responsive.
-      Tất cả element bên trong giữ nguyên tọa độ.
-    -->
     <div
       class="site-scale"
       id="siteScale"
@@ -142,8 +135,6 @@
               />
 
 
-              <!-- TAP CUE -->
-
               <span class="monogram-pulse"></span>
 
             </span>
@@ -154,7 +145,7 @@
 
 
         <!-- =====================================
-             PAGE 02
+             INVITATION PAGES 02+
         ====================================== -->
 
         <section
@@ -163,10 +154,19 @@
           aria-hidden="true"
         >
 
-          <div class="invitation-flow">
+          <div
+            class="invitation-flow"
+            id="invitationFlow"
+          >
+
+
+            <!-- =================================
+                 PAGE 02
+            ================================== -->
 
             <section
               class="invitation-page page02-layout"
+              id="page02Layout"
               aria-label="Lễ thành hôn Bách và Thư"
             >
 
@@ -178,8 +178,6 @@
                 alt=""
                 draggable="false"
                 decoding="async"
-                width="852"
-                height="1845"
               />
 
 
@@ -191,8 +189,6 @@
                 alt=""
                 draggable="false"
                 decoding="async"
-                width="852"
-                height="1845"
               />
 
 
@@ -231,7 +227,7 @@
               />
 
 
-              <!-- BAMBOO LEFT -->
+              <!-- BAMBOO -->
 
               <div
                 class="p02-bamboo-window p02-bamboo-window--left"
@@ -248,8 +244,6 @@
 
               </div>
 
-
-              <!-- BAMBOO RIGHT -->
 
               <div
                 class="p02-bamboo-window p02-bamboo-window--right"
@@ -312,7 +306,7 @@
               ></div>
 
 
-              <!-- FLOWER SOURCE -->
+              <!-- FLOWERS SOURCE -->
 
               <img
                 class="p02-flower-source deferred-page02-asset"
@@ -322,8 +316,6 @@
                 decoding="async"
               />
 
-
-              <!-- PETALS -->
 
               <div
                 class="p02-petals"
@@ -390,10 +382,353 @@
               </div>
 
 
-              <!-- BOTTOM ORNAMENT -->
-
               <img
                 class="p02-bottom-ornament deferred-page02-asset"
+                data-src="./assets/page02-bottom-ornament.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+            </section>
+
+
+            <!-- =================================
+                 PAGE 03 — AGENDA
+            ================================== -->
+
+            <section
+              class="invitation-page page03-layout"
+              id="page03"
+              aria-label="Lịch trình đám cưới"
+            >
+
+              <!-- BACKGROUND -->
+
+              <img
+                class="p03-background deferred-page03-asset"
+                data-src="./assets/page02-bg.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+
+              <!-- FRAME DÙNG LẠI -->
+
+              <img
+                class="p03-frame deferred-page03-asset"
+                data-src="./assets/page02-frame.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+
+              <!-- =================================
+                   CLOUDS DÙNG LẠI
+              ================================== -->
+
+              <img
+                class="p03-cloud p03-cloud--01 deferred-page03-asset"
+                data-src="./assets/page02-cloud-01.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+              <img
+                class="p03-cloud p03-cloud--02 deferred-page03-asset"
+                data-src="./assets/page02-cloud-03.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+              <img
+                class="p03-cloud p03-cloud--03 deferred-page03-asset"
+                data-src="./assets/page02-cloud-02.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+              <img
+                class="p03-cloud p03-cloud--04 deferred-page03-asset"
+                data-src="./assets/page02-cloud-04.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+
+              <!-- =================================
+                   TITLE
+              ================================== -->
+
+              <h2 class="p03-title">
+                AGENDA
+              </h2>
+
+              <img
+                class="p03-title-divider deferred-page03-asset"
+                data-src="./assets/page03-title-divider.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+
+              <!-- =================================
+                   TIMELINE
+              ================================== -->
+
+              <img
+                class="p03-timeline deferred-page03-asset"
+                data-src="./assets/page03-timeline.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+
+              <!-- =================================
+                   EVENT 01
+              ================================== -->
+
+              <img
+                class="p03-number p03-number--01 deferred-page03-asset"
+                data-src="./assets/page03-number-01.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+              <img
+                class="p03-illustration p03-trap deferred-page03-asset"
+                data-src="./assets/page03-trap.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+              <article class="p03-event p03-event--01">
+
+                <h3 class="p03-event-title">
+                  ĂN HỎI
+                </h3>
+
+                <p class="p03-event-date">
+                  20 · 11 · 2026
+                </p>
+
+                <p class="p03-event-time">
+                  08:00 — 13:00
+                </p>
+
+                <div class="p03-location">
+
+                  <span
+                    class="p03-location-pin"
+                    aria-hidden="true"
+                  ></span>
+
+                  <div>
+                    <strong>Nhà cô dâu</strong>
+                    <span>AD-14, Ocean Park 3</span>
+                    <span>Nghĩa Trụ, Văn Giang, Hưng Yên</span>
+                  </div>
+
+                </div>
+
+              </article>
+
+
+              <!-- =================================
+                   EVENT 02
+              ================================== -->
+
+              <img
+                class="p03-number p03-number--02 deferred-page03-asset"
+                data-src="./assets/page03-number-02.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+              <img
+                class="p03-illustration p03-kieu deferred-page03-asset"
+                data-src="./assets/page03-kieu.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+              <article class="p03-event p03-event--02">
+
+                <h3 class="p03-event-title">
+                  ĐÓN DÂU
+                </h3>
+
+                <p class="p03-event-date">
+                  24 · 11 · 2026
+                </p>
+
+              </article>
+
+
+              <!-- =================================
+                   EVENT 03
+              ================================== -->
+
+              <img
+                class="p03-number p03-number--03 deferred-page03-asset"
+                data-src="./assets/page03-number-03.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+              <img
+                class="p03-illustration p03-mam-co deferred-page03-asset"
+                data-src="./assets/page03-mam-co.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+              <article class="p03-event p03-event--03">
+
+                <h3 class="p03-event-title">
+                  TIỆC CƯỚI
+                </h3>
+
+                <p class="p03-event-date">
+                  24 · 11 · 2026
+                </p>
+
+                <p class="p03-event-time">
+                  11:00 — 14:00
+                </p>
+
+                <div class="p03-location">
+
+                  <span
+                    class="p03-location-pin"
+                    aria-hidden="true"
+                  ></span>
+
+                  <div>
+                    <strong>Sheraton Hanoi Hotel</strong>
+                    <span>K5 Nghi Tàm, 11 Xuân Diệu</span>
+                    <span>Tây Hồ, Hà Nội</span>
+                  </div>
+
+                </div>
+
+              </article>
+
+
+              <!-- =================================
+                   EVENT 04
+              ================================== -->
+
+              <img
+                class="p03-number p03-number--04 deferred-page03-asset"
+                data-src="./assets/page03-number-04.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+              <img
+                class="p03-illustration p03-cheers deferred-page03-asset"
+                data-src="./assets/page03-cheers.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+              <article class="p03-event p03-event--04">
+
+                <h3 class="p03-event-title">
+                  AFTER PARTY
+                </h3>
+
+                <p class="p03-event-date">
+                  24 · 11 · 2026
+                </p>
+
+                <p class="p03-event-time">
+                  18:30 — 22:00
+                </p>
+
+                <div class="p03-location">
+
+                  <span
+                    class="p03-location-pin"
+                    aria-hidden="true"
+                  ></span>
+
+                  <div>
+                    <strong>
+                      Sheraton Hanoi Hotel (dự kiến)
+                    </strong>
+                  </div>
+
+                </div>
+
+              </article>
+
+
+              <!-- =================================
+                   DRESS CODE
+              ================================== -->
+
+              <section
+                class="p03-dress-code"
+                aria-label="Dress code"
+              >
+
+                <h3 class="p03-dress-title">
+                  <span>✦</span>
+                  DRESS CODE
+                  <span>✦</span>
+                </h3>
+
+                <div class="p03-color-list">
+
+                  <div class="p03-color-item">
+                    <span class="p03-color p03-color--white"></span>
+                    <span>WHITE</span>
+                  </div>
+
+                  <div class="p03-color-item">
+                    <span class="p03-color p03-color--beige"></span>
+                    <span>BEIGE</span>
+                  </div>
+
+                  <div class="p03-color-item">
+                    <span class="p03-color p03-color--black"></span>
+                    <span>BLACK</span>
+                  </div>
+
+                  <div class="p03-color-item">
+                    <span class="p03-color p03-color--gold"></span>
+                    <span>GOLD</span>
+                  </div>
+
+                </div>
+
+              </section>
+
+
+              <!-- =================================
+                   BOTTOM ORNAMENT DÙNG LẠI
+              ================================== -->
+
+              <img
+                class="p03-bottom-ornament deferred-page03-asset"
                 data-src="./assets/page02-bottom-ornament.png"
                 alt=""
                 draggable="false"
@@ -411,6 +746,7 @@
     </div>
 
   </main>
+
 
   <script src="./script.js"></script>
 
