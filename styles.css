@@ -4084,3 +4084,885 @@ a {
 
   -webkit-user-drag: none;
 }
+
+/* =========================================================
+   PAGE 07
+   SEND WISHES
+========================================================= */
+
+.page-07 {
+  position: relative;
+
+  width: 680px;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+
+  background: #f4dfb7;
+}
+
+
+.page07-canvas {
+  position: relative;
+
+  width: 680px;
+  height: 1450px;
+
+  overflow: hidden;
+
+  isolation: isolate;
+}
+
+
+/* =========================================================
+   PAGE 07 BACKGROUND
+========================================================= */
+
+.page07-background {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 0;
+
+  background-image:
+    url("./assets/page02-bg.png");
+
+  background-repeat: no-repeat;
+
+  background-position: center top;
+
+  background-size: 100% 100%;
+}
+
+
+/* =========================================================
+   PAGE 07 FRAME
+========================================================= */
+
+.page07-frame {
+  position: absolute;
+
+  z-index: 20;
+
+  left: 8px;
+  top: 0;
+
+  width: 664px;
+  height: 1450px;
+
+  object-fit: fill;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   PAGE 07 TOP KNOT
+========================================================= */
+
+.page07-hanging-knot {
+  position: absolute;
+
+  z-index: 4;
+
+  top: -4px;
+  left: 50%;
+
+  width: 78px;
+
+  transform: translateX(-50%);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   PAGE 07 CLOUDS
+========================================================= */
+
+.page07-cloud {
+  position: absolute;
+
+  z-index: 2;
+
+  object-fit: contain;
+
+  pointer-events: none;
+
+  opacity: 0.72;
+}
+
+
+.page07-cloud-01 {
+  width: 120px;
+
+  top: 61px;
+  right: 67px;
+}
+
+
+.page07-cloud-02 {
+  width: 116px;
+
+  top: 328px;
+  left: -15px;
+}
+
+
+.page07-cloud-03 {
+  width: 116px;
+
+  bottom: 255px;
+  left: 32px;
+
+  opacity: 0.55;
+}
+
+
+/* =========================================================
+   PAGE 07 CONTENT
+========================================================= */
+
+.page07-content {
+  position: absolute;
+
+  z-index: 6;
+
+  top: 193px;
+  left: 0;
+
+  width: 100%;
+
+  text-align: center;
+}
+
+
+/* title ornament above title */
+
+.page07-title-ornament {
+  display: block;
+
+  width: 300px;
+
+  margin: 0 auto 18px;
+
+  object-fit: contain;
+}
+
+
+.page07-title {
+  margin: 0;
+
+  color: #9f2815;
+
+  font-family:
+    "Times New Roman",
+    Georgia,
+    serif;
+
+  font-size: 47px;
+
+  font-weight: 500;
+
+  line-height: 1.12;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* divider beneath title */
+
+.page07-heading-divider {
+  display: block;
+
+  width: 294px;
+
+  margin: 18px auto 24px;
+
+  object-fit: contain;
+}
+
+
+.page07-description {
+  margin: 0;
+
+  color: #705039;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 20px;
+
+  font-weight: 400;
+
+  line-height: 1.6;
+
+  letter-spacing: 0.1px;
+}
+
+
+/* =========================================================
+   PAGE 07 CARDS
+========================================================= */
+
+.page07-card {
+  position: absolute;
+
+  left: 50%;
+
+  width: 518px;
+  height: 198px;
+
+  padding: 0;
+
+  transform: translateX(-50%);
+
+  border: 0;
+
+  background: transparent;
+
+  appearance: none;
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+
+.page07-card-message {
+  top: 375px;
+}
+
+
+.page07-card-video {
+  top: 620px;
+}
+
+
+.page07-card-background {
+  position: absolute;
+
+  z-index: 0;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: fill;
+
+  pointer-events: none;
+}
+
+
+.page07-card-icon {
+  position: absolute;
+
+  z-index: 2;
+
+  object-fit: contain;
+
+  pointer-events: none;
+}
+
+
+.page07-card-icon-message {
+  left: 43px;
+  top: 44px;
+
+  width: 126px;
+}
+
+
+.page07-card-icon-video {
+  left: 45px;
+  top: 52px;
+
+  width: 133px;
+}
+
+
+.page07-card-copy {
+  position: absolute;
+
+  z-index: 2;
+
+  top: 48px;
+  left: 205px;
+
+  color: #705039;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  pointer-events: none;
+}
+
+
+.page07-card-copy strong {
+  display: block;
+
+  margin-bottom: 13px;
+
+  color: #a52b17;
+
+  font-family:
+    "Times New Roman",
+    Georgia,
+    serif;
+
+  font-size: 24px;
+
+  font-weight: 500;
+
+  line-height: 1;
+}
+
+
+.page07-card-copy span {
+  display: block;
+
+  font-size: 18px;
+
+  line-height: 1.45;
+}
+
+
+.page07-card-arrow {
+  position: absolute;
+
+  z-index: 3;
+
+  top: 74px;
+  right: 34px;
+
+  width: 50px;
+  height: 50px;
+
+  object-fit: contain;
+
+  pointer-events: none;
+}
+
+
+.page07-card {
+  transition:
+    transform 160ms ease,
+    filter 160ms ease;
+}
+
+
+.page07-card:hover {
+  transform:
+    translateX(-50%)
+    translateY(-2px);
+
+  filter: brightness(1.02);
+}
+
+
+.page07-card:active {
+  transform:
+    translateX(-50%)
+    translateY(1px);
+}
+
+
+/* =========================================================
+   PAGE 07 FLOWERS
+========================================================= */
+
+.page07-flower-scatter {
+  position: absolute;
+
+  z-index: 4;
+
+  left: 47px;
+  bottom: 72px;
+
+  width: 584px;
+
+  opacity: 0.73;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   PAGE 07 COUPLE
+========================================================= */
+
+.page07-couple {
+  position: absolute;
+
+  z-index: 7;
+
+  bottom: -48px;
+  left: 50%;
+
+  width: 340px;
+
+  transform: translateX(-50%);
+
+  object-fit: contain;
+
+  pointer-events: none;
+}
+
+
+
+/* =========================================================
+   PAGE 08
+   THANK YOU / SAVE THE DATE
+========================================================= */
+
+.page-08 {
+  position: relative;
+
+  width: 680px;
+
+  margin: 0 auto;
+
+  overflow: hidden;
+
+  background: #f4dfb7;
+}
+
+
+.page08-canvas {
+  position: relative;
+
+  width: 680px;
+  height: 1235px;
+
+  overflow: hidden;
+
+  isolation: isolate;
+}
+
+
+/* =========================================================
+   PAGE 08 BACKGROUND
+========================================================= */
+
+.page08-background {
+  position: absolute;
+
+  z-index: 0;
+
+  inset: 0;
+
+  background-image:
+    url("./assets/page02-bg.png");
+
+  background-position: center;
+
+  background-repeat: no-repeat;
+
+  background-size: 100% 100%;
+}
+
+
+/* =========================================================
+   PAGE 08 FRAME
+========================================================= */
+
+.page08-frame {
+  position: absolute;
+
+  z-index: 20;
+
+  left: 8px;
+  top: 0;
+
+  width: 664px;
+  height: 1235px;
+
+  object-fit: fill;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   PAGE 08 TEXT CONTENT
+========================================================= */
+
+.page08-content {
+  position: absolute;
+
+  z-index: 8;
+
+  top: 187px;
+  left: 0;
+
+  width: 100%;
+
+  text-align: center;
+}
+
+
+.page08-thank-title {
+  margin: 0;
+
+  color: #982b16;
+
+  font-family:
+    "Times New Roman",
+    Georgia,
+    serif;
+
+  font-size: 48px;
+
+  font-weight: 500;
+
+  line-height: 1.18;
+
+  letter-spacing: 1px;
+}
+
+
+.page08-small-divider {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  width: 232px;
+
+  margin: 24px auto 34px;
+
+  color: #9d321d;
+}
+
+
+.page08-small-divider span {
+  display: block;
+
+  width: 86px;
+  height: 1px;
+
+  background: #ad482f;
+}
+
+
+.page08-small-divider b {
+  display: block;
+
+  font-family: Georgia, serif;
+
+  font-size: 24px;
+
+  font-weight: 400;
+
+  line-height: 1;
+}
+
+
+.page08-save-date {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  color: #36583c;
+
+  font-family:
+    "Times New Roman",
+    Georgia,
+    serif;
+}
+
+
+.page08-save-date strong {
+  font-size: 28px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.6px;
+}
+
+
+.page08-dot {
+  color: #9d321d;
+
+  font-size: 25px;
+}
+
+
+.page08-leaf {
+  display: inline-block;
+
+  color: #566d41;
+
+  font-family: Georgia, serif;
+
+  font-size: 33px;
+
+  line-height: 1;
+
+  transform: rotate(-10deg);
+}
+
+
+.page08-leaf-right {
+  transform:
+    scaleX(-1)
+    rotate(-10deg);
+}
+
+
+.page08-name {
+  margin-top: 34px;
+
+  color: #9b2e19;
+
+  font-family:
+    "Snell Roundhand",
+    "Segoe Script",
+    "Brush Script MT",
+    cursive;
+
+  font-size: 61px;
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  white-space: nowrap;
+}
+
+
+.page08-name span {
+  font-size: 52px;
+}
+
+
+.page08-small-divider-02 {
+  margin-top: 40px;
+  margin-bottom: 27px;
+}
+
+
+.page08-date {
+  color: #36583c;
+
+  font-family:
+    "Times New Roman",
+    Georgia,
+    serif;
+
+  font-size: 29px;
+
+  letter-spacing: 3px;
+}
+
+
+/* =========================================================
+   PAGE 08 CLOUDS
+========================================================= */
+
+.page08-cloud {
+  position: absolute;
+
+  z-index: 3;
+
+  object-fit: contain;
+
+  opacity: 0.7;
+
+  pointer-events: none;
+}
+
+
+.page08-cloud-left {
+  width: 122px;
+
+  top: 746px;
+  left: 63px;
+}
+
+
+.page08-cloud-right {
+  width: 118px;
+
+  top: 688px;
+  right: 53px;
+}
+
+
+/* =========================================================
+   PAGE 08 WATER GROUND
+========================================================= */
+
+.page08-water {
+  position: absolute;
+
+  z-index: 2;
+
+  left: 50%;
+  bottom: 53px;
+
+  width: 530px;
+
+  transform: translateX(-50%);
+
+  object-fit: contain;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   PAGE 08 TEMPLE
+========================================================= */
+
+.page08-temple {
+  position: absolute;
+
+  z-index: 4;
+
+  width: 323px;
+
+  left: 290px;
+  bottom: 136px;
+
+  object-fit: contain;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   PAGE 08 BAMBOO
+========================================================= */
+
+.page08-bamboo {
+  position: absolute;
+
+  z-index: 4;
+
+  width: 112px;
+
+  right: 50px;
+  bottom: 134px;
+
+  object-fit: contain;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   PAGE 08 COUPLE
+========================================================= */
+
+.page08-couple {
+  position: absolute;
+
+  z-index: 7;
+
+  left: 112px;
+  bottom: 76px;
+
+  width: 223px;
+
+  object-fit: contain;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   PAGE 08 LOTUS
+========================================================= */
+
+.page08-lotus {
+  position: absolute;
+
+  z-index: 6;
+
+  object-fit: contain;
+
+  pointer-events: none;
+}
+
+
+.page08-lotus-left {
+  width: 153px;
+
+  left: 30px;
+  bottom: 40px;
+}
+
+
+.page08-lotus-right {
+  width: 183px;
+
+  right: 18px;
+  bottom: 27px;
+}
+
+
+/* =========================================================
+   PAGE 08 BOTTOM ORNAMENT
+========================================================= */
+
+.page08-bottom-ornament {
+  position: absolute;
+
+  z-index: 18;
+
+  left: 50%;
+  bottom: -1px;
+
+  width: 258px;
+
+  transform: translateX(-50%);
+
+  object-fit: contain;
+
+  pointer-events: none;
+}
+
+
+
+/* =========================================================
+   PAGE 07 + PAGE 08
+   IMAGE SAFETY
+========================================================= */
+
+.page07-canvas img,
+.page08-canvas img {
+  max-width: none;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .page07-card {
+    transition: none;
+  }
+
+}
