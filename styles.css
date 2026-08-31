@@ -3626,3 +3626,461 @@ a {
 
   -webkit-user-drag: none;
 }
+
+/* =========================================================
+   =========================================================
+   PAGE 06 — LUCKY NUMBER
+   =========================================================
+========================================================= */
+
+.page06-layout {
+  position: relative;
+
+  z-index: 1;
+
+  width: 390px;
+  height: 680px;
+
+  overflow: hidden;
+
+  background:
+    #f1dfbd;
+
+  isolation: isolate;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.p06-background {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: none;
+
+  object-fit: cover;
+
+  object-position:
+    center center;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   CONFETTI
+========================================================= */
+
+.p06-confetti {
+  position: absolute;
+
+  z-index: 4;
+
+  left: 20px;
+  top: 25px;
+
+  width: 350px;
+  height: 600px;
+
+  object-fit: fill;
+
+  opacity: .86;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   CLOUD COMMON
+========================================================= */
+
+.p06-cloud {
+  position: absolute;
+
+  z-index: 8;
+
+  display: block;
+
+  max-width: none;
+
+  height: auto;
+
+  opacity: .72;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* TOP RIGHT */
+
+.p06-cloud--01 {
+  right: 35px;
+  top: 37px;
+
+  width: 92px;
+}
+
+
+/* LEFT MIDDLE */
+
+.p06-cloud--02 {
+  left: 18px;
+  top: 127px;
+
+  width: 67px;
+}
+
+
+/* RIGHT LOWER */
+
+.p06-cloud--03 {
+  right: -10px;
+  top: 332px;
+
+  width: 74px;
+}
+
+
+/* LEFT LOWER */
+
+.p06-cloud--04 {
+  left: -5px;
+  top: 409px;
+
+  width: 70px;
+}
+
+
+/* =========================================================
+   CARD WRAP
+========================================================= */
+
+.p06-card-wrap {
+  position: absolute;
+
+  z-index: 16;
+
+  left: 50%;
+  top: 158px;
+
+  width: 246px;
+
+  transform:
+    translateX(-50%);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   LUCKY CARD IMAGE
+========================================================= */
+
+.p06-lucky-card {
+  position: relative;
+
+  z-index: 1;
+
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  max-width: none;
+
+  filter:
+    drop-shadow(
+      0
+      6px
+      6px
+      rgba(
+        91,
+        59,
+        24,
+        .14
+      )
+    );
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   LUCKY NUMBER TITLE
+========================================================= */
+
+.p06-title {
+  position: absolute;
+
+  z-index: 5;
+
+  left: 50%;
+  top: 86px;
+
+  width: 220px;
+
+  margin: 0;
+
+  transform:
+    translateX(-50%);
+
+  text-align: center;
+
+  color:
+    #315747;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 23px;
+
+  line-height: 1;
+
+  font-weight: 400;
+
+  letter-spacing:
+    .005em;
+}
+
+
+/* =========================================================
+   RANDOM NUMBER SLOT
+
+   HIỆN ĐỂ TRỐNG.
+
+   Sau này set textContent bằng JS.
+========================================================= */
+
+.p06-number-slot {
+  position: absolute;
+
+  z-index: 6;
+
+  left: 50%;
+  top: 160px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 205px;
+  height: 125px;
+
+  transform:
+    translateX(-50%);
+
+  text-align: center;
+
+  color:
+    #a52f15;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 94px;
+
+  line-height: 1;
+
+  font-weight: 400;
+
+  letter-spacing:
+    -.04em;
+
+  font-variant-numeric:
+    lining-nums;
+}
+
+
+/* =========================================================
+   LUCKY ITEMS COMMON
+========================================================= */
+
+.p06-lucky-item {
+  position: absolute;
+
+  display: block;
+
+  max-width: none;
+
+  height: auto;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   GOLD INGOTS
+========================================================= */
+
+.p06-ingots {
+  z-index: 25;
+
+  left: 35px;
+  bottom: 47px;
+
+  width: 75px;
+}
+
+
+/* =========================================================
+   LUCKY KNOT
+========================================================= */
+
+.p06-knot {
+  z-index: 28;
+
+  left: 97px;
+  bottom: 39px;
+
+  width: 77px;
+
+  transform:
+    rotate(-7deg);
+
+  transform-origin:
+    50% 50%;
+}
+
+
+/* =========================================================
+   LUCKY BAG
+========================================================= */
+
+.p06-bag {
+  z-index: 26;
+
+  right: 33px;
+  bottom: 46px;
+
+  width: 105px;
+}
+
+
+/* =========================================================
+   GOLD COINS
+========================================================= */
+
+.p06-coins {
+  z-index: 29;
+
+  right: 109px;
+  bottom: 38px;
+
+  width: 53px;
+
+  transform:
+    rotate(5deg);
+
+  transform-origin:
+    50% 50%;
+}
+
+
+/* =========================================================
+   FRAME
+
+   ĐỂ GẦN CUỐI LAYER
+========================================================= */
+
+.p06-frame {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 40;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: none;
+
+  object-fit: fill;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   BOTTOM ORNAMENT
+========================================================= */
+
+.p06-bottom-ornament {
+  position: absolute;
+
+  z-index: 45;
+
+  left: 50%;
+  bottom: -14px;
+
+  display: block;
+
+  width: 158px;
+  height: auto;
+
+  max-width: none;
+
+  transform:
+    translateX(-50%);
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-select: none;
+
+  -webkit-user-drag: none;
+}
