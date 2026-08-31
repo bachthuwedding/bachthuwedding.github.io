@@ -1027,12 +1027,6 @@ if (
    DEFERRED ASSETS
 ========================================================= */
 
-const page05 =
-  document.getElementById(
-    "page05"
-  );
-
-
 const deferredPage05Assets =
   Array.from(
     document.querySelectorAll(
@@ -1145,6 +1139,139 @@ if (
     () => {
 
       loadPage05Assets();
+
+    },
+    {
+      passive: true
+    }
+  );
+
+}
+
+/* =========================================================
+   PAGE 06
+   DEFERRED ASSETS
+========================================================= */
+
+const page06 =
+  document.getElementById(
+    "page06"
+  );
+
+
+const deferredPage06Assets =
+  Array.from(
+    document.querySelectorAll(
+      ".deferred-page06-asset[data-src]"
+    )
+  );
+
+
+let page06AssetsPromise =
+  null;
+
+
+/* =========================================================
+   LOAD PAGE 06 ASSETS
+========================================================= */
+
+function loadPage06Assets() {
+
+  if (
+    page06AssetsPromise
+  ) {
+
+    return page06AssetsPromise;
+
+  }
+
+
+  page06AssetsPromise =
+    Promise.all(
+      deferredPage06Assets.map(
+        loadDeferredImage
+      )
+    )
+      .then(
+        () => {
+
+          if (
+            page06
+          ) {
+
+            page06.classList.add(
+              "is-assets-ready"
+            );
+
+          }
+
+        }
+      );
+
+
+  return page06AssetsPromise;
+
+}
+
+
+/* =========================================================
+   PRELOAD PAGE 06
+
+   MASTER = 680px
+
+   PAGE 02 = 0
+   PAGE 03 = 680
+   PAGE 04 = 1360
+   PAGE 05 = 2040
+   PAGE 06 = 2720
+
+   Khi user đi vào khoảng đầu Page 05,
+   Page 06 bắt đầu tải.
+========================================================= */
+
+page02.addEventListener(
+  "scroll",
+  () => {
+
+    const scrollY =
+      page02.scrollTop;
+
+
+    if (
+      scrollY >=
+      DESIGN_HEIGHT * 3.15
+    ) {
+
+      loadPage06Assets();
+
+    }
+
+  },
+  {
+    passive: true
+  }
+);
+
+
+/* =========================================================
+   EARLY LOAD IF USER TOUCHES PAGE 05
+========================================================= */
+
+const page05 =
+  document.getElementById(
+    "page05"
+  );
+
+
+if (
+  page05
+) {
+
+  page05.addEventListener(
+    "pointerdown",
+    () => {
+
+      loadPage06Assets();
 
     },
     {
