@@ -6,7 +6,7 @@ const DESIGN_WIDTH =
   390;
 
 const DESIGN_HEIGHT =
-  760;
+  700;
 
 
 /* =========================================
@@ -30,7 +30,7 @@ const page02 =
 
 
 /* =========================================
-   ASSETS
+   DEFERRED ASSETS
 ========================================= */
 
 const deferredOpeningAssets =
@@ -70,28 +70,36 @@ let page02AssetsPromise =
   null;
 
 
-let lastViewportWidth =
-  0;
+/* =========================================
+   SCALE STATE
+========================================= */
+
+let scaleFrame =
+  null;
 
 
 /* =========================================
-   GET REAL VISIBLE VIEWPORT
+   GET REAL VIEWPORT
 ========================================= */
 
 function getViewportSize() {
 
-  const visualViewport =
-    window.visualViewport;
+  /*
+    visualViewport chính xác hơn trên
+    Safari / Chrome iOS vì nó phản ánh
+    vùng nội dung đang thực sự nhìn thấy.
+  */
 
-
-  if (visualViewport) {
+  if (
+    window.visualViewport
+  ) {
 
     return {
       width:
-        visualViewport.width,
+        window.visualViewport.width,
 
       height:
-        visualViewport.height
+        window.visualViewport.height
     };
 
   }
@@ -109,57 +117,24 @@ function getViewportSize() {
 
 
 /* =========================================
-   GLOBAL SCALE
+   SCALE SYSTEM
 
-   Luôn CONTAIN.
+   Một artboard duy nhất:
+   390 × 700
 
-   Không crop.
-   Không méo.
-   Không scale từng element.
+   CONTAIN:
+   - không crop
+   - không stretch
+   - không lệch element
 ========================================= */
 
-function updateDesignScale(
-  force = false
-) {
+function updateDesignScale() {
 
-  const viewport =
+  const {
+    width: viewportWidth,
+    height: viewportHeight
+  } =
     getViewportSize();
-
-
-  const viewportWidth =
-    viewport.width;
-
-
-  const viewportHeight =
-    viewport.height;
-
-
-  /*
-    Trên mobile browser toolbar có thể
-    thay đổi height liên tục.
-
-    Nếu width không đổi và đây không phải
-    lần force, không cho website zoom nhảy.
-  */
-
-  const touchDevice =
-    window.matchMedia(
-      "(pointer: coarse)"
-    ).matches;
-
-
-  if (
-    !force &&
-    touchDevice &&
-    Math.abs(
-      viewportWidth -
-      lastViewportWidth
-    ) < 2
-  ) {
-
-    return;
-
-  }
 
 
   const scaleByWidth =
@@ -171,11 +146,6 @@ function updateDesignScale(
     viewportHeight /
     DESIGN_HEIGHT;
 
-
-  /*
-    CONTAIN:
-    luôn giữ toàn bộ artboard trong viewport.
-  */
 
   let scale =
     Math.min(
@@ -225,10 +195,6 @@ function updateDesignScale(
     );
 
 
-  lastViewportWidth =
-    viewportWidth;
-
-
   siteShell.classList.add(
     "is-scale-ready"
   );
@@ -237,27 +203,77 @@ function updateDesignScale(
 
 
 /* =========================================
-   INITIAL SCALE
+   REQUEST SCALE UPDATE
+
+   Gom resize về một animation frame
+   để tránh gọi liên tục.
 ========================================= */
 
-updateDesignScale(true);
+function requestScaleUpdate() {
+
+  if (
+    scaleFrame !== null
+  ) {
+    return;
+  }
+
+
+  scaleFrame =
+    window.requestAnimationFrame(
+      () => {
+
+        scaleFrame =
+          null;
+
+
+        updateDesignScale();
+
+      }
+    );
+
+}
 
 
 /* =========================================
-   RESIZE
+   INITIAL SCALE
+========================================= */
+
+updateDesignScale();
+
+
+/* =========================================
+   WINDOW RESIZE
 ========================================= */
 
 window.addEventListener(
   "resize",
-  () => {
-
-    updateDesignScale();
-
-  },
+  requestScaleUpdate,
   {
     passive: true
   }
 );
+
+
+/* =========================================
+   VISUAL VIEWPORT
+
+   Quan trọng cho Safari / Chrome iOS.
+========================================= */
+
+if (
+  window.visualViewport
+) {
+
+  window.visualViewport
+    .addEventListener(
+      "resize",
+      requestScaleUpdate,
+      {
+        passive: true
+      }
+    );
+
+}
 
 
 /* =========================================
@@ -269,42 +285,12 @@ window.addEventListener(
   () => {
 
     window.setTimeout(
-      () => {
-
-        updateDesignScale(true);
-
-      },
-      180
+      requestScaleUpdate,
+      150
     );
 
   }
 );
-
-
-/* =========================================
-   VISUAL VIEWPORT
-
-   iOS Safari / Chrome.
-========================================= */
-
-if (
-  window.visualViewport
-) {
-
-  window.visualViewport
-    .addEventListener(
-      "resize",
-      () => {
-
-        updateDesignScale();
-
-      },
-      {
-        passive: true
-      }
-    );
-
-}
 
 
 /* =========================================
@@ -320,7 +306,9 @@ function loadDeferredImage(
 
 
   if (!source) {
+
     return Promise.resolve();
+
   }
 
 
@@ -385,7 +373,7 @@ function loadDeferredImage(
 
 
 /* =========================================
-   PAGE 01 ASSETS
+   LOAD PAGE 01 OPEN ASSETS
 ========================================= */
 
 function loadOpeningAssets() {
@@ -413,7 +401,7 @@ function loadOpeningAssets() {
 
 
 /* =========================================
-   PAGE 02 ASSETS
+   LOAD PAGE 02 ASSETS
 ========================================= */
 
 function loadPage02Assets() {
@@ -450,7 +438,7 @@ function loadPage02Assets() {
 
 
 /* =========================================
-   PAGE 01 IDLE LOAD
+   PAGE 01 IDLE PRELOAD
 ========================================= */
 
 function scheduleOpeningAssets() {
@@ -497,7 +485,9 @@ window.addEventListener(
 
 
 /* =========================================
-   PAGE 02 IDLE LOAD
+   PAGE 02 DEFERRED PRELOAD
+
+   Không preload Page 02 từ first screen.
 ========================================= */
 
 function schedulePage02Assets() {
@@ -535,7 +525,7 @@ function schedulePage02Assets() {
 
 
 /* =========================================
-   PRELOAD OPENING ON TOUCH
+   EARLY OPEN-ASSET LOAD
 ========================================= */
 
 envelopeButton.addEventListener(
@@ -560,7 +550,7 @@ envelopeButton.addEventListener(
 
 
 /* =========================================
-   PRELOAD PAGE 02
+   EARLY PAGE 02 LOAD
 ========================================= */
 
 invitationCard.addEventListener(
@@ -594,7 +584,9 @@ async function openEnvelope() {
     envelopeIsPreparing ||
     page02IsOpen
   ) {
+
     return;
+
   }
 
 
@@ -611,22 +603,26 @@ async function openEnvelope() {
   await loadOpeningAssets();
 
 
-  envelopeIsPreparing =
-    false;
-
-
   if (
     page02IsOpen
   ) {
+
+    envelopeIsPreparing =
+      false;
+
 
     envelopeButton.removeAttribute(
       "aria-busy"
     );
 
+
     return;
 
   }
 
+
+  envelopeIsPreparing =
+    false;
 
   envelopeIsOpen =
     true;
@@ -654,6 +650,11 @@ async function openEnvelope() {
   );
 
 
+  /*
+    Chỉ sau khi phong bì mở
+    mới tải Page 02.
+  */
+
   schedulePage02Assets();
 
 }
@@ -669,7 +670,9 @@ function openPage02() {
     !envelopeIsOpen ||
     page02IsOpen
   ) {
+
     return;
+
   }
 
 
@@ -719,12 +722,19 @@ envelopeButton.addEventListener(
 
       event.preventDefault();
 
+
       openEnvelope();
+
 
       return;
 
     }
 
+
+    /*
+      Sau khi mở:
+      click vùng phong bì không đóng lại.
+    */
 
     event.preventDefault();
 
@@ -733,7 +743,7 @@ envelopeButton.addEventListener(
 
 
 /* =========================================
-   CARD CLICK
+   CARD CLICK -> PAGE 02
 ========================================= */
 
 invitationCard.addEventListener(
@@ -744,7 +754,9 @@ invitationCard.addEventListener(
       !envelopeIsOpen ||
       page02IsOpen
     ) {
+
       return;
+
     }
 
 
