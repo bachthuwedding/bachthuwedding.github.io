@@ -1,18 +1,12 @@
 /* =========================================
    MASTER ARTBOARD
-
-   Toàn bộ website được thiết kế cố định
-   tại 390 × 844.
-
-   Không scale từng element.
-   Chỉ scale toàn bộ .site-scale một lần.
 ========================================= */
 
 const DESIGN_WIDTH =
   390;
 
 const DESIGN_HEIGHT =
-  844;
+  760;
 
 
 /* =========================================
@@ -36,7 +30,7 @@ const page02 =
 
 
 /* =========================================
-   DEFERRED ASSETS
+   ASSETS
 ========================================= */
 
 const deferredOpeningAssets =
@@ -76,102 +70,87 @@ let page02AssetsPromise =
   null;
 
 
-/* =========================================
-   SCALE STATE
-========================================= */
-
 let lastViewportWidth =
   0;
 
-let lastViewportHeight =
-  0;
+
+/* =========================================
+   GET REAL VISIBLE VIEWPORT
+========================================= */
+
+function getViewportSize() {
+
+  const visualViewport =
+    window.visualViewport;
+
+
+  if (visualViewport) {
+
+    return {
+      width:
+        visualViewport.width,
+
+      height:
+        visualViewport.height
+    };
+
+  }
+
+
+  return {
+    width:
+      window.innerWidth,
+
+    height:
+      window.innerHeight
+  };
+
+}
 
 
 /* =========================================
-   SCALE SYSTEM
+   GLOBAL SCALE
 
-   PHONE PORTRAIT
-   -> FIT WIDTH
+   Luôn CONTAIN.
 
-   TABLET / DESKTOP
-   -> FIT HEIGHT
-
-   LANDSCAPE PHONE
-   -> CONTAIN
-
-   Như vậy:
-   - iPhone luôn kín chiều ngang
-   - iPad / desktop kín chiều cao
-   - không méo
-   - tất cả element giữ nguyên vị trí
+   Không crop.
+   Không méo.
+   Không scale từng element.
 ========================================= */
 
 function updateDesignScale(
   force = false
 ) {
 
-  /*
-    window.innerWidth rất ổn cho việc
-    xác định chiều rộng layout trên mobile.
+  const viewport =
+    getViewportSize();
 
-    Không dùng visualViewport.height để
-    scale mobile vì browser toolbar sẽ làm
-    thiệp co lại theo chiều cao.
-  */
 
   const viewportWidth =
-    window.innerWidth;
+    viewport.width;
+
 
   const viewportHeight =
-    window.innerHeight;
-
-
-  /* =====================================
-     DEVICE / ORIENTATION
-  ===================================== */
-
-  const isPortrait =
-    viewportHeight >=
-    viewportWidth;
+    viewport.height;
 
 
   /*
-    Dùng CSS viewport width thay vì
-    user-agent detection.
+    Trên mobile browser toolbar có thể
+    thay đổi height liên tục.
 
-    <= 600px portrait:
-    coi là phone.
+    Nếu width không đổi và đây không phải
+    lần force, không cho website zoom nhảy.
   */
 
-  const isPhonePortrait =
-    isPortrait &&
-    viewportWidth <= 600;
+  const touchDevice =
+    window.matchMedia(
+      "(pointer: coarse)"
+    ).matches;
 
-
-  /*
-    Tablet / desktop portrait hoặc landscape.
-  */
-
-  const isLargeScreen =
-    !isPhonePortrait;
-
-
-  /* =====================================
-     IGNORE MOBILE TOOLBAR RESIZE
-
-     Safari / Chrome mobile thường fire
-     resize khi thanh địa chỉ ẩn / hiện.
-
-     Nếu width không thay đổi,
-     KHÔNG scale lại.
-
-     Nhờ vậy website không bị zoom
-     lên xuống khi người dùng scroll.
-  ===================================== */
 
   if (
     !force &&
-    isPhonePortrait &&
+    touchDevice &&
     Math.abs(
       viewportWidth -
       lastViewportWidth
@@ -182,33 +161,6 @@ function updateDesignScale(
 
   }
 
-
-  /*
-    Tablet / desktop:
-    resize thật sự thì tính lại.
-  */
-
-  if (
-    !force &&
-    isLargeScreen &&
-    Math.abs(
-      viewportWidth -
-      lastViewportWidth
-    ) < 2 &&
-    Math.abs(
-      viewportHeight -
-      lastViewportHeight
-    ) < 2
-  ) {
-
-    return;
-
-  }
-
-
-  /* =====================================
-     SCALE VALUES
-  ===================================== */
 
   const scaleByWidth =
     viewportWidth /
@@ -220,68 +172,17 @@ function updateDesignScale(
     DESIGN_HEIGHT;
 
 
-  let scale;
+  /*
+    CONTAIN:
+    luôn giữ toàn bộ artboard trong viewport.
+  */
 
+  let scale =
+    Math.min(
+      scaleByWidth,
+      scaleByHeight
+    );
 
-  /* =====================================
-     PHONE PORTRAIT
-     ALWAYS FIT WIDTH
-  ===================================== */
-
-  if (
-    isPhonePortrait
-  ) {
-
-    scale =
-      scaleByWidth;
-
-  }
-
-
-  /* =====================================
-     TABLET / DESKTOP
-
-     Ưu tiên full height.
-
-     Vì màn hình tablet / laptop rộng hơn
-     artboard rất nhiều nên thông thường
-     scaleByHeight vẫn không vượt width.
-  ===================================== */
-
-  else {
-
-    scale =
-      scaleByHeight;
-
-
-    /*
-      Safety:
-      nếu gặp màn hình cực hẹp / landscape
-      khiến width không đủ thì chuyển về
-      contain để không crop ngang.
-    */
-
-    const resultingWidth =
-      DESIGN_WIDTH *
-      scale;
-
-
-    if (
-      resultingWidth >
-      viewportWidth
-    ) {
-
-      scale =
-        scaleByWidth;
-
-    }
-
-  }
-
-
-  /* =====================================
-     SAFETY
-  ===================================== */
 
   scale =
     Math.max(
@@ -289,10 +190,6 @@ function updateDesignScale(
       scale
     );
 
-
-  /* =====================================
-     RENDER SIZE
-  ===================================== */
 
   const renderWidth =
     DESIGN_WIDTH *
@@ -303,10 +200,6 @@ function updateDesignScale(
     DESIGN_HEIGHT *
     scale;
 
-
-  /* =====================================
-     SEND VALUES TO CSS
-  ===================================== */
 
   document.documentElement
     .style
@@ -332,21 +225,9 @@ function updateDesignScale(
     );
 
 
-  /* =====================================
-     SAVE VIEWPORT
-  ===================================== */
-
   lastViewportWidth =
     viewportWidth;
 
-
-  lastViewportHeight =
-    viewportHeight;
-
-
-  /* =====================================
-     SHOW WEBSITE
-  ===================================== */
 
   siteShell.classList.add(
     "is-scale-ready"
@@ -364,13 +245,6 @@ updateDesignScale(true);
 
 /* =========================================
    RESIZE
-
-   Phone:
-   toolbar resize bị bỏ qua do width
-   không đổi.
-
-   Desktop/tablet:
-   resize bình thường.
 ========================================= */
 
 window.addEventListener(
@@ -387,10 +261,7 @@ window.addEventListener(
 
 
 /* =========================================
-   ORIENTATION CHANGE
-
-   Khi xoay điện thoại / iPad,
-   bắt buộc tính lại.
+   ORIENTATION
 ========================================= */
 
 window.addEventListener(
@@ -411,6 +282,32 @@ window.addEventListener(
 
 
 /* =========================================
+   VISUAL VIEWPORT
+
+   iOS Safari / Chrome.
+========================================= */
+
+if (
+  window.visualViewport
+) {
+
+  window.visualViewport
+    .addEventListener(
+      "resize",
+      () => {
+
+        updateDesignScale();
+
+      },
+      {
+        passive: true
+      }
+    );
+
+}
+
+
+/* =========================================
    LOAD ONE IMAGE
 ========================================= */
 
@@ -423,9 +320,7 @@ function loadDeferredImage(
 
 
   if (!source) {
-
     return Promise.resolve();
-
   }
 
 
@@ -490,7 +385,7 @@ function loadDeferredImage(
 
 
 /* =========================================
-   LOAD PAGE 01 OPENING ASSETS
+   PAGE 01 ASSETS
 ========================================= */
 
 function loadOpeningAssets() {
@@ -518,7 +413,7 @@ function loadOpeningAssets() {
 
 
 /* =========================================
-   LOAD PAGE 02 ASSETS
+   PAGE 02 ASSETS
 ========================================= */
 
 function loadPage02Assets() {
@@ -555,7 +450,7 @@ function loadPage02Assets() {
 
 
 /* =========================================
-   SCHEDULE PAGE 01 ASSETS
+   PAGE 01 IDLE LOAD
 ========================================= */
 
 function scheduleOpeningAssets() {
@@ -592,12 +487,6 @@ function scheduleOpeningAssets() {
 }
 
 
-/* =========================================
-   FIRST SCREEN
-
-   Chỉ preload Page 01 như baseline cũ.
-========================================= */
-
 window.addEventListener(
   "load",
   scheduleOpeningAssets,
@@ -608,9 +497,7 @@ window.addEventListener(
 
 
 /* =========================================
-   SCHEDULE PAGE 02 ASSETS
-
-   Chỉ sau khi phong bì mở.
+   PAGE 02 IDLE LOAD
 ========================================= */
 
 function schedulePage02Assets() {
@@ -648,7 +535,7 @@ function schedulePage02Assets() {
 
 
 /* =========================================
-   EARLY LOAD PAGE 01 ON TOUCH
+   PRELOAD OPENING ON TOUCH
 ========================================= */
 
 envelopeButton.addEventListener(
@@ -673,7 +560,7 @@ envelopeButton.addEventListener(
 
 
 /* =========================================
-   EARLY LOAD PAGE 02
+   PRELOAD PAGE 02
 ========================================= */
 
 invitationCard.addEventListener(
@@ -707,9 +594,7 @@ async function openEnvelope() {
     envelopeIsPreparing ||
     page02IsOpen
   ) {
-
     return;
-
   }
 
 
@@ -726,26 +611,21 @@ async function openEnvelope() {
   await loadOpeningAssets();
 
 
+  envelopeIsPreparing =
+    false;
+
+
   if (
     page02IsOpen
   ) {
-
-    envelopeIsPreparing =
-      false;
-
 
     envelopeButton.removeAttribute(
       "aria-busy"
     );
 
-
     return;
 
   }
-
-
-  envelopeIsPreparing =
-    false;
 
 
   envelopeIsOpen =
@@ -774,10 +654,6 @@ async function openEnvelope() {
   );
 
 
-  /*
-    Page 02 vẫn không preload từ đầu.
-  */
-
   schedulePage02Assets();
 
 }
@@ -793,9 +669,7 @@ function openPage02() {
     !envelopeIsOpen ||
     page02IsOpen
   ) {
-
     return;
-
   }
 
 
@@ -804,10 +678,6 @@ function openPage02() {
 
 
   loadPage02Assets();
-
-
-  page02.scrollTop =
-    0;
 
 
   siteShell.classList.add(
@@ -849,19 +719,12 @@ envelopeButton.addEventListener(
 
       event.preventDefault();
 
-
       openEnvelope();
-
 
       return;
 
     }
 
-
-    /*
-      Phong bì đã mở:
-      click vùng đỏ không đóng lại.
-    */
 
     event.preventDefault();
 
@@ -870,7 +733,7 @@ envelopeButton.addEventListener(
 
 
 /* =========================================
-   CARD CLICK -> PAGE 02
+   CARD CLICK
 ========================================= */
 
 invitationCard.addEventListener(
@@ -881,9 +744,7 @@ invitationCard.addEventListener(
       !envelopeIsOpen ||
       page02IsOpen
     ) {
-
       return;
-
     }
 
 
