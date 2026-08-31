@@ -14,7 +14,7 @@
 
   <title>Bách & Thư</title>
 
-  <!-- Chỉ preload asset cần nhìn thấy ngay ở Page 01 -->
+  <!-- Chỉ preload asset cần nhìn thấy ngay -->
   <link
     rel="preload"
     href="./assets/page01-bg-optimized.webp"
@@ -37,471 +37,456 @@
 
 <body>
 
+  <!--
+    SITE SHELL
+
+    Kích thước bên ngoài được JS tính theo
+    MASTER 390 × 844.
+
+    Toàn bộ website bên trong chỉ scale
+    MỘT LẦN tại .site-scale.
+  -->
+
   <main
     class="site-shell"
     id="siteShell"
   >
 
-    <!-- =====================================
-         PAGE 01
-    ====================================== -->
-
-    <section
-      class="opening-page"
-      id="opening"
-      aria-label="Mở thiệp cưới Bách và Thư"
+    <div
+      class="site-scale"
+      id="siteScale"
     >
 
-      <button
-        class="envelope-button"
-        id="envelopeButton"
-        type="button"
-        aria-label="Mở thiệp"
-        aria-expanded="false"
-      >
+      <div class="design-stage">
 
-        <span
-          class="envelope-stage"
+
+        <!-- =====================================
+             PAGE 01
+        ====================================== -->
+
+        <section
+          class="opening-page"
+          id="opening"
+          aria-label="Mở thiệp cưới Bách và Thư"
+        >
+
+          <button
+            class="envelope-button"
+            id="envelopeButton"
+            type="button"
+            aria-label="Mở thiệp"
+            aria-expanded="false"
+          >
+
+            <span
+              class="envelope-stage"
+              aria-hidden="true"
+            >
+
+              <!-- =========================
+                   OPEN STATE
+              ========================== -->
+
+              <span class="envelope-open">
+
+                <img
+                  class="envelope-open-flap deferred-opening-asset"
+                  data-src="./assets/envelope-open-flap-optimized.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                  width="900"
+                  height="600"
+                />
+
+                <img
+                  class="envelope-open-body deferred-opening-asset"
+                  data-src="./assets/envelope-open-body-optimized.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                  width="800"
+                  height="1200"
+                />
+
+                <img
+                  class="invitation-card deferred-opening-asset"
+                  id="invitationCard"
+                  data-src="./assets/invitation-card-optimized.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                  width="720"
+                  height="960"
+                />
+
+                <img
+                  class="envelope-open-front deferred-opening-asset"
+                  data-src="./assets/envelope-open-front-optimized.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                  width="800"
+                  height="1200"
+                />
+
+              </span>
+
+
+              <!-- =========================
+                   CLOSED STATE
+              ========================== -->
+
+              <img
+                class="envelope-closed"
+                src="./assets/envelope-closed-optimized.png"
+                alt=""
+                draggable="false"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+                width="800"
+                height="1200"
+              />
+
+
+              <span class="monogram-pulse"></span>
+
+            </span>
+
+          </button>
+
+        </section>
+
+
+        <!-- =====================================
+             PAGE 02+
+        ====================================== -->
+
+        <section
+          class="page-02"
+          id="page02"
           aria-hidden="true"
         >
 
-          <!-- OPEN STATE -->
+          <!--
+            Các page sau này sẽ tiếp tục
+            được đặt trong invitation-flow.
+          -->
 
-          <span class="envelope-open">
-
-            <img
-              class="envelope-open-flap deferred-opening-asset"
-              data-src="./assets/envelope-open-flap-optimized.png"
-              alt=""
-              draggable="false"
-              decoding="async"
-              width="900"
-              height="600"
-            />
-
-            <img
-              class="envelope-open-body deferred-opening-asset"
-              data-src="./assets/envelope-open-body-optimized.png"
-              alt=""
-              draggable="false"
-              decoding="async"
-              width="800"
-              height="1200"
-            />
-
-            <img
-              class="invitation-card deferred-opening-asset"
-              id="invitationCard"
-              data-src="./assets/invitation-card-optimized.png"
-              alt=""
-              draggable="false"
-              decoding="async"
-              width="720"
-              height="960"
-            />
-
-            <img
-              class="envelope-open-front deferred-opening-asset"
-              data-src="./assets/envelope-open-front-optimized.png"
-              alt=""
-              draggable="false"
-              decoding="async"
-              width="800"
-              height="1200"
-            />
-
-          </span>
+          <div class="invitation-flow">
 
 
-          <!-- CLOSED STATE -->
+            <!-- =================================
+                 PAGE 02
+            ================================== -->
 
-          <img
-            class="envelope-closed"
-            src="./assets/envelope-closed-optimized.png"
-            alt=""
-            draggable="false"
-            loading="eager"
-            decoding="async"
-            fetchpriority="high"
-            width="800"
-            height="1200"
-          />
+            <section
+              class="invitation-page page02-layout"
+              aria-label="Lễ thành hôn Bách và Thư"
+            >
 
+              <!-- BACKGROUND -->
 
-          <span class="monogram-pulse"></span>
-
-        </span>
-
-      </button>
-
-    </section>
+              <img
+                class="p02-background deferred-page02-asset"
+                data-src="./assets/page02-bg.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+                width="852"
+                height="1845"
+              />
 
 
-    <!-- =====================================
-         PAGE 02
-    ====================================== -->
+              <!-- FRAME -->
 
-    <section
-      class="page-02"
-      id="page02"
-      aria-hidden="true"
-    >
-
-      <div class="invitation-flow">
-
-        <section
-          class="invitation-page page02-layout"
-          aria-label="Lễ thành hôn Bách và Thư"
-        >
-
-          <!-- =================================
-               BACKGROUND
-          ================================== -->
-
-          <img
-            class="p02-background deferred-page02-asset"
-            data-src="./assets/page02-bg.png"
-            alt=""
-            draggable="false"
-            decoding="async"
-            width="852"
-            height="1845"
-          />
+              <img
+                class="p02-frame deferred-page02-asset"
+                data-src="./assets/page02-frame.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+                width="852"
+                height="1845"
+              />
 
 
-          <!-- =================================
-               FRAME
-          ================================== -->
+              <!-- ===============================
+                   CLOUDS
+              ================================ -->
 
-          <img
-            class="p02-frame deferred-page02-asset"
-            data-src="./assets/page02-frame.png"
-            alt=""
-            draggable="false"
-            decoding="async"
-            width="852"
-            height="1845"
-          />
+              <img
+                class="
+                  p02-cloud
+                  p02-cloud--01
+                  deferred-page02-asset
+                "
+                data-src="./assets/page02-cloud-01.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
+              <img
+                class="
+                  p02-cloud
+                  p02-cloud--02
+                  deferred-page02-asset
+                "
+                data-src="./assets/page02-cloud-02.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-          <!-- =================================
-               CLOUD 01
-               LARGE LEFT
-          ================================== -->
+              <img
+                class="
+                  p02-cloud
+                  p02-cloud--03
+                  deferred-page02-asset
+                "
+                data-src="./assets/page02-cloud-03.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-          <img
-            class="
-              p02-cloud
-              p02-cloud--01
-              deferred-page02-asset
-            "
-            data-src="./assets/page02-cloud-01.png"
-            alt=""
-            draggable="false"
-            decoding="async"
-            width="616"
-            height="391"
-          />
-
-
-          <!-- =================================
-               CLOUD 02
-               LARGE RIGHT
-          ================================== -->
-
-          <img
-            class="
-              p02-cloud
-              p02-cloud--02
-              deferred-page02-asset
-            "
-            data-src="./assets/page02-cloud-02.png"
-            alt=""
-            draggable="false"
-            decoding="async"
-            width="1448"
-            height="1086"
-          />
+              <img
+                class="
+                  p02-cloud
+                  p02-cloud--04
+                  deferred-page02-asset
+                "
+                data-src="./assets/page02-cloud-04.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
 
-          <!-- =================================
-               CLOUD 03
-               SMALL LEFT
-          ================================== -->
+              <!-- ===============================
+                   BAMBOO
+              ================================ -->
 
-          <img
-            class="
-              p02-cloud
-              p02-cloud--03
-              deferred-page02-asset
-            "
-            data-src="./assets/page02-cloud-03.png"
-            alt=""
-            draggable="false"
-            decoding="async"
-            width="490"
-            height="273"
-          />
+              <div
+                class="
+                  p02-bamboo-window
+                  p02-bamboo-window--left
+                "
+                aria-hidden="true"
+              >
 
+                <img
+                  class="p02-bamboo deferred-page02-asset"
+                  data-src="./assets/page02-bamboo-left.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
 
-          <!-- =================================
-               CLOUD 04
-               SMALL RIGHT
-          ================================== -->
-
-          <img
-            class="
-              p02-cloud
-              p02-cloud--04
-              deferred-page02-asset
-            "
-            data-src="./assets/page02-cloud-04.png"
-            alt=""
-            draggable="false"
-            decoding="async"
-            width="479"
-            height="261"
-          />
+              </div>
 
 
-          <!-- =================================
-               BAMBOO LEFT
-          ================================== -->
+              <div
+                class="
+                  p02-bamboo-window
+                  p02-bamboo-window--right
+                "
+                aria-hidden="true"
+              >
 
-          <div
-            class="
-              p02-bamboo-window
-              p02-bamboo-window--left
-            "
-            aria-hidden="true"
-          >
+                <img
+                  class="p02-bamboo deferred-page02-asset"
+                  data-src="./assets/page02-bamboo-right.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
 
-            <img
-              class="p02-bamboo deferred-page02-asset"
-              data-src="./assets/page02-bamboo-left.png"
-              alt=""
-              draggable="false"
-              decoding="async"
-              width="682"
-              height="2048"
-            />
+              </div>
+
+
+              <!-- ===============================
+                   TEXT
+              ================================ -->
+
+              <p class="p02-invite">
+                TRÂN TRỌNG KÍNH MỜI
+              </p>
+
+
+              <div
+                class="p02-divider"
+                aria-hidden="true"
+              ></div>
+
+
+              <p class="p02-to">
+                TỚI
+              </p>
+
+
+              <p class="p02-wedding-title">
+                LỄ THÀNH HÔN
+              </p>
+
+
+              <h1 class="p02-couple-names">
+
+                <span class="p02-name">
+                  BÁCH
+                </span>
+
+                <span class="p02-ampersand">
+                  &amp;
+                </span>
+
+                <span class="p02-name">
+                  THƯ
+                </span>
+
+              </h1>
+
+
+              <p class="p02-date">
+                24.11.2026
+              </p>
+
+
+              <div
+                class="p02-date-divider"
+                aria-hidden="true"
+              ></div>
+
+
+              <!-- ===============================
+                   FLOWER SOURCE
+              ================================ -->
+
+              <img
+                class="p02-flower-source deferred-page02-asset"
+                data-src="./assets/page02-flowers.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+
+              <!-- ===============================
+                   PETALS
+              ================================ -->
+
+              <div
+                class="p02-petals"
+                aria-hidden="true"
+              >
+
+                <span class="p02-petal p02-petal--01"></span>
+                <span class="p02-petal p02-petal--02"></span>
+                <span class="p02-petal p02-petal--03"></span>
+                <span class="p02-petal p02-petal--04"></span>
+                <span class="p02-petal p02-petal--05"></span>
+                <span class="p02-petal p02-petal--06"></span>
+                <span class="p02-petal p02-petal--07"></span>
+                <span class="p02-petal p02-petal--08"></span>
+                <span class="p02-petal p02-petal--09"></span>
+                <span class="p02-petal p02-petal--10"></span>
+                <span class="p02-petal p02-petal--11"></span>
+                <span class="p02-petal p02-petal--12"></span>
+                <span class="p02-petal p02-petal--13"></span>
+                <span class="p02-petal p02-petal--14"></span>
+
+              </div>
+
+
+              <!-- ===============================
+                   PROCESSION
+              ================================ -->
+
+              <div
+                class="p02-procession"
+                aria-hidden="true"
+              >
+
+                <img
+                  class="
+                    p02-procession-item
+                    p02-flag-bearer
+                    deferred-page02-asset
+                  "
+                  data-src="./assets/page02-flag-bearer.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
+
+
+                <img
+                  class="
+                    p02-procession-item
+                    p02-couple
+                    deferred-page02-asset
+                  "
+                  data-src="./assets/page02-couple.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
+
+
+                <img
+                  class="
+                    p02-procession-item
+                    p02-lion-dance
+                    deferred-page02-asset
+                  "
+                  data-src="./assets/page02-lion-dance.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
+
+
+                <img
+                  class="
+                    p02-procession-item
+                    p02-drummer
+                    deferred-page02-asset
+                  "
+                  data-src="./assets/page02-drummer.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
+
+              </div>
+
+
+              <!-- ===============================
+                   BOTTOM ORNAMENT
+              ================================ -->
+
+              <img
+                class="
+                  p02-bottom-ornament
+                  deferred-page02-asset
+                "
+                data-src="./assets/page02-bottom-ornament.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+            </section>
 
           </div>
-
-
-          <!-- =================================
-               BAMBOO RIGHT
-          ================================== -->
-
-          <div
-            class="
-              p02-bamboo-window
-              p02-bamboo-window--right
-            "
-            aria-hidden="true"
-          >
-
-            <img
-              class="p02-bamboo deferred-page02-asset"
-              data-src="./assets/page02-bamboo-right.png"
-              alt=""
-              draggable="false"
-              decoding="async"
-              width="682"
-              height="2048"
-            />
-
-          </div>
-
-
-          <!-- =================================
-               TEXT
-          ================================== -->
-
-          <p class="p02-invite">
-            TRÂN TRỌNG KÍNH MỜI
-          </p>
-
-
-          <div
-            class="p02-divider"
-            aria-hidden="true"
-          ></div>
-
-
-          <p class="p02-to">
-            TỚI
-          </p>
-
-
-          <p class="p02-wedding-title">
-            LỄ THÀNH HÔN
-          </p>
-
-
-          <h1 class="p02-couple-names">
-
-            <span class="p02-name">
-              BÁCH
-            </span>
-
-            <span class="p02-ampersand">
-              &amp;
-            </span>
-
-            <span class="p02-name">
-              THƯ
-            </span>
-
-          </h1>
-
-
-          <p class="p02-date">
-            24.11.2026
-          </p>
-
-
-          <div
-            class="p02-date-divider"
-            aria-hidden="true"
-          ></div>
-
-
-          <!-- =================================
-               FLOWER SOURCE
-          ================================== -->
-
-          <img
-            class="p02-flower-source deferred-page02-asset"
-            data-src="./assets/page02-flowers.png"
-            alt=""
-            draggable="false"
-            decoding="async"
-            width="1254"
-            height="1254"
-          />
-
-
-          <!-- =================================
-               PETALS
-          ================================== -->
-
-          <div
-            class="p02-petals"
-            aria-hidden="true"
-          >
-
-            <span class="p02-petal p02-petal--01"></span>
-            <span class="p02-petal p02-petal--02"></span>
-            <span class="p02-petal p02-petal--03"></span>
-            <span class="p02-petal p02-petal--04"></span>
-            <span class="p02-petal p02-petal--05"></span>
-            <span class="p02-petal p02-petal--06"></span>
-            <span class="p02-petal p02-petal--07"></span>
-            <span class="p02-petal p02-petal--08"></span>
-            <span class="p02-petal p02-petal--09"></span>
-            <span class="p02-petal p02-petal--10"></span>
-            <span class="p02-petal p02-petal--11"></span>
-            <span class="p02-petal p02-petal--12"></span>
-            <span class="p02-petal p02-petal--13"></span>
-            <span class="p02-petal p02-petal--14"></span>
-
-          </div>
-
-
-          <!-- =================================
-               PROCESSION
-          ================================== -->
-
-          <div
-            class="p02-procession"
-            aria-hidden="true"
-          >
-
-            <img
-              class="
-                p02-procession-item
-                p02-flag-bearer
-                deferred-page02-asset
-              "
-              data-src="./assets/page02-flag-bearer.png"
-              alt=""
-              draggable="false"
-              decoding="async"
-              width="1024"
-              height="1536"
-            />
-
-
-            <img
-              class="
-                p02-procession-item
-                p02-couple
-                deferred-page02-asset
-              "
-              data-src="./assets/page02-couple.png"
-              alt=""
-              draggable="false"
-              decoding="async"
-              width="1024"
-              height="1536"
-            />
-
-
-            <img
-              class="
-                p02-procession-item
-                p02-lion-dance
-                deferred-page02-asset
-              "
-              data-src="./assets/page02-lion-dance.png"
-              alt=""
-              draggable="false"
-              decoding="async"
-              width="1448"
-              height="1086"
-            />
-
-
-            <img
-              class="
-                p02-procession-item
-                p02-drummer
-                deferred-page02-asset
-              "
-              data-src="./assets/page02-drummer.png"
-              alt=""
-              draggable="false"
-              decoding="async"
-              width="1024"
-              height="1536"
-            />
-
-          </div>
-
-
-          <!-- =================================
-               BOTTOM ORNAMENT
-          ================================== -->
-
-          <img
-            class="
-              p02-bottom-ornament
-              deferred-page02-asset
-            "
-            data-src="./assets/page02-bottom-ornament.png"
-            alt=""
-            draggable="false"
-            decoding="async"
-            width="2048"
-            height="682"
-          />
 
         </section>
 
       </div>
 
-    </section>
+    </div>
 
   </main>
 
