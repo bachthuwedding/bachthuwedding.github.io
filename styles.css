@@ -1,21 +1,18 @@
 :root {
-
   /* =========================================
-     MASTER DESIGN SYSTEM
+     MASTER
   ========================================= */
 
   --design-width: 390px;
-  --design-height: 844px;
+  --design-height: 760px;
 
   --design-scale: 1;
 
   --render-width: 390px;
-  --render-height: 844px;
+  --render-height: 760px;
 
 
-  /* =========================================
-     COLORS
-  ========================================= */
+  /* COLORS */
 
   --paper: #ead5ad;
   --page-background: #d8c59f;
@@ -26,10 +23,7 @@
   --invitation-gold: #a78042;
 
 
-  /* =========================================
-     PAGE 01
-     GIỮ NGUYÊN THÔNG SỐ ĐÃ CHỐT
-  ========================================= */
+  /* PAGE 01 - GIỮ THÔNG SỐ CHỐT */
 
   --body-offset-closed: 24px;
   --body-offset-open: 50px;
@@ -48,33 +42,25 @@
   box-sizing: border-box;
 }
 
-
 html,
 body {
   width: 100%;
   height: 100%;
 
-  min-height: 100%;
-
   margin: 0;
   padding: 0;
 }
 
-
 html {
-  background:
-    var(--page-background);
+  background: var(--page-background);
 }
-
 
 body {
   display: grid;
 
-  place-items:
-    center;
+  place-items: center;
 
-  overflow:
-    hidden;
+  overflow: hidden;
 
   background:
     var(--page-background);
@@ -88,16 +74,13 @@ body {
     transparent;
 }
 
-
 button {
   font: inherit;
 }
 
 
 /* =========================================
-   OUTER SHELL
-
-   Shell = kích thước SAU KHI scale.
+   SHELL
 ========================================= */
 
 .site-shell {
@@ -122,18 +105,11 @@ button {
   isolation:
     isolate;
 
-
-  /*
-    Ngăn flash layout trước khi JS
-    tính scale lần đầu.
-  */
-
   opacity: 0;
 
   transition:
     opacity .08s linear;
 }
-
 
 .site-shell.is-scale-ready {
   opacity: 1;
@@ -142,8 +118,6 @@ button {
 
 /* =========================================
    ONE GLOBAL SCALE
-
-   Đây là nơi DUY NHẤT website scale.
 ========================================= */
 
 .site-scale {
@@ -163,14 +137,11 @@ button {
 
   transform:
     scale(var(--design-scale));
-
-  will-change:
-    transform;
 }
 
 
 /* =========================================
-   FIXED MASTER ARTBOARD
+   MASTER ARTBOARD
 ========================================= */
 
 .design-stage {
@@ -200,14 +171,7 @@ button {
 .opening-page {
   position: absolute;
 
-  left: 0;
-  top: 0;
-
-  width:
-    var(--design-width);
-
-  height:
-    var(--design-height);
+  inset: 0;
 
   z-index: 2;
 
@@ -252,22 +216,12 @@ button {
 .page-02 {
   position: absolute;
 
-  left: 0;
-  top: 0;
-
-  width:
-    var(--design-width);
-
-  height:
-    var(--design-height);
+  inset: 0;
 
   z-index: 1;
 
-  overflow-x:
+  overflow:
     hidden;
-
-  overflow-y:
-    auto;
 
   background:
     var(--invitation-paper);
@@ -275,7 +229,7 @@ button {
   opacity: 0;
 
   transform:
-    translate3d(0, 24px, 0);
+    translate3d(0, 20px, 0);
 
   pointer-events:
     none;
@@ -288,25 +242,11 @@ button {
   will-change:
     opacity,
     transform;
-
-  overscroll-behavior-y:
-    contain;
-
-  -webkit-overflow-scrolling:
-    touch;
-
-  scrollbar-width:
-    none;
-}
-
-
-.page-02::-webkit-scrollbar {
-  display: none;
 }
 
 
 /* =========================================
-   PAGE 01 -> PAGE 02
+   PAGE TRANSITION
 ========================================= */
 
 .site-shell.is-page-02
@@ -314,12 +254,11 @@ button {
   opacity: 0;
 
   transform:
-    translate3d(0, -18px, 0);
+    translate3d(0, -16px, 0);
 
   pointer-events:
     none;
 }
-
 
 .site-shell.is-page-02
 .page-02 {
@@ -336,10 +275,7 @@ button {
 
 
 /* =========================================
-   INVITATION FLOW
-
-   Sau này Page 03 / 04 / 05
-   tiếp tục đặt trong flow này.
+   INVITATION
 ========================================= */
 
 .invitation-flow {
@@ -348,7 +284,7 @@ button {
   width:
     var(--design-width);
 
-  min-height:
+  height:
     var(--design-height);
 
   overflow:
@@ -360,47 +296,6 @@ button {
   background:
     #f1dfbd;
 }
-
-
-/* SIDE FRAME RAILS */
-
-.invitation-flow::before,
-.invitation-flow::after {
-  content: "";
-
-  position: absolute;
-
-  top: 16px;
-  bottom: 16px;
-
-  z-index: 2;
-
-  width: 1px;
-
-  background:
-    rgba(135, 40, 23, .28);
-
-  pointer-events:
-    none;
-}
-
-
-.invitation-flow::before {
-  left: 2.25%;
-}
-
-
-.invitation-flow::after {
-  right: 2.25%;
-}
-
-
-/* =========================================
-   GENERIC INVITATION PAGE
-
-   Mỗi page từ Page 02 trở đi luôn là:
-   390 × 844
-========================================= */
 
 .invitation-page {
   position: relative;
@@ -415,7 +310,6 @@ button {
     hidden;
 }
 
-
 .page02-layout {
   z-index: 1;
 
@@ -425,7 +319,7 @@ button {
 
 
 /* =========================================
-   PAGE 02 BACKGROUND
+   BACKGROUND
 ========================================= */
 
 .p02-background {
@@ -435,35 +329,24 @@ button {
 
   z-index: 0;
 
-  display: block;
-
   width: 100%;
   height: 100%;
 
-  max-width: none;
+  display: block;
 
   object-fit:
-    cover;
-
-  object-position:
-    center center;
+    fill;
 
   pointer-events:
     none;
 
   user-select:
     none;
-
-  -webkit-user-select:
-    none;
-
-  -webkit-user-drag:
-    none;
 }
 
 
 /* =========================================
-   PAGE 02 FRAME
+   FRAME
 ========================================= */
 
 .p02-frame {
@@ -478,8 +361,6 @@ button {
   width: 100%;
   height: 100%;
 
-  max-width: none;
-
   object-fit:
     fill;
 
@@ -488,17 +369,11 @@ button {
 
   user-select:
     none;
-
-  -webkit-user-select:
-    none;
-
-  -webkit-user-drag:
-    none;
 }
 
 
 /* =========================================
-   COMMON PAGE 02 IMAGE
+   COMMON PAGE 02 ASSETS
 ========================================= */
 
 .p02-cloud,
@@ -509,20 +384,16 @@ button {
 
   display: block;
 
-  max-width: none;
-
-  height: auto;
-
-  user-select:
+  max-width:
     none;
+
+  height:
+    auto;
 
   pointer-events:
     none;
 
-  -webkit-user-select:
-    none;
-
-  -webkit-user-drag:
+  user-select:
     none;
 }
 
@@ -535,8 +406,7 @@ button {
   z-index: 8;
 
   left: 1.5%;
-
-  top: 21.4%;
+  top: 21%;
 
   width: 22.5%;
 }
@@ -546,8 +416,7 @@ button {
   z-index: 8;
 
   right: -1.8%;
-
-  top: 22.8%;
+  top: 22.5%;
 
   width: 24.8%;
 }
@@ -557,8 +426,7 @@ button {
   z-index: 8;
 
   left: 4.2%;
-
-  top: 31.8%;
+  top: 31%;
 
   width: 12.2%;
 }
@@ -568,8 +436,7 @@ button {
   z-index: 8;
 
   right: 13.7%;
-
-  top: 43.1%;
+  top: 42%;
 
   width: 11.8%;
 }
@@ -594,23 +461,19 @@ button {
 
 .p02-bamboo-window--left {
   left: -3.2%;
-
-  top: 36.6%;
+  top: 34%;
 
   width: 31.7%;
-
-  height: 38.5%;
+  height: 40%;
 }
 
 
 .p02-bamboo-window--right {
   right: -3.4%;
-
-  top: 32.6%;
+  top: 30%;
 
   width: 52%;
-
-  height: 42%;
+  height: 44%;
 }
 
 
@@ -622,7 +485,7 @@ button {
 
 
 /* =========================================
-   TYPOGRAPHY
+   TEXT COMMON
 ========================================= */
 
 .p02-invite,
@@ -643,9 +506,6 @@ button {
   text-align:
     center;
 
-  transform-origin:
-    50% 50%;
-
   font-family:
     "Times New Roman",
     Times,
@@ -656,22 +516,21 @@ button {
 
   color:
     var(--invitation-green);
+
+  transform-origin:
+    center;
 }
 
 
 /* INVITE */
 
 .p02-invite {
-  top: 10.98%;
+  top: 10%;
 
   font-size:
     2.95cqw;
 
-  line-height:
-    1.15;
-
-  letter-spacing:
-    .015em;
+  line-height: 1.15;
 
   transform:
     translateX(-50%)
@@ -687,11 +546,9 @@ button {
   z-index: 20;
 
   left: 50%;
-
-  top: 20.05%;
+  top: 18.6%;
 
   width: 56.5%;
-
   height: 1px;
 
   transform:
@@ -700,7 +557,6 @@ button {
   background:
     rgba(153, 111, 52, .72);
 }
-
 
 .p02-divider::after {
   content: "•••";
@@ -724,22 +580,16 @@ button {
 
   font-size:
     1.85cqw;
-
-  line-height:
-    1;
 }
 
 
 /* TỚI */
 
 .p02-to {
-  top: 23.6%;
+  top: 22%;
 
   font-size:
     4.95cqw;
-
-  line-height:
-    1;
 
   transform:
     translateX(-50%)
@@ -750,13 +600,10 @@ button {
 /* LỄ THÀNH HÔN */
 
 .p02-wedding-title {
-  top: 29.1%;
+  top: 27%;
 
   font-size:
     4.6cqw;
-
-  line-height:
-    1;
 
   transform:
     translateX(-50%)
@@ -767,7 +614,7 @@ button {
 /* NAMES */
 
 .p02-couple-names {
-  top: 34.9%;
+  top: 32%;
 
   display: flex;
 
@@ -787,7 +634,6 @@ button {
     translateX(-50%);
 }
 
-
 .p02-name {
   display: block;
 
@@ -796,11 +642,7 @@ button {
 
   transform:
     scaleX(.76);
-
-  transform-origin:
-    50% 50%;
 }
-
 
 .p02-ampersand {
   display: block;
@@ -810,9 +652,6 @@ button {
 
   font-size:
     8.45cqw;
-
-  line-height:
-    .92;
 
   color:
     var(--invitation-green);
@@ -825,13 +664,10 @@ button {
 /* DATE */
 
 .p02-date {
-  top: 50.8%;
+  top: 48%;
 
   font-size:
     4.8cqw;
-
-  line-height:
-    1;
 
   color:
     var(--invitation-red);
@@ -853,11 +689,9 @@ button {
   z-index: 20;
 
   left: 50%;
-
-  top: 53.55%;
+  top: 51%;
 
   width: 13.5%;
-
   height: 1px;
 
   transform:
@@ -866,7 +700,6 @@ button {
   background:
     rgba(153, 111, 52, .56);
 }
-
 
 .p02-date-divider::after {
   content: "◇";
@@ -907,9 +740,6 @@ button {
   height: 1px;
 
   opacity: 0;
-
-  pointer-events:
-    none;
 }
 
 
@@ -937,20 +767,17 @@ button {
   overflow:
     hidden;
 
+  opacity: 0;
+
   pointer-events:
     none;
 
   background-repeat:
     no-repeat;
 
-  opacity: 0;
-
   filter:
     blur(.12px)
     saturate(.98);
-
-  transform-origin:
-    50% 50%;
 }
 
 
@@ -966,7 +793,7 @@ button {
 
 .p02-petal--01 {
   left: 26%;
-  top: 58.3%;
+  top: 55%;
 
   width: 9px;
 
@@ -988,7 +815,7 @@ button {
 
 .p02-petal--02 {
   left: 49%;
-  top: 60.7%;
+  top: 57%;
 
   width: 10px;
 
@@ -1010,7 +837,7 @@ button {
 
 .p02-petal--03 {
   left: 61%;
-  top: 63.3%;
+  top: 59%;
 
   width: 8px;
 
@@ -1032,7 +859,7 @@ button {
 
 .p02-petal--04 {
   left: 42%;
-  top: 65.7%;
+  top: 61%;
 
   width: 8px;
 
@@ -1054,7 +881,7 @@ button {
 
 .p02-petal--05 {
   left: 32%;
-  top: 68.3%;
+  top: 63%;
 
   width: 9px;
 
@@ -1076,7 +903,7 @@ button {
 
 .p02-petal--06 {
   left: 55%;
-  top: 69.6%;
+  top: 64%;
 
   width: 7px;
 
@@ -1098,7 +925,7 @@ button {
 
 .p02-petal--07 {
   left: 71%;
-  top: 70.5%;
+  top: 65%;
 
   width: 9px;
 
@@ -1120,7 +947,7 @@ button {
 
 .p02-petal--08 {
   left: 23%;
-  top: 72.3%;
+  top: 66%;
 
   width: 8px;
 
@@ -1142,7 +969,7 @@ button {
 
 .p02-petal--09 {
   left: 47%;
-  top: 73.1%;
+  top: 67%;
 
   width: 7px;
 
@@ -1164,7 +991,7 @@ button {
 
 .p02-petal--10 {
   left: 64%;
-  top: 74.7%;
+  top: 68%;
 
   width: 8px;
 
@@ -1186,7 +1013,7 @@ button {
 
 .p02-petal--11 {
   left: 36%;
-  top: 76%;
+  top: 69%;
 
   width: 8px;
 
@@ -1208,7 +1035,7 @@ button {
 
 .p02-petal--12 {
   left: 53%;
-  top: 77.5%;
+  top: 70%;
 
   width: 7px;
 
@@ -1230,7 +1057,7 @@ button {
 
 .p02-petal--13 {
   left: 74%;
-  top: 78%;
+  top: 71%;
 
   width: 8px;
 
@@ -1252,7 +1079,7 @@ button {
 
 .p02-petal--14 {
   left: 18%;
-  top: 76.5%;
+  top: 70%;
 
   width: 7px;
 
@@ -1282,12 +1109,10 @@ button {
   z-index: 30;
 
   left: 0;
-
-  bottom: 7.3%;
+  bottom: 6%;
 
   width: 100%;
-
-  height: 27.8%;
+  height: 28%;
 
   pointer-events:
     none;
@@ -1307,13 +1132,8 @@ button {
 
   transform-origin:
     50% 100%;
-
-  transform:
-    translateZ(0);
 }
 
-
-/* FLAG */
 
 .p02-flag-bearer {
   z-index: 31;
@@ -1324,8 +1144,6 @@ button {
 }
 
 
-/* COUPLE */
-
 .p02-couple {
   z-index: 34;
 
@@ -1334,8 +1152,6 @@ button {
   height: 63%;
 }
 
-
-/* LION */
 
 .p02-lion-dance {
   z-index: 33;
@@ -1347,8 +1163,6 @@ button {
   height: 89%;
 }
 
-
-/* DRUMMER */
 
 .p02-drummer {
   z-index: 32;
@@ -1367,7 +1181,6 @@ button {
   z-index: 36;
 
   left: 50%;
-
   bottom: -2.4%;
 
   width: 43%;
@@ -1378,11 +1191,7 @@ button {
 
 
 /* =========================================
-   PAGE 01
-   ENVELOPE POSITION
-
-   Vì parent luôn cố định 390×844,
-   các % này KHÔNG còn thay đổi theo máy.
+   PAGE 01 ENVELOPE
 ========================================= */
 
 .envelope-button {
@@ -1391,7 +1200,7 @@ button {
   left: 50%;
 
   top:
-    calc(14.5% + 18px);
+    calc(12.5% + 14px);
 
   width: 82%;
 
@@ -1433,8 +1242,7 @@ button {
 
   inset: 0;
 
-  display:
-    block;
+  display: block;
 
   overflow:
     visible;
@@ -1471,14 +1279,9 @@ button {
 
   max-width: none;
 
-  user-select:
-    none;
+  user-select: none;
 
-  pointer-events:
-    none;
-
-  -webkit-user-select:
-    none;
+  pointer-events: none;
 
   -webkit-user-drag:
     none;
@@ -1486,7 +1289,7 @@ button {
 
 
 /* =========================================
-   CLOSED ENVELOPE
+   CLOSED
 ========================================= */
 
 .envelope-closed {
@@ -1523,10 +1326,6 @@ button {
     opacity .28s ease,
     transform .56s
       cubic-bezier(.22, .61, .36, 1);
-
-  will-change:
-    transform,
-    opacity;
 }
 
 
@@ -1556,7 +1355,6 @@ button {
     opacity .18s ease;
 }
 
-
 .envelope-button.is-open
 .envelope-open {
   pointer-events:
@@ -1572,11 +1370,9 @@ button {
   z-index: 9;
 
   left: 50%;
-
   bottom: 80%;
 
   width: 68%;
-
   height: auto;
 
   opacity: 0;
@@ -1594,10 +1390,6 @@ button {
     transform .52s
       cubic-bezier(.22, .61, .36, 1),
     opacity .12s ease;
-
-  will-change:
-    transform,
-    opacity;
 }
 
 
@@ -1617,8 +1409,6 @@ button {
   object-fit:
     contain;
 
-  opacity: 1;
-
   transform:
     translate3d(
       0,
@@ -1626,21 +1416,14 @@ button {
       0
     );
 
-  transform-origin:
-    50% 50%;
-
   transition:
     transform .56s
-      cubic-bezier(.22, .61, .36, 1),
-    opacity .22s ease;
-
-  will-change:
-    transform;
+      cubic-bezier(.22, .61, .36, 1);
 }
 
 
 /* =========================================
-   INVITATION CARD
+   CARD
 ========================================= */
 
 .invitation-card {
@@ -1670,9 +1453,6 @@ button {
       0
     );
 
-  transform-origin:
-    50% 50%;
-
   filter:
     drop-shadow(
       0 8px 8px
@@ -1683,25 +1463,11 @@ button {
     transform .62s
       cubic-bezier(.16, .78, .18, 1),
     opacity .16s ease;
-
-  will-change:
-    transform,
-    opacity;
-}
-
-
-.envelope-button.is-open
-.invitation-card {
-  pointer-events:
-    auto;
-
-  cursor:
-    pointer;
 }
 
 
 /* =========================================
-   OPEN FRONT
+   FRONT
 ========================================= */
 
 .envelope-open-front {
@@ -1716,8 +1482,6 @@ button {
   object-fit:
     contain;
 
-  opacity: 1;
-
   transform:
     translate3d(
       0,
@@ -1725,21 +1489,14 @@ button {
       0
     );
 
-  transform-origin:
-    50% 50%;
-
   transition:
     transform .56s
-      cubic-bezier(.22, .61, .36, 1),
-    opacity .22s ease;
-
-  will-change:
-    transform;
+      cubic-bezier(.22, .61, .36, 1);
 }
 
 
 /* =========================================
-   TAP HINT
+   TAP CUE
 ========================================= */
 
 .monogram-pulse {
@@ -1770,8 +1527,7 @@ button {
     none;
 
   transition:
-    opacity .22s ease,
-    transform .22s ease;
+    opacity .22s ease;
 }
 
 
@@ -1799,71 +1555,9 @@ button {
     infinite;
 }
 
-
 .monogram-pulse::after {
   animation-delay:
     1.2s;
-}
-
-
-/* =========================================
-   CLOSED HOVER
-========================================= */
-
-.envelope-button:not(.is-open):hover
-.envelope-stage,
-
-.envelope-button:not(.is-open):focus-visible
-.envelope-stage {
-  filter:
-    drop-shadow(
-      0 16px 12px
-      rgba(62, 24, 14, .20)
-    );
-}
-
-
-.envelope-button:not(.is-open):hover
-.envelope-closed,
-
-.envelope-button:not(.is-open):focus-visible
-.envelope-closed {
-  animation-play-state:
-    paused;
-
-  transform:
-    translate3d(
-      0,
-      calc(
-        var(--body-offset-closed) - 4px
-      ),
-      0
-    )
-    scale(1.01);
-}
-
-
-/* =========================================
-   CLOSED PRESS
-========================================= */
-
-.envelope-button:not(.is-open):active
-.envelope-closed {
-  transform:
-    translate3d(
-      0,
-      calc(
-        var(--body-offset-closed) - 1px
-      ),
-      0
-    )
-    scale(.997);
-}
-
-
-.envelope-button:focus-visible {
-  outline:
-    none;
 }
 
 
@@ -1872,28 +1566,14 @@ button {
 ========================================= */
 
 .envelope-button.is-open
-.envelope-stage {
-  filter:
-    drop-shadow(
-      0 14px 10px
-      rgba(62, 24, 14, .18)
-    );
-}
-
-
-.envelope-button.is-open
 .envelope-open {
   opacity: 1;
-
-  transition-delay:
-    .02s;
 }
 
 
 .envelope-button.is-open
 .envelope-closed {
-  animation:
-    none;
+  animation: none;
 
   opacity: 0;
 
@@ -1902,8 +1582,7 @@ button {
       0,
       var(--body-offset-open),
       0
-    )
-    scale(1);
+    );
 }
 
 
@@ -1921,6 +1600,12 @@ button {
 .envelope-button.is-open
 .invitation-card {
   opacity: 1;
+
+  pointer-events:
+    auto;
+
+  cursor:
+    pointer;
 
   transform:
     translate3d(
@@ -1958,23 +1643,17 @@ button {
       var(--open-flap-scale-x)
     )
     scaleY(1);
-
-  transition-delay:
-    0s;
 }
 
 
 .envelope-button.is-open
 .monogram-pulse {
   opacity: 0;
-
-  transform:
-    translate(-50%, -50%);
 }
 
 
 /* =========================================
-   CLOSED IDLE ANIMATION
+   ANIMATION
 ========================================= */
 
 @keyframes closedEnvelopeCue {
@@ -1989,9 +1668,8 @@ button {
         0
       )
       scale(1)
-      rotate(0deg);
+      rotate(0);
   }
-
 
   70% {
     transform:
@@ -2002,10 +1680,8 @@ button {
         ),
         0
       )
-      scale(1.012)
-      rotate(0deg);
+      scale(1.012);
   }
-
 
   78% {
     transform:
@@ -2020,7 +1696,6 @@ button {
       rotate(-.35deg);
   }
 
-
   86% {
     transform:
       translate3d(
@@ -2034,24 +1709,8 @@ button {
       rotate(.35deg);
   }
 
-
-  94% {
-    transform:
-      translate3d(
-        0,
-        var(--body-offset-closed),
-        0
-      )
-      scale(1)
-      rotate(0deg);
-  }
-
 }
 
-
-/* =========================================
-   TAP RING
-========================================= */
 
 @keyframes tapRing {
 
@@ -2059,29 +1718,18 @@ button {
     transform:
       scale(.52);
 
-    opacity:
-      0;
+    opacity: 0;
   }
-
 
   18% {
-    opacity:
-      .5;
+    opacity: .5;
   }
-
-
-  72% {
-    opacity:
-      .14;
-  }
-
 
   100% {
     transform:
       scale(1.18);
 
-    opacity:
-      0;
+    opacity: 0;
   }
 
 }
