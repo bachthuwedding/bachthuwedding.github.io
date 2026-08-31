@@ -1,26 +1,9 @@
 /* =========================================================
    BÁCH & THƯ WEDDING
-   MASTER STYLESHEET
-
-   MASTER ARTBOARD:
-   390 × 680
-
-   PAGE 01
-   PAGE 02
-   PAGE 03
-========================================================= */
-
-
-/* =========================================================
-   ROOT
+   MASTER: 390 × 680
 ========================================================= */
 
 :root {
-
-  /* =========================================
-     MASTER ARTBOARD
-  ========================================= */
-
   --design-width: 390px;
   --design-height: 680px;
 
@@ -29,33 +12,13 @@
   --render-width: 390px;
   --render-height: 680px;
 
-
-  /* =========================================
-     COLORS
-  ========================================= */
-
   --paper: #ead5ad;
+  --page-background: #d8c59f;
 
-  --page-background:
-    #d8c59f;
-
-  --invitation-paper:
-    #efe0bc;
-
-  --invitation-green:
-    #28513f;
-
-  --invitation-red:
-    #a63019;
-
-  --invitation-gold:
-    #a78042;
-
-
-  /* =========================================
-     PAGE 01
-     GIỮ CÁC THÔNG SỐ ĐÃ CHỐT
-  ========================================= */
+  --invitation-paper: #efe0bc;
+  --invitation-green: #28513f;
+  --invitation-red: #a63019;
+  --invitation-gold: #a78042;
 
   --body-offset-closed: 24px;
   --body-offset-open: 50px;
@@ -86,8 +49,7 @@ body {
 
 
 html {
-  background:
-    var(--page-background);
+  background: var(--page-background);
 }
 
 
@@ -111,13 +73,20 @@ body {
 }
 
 
-button {
+button,
+a {
   font: inherit;
 }
 
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
 /* =========================================================
-   OUTER SHELL
+   SITE SHELL
 ========================================================= */
 
 .site-shell {
@@ -134,13 +103,13 @@ button {
   background:
     var(--paper);
 
-  box-shadow:
-    0 0 40px
-    rgba(80, 46, 24, .12);
-
   isolation: isolate;
 
   opacity: 0;
+
+  box-shadow:
+    0 0 40px
+    rgba(80, 46, 24, .12);
 
   transition:
     opacity .08s linear;
@@ -153,9 +122,7 @@ button {
 
 
 /* =========================================================
-   GLOBAL SCALE
-
-   CHỈ SCALE TOÀN BỘ ARTBOARD 1 LẦN
+   GLOBAL FIXED ARTBOARD SCALE
 ========================================================= */
 
 .site-scale {
@@ -178,14 +145,9 @@ button {
       var(--design-scale)
     );
 
-  will-change:
-    transform;
+  will-change: transform;
 }
 
-
-/* =========================================================
-   MASTER DESIGN STAGE
-========================================================= */
 
 .design-stage {
   position: relative;
@@ -222,9 +184,7 @@ button {
     #ead5ad;
 
   background-image:
-    url(
-      "./assets/page01-bg-optimized.webp"
-    );
+    url("./assets/page01-bg-optimized.webp");
 
   background-repeat:
     no-repeat;
@@ -238,21 +198,12 @@ button {
   opacity: 1;
 
   transform:
-    translate3d(
-      0,
-      0,
-      0
-    );
+    translate3d(0, 0, 0);
 
   transition:
     opacity .48s ease,
     transform .58s
-      cubic-bezier(
-        .22,
-        .61,
-        .36,
-        1
-      );
+      cubic-bezier(.22, .61, .36, 1);
 
   will-change:
     opacity,
@@ -261,7 +212,10 @@ button {
 
 
 /* =========================================================
-   PAGE 02+
+   PAGE 02+ SCROLL CONTAINER
+
+   QUAN TRỌNG:
+   tất cả Page 02, 03, 04 scroll ở đây.
 ========================================================= */
 
 .page-02 {
@@ -270,6 +224,9 @@ button {
   inset: 0;
 
   z-index: 1;
+
+  width: 390px;
+  height: 680px;
 
   overflow-x: hidden;
   overflow-y: auto;
@@ -280,37 +237,30 @@ button {
   opacity: 0;
 
   transform:
-    translate3d(
-      0,
-      18px,
-      0
-    );
+    translate3d(0, 18px, 0);
 
   pointer-events:
     none;
 
+  scrollbar-width: none;
+
+  overscroll-behavior:
+    contain;
+
+  touch-action:
+    pan-y;
+
+  -webkit-overflow-scrolling:
+    touch;
+
   transition:
     opacity .48s ease,
     transform .58s
-      cubic-bezier(
-        .22,
-        .61,
-        .36,
-        1
-      );
+      cubic-bezier(.22, .61, .36, 1);
 
   will-change:
     opacity,
     transform;
-
-  scrollbar-width:
-    none;
-
-  overscroll-behavior-y:
-    contain;
-
-  -webkit-overflow-scrolling:
-    touch;
 }
 
 
@@ -320,7 +270,7 @@ button {
 
 
 /* =========================================================
-   PAGE 01 -> PAGE 02
+   PAGE TRANSITION
 ========================================================= */
 
 .site-shell.is-page-02
@@ -328,14 +278,9 @@ button {
   opacity: 0;
 
   transform:
-    translate3d(
-      0,
-      -16px,
-      0
-    );
+    translate3d(0, -16px, 0);
 
-  pointer-events:
-    none;
+  pointer-events: none;
 }
 
 
@@ -346,59 +291,57 @@ button {
   opacity: 1;
 
   transform:
-    translate3d(
-      0,
-      0,
-      0
-    );
+    translate3d(0, 0, 0);
 
-  pointer-events:
-    auto;
+  pointer-events: auto;
 }
 
 
 /* =========================================================
    INVITATION FLOW
 
-   PAGE 02 + PAGE 03
+   KHÔNG fixed height.
+   4 page tự xếp nối tiếp theo chiều dọc.
 ========================================================= */
 
 .invitation-flow {
   position: relative;
 
-  width:
-    var(--design-width);
+  width: 390px;
 
   height: auto;
-
-  min-height:
-    calc(
-      var(--design-height) * 2
-    );
+  min-height: 2720px;
 
   overflow: visible;
 
-  isolation: isolate;
-
   background:
     #f1dfbd;
+
+  isolation: isolate;
 }
 
 
 /* =========================================================
-   GENERIC INVITATION PAGE
+   GENERIC PAGE
 ========================================================= */
 
 .invitation-page {
   position: relative;
 
-  width:
-    var(--design-width);
+  display: block;
 
-  height:
-    var(--design-height);
+  flex: none;
+
+  width: 390px;
+  height: 680px;
 
   overflow: hidden;
+
+  margin: 0;
+  padding: 0;
+
+  background:
+    #f1dfbd;
 }
 
 
@@ -409,25 +352,13 @@ button {
 ========================================================= */
 
 .page02-layout {
-  position: relative;
-
   z-index: 1;
-
-  width: 390px;
-  height: 680px;
-
-  overflow: hidden;
-
-  background:
-    #f1dfbd;
 
   isolation: isolate;
 }
 
 
-/* =========================================================
-   PAGE 02 BACKGROUND
-========================================================= */
+/* BACKGROUND */
 
 .p02-background {
   position: absolute;
@@ -448,23 +379,15 @@ button {
   object-position:
     center center;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
-  user-select:
-    none;
+  user-select: none;
 
-  -webkit-user-select:
-    none;
-
-  -webkit-user-drag:
-    none;
+  -webkit-user-drag: none;
 }
 
 
-/* =========================================================
-   PAGE 02 FRAME
-========================================================= */
+/* FRAME */
 
 .p02-frame {
   position: absolute;
@@ -482,23 +405,15 @@ button {
 
   object-fit: fill;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
-  user-select:
-    none;
+  user-select: none;
 
-  -webkit-user-select:
-    none;
-
-  -webkit-user-drag:
-    none;
+  -webkit-user-drag: none;
 }
 
 
-/* =========================================================
-   PAGE 02 COMMON IMAGE
-========================================================= */
+/* COMMON IMAGE */
 
 .p02-cloud,
 .p02-bamboo,
@@ -512,23 +427,15 @@ button {
 
   height: auto;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
-  user-select:
-    none;
+  user-select: none;
 
-  -webkit-user-select:
-    none;
-
-  -webkit-user-drag:
-    none;
+  -webkit-user-drag: none;
 }
 
 
-/* =========================================================
-   PAGE 02 CLOUDS
-========================================================= */
+/* CLOUDS */
 
 .p02-cloud--01 {
   z-index: 8;
@@ -570,9 +477,7 @@ button {
 }
 
 
-/* =========================================================
-   PAGE 02 BAMBOO
-========================================================= */
+/* BAMBOO */
 
 .p02-bamboo-window {
   position: absolute;
@@ -581,8 +486,7 @@ button {
 
   overflow: hidden;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 }
 
 
@@ -611,9 +515,7 @@ button {
 }
 
 
-/* =========================================================
-   PAGE 02 TEXT COMMON
-========================================================= */
+/* TEXT COMMON */
 
 .p02-invite,
 .p02-to,
@@ -647,17 +549,12 @@ button {
 }
 
 
-/* =========================================================
-   PAGE 02 INVITE
-========================================================= */
-
 .p02-invite {
   top: 68px;
 
   font-size: 12px;
 
-  line-height:
-    1.15;
+  line-height: 1.15;
 
   letter-spacing:
     .015em;
@@ -667,10 +564,6 @@ button {
     scaleX(.94);
 }
 
-
-/* =========================================================
-   PAGE 02 DIVIDER
-========================================================= */
 
 .p02-divider {
   position: absolute;
@@ -687,12 +580,7 @@ button {
     translateX(-50%);
 
   background:
-    rgba(
-      153,
-      111,
-      52,
-      .72
-    );
+    rgba(153, 111, 52, .72);
 }
 
 
@@ -708,10 +596,7 @@ button {
     0 4px;
 
   transform:
-    translate(
-      -50%,
-      -56%
-    );
+    translate(-50%, -56%);
 
   background:
     #f1dfbd;
@@ -724,10 +609,6 @@ button {
   line-height: 1;
 }
 
-
-/* =========================================================
-   PAGE 02 TỚI
-========================================================= */
 
 .p02-to {
   top: 149px;
@@ -742,10 +623,6 @@ button {
 }
 
 
-/* =========================================================
-   PAGE 02 WEDDING TITLE
-========================================================= */
-
 .p02-wedding-title {
   top: 183px;
 
@@ -759,26 +636,19 @@ button {
 }
 
 
-/* =========================================================
-   PAGE 02 NAMES
-========================================================= */
-
 .p02-couple-names {
   top: 216px;
 
   display: flex;
 
-  flex-direction:
-    column;
+  flex-direction: column;
 
-  align-items:
-    center;
+  align-items: center;
 
   color:
     var(--invitation-red);
 
-  line-height:
-    .89;
+  line-height: .89;
 
   transform:
     translateX(-50%);
@@ -808,8 +678,7 @@ button {
 
   font-size: 33px;
 
-  line-height:
-    .92;
+  line-height: .92;
 
   color:
     var(--invitation-green);
@@ -818,10 +687,6 @@ button {
     scaleX(.92);
 }
 
-
-/* =========================================================
-   PAGE 02 DATE
-========================================================= */
 
 .p02-date {
   top: 326px;
@@ -842,10 +707,6 @@ button {
 }
 
 
-/* =========================================================
-   PAGE 02 DATE DIVIDER
-========================================================= */
-
 .p02-date-divider {
   position: absolute;
 
@@ -861,12 +722,7 @@ button {
     translateX(-50%);
 
   background:
-    rgba(
-      153,
-      111,
-      52,
-      .56
-    );
+    rgba(153, 111, 52, .56);
 }
 
 
@@ -882,10 +738,7 @@ button {
     0 3px;
 
   transform:
-    translate(
-      -50%,
-      -51%
-    );
+    translate(-50%, -51%);
 
   background:
     #f1dfbd;
@@ -897,9 +750,7 @@ button {
 }
 
 
-/* =========================================================
-   PAGE 02 FLOWER SOURCE
-========================================================= */
+/* FLOWER SOURCE */
 
 .p02-flower-source {
   position: absolute;
@@ -912,14 +763,11 @@ button {
 
   opacity: 0;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 }
 
 
-/* =========================================================
-   PAGE 02 PETALS
-========================================================= */
+/* PETALS */
 
 .p02-petals {
   position: absolute;
@@ -928,8 +776,7 @@ button {
 
   z-index: 14;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 }
 
 
@@ -942,8 +789,7 @@ button {
 
   opacity: 0;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
   background-repeat:
     no-repeat;
@@ -957,19 +803,12 @@ button {
 .page-02.is-assets-ready
 .p02-petal {
   background-image:
-    url(
-      "./assets/page02-flowers.png"
-    );
+    url("./assets/page02-flowers.png");
 
   opacity:
-    var(
-      --petal-opacity,
-      .38
-    );
+    var(--petal-opacity, .38);
 }
 
-
-/* 01 */
 
 .p02-petal--01 {
   left: 101px;
@@ -977,8 +816,7 @@ button {
 
   width: 9px;
 
-  aspect-ratio:
-    32 / 26;
+  aspect-ratio: 32 / 26;
 
   background-size:
     3918.75% auto;
@@ -993,16 +831,13 @@ button {
 }
 
 
-/* 02 */
-
 .p02-petal--02 {
   left: 191px;
   top: 388px;
 
   width: 10px;
 
-  aspect-ratio:
-    44 / 36;
+  aspect-ratio: 44 / 36;
 
   background-size:
     2850% auto;
@@ -1017,16 +852,13 @@ button {
 }
 
 
-/* 03 */
-
 .p02-petal--03 {
   left: 238px;
   top: 401px;
 
   width: 8px;
 
-  aspect-ratio:
-    35 / 43;
+  aspect-ratio: 35 / 43;
 
   background-size:
     3582.857% auto;
@@ -1041,16 +873,13 @@ button {
 }
 
 
-/* 04 */
-
 .p02-petal--04 {
   left: 164px;
   top: 414px;
 
   width: 8px;
 
-  aspect-ratio:
-    39 / 59;
+  aspect-ratio: 39 / 59;
 
   background-size:
     3215.385% auto;
@@ -1065,16 +894,13 @@ button {
 }
 
 
-/* 05 */
-
 .p02-petal--05 {
   left: 125px;
   top: 427px;
 
   width: 9px;
 
-  aspect-ratio:
-    58 / 42;
+  aspect-ratio: 58 / 42;
 
   background-size:
     2162.069% auto;
@@ -1089,16 +915,13 @@ button {
 }
 
 
-/* 06 */
-
 .p02-petal--06 {
   left: 215px;
   top: 435px;
 
   width: 7px;
 
-  aspect-ratio:
-    27 / 20;
+  aspect-ratio: 27 / 20;
 
   background-size:
     4644.444% auto;
@@ -1113,16 +936,13 @@ button {
 }
 
 
-/* 07 */
-
 .p02-petal--07 {
   left: 277px;
   top: 442px;
 
   width: 9px;
 
-  aspect-ratio:
-    56 / 52;
+  aspect-ratio: 56 / 52;
 
   background-size:
     2239.286% auto;
@@ -1137,16 +957,13 @@ button {
 }
 
 
-/* 08 */
-
 .p02-petal--08 {
   left: 90px;
   top: 449px;
 
   width: 8px;
 
-  aspect-ratio:
-    55 / 61;
+  aspect-ratio: 55 / 61;
 
   background-size:
     2280% auto;
@@ -1161,16 +978,13 @@ button {
 }
 
 
-/* 09 */
-
 .p02-petal--09 {
   left: 183px;
   top: 456px;
 
   width: 7px;
 
-  aspect-ratio:
-    34 / 35;
+  aspect-ratio: 34 / 35;
 
   background-size:
     3688.235% auto;
@@ -1185,16 +999,13 @@ button {
 }
 
 
-/* 10 */
-
 .p02-petal--10 {
   left: 250px;
   top: 463px;
 
   width: 8px;
 
-  aspect-ratio:
-    56 / 50;
+  aspect-ratio: 56 / 50;
 
   background-size:
     2239.286% auto;
@@ -1209,16 +1020,13 @@ button {
 }
 
 
-/* 11 */
-
 .p02-petal--11 {
   left: 140px;
   top: 470px;
 
   width: 8px;
 
-  aspect-ratio:
-    59 / 44;
+  aspect-ratio: 59 / 44;
 
   background-size:
     2125.424% auto;
@@ -1233,16 +1041,13 @@ button {
 }
 
 
-/* 12 */
-
 .p02-petal--12 {
   left: 207px;
   top: 477px;
 
   width: 7px;
 
-  aspect-ratio:
-    50 / 49;
+  aspect-ratio: 50 / 49;
 
   background-size:
     2508% auto;
@@ -1257,16 +1062,13 @@ button {
 }
 
 
-/* 13 */
-
 .p02-petal--13 {
   left: 289px;
   top: 484px;
 
   width: 8px;
 
-  aspect-ratio:
-    57 / 47;
+  aspect-ratio: 57 / 47;
 
   background-size:
     2200% auto;
@@ -1281,16 +1083,13 @@ button {
 }
 
 
-/* 14 */
-
 .p02-petal--14 {
   left: 70px;
   top: 477px;
 
   width: 7px;
 
-  aspect-ratio:
-    55 / 44;
+  aspect-ratio: 55 / 44;
 
   background-size:
     2280% auto;
@@ -1305,9 +1104,7 @@ button {
 }
 
 
-/* =========================================================
-   PAGE 02 PROCESSION
-========================================================= */
+/* PROCESSION */
 
 .p02-procession {
   position: absolute;
@@ -1320,8 +1117,7 @@ button {
   width: 390px;
   height: 196px;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 }
 
 
@@ -1332,15 +1128,12 @@ button {
 
   max-width: none;
 
-  object-fit:
-    contain;
+  object-fit: contain;
 
   transform-origin:
     50% 100%;
 }
 
-
-/* FLAG */
 
 .p02-flag-bearer {
   z-index: 31;
@@ -1351,8 +1144,6 @@ button {
 }
 
 
-/* COUPLE */
-
 .p02-couple {
   z-index: 34;
 
@@ -1361,8 +1152,6 @@ button {
   height: 123px;
 }
 
-
-/* LION */
 
 .p02-lion-dance {
   z-index: 33;
@@ -1374,8 +1163,6 @@ button {
 }
 
 
-/* DRUMMER */
-
 .p02-drummer {
   z-index: 32;
 
@@ -1384,10 +1171,6 @@ button {
   height: 122px;
 }
 
-
-/* =========================================================
-   PAGE 02 BOTTOM ORNAMENT
-========================================================= */
 
 .p02-bottom-ornament {
   z-index: 36;
@@ -1404,8 +1187,7 @@ button {
 
 /* =========================================================
    =========================================================
-   PAGE 03
-   AGENDA
+   PAGE 03 — AGENDA
    =========================================================
 ========================================================= */
 
@@ -1426,10 +1208,6 @@ button {
 }
 
 
-/* =========================================================
-   PAGE 03 BACKGROUND
-========================================================= */
-
 .p03-background {
   position: absolute;
 
@@ -1444,23 +1222,9 @@ button {
 
   object-fit: cover;
 
-  object-position:
-    center center;
-
-  pointer-events:
-    none;
-
-  user-select:
-    none;
-
-  -webkit-user-drag:
-    none;
+  pointer-events: none;
 }
 
-
-/* =========================================================
-   PAGE 03 FRAME
-========================================================= */
 
 .p03-frame {
   position: absolute;
@@ -1469,27 +1233,14 @@ button {
 
   z-index: 5;
 
-  display: block;
-
   width: 100%;
   height: 100%;
 
   object-fit: fill;
 
-  pointer-events:
-    none;
-
-  user-select:
-    none;
-
-  -webkit-user-drag:
-    none;
+  pointer-events: none;
 }
 
-
-/* =========================================================
-   PAGE 03 COMMON IMAGE
-========================================================= */
 
 .p03-cloud,
 .p03-title-divider,
@@ -1505,23 +1256,13 @@ button {
 
   height: auto;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
-  user-select:
-    none;
+  user-select: none;
 
-  -webkit-user-select:
-    none;
-
-  -webkit-user-drag:
-    none;
+  -webkit-user-drag: none;
 }
 
-
-/* =========================================================
-   PAGE 03 TITLE
-========================================================= */
 
 .p03-title {
   position: absolute;
@@ -1568,18 +1309,12 @@ button {
 }
 
 
-/* =========================================================
-   PAGE 03 CLOUDS
-========================================================= */
-
 .p03-cloud {
   z-index: 8;
 
   opacity: .82;
 }
 
-
-/* TOP LEFT */
 
 .p03-cloud--01 {
   left: 25px;
@@ -1589,8 +1324,6 @@ button {
 }
 
 
-/* MIDDLE LEFT */
-
 .p03-cloud--02 {
   left: 38px;
   top: 142px;
@@ -1598,8 +1331,6 @@ button {
   width: 47px;
 }
 
-
-/* TOP RIGHT */
 
 .p03-cloud--03 {
   right: 22px;
@@ -1609,8 +1340,6 @@ button {
 }
 
 
-/* LOWER RIGHT */
-
 .p03-cloud--04 {
   right: 26px;
   top: 284px;
@@ -1618,10 +1347,6 @@ button {
   width: 49px;
 }
 
-
-/* =========================================================
-   PAGE 03 TIMELINE
-========================================================= */
 
 .p03-timeline {
   z-index: 14;
@@ -1634,10 +1359,6 @@ button {
 }
 
 
-/* =========================================================
-   PAGE 03 NUMBER BADGES
-========================================================= */
-
 .p03-number {
   z-index: 18;
 
@@ -1645,15 +1366,11 @@ button {
 }
 
 
-/* 01 */
-
 .p03-number--01 {
   left: 130px;
   top: 116px;
 }
 
-
-/* 02 */
 
 .p03-number--02 {
   left: 130px;
@@ -1661,15 +1378,11 @@ button {
 }
 
 
-/* 03 */
-
 .p03-number--03 {
   left: 130px;
   top: 383px;
 }
 
-
-/* 04 */
 
 .p03-number--04 {
   left: 130px;
@@ -1677,16 +1390,10 @@ button {
 }
 
 
-/* =========================================================
-   PAGE 03 ILLUSTRATIONS
-========================================================= */
-
 .p03-illustration {
   z-index: 12;
 }
 
-
-/* ĂN HỎI */
 
 .p03-trap {
   left: 34px;
@@ -1696,8 +1403,6 @@ button {
 }
 
 
-/* KIỆU */
-
 .p03-kieu {
   left: 27px;
   top: 286px;
@@ -1705,8 +1410,6 @@ button {
   width: 123px;
 }
 
-
-/* MÂM CỖ */
 
 .p03-mam-co {
   left: 30px;
@@ -1716,8 +1419,6 @@ button {
 }
 
 
-/* AFTER PARTY */
-
 .p03-cheers {
   left: 68px;
   top: 519px;
@@ -1725,10 +1426,6 @@ button {
   width: 65px;
 }
 
-
-/* =========================================================
-   PAGE 03 EVENT COMMON
-========================================================= */
 
 .p03-event {
   position: absolute;
@@ -1755,10 +1452,6 @@ button {
 }
 
 
-/* =========================================================
-   PAGE 03 EVENT TITLE
-========================================================= */
-
 .p03-event-title {
   margin-bottom:
     8px !important;
@@ -1766,23 +1459,15 @@ button {
   color:
     #ad4629;
 
-  font-size:
-    17px;
+  font-size: 17px;
 
-  line-height:
-    1;
+  line-height: 1;
 
-  font-weight:
-    400;
+  font-weight: 400;
 
-  white-space:
-    nowrap;
+  white-space: nowrap;
 }
 
-
-/* =========================================================
-   PAGE 03 EVENT DATE
-========================================================= */
 
 .p03-event-date {
   margin-bottom:
@@ -1791,20 +1476,13 @@ button {
   color:
     #ad4629;
 
-  font-size:
-    12px;
+  font-size: 12px;
 
-  line-height:
-    1.1;
+  line-height: 1.1;
 
-  white-space:
-    nowrap;
+  white-space: nowrap;
 }
 
-
-/* =========================================================
-   PAGE 03 EVENT TIME
-========================================================= */
 
 .p03-event-time {
   margin-bottom:
@@ -1813,52 +1491,33 @@ button {
   color:
     #304c3c;
 
-  font-size:
-    11px;
+  font-size: 11px;
 
-  line-height:
-    1.1;
+  line-height: 1.1;
 
-  white-space:
-    nowrap;
+  white-space: nowrap;
 }
 
-
-/* =========================================================
-   PAGE 03 EVENT POSITIONS
-========================================================= */
-
-/* EVENT 01 */
 
 .p03-event--01 {
   top: 119px;
 }
 
 
-/* EVENT 02 */
-
 .p03-event--02 {
   top: 270px;
 }
 
-
-/* EVENT 03 */
 
 .p03-event--03 {
   top: 392px;
 }
 
 
-/* EVENT 04 */
-
 .p03-event--04 {
   top: 501px;
 }
 
-
-/* =========================================================
-   PAGE 03 LOCATION
-========================================================= */
 
 .p03-location {
   position: relative;
@@ -1870,14 +1529,11 @@ button {
 
   gap: 8px;
 
-  margin-top:
-    7px;
+  margin-top: 7px;
 
-  font-size:
-    9.5px;
+  font-size: 9.5px;
 
-  line-height:
-    1.42;
+  line-height: 1.42;
 
   color:
     #304c3c;
@@ -1887,8 +1543,7 @@ button {
 .p03-location > div {
   display: flex;
 
-  flex-direction:
-    column;
+  flex-direction: column;
 
   min-width: 0;
 }
@@ -1897,14 +1552,11 @@ button {
 .p03-location strong {
   display: block;
 
-  margin-bottom:
-    2px;
+  margin-bottom: 2px;
 
-  font-size:
-    10px;
+  font-size: 10px;
 
-  font-weight:
-    400;
+  font-weight: 400;
 }
 
 
@@ -1912,10 +1564,6 @@ button {
   display: block;
 }
 
-
-/* =========================================================
-   PAGE 03 LOCATION PIN
-========================================================= */
 
 .p03-location-pin {
   position: relative;
@@ -1926,8 +1574,7 @@ button {
   width: 8px;
   height: 8px;
 
-  margin-top:
-    2px;
+  margin-top: 2px;
 
   border-radius:
     50% 50% 50% 0;
@@ -1951,17 +1598,12 @@ button {
   width: 3px;
   height: 3px;
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 
   background:
     #f3dfb8;
 }
 
-
-/* =========================================================
-   PAGE 03 DRESS CODE
-========================================================= */
 
 .p03-dress-code {
   position: absolute;
@@ -1981,28 +1623,15 @@ button {
     8px 14px 7px;
 
   background:
-    rgba(
-      248,
-      237,
-      211,
-      .88
-    );
+    rgba(248, 237, 211, .88);
 
   box-shadow:
     0 4px 12px
-    rgba(
-      104,
-      74,
-      38,
-      .08
-    );
+    rgba(104, 74, 38, .08);
 
-  text-align:
-    center;
+  text-align: center;
 }
 
-
-/* TAPE */
 
 .p03-dress-code::before {
   content: "";
@@ -2016,29 +1645,19 @@ button {
   height: 10px;
 
   background:
-    rgba(
-      207,
-      165,
-      102,
-      .32
-    );
+    rgba(207, 165, 102, .32);
 
   transform:
     rotate(-34deg);
 }
 
 
-/* =========================================================
-   PAGE 03 DRESS TITLE
-========================================================= */
-
 .p03-dress-title {
   display: flex;
 
   align-items: center;
 
-  justify-content:
-    center;
+  justify-content: center;
 
   gap: 8px;
 
@@ -2053,14 +1672,11 @@ button {
     Times,
     serif;
 
-  font-size:
-    12px;
+  font-size: 12px;
 
-  line-height:
-    1;
+  line-height: 1;
 
-  font-weight:
-    600;
+  font-weight: 600;
 }
 
 
@@ -2068,20 +1684,14 @@ button {
   color:
     #c38d31;
 
-  font-size:
-    9px;
+  font-size: 9px;
 }
 
-
-/* =========================================================
-   PAGE 03 COLORS
-========================================================= */
 
 .p03-color-list {
   display: flex;
 
-  justify-content:
-    center;
+  justify-content: center;
 
   gap: 13px;
 }
@@ -2090,11 +1700,9 @@ button {
 .p03-color-item {
   display: flex;
 
-  flex-direction:
-    column;
+  flex-direction: column;
 
-  align-items:
-    center;
+  align-items: center;
 
   gap: 3px;
 
@@ -2106,11 +1714,9 @@ button {
     Times,
     serif;
 
-  font-size:
-    7px;
+  font-size: 7px;
 
-  line-height:
-    1;
+  line-height: 1;
 }
 
 
@@ -2120,12 +1726,9 @@ button {
   width: 27px;
   height: 27px;
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 }
 
-
-/* WHITE */
 
 .p03-color--white {
   background:
@@ -2133,16 +1736,9 @@ button {
 
   border:
     1px solid
-    rgba(
-      255,
-      255,
-      255,
-      .95
-    );
+    rgba(255, 255, 255, .95);
 }
 
-
-/* BEIGE */
 
 .p03-color--beige {
   background:
@@ -2150,16 +1746,9 @@ button {
 
   border:
     1px solid
-    rgba(
-      255,
-      255,
-      255,
-      .75
-    );
+    rgba(255, 255, 255, .75);
 }
 
-
-/* BLACK */
 
 .p03-color--black {
   background:
@@ -2167,16 +1756,9 @@ button {
 
   border:
     1px solid
-    rgba(
-      255,
-      255,
-      255,
-      .6
-    );
+    rgba(255, 255, 255, .6);
 }
 
-
-/* GOLD */
 
 .p03-color--gold {
   background:
@@ -2184,18 +1766,9 @@ button {
 
   border:
     1px solid
-    rgba(
-      255,
-      255,
-      255,
-      .65
-    );
+    rgba(255, 255, 255, .65);
 }
 
-
-/* =========================================================
-   PAGE 03 BOTTOM ORNAMENT
-========================================================= */
 
 .p03-bottom-ornament {
   z-index: 30;
@@ -2212,6 +1785,496 @@ button {
 
 /* =========================================================
    =========================================================
+   PAGE 04 — LOCATION
+   =========================================================
+========================================================= */
+
+.page04-layout {
+  position: relative;
+
+  z-index: 1;
+
+  width: 390px;
+  height: 680px;
+
+  overflow: hidden;
+
+  background:
+    #f1dfbd;
+
+  isolation: isolate;
+}
+
+
+/* BACKGROUND */
+
+.p04-background {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  object-position:
+    center;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* FRAME */
+
+.p04-frame {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 5;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: fill;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* COMMON */
+
+.p04-cloud,
+.p04-map,
+.p04-card-frame,
+.p04-card-icon,
+.p04-arrow,
+.p04-bottom-ornament {
+  position: absolute;
+
+  display: block;
+
+  max-width: none;
+
+  height: auto;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   PAGE 04 CLOUDS
+========================================================= */
+
+.p04-cloud {
+  z-index: 8;
+
+  pointer-events: none;
+
+  opacity: .76;
+}
+
+
+.p04-cloud--01 {
+  left: 67px;
+  top: 55px;
+
+  width: 69px;
+}
+
+
+.p04-cloud--02 {
+  right: 55px;
+  top: 42px;
+
+  width: 65px;
+}
+
+
+/* =========================================================
+   PAGE 04 TITLE
+========================================================= */
+
+.p04-couple-label {
+  position: absolute;
+
+  z-index: 20;
+
+  left: 50%;
+  top: 77px;
+
+  width: 250px;
+
+  margin: 0;
+
+  transform:
+    translateX(-50%);
+
+  text-align: center;
+
+  color:
+    #a23c23;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 19px;
+
+  line-height: 1;
+
+  font-weight: 400;
+}
+
+
+.p04-title-ampersand {
+  color:
+    #315544;
+}
+
+
+.p04-title {
+  position: absolute;
+
+  z-index: 20;
+
+  left: 50%;
+  top: 103px;
+
+  margin: 0;
+
+  transform:
+    translateX(-50%)
+    scaleX(.88);
+
+  transform-origin:
+    50% 50%;
+
+  color:
+    #9f301c;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 38px;
+
+  line-height: .95;
+
+  font-weight: 400;
+
+  letter-spacing:
+    .015em;
+}
+
+
+.p04-subtitle {
+  position: absolute;
+
+  z-index: 20;
+
+  left: 50%;
+  top: 149px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  width: 340px;
+
+  margin: 0;
+
+  transform:
+    translateX(-50%);
+
+  color:
+    #345849;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 10.5px;
+
+  line-height: 1;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+.p04-subtitle-symbol {
+  color:
+    #a43c24;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   PAGE 04 MAP
+
+   Asset được giữ nguyên tỷ lệ.
+   Không stretch.
+========================================================= */
+
+.p04-map {
+  z-index: 10;
+
+  left: 50%;
+  top: 169px;
+
+  width: 276px;
+
+  transform:
+    translateX(-50%);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   PAGE 04 INFO CARDS
+========================================================= */
+
+.p04-info-card {
+  position: absolute;
+
+  z-index: 25;
+
+  top: 579px;
+
+  width: 170px;
+  height: 64px;
+
+  overflow: hidden;
+
+  background:
+    rgba(244, 229, 197, .16);
+}
+
+
+.p04-hotel-card {
+  left: 20px;
+}
+
+
+.p04-link-card {
+  right: 20px;
+
+  cursor: pointer;
+
+  touch-action:
+    manipulation;
+}
+
+
+.p04-card-frame {
+  z-index: 0;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: fill;
+
+  pointer-events: none;
+}
+
+
+.p04-card-content {
+  position: absolute;
+
+  z-index: 2;
+
+  inset: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  padding:
+    8px 9px;
+}
+
+
+/* =========================================================
+   PAGE 04 HOTEL CARD
+========================================================= */
+
+.p04-card-icon {
+  position: relative;
+
+  flex:
+    0 0 auto;
+
+  pointer-events: none;
+}
+
+
+.p04-hotel-icon {
+  width: 27px;
+  height: 32px;
+
+  object-fit: contain;
+}
+
+
+.p04-card-text {
+  display: flex;
+
+  flex: 1 1 auto;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  min-width: 0;
+
+  margin-left: 7px;
+}
+
+
+.p04-card-title {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color:
+    #a13a23;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 9.4px;
+
+  line-height: 1.05;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+.p04-card-description {
+  display: block;
+
+  color:
+    #345447;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 7.7px;
+
+  line-height: 1.28;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   PAGE 04 LINK CARD
+========================================================= */
+
+.p04-location-icon {
+  width: 29px;
+  height: 31px;
+
+  object-fit: contain;
+}
+
+
+.p04-link-card
+.p04-card-text {
+  margin-left: 8px;
+
+  padding-right: 17px;
+}
+
+
+.p04-link-card
+.p04-card-title {
+  margin-bottom: 7px;
+
+  font-size: 10.5px;
+}
+
+
+.p04-link-card
+.p04-card-description {
+  font-size: 8.5px;
+}
+
+
+.p04-arrow {
+  position: absolute;
+
+  z-index: 3;
+
+  right: 10px;
+  top: 50%;
+
+  width: 17px;
+
+  transform:
+    translateY(-50%);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   PAGE 04 BOTTOM ORNAMENT
+========================================================= */
+
+.p04-bottom-ornament {
+  z-index: 32;
+
+  left: 50%;
+  bottom: -14px;
+
+  width: 158px;
+
+  transform:
+    translateX(-50%);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   =========================================================
    PAGE 01 ENVELOPE
    =========================================================
 ========================================================= */
@@ -2222,14 +2285,11 @@ button {
   left: 50%;
 
   top:
-    calc(
-      14.5% + 18px
-    );
+    calc(14.5% + 18px);
 
   width: 82%;
 
-  max-width:
-    352px;
+  max-width: 352px;
 
   aspect-ratio:
     2 / 3;
@@ -2246,20 +2306,14 @@ button {
   background:
     transparent;
 
-  cursor:
-    pointer;
+  cursor: pointer;
 
   touch-action:
     manipulation;
 
-  overflow:
-    visible;
+  overflow: visible;
 }
 
-
-/* =========================================================
-   ENVELOPE STAGE
-========================================================= */
 
 .envelope-stage {
   position: absolute;
@@ -2268,8 +2322,7 @@ button {
 
   display: block;
 
-  overflow:
-    visible;
+  overflow: visible;
 
   transform:
     translateZ(0);
@@ -2279,25 +2332,14 @@ button {
 
   filter:
     drop-shadow(
-      0
-      12px
-      9px
-      rgba(
-        62,
-        24,
-        14,
-        .16
-      )
+      0 12px 9px
+      rgba(62, 24, 14, .16)
     );
 
   transition:
     filter .62s ease;
 }
 
-
-/* =========================================================
-   PAGE 01 IMAGE COMMON
-========================================================= */
 
 .envelope-closed,
 .envelope-open-body,
@@ -2312,8 +2354,7 @@ button {
 
   user-select: none;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
   -webkit-user-select:
     none;
@@ -2322,10 +2363,6 @@ button {
     none;
 }
 
-
-/* =========================================================
-   CLOSED ENVELOPE
-========================================================= */
 
 .envelope-closed {
   z-index: 30;
@@ -2354,33 +2391,19 @@ button {
   animation:
     closedEnvelopeCue
     2.6s
-    cubic-bezier(
-      .22,
-      .75,
-      .22,
-      1
-    )
+    cubic-bezier(.22, .75, .22, 1)
     infinite;
 
   transition:
     opacity .28s ease,
     transform .56s
-      cubic-bezier(
-        .22,
-        .61,
-        .36,
-        1
-      );
+      cubic-bezier(.22, .61, .36, 1);
 
   will-change:
     transform,
     opacity;
 }
 
-
-/* =========================================================
-   OPEN GROUP
-========================================================= */
 
 .envelope-open {
   position: absolute;
@@ -2392,13 +2415,11 @@ button {
   width: 100%;
   height: 100%;
 
-  overflow:
-    visible;
+  overflow: visible;
 
   opacity: 0;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
   transition:
     opacity .18s ease;
@@ -2407,14 +2428,9 @@ button {
 
 .envelope-button.is-open
 .envelope-open {
-  pointer-events:
-    auto;
+  pointer-events: auto;
 }
 
-
-/* =========================================================
-   OPEN FLAP
-========================================================= */
 
 .envelope-open-flap {
   z-index: 9;
@@ -2438,12 +2454,7 @@ button {
 
   transition:
     transform .52s
-      cubic-bezier(
-        .22,
-        .61,
-        .36,
-        1
-      ),
+      cubic-bezier(.22, .61, .36, 1),
     opacity .12s ease;
 
   will-change:
@@ -2451,10 +2462,6 @@ button {
     opacity;
 }
 
-
-/* =========================================================
-   OPEN BODY
-========================================================= */
 
 .envelope-open-body {
   z-index: 11;
@@ -2482,22 +2489,13 @@ button {
 
   transition:
     transform .56s
-      cubic-bezier(
-        .22,
-        .61,
-        .36,
-        1
-      ),
+      cubic-bezier(.22, .61, .36, 1),
     opacity .22s ease;
 
   will-change:
     transform;
 }
 
-
-/* =========================================================
-   INVITATION CARD
-========================================================= */
 
 .invitation-card {
   z-index: 13;
@@ -2506,10 +2504,8 @@ button {
 
   left:
     calc(
-      (
-        100% -
-        var(--card-width)
-      ) / 2
+      (100% - var(--card-width))
+      / 2
     );
 
   width:
@@ -2523,8 +2519,8 @@ button {
     translate3d(
       0,
       calc(
-        var(--body-offset-open) +
-        128px
+        var(--body-offset-open)
+        + 128px
       ),
       0
     );
@@ -2534,25 +2530,13 @@ button {
 
   filter:
     drop-shadow(
-      0
-      8px
-      8px
-      rgba(
-        77,
-        42,
-        22,
-        .08
-      )
+      0 8px 8px
+      rgba(77, 42, 22, .08)
     );
 
   transition:
     transform .62s
-      cubic-bezier(
-        .16,
-        .78,
-        .18,
-        1
-      ),
+      cubic-bezier(.16, .78, .18, 1),
     opacity .16s ease;
 
   will-change:
@@ -2563,20 +2547,14 @@ button {
 
 .envelope-button.is-open
 .invitation-card {
-  pointer-events:
-    auto;
+  pointer-events: auto;
 
-  cursor:
-    pointer;
+  cursor: pointer;
 }
 
 
-/* =========================================================
-   OPEN FRONT
-
-   KHÔNG DỊCH NGANG
-   KHÔNG SCALE X
-========================================================= */
+/* IMPORTANT:
+   front giữ đúng baseline đã chốt */
 
 .envelope-open-front {
   z-index: 14;
@@ -2604,22 +2582,13 @@ button {
 
   transition:
     transform .56s
-      cubic-bezier(
-        .22,
-        .61,
-        .36,
-        1
-      ),
+      cubic-bezier(.22, .61, .36, 1),
     opacity .22s ease;
 
   will-change:
     transform;
 }
 
-
-/* =========================================================
-   MONOGRAM TAP CUE
-========================================================= */
 
 .monogram-pulse {
   position: absolute;
@@ -2630,25 +2599,22 @@ button {
 
   top:
     calc(
-      60.5% +
-      var(--body-offset-closed)
+      60.5%
+      + var(--body-offset-closed)
     );
 
   width: 31%;
 
-  aspect-ratio: 1;
+  aspect-ratio:
+    1;
 
   border-radius:
     50%;
 
   transform:
-    translate(
-      -50%,
-      -50%
-    );
+    translate(-50%, -50%);
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
   transition:
     opacity .22s ease,
@@ -2666,12 +2632,7 @@ button {
 
   border:
     1.5px solid
-    rgba(
-      237,
-      196,
-      96,
-      .52
-    );
+    rgba(237, 196, 96, .52);
 
   border-radius:
     50%;
@@ -2693,7 +2654,7 @@ button {
 
 
 /* =========================================================
-   CLOSED HOVER
+   PAGE 01 INTERACTION
 ========================================================= */
 
 .envelope-button:not(.is-open):hover
@@ -2703,15 +2664,8 @@ button {
 .envelope-stage {
   filter:
     drop-shadow(
-      0
-      16px
-      12px
-      rgba(
-        62,
-        24,
-        14,
-        .20
-      )
+      0 16px 12px
+      rgba(62, 24, 14, .20)
     );
 }
 
@@ -2737,10 +2691,6 @@ button {
 }
 
 
-/* =========================================================
-   CLOSED PRESS
-========================================================= */
-
 .envelope-button:not(.is-open):active
 .envelope-closed {
   transform:
@@ -2761,23 +2711,14 @@ button {
 }
 
 
-/* =========================================================
-   PAGE 01 OPEN STATE
-========================================================= */
+/* OPEN */
 
 .envelope-button.is-open
 .envelope-stage {
   filter:
     drop-shadow(
-      0
-      14px
-      10px
-      rgba(
-        62,
-        24,
-        14,
-        .18
-      )
+      0 14px 10px
+      rgba(62, 24, 14, .18)
     );
 }
 
@@ -2859,9 +2800,6 @@ button {
       var(--open-flap-scale-x)
     )
     scaleY(1);
-
-  transition-delay:
-    0s;
 }
 
 
@@ -2870,15 +2808,12 @@ button {
   opacity: 0;
 
   transform:
-    translate(
-      -50%,
-      -50%
-    );
+    translate(-50%, -50%);
 }
 
 
 /* =========================================================
-   CLOSED ENVELOPE ANIMATION
+   ANIMATIONS
 ========================================================= */
 
 @keyframes closedEnvelopeCue {
@@ -2886,7 +2821,6 @@ button {
   0%,
   60%,
   100% {
-
     transform:
       translate3d(
         0,
@@ -2895,12 +2829,9 @@ button {
       )
       scale(1)
       rotate(0deg);
-
   }
 
-
   70% {
-
     transform:
       translate3d(
         0,
@@ -2912,12 +2843,9 @@ button {
       )
       scale(1.012)
       rotate(0deg);
-
   }
 
-
   78% {
-
     transform:
       translate3d(
         0,
@@ -2929,12 +2857,9 @@ button {
       )
       scale(1.012)
       rotate(-.35deg);
-
   }
 
-
   86% {
-
     transform:
       translate3d(
         0,
@@ -2946,12 +2871,9 @@ button {
       )
       scale(1.012)
       rotate(.35deg);
-
   }
 
-
   94% {
-
     transform:
       translate3d(
         0,
@@ -2960,51 +2882,33 @@ button {
       )
       scale(1)
       rotate(0deg);
-
   }
-
 }
 
-
-/* =========================================================
-   TAP RING
-========================================================= */
 
 @keyframes tapRing {
 
   0% {
-
     transform:
       scale(.52);
 
     opacity: 0;
-
   }
-
 
   18% {
-
     opacity: .5;
-
   }
-
 
   72% {
-
     opacity: .14;
-
   }
 
-
   100% {
-
     transform:
       scale(1.18);
 
     opacity: 0;
-
   }
-
 }
 
 
@@ -3018,7 +2922,6 @@ button {
   *,
   *::before,
   *::after {
-
     animation-duration:
       .001ms !important;
 
@@ -3027,7 +2930,6 @@ button {
 
     transition-duration:
       .001ms !important;
-
   }
 
 }
