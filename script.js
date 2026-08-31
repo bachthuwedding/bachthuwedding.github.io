@@ -6,7 +6,7 @@ const DESIGN_WIDTH =
   390;
 
 const DESIGN_HEIGHT =
-  690;
+  686;
 
 
 /* =========================================
