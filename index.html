@@ -14,7 +14,7 @@
 
   <title>Bách & Thư</title>
 
-  <!-- Chỉ preload asset cần nhìn thấy ngay -->
+  <!-- Chỉ preload asset cần nhìn thấy ngay ở Page 01 -->
   <link
     rel="preload"
     href="./assets/page01-bg-optimized.webp"
@@ -34,31 +34,23 @@
   <link rel="stylesheet" href="./styles.css" />
 </head>
 
-
 <body>
-
-  <!--
-    SITE SHELL
-
-    Kích thước bên ngoài được JS tính theo
-    MASTER 390 × 844.
-
-    Toàn bộ website bên trong chỉ scale
-    MỘT LẦN tại .site-scale.
-  -->
 
   <main
     class="site-shell"
     id="siteShell"
   >
 
+    <!--
+      Toàn bộ website nằm trong artboard cố định
+      390 × 760 rồi scale cả khối một lần.
+    -->
     <div
       class="site-scale"
       id="siteScale"
     >
 
       <div class="design-stage">
-
 
         <!-- =====================================
              PAGE 01
@@ -83,9 +75,7 @@
               aria-hidden="true"
             >
 
-              <!-- =========================
-                   OPEN STATE
-              ========================== -->
+              <!-- OPEN STATE -->
 
               <span class="envelope-open">
 
@@ -132,10 +122,7 @@
 
               </span>
 
-
-              <!-- =========================
-                   CLOSED STATE
-              ========================== -->
+              <!-- CLOSED STATE -->
 
               <img
                 class="envelope-closed"
@@ -148,7 +135,6 @@
                 width="800"
                 height="1200"
               />
-
 
               <span class="monogram-pulse"></span>
 
@@ -169,13 +155,7 @@
           aria-hidden="true"
         >
 
-          <!--
-            Các page sau này sẽ tiếp tục
-            được đặt trong invitation-flow.
-          -->
-
           <div class="invitation-flow">
-
 
             <!-- =================================
                  PAGE 02
@@ -198,7 +178,6 @@
                 height="1845"
               />
 
-
               <!-- FRAME -->
 
               <img
@@ -211,17 +190,10 @@
                 height="1845"
               />
 
-
-              <!-- ===============================
-                   CLOUDS
-              ================================ -->
+              <!-- CLOUDS -->
 
               <img
-                class="
-                  p02-cloud
-                  p02-cloud--01
-                  deferred-page02-asset
-                "
+                class="p02-cloud p02-cloud--01 deferred-page02-asset"
                 data-src="./assets/page02-cloud-01.png"
                 alt=""
                 draggable="false"
@@ -229,11 +201,7 @@
               />
 
               <img
-                class="
-                  p02-cloud
-                  p02-cloud--02
-                  deferred-page02-asset
-                "
+                class="p02-cloud p02-cloud--02 deferred-page02-asset"
                 data-src="./assets/page02-cloud-02.png"
                 alt=""
                 draggable="false"
@@ -241,11 +209,7 @@
               />
 
               <img
-                class="
-                  p02-cloud
-                  p02-cloud--03
-                  deferred-page02-asset
-                "
+                class="p02-cloud p02-cloud--03 deferred-page02-asset"
                 data-src="./assets/page02-cloud-03.png"
                 alt=""
                 draggable="false"
@@ -253,30 +217,19 @@
               />
 
               <img
-                class="
-                  p02-cloud
-                  p02-cloud--04
-                  deferred-page02-asset
-                "
+                class="p02-cloud p02-cloud--04 deferred-page02-asset"
                 data-src="./assets/page02-cloud-04.png"
                 alt=""
                 draggable="false"
                 decoding="async"
               />
 
-
-              <!-- ===============================
-                   BAMBOO
-              ================================ -->
+              <!-- BAMBOO LEFT -->
 
               <div
-                class="
-                  p02-bamboo-window
-                  p02-bamboo-window--left
-                "
+                class="p02-bamboo-window p02-bamboo-window--left"
                 aria-hidden="true"
               >
-
                 <img
                   class="p02-bamboo deferred-page02-asset"
                   data-src="./assets/page02-bamboo-left.png"
@@ -284,18 +237,14 @@
                   draggable="false"
                   decoding="async"
                 />
-
               </div>
 
+              <!-- BAMBOO RIGHT -->
 
               <div
-                class="
-                  p02-bamboo-window
-                  p02-bamboo-window--right
-                "
+                class="p02-bamboo-window p02-bamboo-window--right"
                 aria-hidden="true"
               >
-
                 <img
                   class="p02-bamboo deferred-page02-asset"
                   data-src="./assets/page02-bamboo-right.png"
@@ -303,34 +252,26 @@
                   draggable="false"
                   decoding="async"
                 />
-
               </div>
 
-
-              <!-- ===============================
-                   TEXT
-              ================================ -->
+              <!-- TEXT -->
 
               <p class="p02-invite">
                 TRÂN TRỌNG KÍNH MỜI
               </p>
-
 
               <div
                 class="p02-divider"
                 aria-hidden="true"
               ></div>
 
-
               <p class="p02-to">
                 TỚI
               </p>
 
-
               <p class="p02-wedding-title">
                 LỄ THÀNH HÔN
               </p>
-
 
               <h1 class="p02-couple-names">
 
@@ -348,21 +289,16 @@
 
               </h1>
 
-
               <p class="p02-date">
                 24.11.2026
               </p>
-
 
               <div
                 class="p02-date-divider"
                 aria-hidden="true"
               ></div>
 
-
-              <!-- ===============================
-                   FLOWER SOURCE
-              ================================ -->
+              <!-- FLOWER SOURCE -->
 
               <img
                 class="p02-flower-source deferred-page02-asset"
@@ -372,16 +308,12 @@
                 decoding="async"
               />
 
-
-              <!-- ===============================
-                   PETALS
-              ================================ -->
+              <!-- PETALS -->
 
               <div
                 class="p02-petals"
                 aria-hidden="true"
               >
-
                 <span class="p02-petal p02-petal--01"></span>
                 <span class="p02-petal p02-petal--02"></span>
                 <span class="p02-petal p02-petal--03"></span>
@@ -396,13 +328,9 @@
                 <span class="p02-petal p02-petal--12"></span>
                 <span class="p02-petal p02-petal--13"></span>
                 <span class="p02-petal p02-petal--14"></span>
-
               </div>
 
-
-              <!-- ===============================
-                   PROCESSION
-              ================================ -->
+              <!-- PROCESSION -->
 
               <div
                 class="p02-procession"
@@ -410,50 +338,31 @@
               >
 
                 <img
-                  class="
-                    p02-procession-item
-                    p02-flag-bearer
-                    deferred-page02-asset
-                  "
+                  class="p02-procession-item p02-flag-bearer deferred-page02-asset"
                   data-src="./assets/page02-flag-bearer.png"
                   alt=""
                   draggable="false"
                   decoding="async"
                 />
 
-
                 <img
-                  class="
-                    p02-procession-item
-                    p02-couple
-                    deferred-page02-asset
-                  "
+                  class="p02-procession-item p02-couple deferred-page02-asset"
                   data-src="./assets/page02-couple.png"
                   alt=""
                   draggable="false"
                   decoding="async"
                 />
 
-
                 <img
-                  class="
-                    p02-procession-item
-                    p02-lion-dance
-                    deferred-page02-asset
-                  "
+                  class="p02-procession-item p02-lion-dance deferred-page02-asset"
                   data-src="./assets/page02-lion-dance.png"
                   alt=""
                   draggable="false"
                   decoding="async"
                 />
 
-
                 <img
-                  class="
-                    p02-procession-item
-                    p02-drummer
-                    deferred-page02-asset
-                  "
+                  class="p02-procession-item p02-drummer deferred-page02-asset"
                   data-src="./assets/page02-drummer.png"
                   alt=""
                   draggable="false"
@@ -462,16 +371,10 @@
 
               </div>
 
-
-              <!-- ===============================
-                   BOTTOM ORNAMENT
-              ================================ -->
+              <!-- BOTTOM ORNAMENT -->
 
               <img
-                class="
-                  p02-bottom-ornament
-                  deferred-page02-asset
-                "
+                class="p02-bottom-ornament deferred-page02-asset"
                 data-src="./assets/page02-bottom-ornament.png"
                 alt=""
                 draggable="false"
@@ -489,7 +392,6 @@
     </div>
 
   </main>
-
 
   <script src="./script.js"></script>
 
