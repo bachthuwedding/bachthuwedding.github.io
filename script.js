@@ -1021,3 +1021,135 @@ if (
   );
 
 }
+
+/* =========================================================
+   PAGE 05
+   DEFERRED ASSETS
+========================================================= */
+
+const page05 =
+  document.getElementById(
+    "page05"
+  );
+
+
+const deferredPage05Assets =
+  Array.from(
+    document.querySelectorAll(
+      ".deferred-page05-asset[data-src]"
+    )
+  );
+
+
+let page05AssetsPromise =
+  null;
+
+
+/* =========================================================
+   LOAD PAGE 05 ASSETS
+========================================================= */
+
+function loadPage05Assets() {
+
+  if (
+    page05AssetsPromise
+  ) {
+
+    return page05AssetsPromise;
+
+  }
+
+
+  page05AssetsPromise =
+    Promise.all(
+      deferredPage05Assets.map(
+        loadDeferredImage
+      )
+    )
+      .then(
+        () => {
+
+          if (
+            page05
+          ) {
+
+            page05.classList.add(
+              "is-assets-ready"
+            );
+
+          }
+
+        }
+      );
+
+
+  return page05AssetsPromise;
+
+}
+
+
+/* =========================================================
+   PAGE 05 PRELOAD
+
+   PAGE POSITIONS:
+
+   PAGE 02:
+   0 → 680
+
+   PAGE 03:
+   680 → 1360
+
+   PAGE 04:
+   1360 → 2040
+
+   PAGE 05:
+   2040 → 2720
+
+   Load Page 05 khi user mới bắt đầu đi vào Page 04.
+========================================================= */
+
+page02.addEventListener(
+  "scroll",
+  () => {
+
+    const scrollY =
+      page02.scrollTop;
+
+
+    if (
+      scrollY >=
+      DESIGN_HEIGHT * 2.10
+    ) {
+
+      loadPage05Assets();
+
+    }
+
+  },
+  {
+    passive: true
+  }
+);
+
+
+/* =========================================================
+   EARLY LOAD ON PAGE 04 TOUCH
+========================================================= */
+
+if (
+  page04
+) {
+
+  page04.addEventListener(
+    "pointerdown",
+    () => {
+
+      loadPage05Assets();
+
+    },
+    {
+      passive: true
+    }
+  );
+
+}
