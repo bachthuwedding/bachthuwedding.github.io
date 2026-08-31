@@ -1,25 +1,42 @@
 :root {
+
+  /* =========================================
+     MASTER DESIGN SYSTEM
+  ========================================= */
+
+  --design-width: 390px;
+  --design-height: 844px;
+
+  --design-scale: 1;
+
+  --render-width: 390px;
+  --render-height: 844px;
+
+
+  /* =========================================
+     COLORS
+  ========================================= */
+
   --paper: #ead5ad;
   --page-background: #d8c59f;
+
+  --invitation-paper: #efe0bc;
+  --invitation-green: #28513f;
+  --invitation-red: #a63019;
+  --invitation-gold: #a78042;
+
+
+  /* =========================================
+     PAGE 01
+     GIỮ NGUYÊN THÔNG SỐ ĐÃ CHỐT
+  ========================================= */
 
   --body-offset-closed: 24px;
   --body-offset-open: 50px;
 
   --open-flap-scale-x: 1.09;
 
-  /* PAGE 01 - ĐÃ CHỐT */
   --card-width: 80%;
-
-  /* PAGE 02 */
-  --invitation-paper: #efe0bc;
-  --invitation-green: #28513f;
-  --invitation-red: #a63019;
-  --invitation-gold: #a78042;
-
-  --invitation-page-height: 100dvh;
-
-  --desktop-shell-height:
-    min(100dvh, 932px);
 }
 
 
@@ -31,22 +48,33 @@
   box-sizing: border-box;
 }
 
+
 html,
 body {
   width: 100%;
+  height: 100%;
+
   min-height: 100%;
 
   margin: 0;
   padding: 0;
 }
 
+
 html {
   background:
     var(--page-background);
 }
 
+
 body {
-  overflow: hidden;
+  display: grid;
+
+  place-items:
+    center;
+
+  overflow:
+    hidden;
 
   background:
     var(--page-background);
@@ -60,29 +88,26 @@ body {
     transparent;
 }
 
+
 button {
   font: inherit;
 }
 
 
 /* =========================================
-   SITE SHELL
+   OUTER SHELL
+
+   Shell = kích thước SAU KHI scale.
 ========================================= */
 
 .site-shell {
   position: relative;
 
   width:
-    min(100vw, 430px);
+    var(--render-width);
 
   height:
-    100dvh;
-
-  min-height:
-    100svh;
-
-  margin:
-    0 auto;
+    var(--render-height);
 
   overflow:
     hidden;
@@ -96,6 +121,75 @@ button {
 
   isolation:
     isolate;
+
+
+  /*
+    Ngăn flash layout trước khi JS
+    tính scale lần đầu.
+  */
+
+  opacity: 0;
+
+  transition:
+    opacity .08s linear;
+}
+
+
+.site-shell.is-scale-ready {
+  opacity: 1;
+}
+
+
+/* =========================================
+   ONE GLOBAL SCALE
+
+   Đây là nơi DUY NHẤT website scale.
+========================================= */
+
+.site-scale {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width:
+    var(--design-width);
+
+  height:
+    var(--design-height);
+
+  transform-origin:
+    0 0;
+
+  transform:
+    scale(var(--design-scale));
+
+  will-change:
+    transform;
+}
+
+
+/* =========================================
+   FIXED MASTER ARTBOARD
+========================================= */
+
+.design-stage {
+  position: relative;
+
+  width:
+    var(--design-width);
+
+  height:
+    var(--design-height);
+
+  overflow:
+    hidden;
+
+  background:
+    var(--paper);
+
+  isolation:
+    isolate;
 }
 
 
@@ -106,7 +200,14 @@ button {
 .opening-page {
   position: absolute;
 
-  inset: 0;
+  left: 0;
+  top: 0;
+
+  width:
+    var(--design-width);
+
+  height:
+    var(--design-height);
 
   z-index: 2;
 
@@ -151,7 +252,14 @@ button {
 .page-02 {
   position: absolute;
 
-  inset: 0;
+  left: 0;
+  top: 0;
+
+  width:
+    var(--design-width);
+
+  height:
+    var(--design-height);
 
   z-index: 1;
 
@@ -191,22 +299,57 @@ button {
     none;
 }
 
+
 .page-02::-webkit-scrollbar {
   display: none;
 }
 
 
 /* =========================================
+   PAGE 01 -> PAGE 02
+========================================= */
+
+.site-shell.is-page-02
+.opening-page {
+  opacity: 0;
+
+  transform:
+    translate3d(0, -18px, 0);
+
+  pointer-events:
+    none;
+}
+
+
+.site-shell.is-page-02
+.page-02 {
+  z-index: 3;
+
+  opacity: 1;
+
+  transform:
+    translate3d(0, 0, 0);
+
+  pointer-events:
+    auto;
+}
+
+
+/* =========================================
    INVITATION FLOW
+
+   Sau này Page 03 / 04 / 05
+   tiếp tục đặt trong flow này.
 ========================================= */
 
 .invitation-flow {
   position: relative;
 
-  width: 100%;
+  width:
+    var(--design-width);
 
   min-height:
-    var(--invitation-page-height);
+    var(--design-height);
 
   overflow:
     hidden;
@@ -219,7 +362,7 @@ button {
 }
 
 
-/* SIDE RAILS */
+/* SIDE FRAME RAILS */
 
 .invitation-flow::before,
 .invitation-flow::after {
@@ -241,9 +384,11 @@ button {
     none;
 }
 
+
 .invitation-flow::before {
   left: 2.25%;
 }
+
 
 .invitation-flow::after {
   right: 2.25%;
@@ -251,23 +396,25 @@ button {
 
 
 /* =========================================
-   INVITATION PAGE
+   GENERIC INVITATION PAGE
+
+   Mỗi page từ Page 02 trở đi luôn là:
+   390 × 844
 ========================================= */
 
 .invitation-page {
   position: relative;
 
-  width: 100%;
+  width:
+    var(--design-width);
 
   height:
-    var(--invitation-page-height);
-
-  min-height:
-    620px;
+    var(--design-height);
 
   overflow:
     hidden;
 }
+
 
 .page02-layout {
   z-index: 1;
@@ -278,7 +425,7 @@ button {
 
 
 /* =========================================
-   BACKGROUND
+   PAGE 02 BACKGROUND
 ========================================= */
 
 .p02-background {
@@ -316,7 +463,7 @@ button {
 
 
 /* =========================================
-   FRAME
+   PAGE 02 FRAME
 ========================================= */
 
 .p02-frame {
@@ -351,7 +498,7 @@ button {
 
 
 /* =========================================
-   COMMON PAGE 02 ASSETS
+   COMMON PAGE 02 IMAGE
 ========================================= */
 
 .p02-cloud,
@@ -382,22 +529,7 @@ button {
 
 /* =========================================
    CLOUDS
-   4 FILE RIÊNG
 ========================================= */
-
-/*
-  Không crop.
-  Không background-position.
-  Không sprite.
-
-  Chỉ chỉnh:
-  left/right
-  top
-  width
-*/
-
-
-/* LARGE LEFT */
 
 .p02-cloud--01 {
   z-index: 8;
@@ -410,8 +542,6 @@ button {
 }
 
 
-/* LARGE RIGHT */
-
 .p02-cloud--02 {
   z-index: 8;
 
@@ -423,8 +553,6 @@ button {
 }
 
 
-/* SMALL LEFT */
-
 .p02-cloud--03 {
   z-index: 8;
 
@@ -435,8 +563,6 @@ button {
   width: 12.2%;
 }
 
-
-/* SMALL RIGHT */
 
 .p02-cloud--04 {
   z-index: 8;
@@ -466,8 +592,6 @@ button {
 }
 
 
-/* LEFT */
-
 .p02-bamboo-window--left {
   left: -3.2%;
 
@@ -478,8 +602,6 @@ button {
   height: 38.5%;
 }
 
-
-/* RIGHT */
 
 .p02-bamboo-window--right {
   right: -3.4%;
@@ -647,8 +769,7 @@ button {
 .p02-couple-names {
   top: 34.9%;
 
-  display:
-    flex;
+  display: flex;
 
   flex-direction:
     column;
@@ -668,8 +789,7 @@ button {
 
 
 .p02-name {
-  display:
-    block;
+  display: block;
 
   font-size:
     10.7cqw;
@@ -683,8 +803,7 @@ button {
 
 
 .p02-ampersand {
-  display:
-    block;
+  display: block;
 
   margin:
     .9cqw 0 .8cqw;
@@ -787,8 +906,7 @@ button {
   width: 1px;
   height: 1px;
 
-  opacity:
-    0;
+  opacity: 0;
 
   pointer-events:
     none;
@@ -812,11 +930,9 @@ button {
 
 
 .p02-petal {
-  position:
-    absolute;
+  position: absolute;
 
-  display:
-    block;
+  display: block;
 
   overflow:
     hidden;
@@ -827,8 +943,7 @@ button {
   background-repeat:
     no-repeat;
 
-  opacity:
-    0;
+  opacity: 0;
 
   filter:
     blur(.12px)
@@ -849,8 +964,6 @@ button {
 }
 
 
-/* PETAL 01 */
-
 .p02-petal--01 {
   left: 26%;
   top: 58.3%;
@@ -866,15 +979,12 @@ button {
   background-position:
     15.794% 64.169%;
 
-  --petal-opacity:
-    .42;
+  --petal-opacity: .42;
 
   transform:
     rotate(-18deg);
 }
 
-
-/* PETAL 02 */
 
 .p02-petal--02 {
   left: 49%;
@@ -891,15 +1001,12 @@ button {
   background-position:
     20.744% 60.920%;
 
-  --petal-opacity:
-    .40;
+  --petal-opacity: .40;
 
   transform:
     rotate(21deg);
 }
 
-
-/* PETAL 03 */
 
 .p02-petal--03 {
   left: 61%;
@@ -916,15 +1023,12 @@ button {
   background-position:
     47.170% 58.134%;
 
-  --petal-opacity:
-    .36;
+  --petal-opacity: .36;
 
   transform:
     rotate(-37deg);
 }
 
-
-/* PETAL 04 */
 
 .p02-petal--04 {
   left: 42%;
@@ -941,15 +1045,12 @@ button {
   background-position:
     62.634% 67.782%;
 
-  --petal-opacity:
-    .38;
+  --petal-opacity: .38;
 
   transform:
     rotate(17deg);
 }
 
-
-/* PETAL 05 */
 
 .p02-petal--05 {
   left: 32%;
@@ -966,15 +1067,12 @@ button {
   background-position:
     48.997% 70.710%;
 
-  --petal-opacity:
-    .43;
+  --petal-opacity: .43;
 
   transform:
     rotate(-26deg);
 }
 
-
-/* PETAL 06 */
 
 .p02-petal--06 {
   left: 55%;
@@ -991,15 +1089,12 @@ button {
   background-position:
     59.250% 72.123%;
 
-  --petal-opacity:
-    .35;
+  --petal-opacity: .35;
 
   transform:
     rotate(44deg);
 }
 
-
-/* PETAL 07 */
 
 .p02-petal--07 {
   left: 71%;
@@ -1016,15 +1111,12 @@ button {
   background-position:
     24.791% 79.035%;
 
-  --petal-opacity:
-    .39;
+  --petal-opacity: .39;
 
   transform:
     rotate(-14deg);
 }
 
-
-/* PETAL 08 */
 
 .p02-petal--08 {
   left: 23%;
@@ -1041,15 +1133,12 @@ button {
   background-position:
     43.620% 79.883%;
 
-  --petal-opacity:
-    .34;
+  --petal-opacity: .34;
 
   transform:
     rotate(31deg);
 }
 
-
-/* PETAL 09 */
 
 .p02-petal--09 {
   left: 47%;
@@ -1066,15 +1155,12 @@ button {
   background-position:
     17.049% 81.706%;
 
-  --petal-opacity:
-    .38;
+  --petal-opacity: .38;
 
   transform:
     rotate(-42deg);
 }
 
-
-/* PETAL 10 */
 
 .p02-petal--10 {
   left: 64%;
@@ -1091,15 +1177,12 @@ button {
   background-position:
     7.596% 84.967%;
 
-  --petal-opacity:
-    .37;
+  --petal-opacity: .37;
 
   transform:
     rotate(26deg);
 }
 
-
-/* PETAL 11 */
 
 .p02-petal--11 {
   left: 36%;
@@ -1116,15 +1199,12 @@ button {
   background-position:
     50.293% 87.438%;
 
-  --petal-opacity:
-    .32;
+  --petal-opacity: .32;
 
   transform:
     rotate(-21deg);
 }
 
-
-/* PETAL 12 */
 
 .p02-petal--12 {
   left: 53%;
@@ -1141,15 +1221,12 @@ button {
   background-position:
     29.734% 93.444%;
 
-  --petal-opacity:
-    .36;
+  --petal-opacity: .36;
 
   transform:
     rotate(39deg);
 }
 
-
-/* PETAL 13 */
 
 .p02-petal--13 {
   left: 74%;
@@ -1166,15 +1243,12 @@ button {
   background-position:
     63.241% 95.443%;
 
-  --petal-opacity:
-    .35;
+  --petal-opacity: .35;
 
   transform:
     rotate(-33deg);
 }
 
-
-/* PETAL 14 */
 
 .p02-petal--14 {
   left: 18%;
@@ -1191,8 +1265,7 @@ button {
   background-position:
     50.125% 95.785%;
 
-  --petal-opacity:
-    .30;
+  --petal-opacity: .30;
 
   transform:
     rotate(19deg);
@@ -1204,23 +1277,17 @@ button {
 ========================================= */
 
 .p02-procession {
-  position:
-    absolute;
+  position: absolute;
 
-  z-index:
-    30;
+  z-index: 30;
 
-  left:
-    0;
+  left: 0;
 
-  bottom:
-    7.3%;
+  bottom: 7.3%;
 
-  width:
-    100%;
+  width: 100%;
 
-  height:
-    27.8%;
+  height: 27.8%;
 
   pointer-events:
     none;
@@ -1228,11 +1295,9 @@ button {
 
 
 .p02-procession-item {
-  bottom:
-    0;
+  bottom: 0;
 
-  width:
-    auto;
+  width: auto;
 
   max-width:
     none;
@@ -1251,59 +1316,46 @@ button {
 /* FLAG */
 
 .p02-flag-bearer {
-  z-index:
-    31;
+  z-index: 31;
 
-  left:
-    -2%;
+  left: -2%;
 
-  height:
-    83%;
+  height: 83%;
 }
 
 
 /* COUPLE */
 
 .p02-couple {
-  z-index:
-    34;
+  z-index: 34;
 
-  left:
-    22.6%;
+  left: 22.6%;
 
-  height:
-    63%;
+  height: 63%;
 }
 
 
 /* LION */
 
 .p02-lion-dance {
-  z-index:
-    33;
+  z-index: 33;
 
-  left:
-    32.5%;
+  left: 32.5%;
 
-  bottom:
-    .3%;
+  bottom: .3%;
 
-  height:
-    89%;
+  height: 89%;
 }
 
 
 /* DRUMMER */
 
 .p02-drummer {
-  z-index:
-    32;
+  z-index: 32;
 
-  right:
-    -1.5%;
+  right: -1.5%;
 
-  height:
-    62%;
+  height: 62%;
 }
 
 
@@ -1312,17 +1364,13 @@ button {
 ========================================= */
 
 .p02-bottom-ornament {
-  z-index:
-    36;
+  z-index: 36;
 
-  left:
-    50%;
+  left: 50%;
 
-  bottom:
-    -2.4%;
+  bottom: -2.4%;
 
-  width:
-    43%;
+  width: 43%;
 
   transform:
     translateX(-50%);
@@ -1330,56 +1378,22 @@ button {
 
 
 /* =========================================
-   PAGE 01 -> PAGE 02
-========================================= */
-
-.site-shell.is-page-02
-.opening-page {
-  opacity:
-    0;
-
-  transform:
-    translate3d(0, -18px, 0);
-
-  pointer-events:
-    none;
-}
-
-
-.site-shell.is-page-02
-.page-02 {
-  z-index:
-    3;
-
-  opacity:
-    1;
-
-  transform:
-    translate3d(0, 0, 0);
-
-  pointer-events:
-    auto;
-}
-
-
-/* =========================================
    PAGE 01
    ENVELOPE POSITION
-   GIỮ NGUYÊN
+
+   Vì parent luôn cố định 390×844,
+   các % này KHÔNG còn thay đổi theo máy.
 ========================================= */
 
 .envelope-button {
-  position:
-    absolute;
+  position: absolute;
 
-  left:
-    50%;
+  left: 50%;
 
   top:
     calc(14.5% + 18px);
 
-  width:
-    82%;
+  width: 82%;
 
   max-width:
     352px;
@@ -1390,17 +1404,11 @@ button {
   transform:
     translateX(-50%);
 
-  margin:
-    0;
+  margin: 0;
+  padding: 0;
 
-  padding:
-    0;
-
-  border:
-    0;
-
-  outline:
-    none;
+  border: 0;
+  outline: none;
 
   background:
     transparent;
@@ -1421,11 +1429,9 @@ button {
 ========================================= */
 
 .envelope-stage {
-  position:
-    absolute;
+  position: absolute;
 
-  inset:
-    0;
+  inset: 0;
 
   display:
     block;
@@ -1451,7 +1457,7 @@ button {
 
 
 /* =========================================
-   COMMON PAGE 01 IMAGE
+   PAGE 01 IMAGE COMMON
 ========================================= */
 
 .envelope-closed,
@@ -1459,14 +1465,11 @@ button {
 .envelope-open-front,
 .envelope-open-flap,
 .invitation-card {
-  position:
-    absolute;
+  position: absolute;
 
-  display:
-    block;
+  display: block;
 
-  max-width:
-    none;
+  max-width: none;
 
   user-select:
     none;
@@ -1487,23 +1490,17 @@ button {
 ========================================= */
 
 .envelope-closed {
-  z-index:
-    30;
+  z-index: 30;
 
-  inset:
-    0;
+  inset: 0;
 
-  width:
-    100%;
-
-  height:
-    100%;
+  width: 100%;
+  height: 100%;
 
   object-fit:
     contain;
 
-  opacity:
-    1;
+  opacity: 1;
 
   transform:
     translate3d(
@@ -1538,26 +1535,19 @@ button {
 ========================================= */
 
 .envelope-open {
-  position:
-    absolute;
+  position: absolute;
 
-  inset:
-    0;
+  inset: 0;
 
-  z-index:
-    10;
+  z-index: 10;
 
-  width:
-    100%;
-
-  height:
-    100%;
+  width: 100%;
+  height: 100%;
 
   overflow:
     visible;
 
-  opacity:
-    0;
+  opacity: 0;
 
   pointer-events:
     none;
@@ -1579,23 +1569,17 @@ button {
 ========================================= */
 
 .envelope-open-flap {
-  z-index:
-    9;
+  z-index: 9;
 
-  left:
-    50%;
+  left: 50%;
 
-  bottom:
-    80%;
+  bottom: 80%;
 
-  width:
-    68%;
+  width: 68%;
 
-  height:
-    auto;
+  height: auto;
 
-  opacity:
-    0;
+  opacity: 0;
 
   transform-origin:
     50% 100%;
@@ -1622,26 +1606,18 @@ button {
 ========================================= */
 
 .envelope-open-body {
-  z-index:
-    11;
+  z-index: 11;
 
-  left:
-    0;
+  left: 0;
+  top: 0;
 
-  top:
-    0;
-
-  width:
-    100%;
-
-  height:
-    100%;
+  width: 100%;
+  height: 100%;
 
   object-fit:
     contain;
 
-  opacity:
-    1;
+  opacity: 1;
 
   transform:
     translate3d(
@@ -1668,11 +1644,9 @@ button {
 ========================================= */
 
 .invitation-card {
-  z-index:
-    13;
+  z-index: 13;
 
-  top:
-    0;
+  top: 0;
 
   left:
     calc(
@@ -1685,8 +1659,7 @@ button {
   height:
     auto;
 
-  opacity:
-    0;
+  opacity: 0;
 
   transform:
     translate3d(
@@ -1732,26 +1705,18 @@ button {
 ========================================= */
 
 .envelope-open-front {
-  z-index:
-    14;
+  z-index: 14;
 
-  left:
-    0;
+  left: 0;
+  top: 0;
 
-  top:
-    0;
-
-  width:
-    100%;
-
-  height:
-    100%;
+  width: 100%;
+  height: 100%;
 
   object-fit:
     contain;
 
-  opacity:
-    1;
+  opacity: 1;
 
   transform:
     translate3d(
@@ -1778,14 +1743,11 @@ button {
 ========================================= */
 
 .monogram-pulse {
-  position:
-    absolute;
+  position: absolute;
 
-  z-index:
-    40;
+  z-index: 40;
 
-  left:
-    50%;
+  left: 50%;
 
   top:
     calc(
@@ -1793,8 +1755,7 @@ button {
       var(--body-offset-closed)
     );
 
-  width:
-    31%;
+  width: 31%;
 
   aspect-ratio:
     1;
@@ -1816,14 +1777,11 @@ button {
 
 .monogram-pulse::before,
 .monogram-pulse::after {
-  content:
-    "";
+  content: "";
 
-  position:
-    absolute;
+  position: absolute;
 
-  inset:
-    0;
+  inset: 0;
 
   border:
     1.5px solid
@@ -1832,8 +1790,7 @@ button {
   border-radius:
     50%;
 
-  opacity:
-    0;
+  opacity: 0;
 
   animation:
     tapRing
@@ -1926,8 +1883,7 @@ button {
 
 .envelope-button.is-open
 .envelope-open {
-  opacity:
-    1;
+  opacity: 1;
 
   transition-delay:
     .02s;
@@ -1939,8 +1895,7 @@ button {
   animation:
     none;
 
-  opacity:
-    0;
+  opacity: 0;
 
   transform:
     translate3d(
@@ -1965,8 +1920,7 @@ button {
 
 .envelope-button.is-open
 .invitation-card {
-  opacity:
-    1;
+  opacity: 1;
 
   transform:
     translate3d(
@@ -1995,8 +1949,7 @@ button {
 
 .envelope-button.is-open
 .envelope-open-flap {
-  opacity:
-    1;
+  opacity: 1;
 
   transform:
     translateX(-50%)
@@ -2013,8 +1966,7 @@ button {
 
 .envelope-button.is-open
 .monogram-pulse {
-  opacity:
-    0;
+  opacity: 0;
 
   transform:
     translate(-50%, -50%);
@@ -2040,6 +1992,7 @@ button {
       rotate(0deg);
   }
 
+
   70% {
     transform:
       translate3d(
@@ -2052,6 +2005,7 @@ button {
       scale(1.012)
       rotate(0deg);
   }
+
 
   78% {
     transform:
@@ -2066,6 +2020,7 @@ button {
       rotate(-.35deg);
   }
 
+
   86% {
     transform:
       translate3d(
@@ -2078,6 +2033,7 @@ button {
       scale(1.012)
       rotate(.35deg);
   }
+
 
   94% {
     transform:
@@ -2107,15 +2063,18 @@ button {
       0;
   }
 
+
   18% {
     opacity:
       .5;
   }
 
+
   72% {
     opacity:
       .14;
   }
+
 
   100% {
     transform:
@@ -2123,97 +2082,6 @@ button {
 
     opacity:
       0;
-  }
-
-}
-
-
-/* =========================================
-   MOBILE
-========================================= */
-
-@media
-(max-aspect-ratio: 375/812) {
-
-  .opening-page {
-    background-size:
-      auto 100%;
-  }
-
-}
-
-
-/* =========================================
-   DESKTOP
-========================================= */
-
-@media
-(min-width: 431px) {
-
-  body {
-    display:
-      grid;
-
-    place-items:
-      center;
-  }
-
-
-  .site-shell {
-    width:
-      min(
-        462px,
-        calc(
-          var(--desktop-shell-height)
-          * 392 / 812
-        )
-      );
-
-    height:
-      var(--desktop-shell-height);
-
-    aspect-ratio:
-      392 / 812;
-  }
-
-}
-
-
-/* =========================================
-   FALLBACK
-========================================= */
-
-@supports not
-(font-size: 1cqw) {
-
-  .p02-invite {
-    font-size:
-      11px;
-  }
-
-  .p02-to {
-    font-size:
-      18px;
-  }
-
-  .p02-wedding-title {
-    font-size:
-      17px;
-  }
-
-  .p02-name {
-    font-size:
-      40px;
-  }
-
-  .p02-ampersand {
-    font-size:
-      31px;
-  }
-
-  .p02-date {
-    font-size:
-      18px;
   }
 
 }
