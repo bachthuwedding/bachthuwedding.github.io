@@ -4087,239 +4087,280 @@ a {
 
 /* =========================================================
    PAGE 07
-   SEND WISHES
+   GỬI LỜI CHÚC MỪNG
+   ARTBOARD: 390 x 680
 ========================================================= */
 
-.page-07 {
+.page07-layout {
   position: relative;
 
-  width: 680px;
-
-  margin: 0 auto;
+  width: 390px;
+  height: 680px;
 
   overflow: hidden;
 
-  background: #f4dfb7;
-}
-
-
-.page07-canvas {
-  position: relative;
-
-  width: 680px;
-  height: 1450px;
-
-  overflow: hidden;
+  background: #f4e1ba;
 
   isolation: isolate;
 }
 
 
 /* =========================================================
-   PAGE 07 BACKGROUND
+   BACKGROUND
 ========================================================= */
 
-.page07-background {
+.p07-background {
   position: absolute;
 
   inset: 0;
 
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
   z-index: 0;
 
-  background-image:
-    url("./assets/page02-bg.png");
-
-  background-repeat: no-repeat;
-
-  background-position: center top;
-
-  background-size: 100% 100%;
+  pointer-events: none;
+  user-select: none;
 }
 
 
 /* =========================================================
-   PAGE 07 FRAME
+   FRAME
 ========================================================= */
 
-.page07-frame {
+.p07-frame {
   position: absolute;
 
-  z-index: 20;
+  left: 5px;
+  top: 5px;
 
-  left: 8px;
-  top: 0;
-
-  width: 664px;
-  height: 1450px;
+  width: 380px;
+  height: 670px;
 
   object-fit: fill;
 
+  z-index: 40;
+
   pointer-events: none;
+  user-select: none;
 }
 
 
 /* =========================================================
-   PAGE 07 TOP KNOT
+   CLOUDS
 ========================================================= */
 
-.page07-hanging-knot {
+.p07-cloud {
   position: absolute;
 
-  z-index: 4;
-
-  top: -4px;
-  left: 50%;
-
-  width: 78px;
-
-  transform: translateX(-50%);
-
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   PAGE 07 CLOUDS
-========================================================= */
-
-.page07-cloud {
-  position: absolute;
-
-  z-index: 2;
+  height: auto;
 
   object-fit: contain;
 
-  pointer-events: none;
-
   opacity: 0.72;
+
+  z-index: 2;
+
+  pointer-events: none;
+  user-select: none;
 }
 
 
-.page07-cloud-01 {
-  width: 120px;
+/* top right */
 
-  top: 61px;
-  right: 67px;
+.p07-cloud--01 {
+  width: 82px;
+
+  top: 31px;
+  right: 40px;
 }
 
 
-.page07-cloud-02 {
-  width: 116px;
+/* middle left */
 
-  top: 328px;
-  left: -15px;
+.p07-cloud--02 {
+  width: 68px;
+
+  top: 164px;
+  left: 3px;
 }
 
 
-.page07-cloud-03 {
-  width: 116px;
+/* lower left */
 
-  bottom: 255px;
-  left: 32px;
+.p07-cloud--03 {
+  width: 67px;
+
+  top: 522px;
+  left: 24px;
 
   opacity: 0.55;
 }
 
 
+/* lower right */
+
+.p07-cloud--04 {
+  width: 66px;
+
+  top: 548px;
+  right: 28px;
+
+  opacity: 0.52;
+}
+
+
 /* =========================================================
-   PAGE 07 CONTENT
+   HANGING KNOT
 ========================================================= */
 
-.page07-content {
+.p07-hanging-knot {
   position: absolute;
+
+  width: 35px;
+  height: auto;
+
+  top: -1px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  z-index: 7;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+
+/* =========================================================
+   TITLE ORNAMENT
+========================================================= */
+
+.p07-title-ornament {
+  position: absolute;
+
+  width: 173px;
+  height: auto;
+
+  left: 50%;
+  top: 91px;
+
+  transform: translateX(-50%);
+
+  z-index: 5;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.p07-title {
+  position: absolute;
+
+  width: 280px;
+
+  left: 50%;
+  top: 121px;
+
+  transform: translateX(-50%);
+
+  margin: 0;
+
+  text-align: center;
+
+  color: #9f2d17;
+
+  font-family:
+    "Times New Roman",
+    "Noto Serif",
+    serif;
+
+  font-size: 29px;
+  font-weight: 500;
+
+  line-height: 1.06;
+
+  letter-spacing: 0.2px;
+
+  z-index: 8;
+}
+
+
+/* =========================================================
+   HEADING DIVIDER
+========================================================= */
+
+.p07-heading-divider {
+  position: absolute;
+
+  width: 150px;
+  height: auto;
+
+  top: 190px;
+  left: 50%;
+
+  transform: translateX(-50%);
 
   z-index: 6;
 
-  top: 193px;
-  left: 0;
-
-  width: 100%;
-
-  text-align: center;
-}
-
-
-/* title ornament above title */
-
-.page07-title-ornament {
-  display: block;
-
-  width: 300px;
-
-  margin: 0 auto 18px;
-
-  object-fit: contain;
-}
-
-
-.page07-title {
-  margin: 0;
-
-  color: #9f2815;
-
-  font-family:
-    "Times New Roman",
-    Georgia,
-    serif;
-
-  font-size: 47px;
-
-  font-weight: 500;
-
-  line-height: 1.12;
-
-  letter-spacing: 0.5px;
-}
-
-
-/* divider beneath title */
-
-.page07-heading-divider {
-  display: block;
-
-  width: 294px;
-
-  margin: 18px auto 24px;
-
-  object-fit: contain;
-}
-
-
-.page07-description {
-  margin: 0;
-
-  color: #705039;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: 20px;
-
-  font-weight: 400;
-
-  line-height: 1.6;
-
-  letter-spacing: 0.1px;
+  pointer-events: none;
+  user-select: none;
 }
 
 
 /* =========================================================
-   PAGE 07 CARDS
+   DESCRIPTION
 ========================================================= */
 
-.page07-card {
+.p07-description {
   position: absolute;
 
+  width: 325px;
+
+  top: 216px;
   left: 50%;
 
-  width: 518px;
-  height: 198px;
+  transform: translateX(-50%);
+
+  margin: 0;
+
+  text-align: center;
+
+  color: #5a4732;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 11px;
+  font-weight: 400;
+
+  line-height: 1.55;
+
+  z-index: 8;
+}
+
+
+/* =========================================================
+   COMMON CARD
+========================================================= */
+
+.p07-card {
+  position: absolute;
+
+  left: 46px;
+
+  width: 298px;
+  height: 104px;
 
   padding: 0;
-
-  transform: translateX(-50%);
 
   border: 0;
 
@@ -4330,23 +4371,25 @@ a {
   cursor: pointer;
 
   text-align: left;
+
+  z-index: 12;
 }
 
 
-.page07-card-message {
-  top: 375px;
+.p07-card--message {
+  top: 269px;
 }
 
 
-.page07-card-video {
-  top: 620px;
+.p07-card--video {
+  top: 388px;
 }
 
 
-.page07-card-background {
+/* actual decorative frame */
+
+.p07-card-frame {
   position: absolute;
-
-  z-index: 0;
 
   inset: 0;
 
@@ -4355,386 +4398,428 @@ a {
 
   object-fit: fill;
 
+  z-index: 0;
+
   pointer-events: none;
+  user-select: none;
 }
 
 
-.page07-card-icon {
-  position: absolute;
+/* =========================================================
+   CARD ICON
+========================================================= */
 
-  z-index: 2;
+.p07-card-icon {
+  position: absolute;
 
   object-fit: contain;
 
-  pointer-events: none;
-}
-
-
-.page07-card-icon-message {
-  left: 43px;
-  top: 44px;
-
-  width: 126px;
-}
-
-
-.page07-card-icon-video {
-  left: 45px;
-  top: 52px;
-
-  width: 133px;
-}
-
-
-.page07-card-copy {
-  position: absolute;
-
   z-index: 2;
 
-  top: 48px;
-  left: 205px;
-
-  color: #705039;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
   pointer-events: none;
+  user-select: none;
 }
 
 
-.page07-card-copy strong {
-  display: block;
+.p07-card-icon--message {
+  width: 74px;
 
-  margin-bottom: 13px;
-
-  color: #a52b17;
-
-  font-family:
-    "Times New Roman",
-    Georgia,
-    serif;
-
-  font-size: 24px;
-
-  font-weight: 500;
-
-  line-height: 1;
+  left: 22px;
+  top: 23px;
 }
 
 
-.page07-card-copy span {
-  display: block;
+.p07-card-icon--video {
+  width: 78px;
 
-  font-size: 18px;
-
-  line-height: 1.45;
+  left: 21px;
+  top: 29px;
 }
 
 
-.page07-card-arrow {
+/* =========================================================
+   CARD TEXT
+========================================================= */
+
+.p07-card-copy {
   position: absolute;
+
+  display: block;
+
+  width: 152px;
+
+  left: 121px;
+  top: 27px;
 
   z-index: 3;
+}
 
-  top: 74px;
-  right: 34px;
 
-  width: 50px;
-  height: 50px;
+.p07-card-title {
+  display: block;
+
+  color: #a2341e;
+
+  font-family:
+    "Times New Roman",
+    "Noto Serif",
+    serif;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  white-space: nowrap;
+}
+
+
+.p07-card-description {
+  display: block;
+
+  margin-top: 8px;
+
+  color: #6c5138;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 10.5px;
+  font-weight: 400;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   CARD ARROW
+========================================================= */
+
+.p07-card-arrow {
+  position: absolute;
+
+  width: 28px;
+  height: 28px;
+
+  right: 18px;
+  top: 39px;
 
   object-fit: contain;
+
+  z-index: 4;
 
   pointer-events: none;
 }
 
 
-.page07-card {
+/* =========================================================
+   BUTTON INTERACTION
+========================================================= */
+
+.p07-card {
   transition:
     transform 160ms ease,
     filter 160ms ease;
 }
 
 
-.page07-card:hover {
-  transform:
-    translateX(-50%)
-    translateY(-2px);
-
-  filter: brightness(1.02);
+.p07-card:active {
+  transform: scale(0.985);
 }
 
 
-.page07-card:active {
-  transform:
-    translateX(-50%)
-    translateY(1px);
+@media (hover: hover) {
+
+  .p07-card:hover {
+    filter: brightness(1.025);
+  }
+
 }
 
 
 /* =========================================================
-   PAGE 07 FLOWERS
+   FLOWER SCATTER
 ========================================================= */
 
-.page07-flower-scatter {
+.p07-flower-scatter {
   position: absolute;
 
-  z-index: 4;
+  width: 310px;
+  height: auto;
 
-  left: 47px;
-  bottom: 72px;
+  left: 50%;
+  top: 505px;
 
-  width: 584px;
+  transform: translateX(-50%);
 
-  opacity: 0.73;
+  opacity: 0.52;
+
+  z-index: 5;
 
   pointer-events: none;
+  user-select: none;
 }
 
 
 /* =========================================================
-   PAGE 07 COUPLE
+   COUPLE
+   DÙNG page02-couple.png
 ========================================================= */
 
-.page07-couple {
+.p07-couple {
   position: absolute;
 
-  z-index: 7;
+  width: 187px;
+  height: auto;
 
-  bottom: -48px;
   left: 50%;
-
-  width: 340px;
+  bottom: -42px;
 
   transform: translateX(-50%);
 
   object-fit: contain;
 
+  z-index: 11;
+
   pointer-events: none;
+  user-select: none;
+}
+
+
+/* =========================================================
+   BOTTOM ORNAMENT
+========================================================= */
+
+.p07-bottom-ornament {
+  position: absolute;
+
+  width: 150px;
+  height: auto;
+
+  left: 50%;
+  bottom: -6px;
+
+  transform: translateX(-50%);
+
+  z-index: 41;
+
+  pointer-events: none;
+  user-select: none;
 }
 
 
 
 /* =========================================================
    PAGE 08
-   THANK YOU / SAVE THE DATE
+   CẢM ƠN MỌI NGƯỜI
+   ARTBOARD: 390 x 680
 ========================================================= */
 
-.page-08 {
+.page08-layout {
   position: relative;
 
-  width: 680px;
-
-  margin: 0 auto;
+  width: 390px;
+  height: 680px;
 
   overflow: hidden;
 
-  background: #f4dfb7;
-}
-
-
-.page08-canvas {
-  position: relative;
-
-  width: 680px;
-  height: 1235px;
-
-  overflow: hidden;
+  background: #f4e1ba;
 
   isolation: isolate;
 }
 
 
 /* =========================================================
-   PAGE 08 BACKGROUND
+   BACKGROUND
 ========================================================= */
 
-.page08-background {
+.p08-background {
   position: absolute;
-
-  z-index: 0;
 
   inset: 0;
 
-  background-image:
-    url("./assets/page02-bg.png");
+  width: 100%;
+  height: 100%;
 
-  background-position: center;
+  object-fit: cover;
 
-  background-repeat: no-repeat;
-
-  background-size: 100% 100%;
-}
-
-
-/* =========================================================
-   PAGE 08 FRAME
-========================================================= */
-
-.page08-frame {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 8px;
-  top: 0;
-
-  width: 664px;
-  height: 1235px;
-
-  object-fit: fill;
+  z-index: 0;
 
   pointer-events: none;
+  user-select: none;
 }
 
 
 /* =========================================================
-   PAGE 08 TEXT CONTENT
+   MAIN TEXT
 ========================================================= */
 
-.page08-content {
+.p08-content {
   position: absolute;
 
-  z-index: 8;
+  width: 330px;
 
-  top: 187px;
-  left: 0;
+  left: 50%;
+  top: 103px;
 
-  width: 100%;
+  transform: translateX(-50%);
 
   text-align: center;
+
+  z-index: 15;
 }
 
 
-.page08-thank-title {
+/* =========================================================
+   TITLE
+========================================================= */
+
+.p08-title {
   margin: 0;
 
-  color: #982b16;
+  color: #972b15;
 
   font-family:
     "Times New Roman",
-    Georgia,
+    "Noto Serif",
     serif;
 
-  font-size: 48px;
-
+  font-size: 31px;
   font-weight: 500;
 
-  line-height: 1.18;
+  line-height: 1.1;
 
-  letter-spacing: 1px;
+  letter-spacing: 0.8px;
 }
 
 
-.page08-small-divider {
+/* =========================================================
+   DIVIDERS
+========================================================= */
+
+.p08-divider {
   display: flex;
 
   align-items: center;
   justify-content: center;
 
-  gap: 12px;
+  width: 150px;
 
-  width: 232px;
-
-  margin: 24px auto 34px;
-
-  color: #9d321d;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
-.page08-small-divider span {
+.p08-divider span {
   display: block;
 
-  width: 86px;
+  width: 50px;
   height: 1px;
 
-  background: #ad482f;
+  background: #b54d31;
 }
 
 
-.page08-small-divider b {
+.p08-divider b {
   display: block;
 
-  font-family: Georgia, serif;
+  margin: 0 8px;
 
-  font-size: 24px;
+  color: #a9341e;
 
+  font-size: 13px;
   font-weight: 400;
-
-  line-height: 1;
 }
 
 
-.page08-save-date {
+.p08-divider--01 {
+  margin-top: 21px;
+}
+
+
+.p08-divider--02 {
+  margin-top: 19px;
+}
+
+
+/* =========================================================
+   SAVE THE DATE
+========================================================= */
+
+.p08-save-date {
   display: flex;
 
   align-items: center;
   justify-content: center;
 
-  gap: 8px;
+  margin-top: 20px;
 
-  color: #36583c;
+  color: #3f6044;
 
   font-family:
     "Times New Roman",
-    Georgia,
+    "Noto Serif",
     serif;
-}
 
-
-.page08-save-date strong {
-  font-size: 28px;
-
-  font-weight: 500;
-
-  letter-spacing: 0.6px;
-}
-
-
-.page08-dot {
-  color: #9d321d;
-
-  font-size: 25px;
-}
-
-
-.page08-leaf {
-  display: inline-block;
-
-  color: #566d41;
-
-  font-family: Georgia, serif;
-
-  font-size: 33px;
+  font-size: 17px;
+  font-weight: 600;
 
   line-height: 1;
 
-  transform: rotate(-10deg);
+  white-space: nowrap;
 }
 
 
-.page08-leaf-right {
-  transform:
-    scaleX(-1)
-    rotate(-10deg);
+.p08-save-leaf {
+  display: inline-block;
+
+  color: #59704b;
+
+  font-size: 20px;
 }
 
 
-.page08-name {
-  margin-top: 34px;
+.p08-save-leaf--left {
+  margin-right: 6px;
 
-  color: #9b2e19;
+  transform: rotate(-35deg);
+}
+
+
+.p08-save-leaf--right {
+  margin-left: 6px;
+
+  transform: scaleX(-1) rotate(-35deg);
+}
+
+
+.p08-save-dot {
+  margin: 0 7px;
+
+  color: #9b321c;
+
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   NAMES
+========================================================= */
+
+.p08-names {
+  margin: 22px 0 0;
+
+  color: #9b331e;
 
   font-family:
-    "Snell Roundhand",
-    "Segoe Script",
     "Brush Script MT",
+    "Segoe Script",
+    "Snell Roundhand",
     cursive;
 
-  font-size: 61px;
-
+  font-size: 41px;
   font-weight: 400;
 
   line-height: 1;
@@ -4743,216 +4828,260 @@ a {
 }
 
 
-.page08-name span {
-  font-size: 52px;
-}
-
-
-.page08-small-divider-02 {
-  margin-top: 40px;
-  margin-bottom: 27px;
-}
-
-
-.page08-date {
-  color: #36583c;
+.p08-names span {
+  color: #4a674b;
 
   font-family:
     "Times New Roman",
-    Georgia,
     serif;
 
-  font-size: 29px;
+  font-size: 25px;
 
-  letter-spacing: 3px;
+  vertical-align: 5px;
+
+  margin: 0 3px;
 }
 
 
 /* =========================================================
-   PAGE 08 CLOUDS
+   DATE
 ========================================================= */
 
-.page08-cloud {
+.p08-date {
+  margin: 16px 0 0;
+
+  color: #496647;
+
+  font-family:
+    "Times New Roman",
+    "Noto Serif",
+    serif;
+
+  font-size: 19px;
+  font-weight: 500;
+
+  letter-spacing: 2px;
+}
+
+
+/* =========================================================
+   CLOUDS
+========================================================= */
+
+.p08-cloud {
   position: absolute;
 
-  z-index: 3;
+  height: auto;
+
+  opacity: 0.74;
 
   object-fit: contain;
 
-  opacity: 0.7;
+  z-index: 4;
 
   pointer-events: none;
+  user-select: none;
 }
 
 
-.page08-cloud-left {
-  width: 122px;
+.p08-cloud--left {
+  width: 77px;
 
-  top: 746px;
-  left: 63px;
+  left: 36px;
+  top: 402px;
 }
 
 
-.page08-cloud-right {
-  width: 118px;
+.p08-cloud--right {
+  width: 68px;
 
-  top: 688px;
-  right: 53px;
+  right: 31px;
+  top: 365px;
 }
 
 
 /* =========================================================
-   PAGE 08 WATER GROUND
+   WATER / GROUND
 ========================================================= */
 
-.page08-water {
+.p08-water-ground {
   position: absolute;
 
-  z-index: 2;
+  width: 300px;
+  height: auto;
 
   left: 50%;
-  bottom: 53px;
-
-  width: 530px;
+  bottom: 34px;
 
   transform: translateX(-50%);
 
   object-fit: contain;
 
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   PAGE 08 TEMPLE
-========================================================= */
-
-.page08-temple {
-  position: absolute;
-
   z-index: 4;
 
-  width: 323px;
-
-  left: 290px;
-  bottom: 136px;
-
-  object-fit: contain;
+  opacity: 0.74;
 
   pointer-events: none;
+  user-select: none;
 }
 
 
 /* =========================================================
-   PAGE 08 BAMBOO
+   TEMPLE
 ========================================================= */
 
-.page08-bamboo {
+.p08-temple-gate {
   position: absolute;
 
-  z-index: 4;
+  width: 172px;
+  height: auto;
 
-  width: 112px;
+  left: 52%;
+  bottom: 72px;
 
-  right: 50px;
-  bottom: 134px;
+  transform: translateX(-50%);
 
   object-fit: contain;
-
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   PAGE 08 COUPLE
-========================================================= */
-
-.page08-couple {
-  position: absolute;
 
   z-index: 7;
 
-  left: 112px;
-  bottom: 76px;
-
-  width: 223px;
-
-  object-fit: contain;
-
   pointer-events: none;
+  user-select: none;
 }
 
 
 /* =========================================================
-   PAGE 08 LOTUS
+   BAMBOO
 ========================================================= */
 
-.page08-lotus {
+.p08-bamboo {
   position: absolute;
+
+  width: 58px;
+  height: auto;
+
+  right: 37px;
+  bottom: 81px;
+
+  object-fit: contain;
 
   z-index: 6;
 
-  object-fit: contain;
-
   pointer-events: none;
-}
-
-
-.page08-lotus-left {
-  width: 153px;
-
-  left: 30px;
-  bottom: 40px;
-}
-
-
-.page08-lotus-right {
-  width: 183px;
-
-  right: 18px;
-  bottom: 27px;
+  user-select: none;
 }
 
 
 /* =========================================================
-   PAGE 08 BOTTOM ORNAMENT
+   COUPLE BACK
 ========================================================= */
 
-.page08-bottom-ornament {
+.p08-couple {
   position: absolute;
 
-  z-index: 18;
+  width: 112px;
+  height: auto;
 
-  left: 50%;
-  bottom: -1px;
-
-  width: 258px;
-
-  transform: translateX(-50%);
+  left: 76px;
+  bottom: 50px;
 
   object-fit: contain;
 
+  z-index: 10;
+
   pointer-events: none;
+  user-select: none;
+}
+
+
+/* =========================================================
+   LOTUS LEFT
+========================================================= */
+
+.p08-lotus {
+  position: absolute;
+
+  height: auto;
+
+  object-fit: contain;
+
+  z-index: 9;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+
+.p08-lotus--left {
+  width: 91px;
+
+  left: 14px;
+  bottom: 36px;
+}
+
+
+.p08-lotus--right {
+  width: 112px;
+
+  right: 2px;
+  bottom: 28px;
+}
+
+
+/* =========================================================
+   FRAME
+========================================================= */
+
+.p08-frame {
+  position: absolute;
+
+  left: 5px;
+  top: 5px;
+
+  width: 380px;
+  height: 670px;
+
+  object-fit: fill;
+
+  z-index: 40;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+
+/* =========================================================
+   BOTTOM ORNAMENT
+========================================================= */
+
+.p08-bottom-ornament {
+  position: absolute;
+
+  width: 150px;
+  height: auto;
+
+  left: 50%;
+  bottom: -6px;
+
+  transform: translateX(-50%);
+
+  z-index: 41;
+
+  pointer-events: none;
+  user-select: none;
 }
 
 
 
 /* =========================================================
    PAGE 07 + PAGE 08
-   IMAGE SAFETY
+   IMAGE DEFAULT
 ========================================================= */
 
-.page07-canvas img,
-.page08-canvas img {
-  max-width: none;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
+.page07-layout img,
+.page08-layout img {
   -webkit-user-drag: none;
 }
-
 
 
 /* =========================================================
@@ -4961,7 +5090,7 @@ a {
 
 @media (prefers-reduced-motion: reduce) {
 
-  .page07-card {
+  .p07-card {
     transition: none;
   }
 
