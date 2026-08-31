@@ -28,9 +28,12 @@ const invitationCard =
 const page02 =
   document.getElementById("page02");
 
+const page03 =
+  document.getElementById("page03");
+
 
 /* =========================================
-   DEFERRED ASSETS
+   ASSET GROUPS
 ========================================= */
 
 const deferredOpeningAssets =
@@ -45,6 +48,14 @@ const deferredPage02Assets =
   Array.from(
     document.querySelectorAll(
       ".deferred-page02-asset[data-src]"
+    )
+  );
+
+
+const deferredPage03Assets =
+  Array.from(
+    document.querySelectorAll(
+      ".deferred-page03-asset[data-src]"
     )
   );
 
@@ -69,26 +80,19 @@ let openingAssetsPromise =
 let page02AssetsPromise =
   null;
 
+let page03AssetsPromise =
+  null;
 
-/* =========================================
-   SCALE STATE
-========================================= */
 
 let scaleFrame =
   null;
 
 
 /* =========================================
-   GET REAL VIEWPORT
+   VIEWPORT
 ========================================= */
 
 function getViewportSize() {
-
-  /*
-    visualViewport chính xác hơn trên
-    Safari / Chrome iOS vì nó phản ánh
-    vùng nội dung đang thực sự nhìn thấy.
-  */
 
   if (
     window.visualViewport
@@ -117,15 +121,7 @@ function getViewportSize() {
 
 
 /* =========================================
-   SCALE SYSTEM
-
-   Một artboard duy nhất:
-   390 × 700
-
-   CONTAIN:
-   - không crop
-   - không stretch
-   - không lệch element
+   GLOBAL SCALE
 ========================================= */
 
 function updateDesignScale() {
@@ -203,10 +199,7 @@ function updateDesignScale() {
 
 
 /* =========================================
-   REQUEST SCALE UPDATE
-
-   Gom resize về một animation frame
-   để tránh gọi liên tục.
+   REQUEST SCALE
 ========================================= */
 
 function requestScaleUpdate() {
@@ -225,7 +218,6 @@ function requestScaleUpdate() {
         scaleFrame =
           null;
 
-
         updateDesignScale();
 
       }
@@ -241,10 +233,6 @@ function requestScaleUpdate() {
 updateDesignScale();
 
 
-/* =========================================
-   WINDOW RESIZE
-========================================= */
-
 window.addEventListener(
   "resize",
   requestScaleUpdate,
@@ -253,12 +241,6 @@ window.addEventListener(
   }
 );
 
-
-/* =========================================
-   VISUAL VIEWPORT
-
-   Quan trọng cho Safari / Chrome iOS.
-========================================= */
 
 if (
   window.visualViewport
@@ -275,10 +257,6 @@ if (
 
 }
 
-
-/* =========================================
-   ORIENTATION
-========================================= */
 
 window.addEventListener(
   "orientationchange",
@@ -373,7 +351,7 @@ function loadDeferredImage(
 
 
 /* =========================================
-   LOAD PAGE 01 OPEN ASSETS
+   PAGE 01 ASSETS
 ========================================= */
 
 function loadOpeningAssets() {
@@ -401,7 +379,7 @@ function loadOpeningAssets() {
 
 
 /* =========================================
-   LOAD PAGE 02 ASSETS
+   PAGE 02 ASSETS
 ========================================= */
 
 function loadPage02Assets() {
@@ -438,7 +416,44 @@ function loadPage02Assets() {
 
 
 /* =========================================
-   PAGE 01 IDLE PRELOAD
+   PAGE 03 ASSETS
+========================================= */
+
+function loadPage03Assets() {
+
+  if (
+    page03AssetsPromise
+  ) {
+
+    return page03AssetsPromise;
+
+  }
+
+
+  page03AssetsPromise =
+    Promise.all(
+      deferredPage03Assets.map(
+        loadDeferredImage
+      )
+    )
+      .then(
+        () => {
+
+          page03.classList.add(
+            "is-assets-ready"
+          );
+
+        }
+      );
+
+
+  return page03AssetsPromise;
+
+}
+
+
+/* =========================================
+   PAGE 01 IDLE LOAD
 ========================================= */
 
 function scheduleOpeningAssets() {
@@ -485,9 +500,7 @@ window.addEventListener(
 
 
 /* =========================================
-   PAGE 02 DEFERRED PRELOAD
-
-   Không preload Page 02 từ first screen.
+   PAGE 02 PRELOAD
 ========================================= */
 
 function schedulePage02Assets() {
@@ -525,7 +538,47 @@ function schedulePage02Assets() {
 
 
 /* =========================================
-   EARLY OPEN-ASSET LOAD
+   PAGE 03 PRELOAD
+
+   Page 03 chỉ tải khi Page 02 đã xuất hiện.
+========================================= */
+
+function schedulePage03Assets() {
+
+  const startLoading =
+    () => {
+
+      loadPage03Assets();
+
+    };
+
+
+  if (
+    "requestIdleCallback"
+    in window
+  ) {
+
+    window.requestIdleCallback(
+      startLoading,
+      {
+        timeout: 1800
+      }
+    );
+
+  } else {
+
+    window.setTimeout(
+      startLoading,
+      700
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   PAGE 01 POINTER PRELOAD
 ========================================= */
 
 envelopeButton.addEventListener(
@@ -550,7 +603,7 @@ envelopeButton.addEventListener(
 
 
 /* =========================================
-   EARLY PAGE 02 LOAD
+   PAGE 02 POINTER PRELOAD
 ========================================= */
 
 invitationCard.addEventListener(
@@ -610,11 +663,9 @@ async function openEnvelope() {
     envelopeIsPreparing =
       false;
 
-
     envelopeButton.removeAttribute(
       "aria-busy"
     );
-
 
     return;
 
@@ -650,11 +701,6 @@ async function openEnvelope() {
   );
 
 
-  /*
-    Chỉ sau khi phong bì mở
-    mới tải Page 02.
-  */
-
   schedulePage02Assets();
 
 }
@@ -683,6 +729,10 @@ function openPage02() {
   loadPage02Assets();
 
 
+  page02.scrollTop =
+    0;
+
+
   siteShell.classList.add(
     "is-page-02"
   );
@@ -705,6 +755,14 @@ function openPage02() {
     "-1"
   );
 
+
+  /*
+    Sau khi Page 02 hiện ra,
+    bắt đầu preload ngầm Page 03.
+  */
+
+  schedulePage03Assets();
+
 }
 
 
@@ -722,19 +780,12 @@ envelopeButton.addEventListener(
 
       event.preventDefault();
 
-
       openEnvelope();
-
 
       return;
 
     }
 
-
-    /*
-      Sau khi mở:
-      click vùng phong bì không đóng lại.
-    */
 
     event.preventDefault();
 
@@ -767,5 +818,37 @@ invitationCard.addEventListener(
 
     openPage02();
 
+  }
+);
+
+
+/* =========================================
+   PAGE 02 SCROLL -> PAGE 03
+
+   Nếu người dùng scroll nhanh,
+   đảm bảo Page 03 được load ngay.
+========================================= */
+
+page02.addEventListener(
+  "scroll",
+  () => {
+
+    const preloadPoint =
+      DESIGN_HEIGHT *
+      .45;
+
+
+    if (
+      page02.scrollTop >=
+      preloadPoint
+    ) {
+
+      loadPage03Assets();
+
+    }
+
+  },
+  {
+    passive: true
   }
 );
