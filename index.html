@@ -9,12 +9,24 @@
     content="width=device-width, initial-scale=1, viewport-fit=cover"
   />
 
-  <meta name="theme-color" content="#ead5ad" />
-  <meta name="description" content="Thiệp cưới Bách & Thư" />
+  <meta
+    name="theme-color"
+    content="#ead5ad"
+  />
+
+  <meta
+    name="description"
+    content="Thiệp cưới Bách & Thư"
+  />
 
   <title>Bách & Thư</title>
 
-  <!-- PAGE 01: chỉ preload những gì cần nhìn thấy ngay -->
+
+  <!-- =================================================
+       PAGE 01
+       CHỈ PRELOAD ASSET FIRST SCREEN
+  ================================================== -->
+
   <link
     rel="preload"
     href="./assets/page01-bg-optimized.webp"
@@ -31,8 +43,14 @@
     fetchpriority="high"
   />
 
-  <link rel="stylesheet" href="./styles.css" />
+
+  <link
+    rel="stylesheet"
+    href="./styles.css"
+  />
+
 </head>
+
 
 <body>
 
@@ -48,8 +66,12 @@
 
       <div class="design-stage">
 
+
         <!-- =================================================
+             =================================================
              PAGE 01
+             OPENING ENVELOPE
+             =================================================
         ================================================== -->
 
         <section
@@ -71,7 +93,16 @@
               aria-hidden="true"
             >
 
+
+              <!-- =============================================
+                   OPEN STATE
+                   LOAD SAU FIRST SCREEN
+              ============================================== -->
+
               <span class="envelope-open">
+
+
+                <!-- NẮP SAU -->
 
                 <img
                   class="envelope-open-flap deferred-opening-asset"
@@ -83,6 +114,9 @@
                   height="600"
                 />
 
+
+                <!-- THÂN SAU -->
+
                 <img
                   class="envelope-open-body deferred-opening-asset"
                   data-src="./assets/envelope-open-body-optimized.png"
@@ -92,6 +126,9 @@
                   width="800"
                   height="1200"
                 />
+
+
+                <!-- TỜ THIỆP -->
 
                 <img
                   class="invitation-card deferred-opening-asset"
@@ -103,6 +140,9 @@
                   width="720"
                   height="960"
                 />
+
+
+                <!-- MẶT TRƯỚC PHONG BÌ -->
 
                 <img
                   class="envelope-open-front deferred-opening-asset"
@@ -116,6 +156,11 @@
 
               </span>
 
+
+              <!-- =============================================
+                   CLOSED STATE
+              ============================================== -->
+
               <img
                 class="envelope-closed"
                 src="./assets/envelope-closed-optimized.png"
@@ -128,6 +173,9 @@
                 height="1200"
               />
 
+
+              <!-- TAP CUE -->
+
               <span class="monogram-pulse"></span>
 
             </span>
@@ -138,8 +186,10 @@
 
 
         <!-- =================================================
+             =================================================
              PAGE 02+
-             Đây là scroll container duy nhất
+             SCROLL CONTAINER
+             =================================================
         ================================================== -->
 
         <section
@@ -153,8 +203,12 @@
             id="invitationFlow"
           >
 
+
             <!-- =================================================
+                 =================================================
                  PAGE 02
+                 WEDDING INTRO
+                 =================================================
             ================================================== -->
 
             <section
@@ -162,6 +216,11 @@
               id="page02Layout"
               aria-label="Lễ thành hôn Bách và Thư"
             >
+
+
+              <!-- =============================================
+                   BACKGROUND
+              ============================================== -->
 
               <img
                 class="p02-background deferred-page02-asset"
@@ -171,6 +230,11 @@
                 decoding="async"
               />
 
+
+              <!-- =============================================
+                   FRAME
+              ============================================== -->
+
               <img
                 class="p02-frame deferred-page02-asset"
                 data-src="./assets/page02-frame.png"
@@ -178,6 +242,11 @@
                 draggable="false"
                 decoding="async"
               />
+
+
+              <!-- =============================================
+                   CLOUD 01
+              ============================================== -->
 
               <img
                 class="p02-cloud p02-cloud--01 deferred-page02-asset"
@@ -187,6 +256,11 @@
                 decoding="async"
               />
 
+
+              <!-- =============================================
+                   CLOUD 02
+              ============================================== -->
+
               <img
                 class="p02-cloud p02-cloud--02 deferred-page02-asset"
                 data-src="./assets/page02-cloud-02.png"
@@ -194,6 +268,11 @@
                 draggable="false"
                 decoding="async"
               />
+
+
+              <!-- =============================================
+                   CLOUD 03
+              ============================================== -->
 
               <img
                 class="p02-cloud p02-cloud--03 deferred-page02-asset"
@@ -203,6 +282,11 @@
                 decoding="async"
               />
 
+
+              <!-- =============================================
+                   CLOUD 04
+              ============================================== -->
+
               <img
                 class="p02-cloud p02-cloud--04 deferred-page02-asset"
                 data-src="./assets/page02-cloud-04.png"
@@ -210,6 +294,11 @@
                 draggable="false"
                 decoding="async"
               />
+
+
+              <!-- =============================================
+                   BAMBOO LEFT
+              ============================================== -->
 
               <div
                 class="p02-bamboo-window p02-bamboo-window--left"
@@ -226,6 +315,11 @@
 
               </div>
 
+
+              <!-- =============================================
+                   BAMBOO RIGHT
+              ============================================== -->
+
               <div
                 class="p02-bamboo-window p02-bamboo-window--right"
                 aria-hidden="true"
@@ -241,22 +335,31 @@
 
               </div>
 
+
+              <!-- =============================================
+                   TEXT
+              ============================================== -->
+
               <p class="p02-invite">
                 TRÂN TRỌNG KÍNH MỜI
               </p>
+
 
               <div
                 class="p02-divider"
                 aria-hidden="true"
               ></div>
 
+
               <p class="p02-to">
                 TỚI
               </p>
 
+
               <p class="p02-wedding-title">
                 LỄ THÀNH HÔN
               </p>
+
 
               <h1 class="p02-couple-names">
 
@@ -274,14 +377,21 @@
 
               </h1>
 
+
               <p class="p02-date">
                 24.11.2026
               </p>
+
 
               <div
                 class="p02-date-divider"
                 aria-hidden="true"
               ></div>
+
+
+              <!-- =============================================
+                   FLOWER SOURCE
+              ============================================== -->
 
               <img
                 class="p02-flower-source deferred-page02-asset"
@@ -291,10 +401,16 @@
                 decoding="async"
               />
 
+
+              <!-- =============================================
+                   PETALS
+              ============================================== -->
+
               <div
                 class="p02-petals"
                 aria-hidden="true"
               >
+
                 <span class="p02-petal p02-petal--01"></span>
                 <span class="p02-petal p02-petal--02"></span>
                 <span class="p02-petal p02-petal--03"></span>
@@ -309,12 +425,21 @@
                 <span class="p02-petal p02-petal--12"></span>
                 <span class="p02-petal p02-petal--13"></span>
                 <span class="p02-petal p02-petal--14"></span>
+
               </div>
+
+
+              <!-- =============================================
+                   PROCESSION
+              ============================================== -->
 
               <div
                 class="p02-procession"
                 aria-hidden="true"
               >
+
+
+                <!-- FLAG BEARER -->
 
                 <img
                   class="p02-procession-item p02-flag-bearer deferred-page02-asset"
@@ -324,6 +449,9 @@
                   decoding="async"
                 />
 
+
+                <!-- COUPLE -->
+
                 <img
                   class="p02-procession-item p02-couple deferred-page02-asset"
                   data-src="./assets/page02-couple.png"
@@ -332,6 +460,9 @@
                   decoding="async"
                 />
 
+
+                <!-- LION -->
+
                 <img
                   class="p02-procession-item p02-lion-dance deferred-page02-asset"
                   data-src="./assets/page02-lion-dance.png"
@@ -339,6 +470,9 @@
                   draggable="false"
                   decoding="async"
                 />
+
+
+                <!-- DRUMMER -->
 
                 <img
                   class="p02-procession-item p02-drummer deferred-page02-asset"
@@ -349,6 +483,11 @@
                 />
 
               </div>
+
+
+              <!-- =============================================
+                   BOTTOM ORNAMENT
+              ============================================== -->
 
               <img
                 class="p02-bottom-ornament deferred-page02-asset"
@@ -362,7 +501,10 @@
 
 
             <!-- =================================================
-                 PAGE 03 — AGENDA
+                 =================================================
+                 PAGE 03
+                 AGENDA
+                 =================================================
             ================================================== -->
 
             <section
@@ -370,6 +512,9 @@
               id="page03"
               aria-label="Agenda đám cưới"
             >
+
+
+              <!-- BACKGROUND -->
 
               <img
                 class="p03-background deferred-page03-asset"
@@ -379,6 +524,9 @@
                 decoding="async"
               />
 
+
+              <!-- FRAME -->
+
               <img
                 class="p03-frame deferred-page03-asset"
                 data-src="./assets/page02-frame.png"
@@ -386,6 +534,9 @@
                 draggable="false"
                 decoding="async"
               />
+
+
+              <!-- CLOUD 01 -->
 
               <img
                 class="p03-cloud p03-cloud--01 deferred-page03-asset"
@@ -395,6 +546,9 @@
                 decoding="async"
               />
 
+
+              <!-- CLOUD 02 -->
+
               <img
                 class="p03-cloud p03-cloud--02 deferred-page03-asset"
                 data-src="./assets/page02-cloud-03.png"
@@ -402,6 +556,9 @@
                 draggable="false"
                 decoding="async"
               />
+
+
+              <!-- CLOUD 03 -->
 
               <img
                 class="p03-cloud p03-cloud--03 deferred-page03-asset"
@@ -411,6 +568,9 @@
                 decoding="async"
               />
 
+
+              <!-- CLOUD 04 -->
+
               <img
                 class="p03-cloud p03-cloud--04 deferred-page03-asset"
                 data-src="./assets/page02-cloud-04.png"
@@ -419,9 +579,15 @@
                 decoding="async"
               />
 
+
+              <!-- =============================================
+                   TITLE
+              ============================================== -->
+
               <h2 class="p03-title">
                 AGENDA
               </h2>
+
 
               <img
                 class="p03-title-divider deferred-page03-asset"
@@ -431,6 +597,11 @@
                 decoding="async"
               />
 
+
+              <!-- =============================================
+                   TIMELINE
+              ============================================== -->
+
               <img
                 class="p03-timeline deferred-page03-asset"
                 data-src="./assets/page03-timeline.png"
@@ -439,7 +610,10 @@
                 decoding="async"
               />
 
-              <!-- EVENT 01 -->
+
+              <!-- =============================================
+                   EVENT 01
+              ============================================== -->
 
               <img
                 class="p03-number p03-number--01 deferred-page03-asset"
@@ -449,6 +623,7 @@
                 decoding="async"
               />
 
+
               <img
                 class="p03-illustration p03-trap deferred-page03-asset"
                 data-src="./assets/page03-trap.png"
@@ -456,6 +631,7 @@
                 draggable="false"
                 decoding="async"
               />
+
 
               <article class="p03-event p03-event--01">
 
@@ -479,9 +655,19 @@
                   ></span>
 
                   <div>
-                    <strong>Nhà cô dâu</strong>
-                    <span>AD-14, Ocean Park 3</span>
-                    <span>Nghĩa Trụ, Văn Giang, Hưng Yên</span>
+
+                    <strong>
+                      Nhà cô dâu
+                    </strong>
+
+                    <span>
+                      AD-14, Ocean Park 3
+                    </span>
+
+                    <span>
+                      Nghĩa Trụ, Văn Giang, Hưng Yên
+                    </span>
+
                   </div>
 
                 </div>
@@ -489,7 +675,9 @@
               </article>
 
 
-              <!-- EVENT 02 -->
+              <!-- =============================================
+                   EVENT 02
+              ============================================== -->
 
               <img
                 class="p03-number p03-number--02 deferred-page03-asset"
@@ -499,6 +687,7 @@
                 decoding="async"
               />
 
+
               <img
                 class="p03-illustration p03-kieu deferred-page03-asset"
                 data-src="./assets/page03-kieu.png"
@@ -506,6 +695,7 @@
                 draggable="false"
                 decoding="async"
               />
+
 
               <article class="p03-event p03-event--02">
 
@@ -520,7 +710,9 @@
               </article>
 
 
-              <!-- EVENT 03 -->
+              <!-- =============================================
+                   EVENT 03
+              ============================================== -->
 
               <img
                 class="p03-number p03-number--03 deferred-page03-asset"
@@ -530,6 +722,7 @@
                 decoding="async"
               />
 
+
               <img
                 class="p03-illustration p03-mam-co deferred-page03-asset"
                 data-src="./assets/page03-mam-co.png"
@@ -537,6 +730,7 @@
                 draggable="false"
                 decoding="async"
               />
+
 
               <article class="p03-event p03-event--03">
 
@@ -560,9 +754,19 @@
                   ></span>
 
                   <div>
-                    <strong>Sheraton Hanoi Hotel</strong>
-                    <span>K5 Nghi Tàm, 11 Xuân Diệu</span>
-                    <span>Tây Hồ, Hà Nội</span>
+
+                    <strong>
+                      Sheraton Hanoi Hotel
+                    </strong>
+
+                    <span>
+                      K5 Nghi Tàm, 11 Xuân Diệu
+                    </span>
+
+                    <span>
+                      Tây Hồ, Hà Nội
+                    </span>
+
                   </div>
 
                 </div>
@@ -570,7 +774,9 @@
               </article>
 
 
-              <!-- EVENT 04 -->
+              <!-- =============================================
+                   EVENT 04
+              ============================================== -->
 
               <img
                 class="p03-number p03-number--04 deferred-page03-asset"
@@ -580,6 +786,7 @@
                 decoding="async"
               />
 
+
               <img
                 class="p03-illustration p03-cheers deferred-page03-asset"
                 data-src="./assets/page03-cheers.png"
@@ -587,6 +794,7 @@
                 draggable="false"
                 decoding="async"
               />
+
 
               <article class="p03-event p03-event--04">
 
@@ -610,9 +818,11 @@
                   ></span>
 
                   <div>
+
                     <strong>
                       Sheraton Hanoi Hotel (dự kiến)
                     </strong>
+
                   </div>
 
                 </div>
@@ -620,7 +830,9 @@
               </article>
 
 
-              <!-- DRESS CODE -->
+              <!-- =============================================
+                   DRESS CODE
+              ============================================== -->
 
               <section
                 class="p03-dress-code"
@@ -628,36 +840,90 @@
               >
 
                 <h3 class="p03-dress-title">
-                  <span>✦</span>
+
+                  <span>
+                    ✦
+                  </span>
+
                   DRESS CODE
-                  <span>✦</span>
+
+                  <span>
+                    ✦
+                  </span>
+
                 </h3>
+
 
                 <div class="p03-color-list">
 
-                  <div class="p03-color-item">
-                    <span class="p03-color p03-color--white"></span>
-                    <span>WHITE</span>
-                  </div>
+
+                  <!-- WHITE -->
 
                   <div class="p03-color-item">
-                    <span class="p03-color p03-color--beige"></span>
-                    <span>BEIGE</span>
+
+                    <span
+                      class="p03-color p03-color--white"
+                    ></span>
+
+                    <span>
+                      WHITE
+                    </span>
+
                   </div>
 
-                  <div class="p03-color-item">
-                    <span class="p03-color p03-color--black"></span>
-                    <span>BLACK</span>
-                  </div>
+
+                  <!-- BEIGE -->
 
                   <div class="p03-color-item">
-                    <span class="p03-color p03-color--gold"></span>
-                    <span>GOLD</span>
+
+                    <span
+                      class="p03-color p03-color--beige"
+                    ></span>
+
+                    <span>
+                      BEIGE
+                    </span>
+
+                  </div>
+
+
+                  <!-- BLACK -->
+
+                  <div class="p03-color-item">
+
+                    <span
+                      class="p03-color p03-color--black"
+                    ></span>
+
+                    <span>
+                      BLACK
+                    </span>
+
+                  </div>
+
+
+                  <!-- GOLD -->
+
+                  <div class="p03-color-item">
+
+                    <span
+                      class="p03-color p03-color--gold"
+                    ></span>
+
+                    <span>
+                      GOLD
+                    </span>
+
                   </div>
 
                 </div>
 
               </section>
+
+
+              <!-- =============================================
+                   BOTTOM ORNAMENT
+              ============================================== -->
 
               <img
                 class="p03-bottom-ornament deferred-page03-asset"
@@ -671,7 +937,10 @@
 
 
             <!-- =================================================
-                 PAGE 04 — LOCATION
+                 =================================================
+                 PAGE 04
+                 LOCATION
+                 =================================================
             ================================================== -->
 
             <section
@@ -680,7 +949,10 @@
               aria-label="Địa điểm tiệc cưới"
             >
 
-              <!-- BACKGROUND DÙNG LẠI -->
+
+              <!-- =============================================
+                   BACKGROUND
+              ============================================== -->
 
               <img
                 class="p04-background deferred-page04-asset"
@@ -690,7 +962,10 @@
                 decoding="async"
               />
 
-              <!-- FRAME DÙNG LẠI -->
+
+              <!-- =============================================
+                   FRAME
+              ============================================== -->
 
               <img
                 class="p04-frame deferred-page04-asset"
@@ -700,7 +975,10 @@
                 decoding="async"
               />
 
-              <!-- CLOUDS -->
+
+              <!-- =============================================
+                   CLOUD LEFT
+              ============================================== -->
 
               <img
                 class="p04-cloud p04-cloud--01 deferred-page04-asset"
@@ -710,6 +988,11 @@
                 decoding="async"
               />
 
+
+              <!-- =============================================
+                   CLOUD RIGHT
+              ============================================== -->
+
               <img
                 class="p04-cloud p04-cloud--02 deferred-page04-asset"
                 data-src="./assets/page02-cloud-04.png"
@@ -718,26 +1001,51 @@
                 decoding="async"
               />
 
-              <!-- TITLE -->
+
+              <!-- =============================================
+                   TITLE
+              ============================================== -->
 
               <p class="p04-couple-label">
-                <span>Bách</span>
-                <span class="p04-title-ampersand">&amp;</span>
-                <span>Thư</span>
+
+                <span>
+                  Bách
+                </span>
+
+                <span class="p04-title-ampersand">
+                  &amp;
+                </span>
+
+                <span>
+                  Thư
+                </span>
+
               </p>
+
 
               <h2 class="p04-title">
                 LOCATION
               </h2>
 
+
               <p class="p04-subtitle">
-                <span class="p04-subtitle-symbol">✤</span>
+
+                <span class="p04-subtitle-symbol">
+                  ✤
+                </span>
+
                 HƯỚNG DẪN DI CHUYỂN ĐẾN TIỆC CƯỚI
-                <span class="p04-subtitle-symbol">✤</span>
+
+                <span class="p04-subtitle-symbol">
+                  ✤
+                </span>
+
               </p>
 
 
-              <!-- MAP -->
+              <!-- =============================================
+                   MAP
+              ============================================== -->
 
               <img
                 class="p04-map deferred-page04-asset"
@@ -748,9 +1056,13 @@
               />
 
 
-              <!-- HOTEL CARD -->
+              <!-- =============================================
+                   HOTEL CARD
+              ============================================== -->
 
-              <article class="p04-info-card p04-hotel-card">
+              <article
+                class="p04-info-card p04-hotel-card"
+              >
 
                 <img
                   class="p04-card-frame deferred-page04-asset"
@@ -760,7 +1072,9 @@
                   decoding="async"
                 />
 
+
                 <div class="p04-card-content">
+
 
                   <img
                     class="p04-card-icon p04-hotel-icon deferred-page04-asset"
@@ -769,6 +1083,7 @@
                     draggable="false"
                     decoding="async"
                   />
+
 
                   <div class="p04-card-text">
 
@@ -791,7 +1106,9 @@
               </article>
 
 
-              <!-- LOCATION LINK CARD -->
+              <!-- =============================================
+                   LOCATION LINK CARD
+              ============================================== -->
 
               <a
                 class="p04-info-card p04-link-card"
@@ -807,7 +1124,9 @@
                   decoding="async"
                 />
 
+
                 <div class="p04-card-content">
+
 
                   <img
                     class="p04-card-icon p04-location-icon deferred-page04-asset"
@@ -816,6 +1135,7 @@
                     draggable="false"
                     decoding="async"
                   />
+
 
                   <div class="p04-card-text">
 
@@ -828,6 +1148,7 @@
                     </span>
 
                   </div>
+
 
                   <img
                     class="p04-arrow deferred-page04-asset"
@@ -842,7 +1163,9 @@
               </a>
 
 
-              <!-- BOTTOM ORNAMENT DÙNG LẠI -->
+              <!-- =============================================
+                   BOTTOM ORNAMENT
+              ============================================== -->
 
               <img
                 class="p04-bottom-ornament deferred-page04-asset"
@@ -854,15 +1177,263 @@
 
             </section>
 
+
+            <!-- =================================================
+                 =================================================
+                 PAGE 05
+                 OUR LOVE STORY
+                 =================================================
+            ================================================== -->
+
+            <section
+              class="invitation-page page05-layout"
+              id="page05"
+              aria-label="Câu chuyện tình yêu của Bách và Thư"
+            >
+
+
+              <!-- =============================================
+                   BACKGROUND
+              ============================================== -->
+
+              <img
+                class="p05-background deferred-page05-asset"
+                data-src="./assets/page02-bg.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+
+              <!-- =============================================
+                   OUTER FRAME
+                   DÙNG LẠI PAGE 02
+              ============================================== -->
+
+              <img
+                class="p05-frame deferred-page05-asset"
+                data-src="./assets/page02-frame.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+
+              <!-- =============================================
+                   TITLE
+              ============================================== -->
+
+              <h2 class="p05-title">
+                OUR LOVE STORY
+              </h2>
+
+
+              <!-- =============================================
+                   TITLE DIVIDER
+              ============================================== -->
+
+              <div
+                class="p05-title-divider"
+                aria-hidden="true"
+              >
+                <span></span>
+              </div>
+
+
+              <!-- =============================================
+                   QUOTE
+              ============================================== -->
+
+              <p class="p05-quote">
+                Somewhere in the midst of<br>
+                ordinary days, we found each other.
+              </p>
+
+
+              <!-- =============================================
+                   PHOTO AREA
+
+                   ẢNH CHÍNH HIỆN ĐỂ TRỐNG
+              ============================================== -->
+
+              <figure
+                class="p05-photo-wrap"
+                aria-label="Ảnh Bách và Thư"
+              >
+
+
+                <!-- =========================================
+                     PHOTO PLACEHOLDER
+                ========================================== -->
+
+                <div class="p05-photo-placeholder">
+
+
+                  <!-- =======================================
+                       SAU NÀY KHI CÓ ẢNH:
+
+                       1. Upload:
+                          assets/page05-main-photo.webp
+
+                       2. Bỏ comment block img dưới đây.
+                  ======================================== -->
+
+
+                  <!--
+
+                  <img
+                    class="p05-main-photo deferred-page05-asset"
+                    data-src="./assets/page05-main-photo.webp"
+                    alt="Bách và Thư"
+                    draggable="false"
+                    decoding="async"
+                  />
+
+                  -->
+
+
+                </div>
+
+
+                <!-- =========================================
+                     PHOTO FRAME
+                ========================================== -->
+
+                <img
+                  class="p05-photo-frame deferred-page05-asset"
+                  data-src="./assets/page05-photo-frame.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
+
+              </figure>
+
+
+              <!-- =============================================
+                   LOTUS LEFT
+              ============================================== -->
+
+              <img
+                class="p05-lotus p05-lotus--left deferred-page05-asset"
+                data-src="./assets/page05-lotus-left.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+
+              <!-- =============================================
+                   LOTUS RIGHT
+              ============================================== -->
+
+              <img
+                class="p05-lotus p05-lotus--right deferred-page05-asset"
+                data-src="./assets/page05-lotus-right.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+
+              <!-- =============================================
+                   LOVE STORY COPY
+              ============================================== -->
+
+              <div class="p05-story-copy">
+
+                <p>
+                  Có những cuộc gặp gỡ bắt đầu rất đỗi bình thường,<br>
+                  nhưng rồi lại trở thành một phần không thể thiếu<br>
+                  trong câu chuyện của mỗi người.<br>
+                  Từ những ngày đầu còn nhiều bỡ ngỡ,<br>
+                  chúng mình đã cùng nhau đi qua niềm vui,<br>
+                  thử thách và cả những khoảnh khắc rất nhỏ của cuộc sống.<br>
+                  Càng đi cùng nhau, chúng mình càng hiểu rằng<br>
+                  điều quý giá nhất không phải là một hành trình hoàn hảo,<br>
+                  mà là có một người luôn muốn cùng mình bước tiếp.<br>
+                  Và giữa rất nhiều người trên thế giới này,<br>
+                  chúng mình đã chọn nhau để cùng xây dựng một mái nhà.<br>
+                  Cảm ơn bạn vì đã trở thành<br>
+                  một phần trong câu chuyện của Bách &amp; Thư.
+                </p>
+
+              </div>
+
+
+              <!-- =============================================
+                   BOTTOM DIVIDER
+              ============================================== -->
+
+              <div
+                class="p05-bottom-divider"
+                aria-hidden="true"
+              >
+                <span></span>
+              </div>
+
+
+              <!-- =============================================
+                   NAMES
+              ============================================== -->
+
+              <p class="p05-names">
+
+                <span class="p05-name">
+                  BÁCH
+                </span>
+
+                <span class="p05-ampersand">
+                  &amp;
+                </span>
+
+                <span class="p05-name">
+                  THƯ
+                </span>
+
+              </p>
+
+
+              <!-- =============================================
+                   DATE
+              ============================================== -->
+
+              <p class="p05-date">
+                24 · 11 · 2026
+              </p>
+
+
+              <!-- =============================================
+                   BOTTOM ORNAMENT
+                   DÙNG LẠI PAGE 02
+              ============================================== -->
+
+              <img
+                class="p05-bottom-ornament deferred-page05-asset"
+                data-src="./assets/page02-bottom-ornament.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
+
+            </section>
+
+
           </div>
+          <!-- END .invitation-flow -->
 
         </section>
+        <!-- END PAGE 02+ -->
+
 
       </div>
+      <!-- END .design-stage -->
 
     </div>
+    <!-- END .site-scale -->
 
   </main>
+
 
   <script src="./script.js"></script>
 
