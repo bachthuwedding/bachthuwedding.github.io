@@ -1,6 +1,6 @@
-/* =========================================
+/* =========================================================
    MASTER ARTBOARD
-========================================= */
+========================================================= */
 
 const DESIGN_WIDTH =
   390;
@@ -9,32 +9,49 @@ const DESIGN_HEIGHT =
   680;
 
 
-/* =========================================
+/* =========================================================
    DOM
-========================================= */
+========================================================= */
 
 const siteShell =
-  document.getElementById("siteShell");
+  document.getElementById(
+    "siteShell"
+  );
 
 const openingPage =
-  document.getElementById("opening");
+  document.getElementById(
+    "opening"
+  );
 
 const envelopeButton =
-  document.getElementById("envelopeButton");
+  document.getElementById(
+    "envelopeButton"
+  );
 
 const invitationCard =
-  document.getElementById("invitationCard");
+  document.getElementById(
+    "invitationCard"
+  );
 
 const page02 =
-  document.getElementById("page02");
+  document.getElementById(
+    "page02"
+  );
 
 const page03 =
-  document.getElementById("page03");
+  document.getElementById(
+    "page03"
+  );
+
+const page04 =
+  document.getElementById(
+    "page04"
+  );
 
 
-/* =========================================
+/* =========================================================
    ASSET GROUPS
-========================================= */
+========================================================= */
 
 const deferredOpeningAssets =
   Array.from(
@@ -60,9 +77,17 @@ const deferredPage03Assets =
   );
 
 
-/* =========================================
+const deferredPage04Assets =
+  Array.from(
+    document.querySelectorAll(
+      ".deferred-page04-asset[data-src]"
+    )
+  );
+
+
+/* =========================================================
    STATE
-========================================= */
+========================================================= */
 
 let envelopeIsOpen =
   false;
@@ -83,14 +108,17 @@ let page02AssetsPromise =
 let page03AssetsPromise =
   null;
 
+let page04AssetsPromise =
+  null;
+
 
 let scaleFrame =
   null;
 
 
-/* =========================================
+/* =========================================================
    VIEWPORT
-========================================= */
+========================================================= */
 
 function getViewportSize() {
 
@@ -120,9 +148,11 @@ function getViewportSize() {
 }
 
 
-/* =========================================
+/* =========================================================
    GLOBAL SCALE
-========================================= */
+
+   Toàn website chỉ scale một lần.
+========================================================= */
 
 function updateDesignScale() {
 
@@ -198,9 +228,9 @@ function updateDesignScale() {
 }
 
 
-/* =========================================
-   REQUEST SCALE
-========================================= */
+/* =========================================================
+   SCALE RAF
+========================================================= */
 
 function requestScaleUpdate() {
 
@@ -218,6 +248,7 @@ function requestScaleUpdate() {
         scaleFrame =
           null;
 
+
         updateDesignScale();
 
       }
@@ -226,9 +257,7 @@ function requestScaleUpdate() {
 }
 
 
-/* =========================================
-   INITIAL SCALE
-========================================= */
+/* INITIAL */
 
 updateDesignScale();
 
@@ -271,9 +300,9 @@ window.addEventListener(
 );
 
 
-/* =========================================
-   LOAD ONE IMAGE
-========================================= */
+/* =========================================================
+   LOAD ONE DEFERRED IMAGE
+========================================================= */
 
 function loadDeferredImage(
   image
@@ -284,9 +313,7 @@ function loadDeferredImage(
 
 
   if (!source) {
-
     return Promise.resolve();
-
   }
 
 
@@ -350,9 +377,9 @@ function loadDeferredImage(
 }
 
 
-/* =========================================
+/* =========================================================
    PAGE 01 ASSETS
-========================================= */
+========================================================= */
 
 function loadOpeningAssets() {
 
@@ -378,9 +405,9 @@ function loadOpeningAssets() {
 }
 
 
-/* =========================================
+/* =========================================================
    PAGE 02 ASSETS
-========================================= */
+========================================================= */
 
 function loadPage02Assets() {
 
@@ -415,9 +442,9 @@ function loadPage02Assets() {
 }
 
 
-/* =========================================
+/* =========================================================
    PAGE 03 ASSETS
-========================================= */
+========================================================= */
 
 function loadPage03Assets() {
 
@@ -452,9 +479,46 @@ function loadPage03Assets() {
 }
 
 
-/* =========================================
-   PAGE 01 IDLE LOAD
-========================================= */
+/* =========================================================
+   PAGE 04 ASSETS
+========================================================= */
+
+function loadPage04Assets() {
+
+  if (
+    page04AssetsPromise
+  ) {
+
+    return page04AssetsPromise;
+
+  }
+
+
+  page04AssetsPromise =
+    Promise.all(
+      deferredPage04Assets.map(
+        loadDeferredImage
+      )
+    )
+      .then(
+        () => {
+
+          page04.classList.add(
+            "is-assets-ready"
+          );
+
+        }
+      );
+
+
+  return page04AssetsPromise;
+
+}
+
+
+/* =========================================================
+   PAGE 01 SCHEDULE
+========================================================= */
 
 function scheduleOpeningAssets() {
 
@@ -499,9 +563,9 @@ window.addEventListener(
 );
 
 
-/* =========================================
-   PAGE 02 PRELOAD
-========================================= */
+/* =========================================================
+   PAGE 02 SCHEDULE
+========================================================= */
 
 function schedulePage02Assets() {
 
@@ -537,11 +601,9 @@ function schedulePage02Assets() {
 }
 
 
-/* =========================================
-   PAGE 03 PRELOAD
-
-   Page 03 chỉ tải khi Page 02 đã xuất hiện.
-========================================= */
+/* =========================================================
+   PAGE 03 SCHEDULE
+========================================================= */
 
 function schedulePage03Assets() {
 
@@ -577,9 +639,49 @@ function schedulePage03Assets() {
 }
 
 
-/* =========================================
-   PAGE 01 POINTER PRELOAD
-========================================= */
+/* =========================================================
+   PAGE 04 SCHEDULE
+
+   Chỉ tải sau Page 03.
+========================================================= */
+
+function schedulePage04Assets() {
+
+  const startLoading =
+    () => {
+
+      loadPage04Assets();
+
+    };
+
+
+  if (
+    "requestIdleCallback"
+    in window
+  ) {
+
+    window.requestIdleCallback(
+      startLoading,
+      {
+        timeout: 1800
+      }
+    );
+
+  } else {
+
+    window.setTimeout(
+      startLoading,
+      700
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   EARLY PAGE 01 LOAD
+========================================================= */
 
 envelopeButton.addEventListener(
   "pointerdown",
@@ -602,9 +704,9 @@ envelopeButton.addEventListener(
 );
 
 
-/* =========================================
-   PAGE 02 POINTER PRELOAD
-========================================= */
+/* =========================================================
+   EARLY PAGE 02 LOAD
+========================================================= */
 
 invitationCard.addEventListener(
   "pointerdown",
@@ -626,9 +728,9 @@ invitationCard.addEventListener(
 );
 
 
-/* =========================================
+/* =========================================================
    OPEN ENVELOPE
-========================================= */
+========================================================= */
 
 async function openEnvelope() {
 
@@ -663,9 +765,11 @@ async function openEnvelope() {
     envelopeIsPreparing =
       false;
 
+
     envelopeButton.removeAttribute(
       "aria-busy"
     );
+
 
     return;
 
@@ -701,14 +805,19 @@ async function openEnvelope() {
   );
 
 
+  /*
+    Sau khi phong bì mở
+    mới bắt đầu preload Page 02.
+  */
+
   schedulePage02Assets();
 
 }
 
 
-/* =========================================
+/* =========================================================
    OPEN PAGE 02
-========================================= */
+========================================================= */
 
 function openPage02() {
 
@@ -757,8 +866,8 @@ function openPage02() {
 
 
   /*
-    Sau khi Page 02 hiện ra,
-    bắt đầu preload ngầm Page 03.
+    Khi Page 02 đã mở,
+    preload Page 03 ở idle.
   */
 
   schedulePage03Assets();
@@ -766,9 +875,9 @@ function openPage02() {
 }
 
 
-/* =========================================
+/* =========================================================
    ENVELOPE CLICK
-========================================= */
+========================================================= */
 
 envelopeButton.addEventListener(
   "click",
@@ -780,7 +889,9 @@ envelopeButton.addEventListener(
 
       event.preventDefault();
 
+
       openEnvelope();
+
 
       return;
 
@@ -793,9 +904,9 @@ envelopeButton.addEventListener(
 );
 
 
-/* =========================================
+/* =========================================================
    CARD CLICK -> PAGE 02
-========================================= */
+========================================================= */
 
 invitationCard.addEventListener(
   "click",
@@ -822,28 +933,54 @@ invitationCard.addEventListener(
 );
 
 
-/* =========================================
-   PAGE 02 SCROLL -> PAGE 03
+/* =========================================================
+   INVITATION SCROLL PRELOAD
 
-   Nếu người dùng scroll nhanh,
-   đảm bảo Page 03 được load ngay.
-========================================= */
+   0px        = Page 02
+   680px      = Page 03
+   1360px     = Page 04
+
+   Load trước khi user nhìn thấy page tiếp theo.
+========================================================= */
 
 page02.addEventListener(
   "scroll",
   () => {
 
-    const preloadPoint =
-      DESIGN_HEIGHT *
-      .45;
+    const scrollY =
+      page02.scrollTop;
 
+
+    /*
+      Khi xuống gần cuối Page 02,
+      đảm bảo Page 03 đã load.
+    */
 
     if (
-      page02.scrollTop >=
-      preloadPoint
+      scrollY >=
+      DESIGN_HEIGHT * .45
     ) {
 
       loadPage03Assets();
+
+    }
+
+
+    /*
+      Khi đã đi vào Page 03,
+      bắt đầu tải Page 04.
+
+      Khoảng 1.15 artboard:
+      user còn khá xa Page 04,
+      nên ảnh map có thời gian decode.
+    */
+
+    if (
+      scrollY >=
+      DESIGN_HEIGHT * 1.15
+    ) {
+
+      loadPage04Assets();
 
     }
 
@@ -852,3 +989,35 @@ page02.addEventListener(
     passive: true
   }
 );
+
+
+/* =========================================================
+   OPTIONAL:
+   preload Page 04 ở idle sau khi Page 03 load xong.
+
+   Không chạy từ first screen.
+========================================================= */
+
+if (
+  page03
+) {
+
+  page03.addEventListener(
+    "pointerdown",
+    () => {
+
+      if (
+        page02IsOpen
+      ) {
+
+        schedulePage04Assets();
+
+      }
+
+    },
+    {
+      passive: true
+    }
+  );
+
+}
