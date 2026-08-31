@@ -4,10 +4,8 @@
    Toàn bộ website được thiết kế cố định
    tại 390 × 844.
 
-   Chỉ parent .site-scale được scale.
-
-   Tất cả element bên trong giữ nguyên
-   tỷ lệ và vị trí tương đối.
+   Không scale từng element.
+   Chỉ scale toàn bộ .site-scale một lần.
 ========================================= */
 
 const DESIGN_WIDTH =
@@ -92,22 +90,34 @@ let lastViewportHeight =
 /* =========================================
    SCALE SYSTEM
 
-   QUAN TRỌNG:
+   PHONE PORTRAIT
+   -> FIT WIDTH
 
-   Không scale từng element.
+   TABLET / DESKTOP
+   -> FIT HEIGHT
 
-   Toàn bộ artboard 390 × 844
-   chỉ được scale MỘT LẦN.
+   LANDSCAPE PHONE
+   -> CONTAIN
 
-   Vì vậy:
-   - vị trí không lệch
-   - tỷ lệ không lệch
-   - desktop / iPad / mobile giống nhau
+   Như vậy:
+   - iPhone luôn kín chiều ngang
+   - iPad / desktop kín chiều cao
+   - không méo
+   - tất cả element giữ nguyên vị trí
 ========================================= */
 
 function updateDesignScale(
   force = false
 ) {
+
+  /*
+    window.innerWidth rất ổn cho việc
+    xác định chiều rộng layout trên mobile.
+
+    Không dùng visualViewport.height để
+    scale mobile vì browser toolbar sẽ làm
+    thiệp co lại theo chiều cao.
+  */
 
   const viewportWidth =
     window.innerWidth;
@@ -116,27 +126,52 @@ function updateDesignScale(
     window.innerHeight;
 
 
+  /* =====================================
+     DEVICE / ORIENTATION
+  ===================================== */
+
+  const isPortrait =
+    viewportHeight >=
+    viewportWidth;
+
+
   /*
-    Touch device:
-    Safari / Chrome mobile thường thay đổi
-    innerHeight khi thanh browser ẩn/hiện.
+    Dùng CSS viewport width thay vì
+    user-agent detection.
 
-    Nếu width không đổi thì KHÔNG scale lại,
-    tránh thiệp tự zoom trong lúc scroll.
-
-    Khi xoay màn hình width sẽ đổi,
-    lúc đó scale sẽ được tính lại.
+    <= 600px portrait:
+    coi là phone.
   */
 
-  const isTouchDevice =
-    window.matchMedia(
-      "(pointer: coarse)"
-    ).matches;
+  const isPhonePortrait =
+    isPortrait &&
+    viewportWidth <= 600;
 
+
+  /*
+    Tablet / desktop portrait hoặc landscape.
+  */
+
+  const isLargeScreen =
+    !isPhonePortrait;
+
+
+  /* =====================================
+     IGNORE MOBILE TOOLBAR RESIZE
+
+     Safari / Chrome mobile thường fire
+     resize khi thanh địa chỉ ẩn / hiện.
+
+     Nếu width không thay đổi,
+     KHÔNG scale lại.
+
+     Nhờ vậy website không bị zoom
+     lên xuống khi người dùng scroll.
+  ===================================== */
 
   if (
     !force &&
-    isTouchDevice &&
+    isPhonePortrait &&
     Math.abs(
       viewportWidth -
       lastViewportWidth
@@ -149,13 +184,13 @@ function updateDesignScale(
 
 
   /*
-    Desktop:
-    cho phép resize cả ngang và dọc.
+    Tablet / desktop:
+    resize thật sự thì tính lại.
   */
 
   if (
     !force &&
-    !isTouchDevice &&
+    isLargeScreen &&
     Math.abs(
       viewportWidth -
       lastViewportWidth
@@ -172,7 +207,7 @@ function updateDesignScale(
 
 
   /* =====================================
-     SCALE THEO WIDTH
+     SCALE VALUES
   ===================================== */
 
   const scaleByWidth =
@@ -180,43 +215,73 @@ function updateDesignScale(
     DESIGN_WIDTH;
 
 
-  /* =====================================
-     SCALE THEO HEIGHT
-  ===================================== */
-
   const scaleByHeight =
     viewportHeight /
     DESIGN_HEIGHT;
 
 
+  let scale;
+
+
   /* =====================================
-     FIT CONTAIN
-
-     Lấy giá trị nhỏ hơn.
-
-     Kết quả:
-     - không crop
-     - không méo
-     - luôn nằm trọn màn hình
-
-     Màn hình hẹp:
-     thường fit width.
-
-     Tablet / desktop:
-     thường fit height.
+     PHONE PORTRAIT
+     ALWAYS FIT WIDTH
   ===================================== */
 
-  let scale =
-    Math.min(
-      scaleByWidth,
-      scaleByHeight
-    );
+  if (
+    isPhonePortrait
+  ) {
+
+    scale =
+      scaleByWidth;
+
+  }
 
 
-  /*
-    Chặn trường hợp browser trả viewport
-    bất thường trong khoảnh khắc đầu.
-  */
+  /* =====================================
+     TABLET / DESKTOP
+
+     Ưu tiên full height.
+
+     Vì màn hình tablet / laptop rộng hơn
+     artboard rất nhiều nên thông thường
+     scaleByHeight vẫn không vượt width.
+  ===================================== */
+
+  else {
+
+    scale =
+      scaleByHeight;
+
+
+    /*
+      Safety:
+      nếu gặp màn hình cực hẹp / landscape
+      khiến width không đủ thì chuyển về
+      contain để không crop ngang.
+    */
+
+    const resultingWidth =
+      DESIGN_WIDTH *
+      scale;
+
+
+    if (
+      resultingWidth >
+      viewportWidth
+    ) {
+
+      scale =
+        scaleByWidth;
+
+    }
+
+  }
+
+
+  /* =====================================
+     SAFETY
+  ===================================== */
 
   scale =
     Math.max(
@@ -226,7 +291,7 @@ function updateDesignScale(
 
 
   /* =====================================
-     KÍCH THƯỚC SAU SCALE
+     RENDER SIZE
   ===================================== */
 
   const renderWidth =
@@ -240,7 +305,7 @@ function updateDesignScale(
 
 
   /* =====================================
-     GHI SCALE VÀO CSS VARIABLE
+     SEND VALUES TO CSS
   ===================================== */
 
   document.documentElement
@@ -280,7 +345,7 @@ function updateDesignScale(
 
 
   /* =====================================
-     SHOW SITE
+     SHOW WEBSITE
   ===================================== */
 
   siteShell.classList.add(
@@ -291,7 +356,7 @@ function updateDesignScale(
 
 
 /* =========================================
-   SCALE NGAY KHI JS CHẠY
+   INITIAL SCALE
 ========================================= */
 
 updateDesignScale(true);
@@ -300,11 +365,12 @@ updateDesignScale(true);
 /* =========================================
    RESIZE
 
-   Desktop:
-   resize browser -> tự fit lại.
+   Phone:
+   toolbar resize bị bỏ qua do width
+   không đổi.
 
-   Mobile:
-   chỉ thay đổi đáng kể khi width đổi.
+   Desktop/tablet:
+   resize bình thường.
 ========================================= */
 
 window.addEventListener(
@@ -323,8 +389,8 @@ window.addEventListener(
 /* =========================================
    ORIENTATION CHANGE
 
-   Đảm bảo xoay iPhone/iPad
-   được tính lại hoàn toàn.
+   Khi xoay điện thoại / iPad,
+   bắt buộc tính lại.
 ========================================= */
 
 window.addEventListener(
@@ -337,7 +403,7 @@ window.addEventListener(
         updateDesignScale(true);
 
       },
-      120
+      180
     );
 
   }
@@ -371,11 +437,6 @@ function loadDeferredImage(
     "data-src"
   );
 
-
-  /*
-    Decode trước khi animation chạy
-    để hạn chế giật hình.
-  */
 
   if (
     typeof image.decode ===
@@ -429,7 +490,7 @@ function loadDeferredImage(
 
 
 /* =========================================
-   LOAD PAGE 01 OPEN ASSETS
+   LOAD PAGE 01 OPENING ASSETS
 ========================================= */
 
 function loadOpeningAssets() {
@@ -479,11 +540,6 @@ function loadPage02Assets() {
     )
       .then(
         () => {
-
-          /*
-            Bật các CSS element phụ thuộc
-            asset Page 02 sau khi decode xong.
-          */
 
           page02.classList.add(
             "is-assets-ready"
@@ -539,7 +595,7 @@ function scheduleOpeningAssets() {
 /* =========================================
    FIRST SCREEN
 
-   Page 01 vẫn giữ chiến lược load nhẹ.
+   Chỉ preload Page 01 như baseline cũ.
 ========================================= */
 
 window.addEventListener(
@@ -554,7 +610,7 @@ window.addEventListener(
 /* =========================================
    SCHEDULE PAGE 02 ASSETS
 
-   Chỉ bắt đầu sau khi phong bì mở.
+   Chỉ sau khi phong bì mở.
 ========================================= */
 
 function schedulePage02Assets() {
@@ -617,7 +673,7 @@ envelopeButton.addEventListener(
 
 
 /* =========================================
-   EARLY LOAD PAGE 02 ON CARD TOUCH
+   EARLY LOAD PAGE 02
 ========================================= */
 
 invitationCard.addEventListener(
@@ -719,10 +775,7 @@ async function openEnvelope() {
 
 
   /*
-    Page 02 KHÔNG preload ngay từ đầu.
-
-    Chỉ khi phong bì đã mở,
-    mới bắt đầu tải ngầm Page 02.
+    Page 02 vẫn không preload từ đầu.
   */
 
   schedulePage02Assets();
@@ -749,11 +802,6 @@ function openPage02() {
   page02IsOpen =
     true;
 
-
-  /*
-    Nếu preload chưa hoàn thành
-    thì tiếp tục tải.
-  */
 
   loadPage02Assets();
 
@@ -811,7 +859,7 @@ envelopeButton.addEventListener(
 
 
     /*
-      Khi đã mở phong bì,
+      Phong bì đã mở:
       click vùng đỏ không đóng lại.
     */
 
