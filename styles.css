@@ -5173,3 +5173,92 @@ a {
 .p03-dress-code::before {
   display: none !important;
 }
+
+/* =========================================================
+   PAGE 02 — CONFETTI
+========================================================= */
+
+.p02-confetti {
+  position: absolute;
+
+  z-index: 14;
+
+  left: 50%;
+  top: 382px;
+
+  width: 320px;
+  height: auto;
+
+  transform: translateX(-50%);
+
+  opacity: 0.9;
+
+  object-fit: contain;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+/* =========================================================
+   PAGE 02 — BAMBOO SWAY
+========================================================= */
+
+@keyframes bamboo-sway-left {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-1.2deg);
+  }
+
+  75% {
+    transform: rotate(1deg);
+  }
+}
+
+@keyframes bamboo-sway-right {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(1.2deg);
+  }
+
+  75% {
+    transform: rotate(-1deg);
+  }
+}
+
+.p02-bamboo-window--left .p02-bamboo {
+  transform-origin: 15% 100%;
+  animation: bamboo-sway-left 1750ms ease-in-out infinite;
+}
+
+.p02-bamboo-window--right .p02-bamboo {
+  transform-origin: 85% 100%;
+  animation: bamboo-sway-right 1750ms ease-in-out infinite;
+}
+
+/* =========================================================
+   PAGE 05 — MAIN PHOTO
+========================================================= */
+
+.p05-photo-placeholder {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.p05-main-photo {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: 50% 50%;
+}
