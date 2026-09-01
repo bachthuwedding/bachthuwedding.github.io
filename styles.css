@@ -5167,3 +5167,9 @@ a {
   animation-iteration-count: infinite !important;
   animation-delay: 0ms !important;
 }
+
+/* PAGE 03 — HIDE DRESS CODE TAPE */
+
+.p03-dress-code::before {
+  display: none !important;
+}
