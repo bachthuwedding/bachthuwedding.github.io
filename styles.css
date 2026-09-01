@@ -5130,3 +5130,40 @@ a {
   pointer-events: none;
   user-select: none;
 }
+
+/* =========================================================
+   GLOBAL CLOUD ANIMATION
+   ALL PAGES
+========================================================= */
+
+@keyframes wedding-cloud-float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+
+/* ALL CLOUDS */
+
+.p02-cloud,
+.p03-cloud,
+.p04-cloud,
+.p06-cloud,
+.p07-cloud,
+.p08-cloud {
+  opacity: 1 !important;
+
+  animation-name: wedding-cloud-float !important;
+  animation-duration: 1750ms !important;
+  animation-timing-function: ease-in-out !important;
+  animation-iteration-count: infinite !important;
+  animation-delay: 0ms !important;
+}
