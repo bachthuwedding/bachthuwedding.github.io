@@ -5095,3 +5095,38 @@ a {
   }
 
 }
+
+/* =========================================================
+   GLOBAL BOTTOM ORNAMENT
+   MATCH PAGE 02
+========================================================= */
+
+.p02-bottom-ornament,
+.p03-bottom-ornament,
+.p04-bottom-ornament,
+.p05-bottom-ornament,
+.p06-bottom-ornament,
+.p07-bottom-ornament,
+.p08-bottom-ornament {
+  position: absolute !important;
+
+  z-index: 36 !important;
+
+  left: 50% !important;
+  right: auto !important;
+
+  top: auto !important;
+  bottom: -1px !important;
+
+  width: 120px !important;
+  height: auto !important;
+
+  max-width: none !important;
+
+  transform: translateX(-50%) !important;
+
+  opacity: 1 !important;
+
+  pointer-events: none;
+  user-select: none;
+}
