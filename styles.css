@@ -1,2345 +1,160 @@
 /* =========================================================
    BÁCH & THƯ WEDDING
-   MASTER: 390 × 680
+   MASTER ARTBOARD: 390 × 680
 ========================================================= */
 
 :root {
   --design-width: 390px;
   --design-height: 680px;
-
   --design-scale: 1;
-
   --render-width: 390px;
   --render-height: 680px;
 
   --paper: #ead5ad;
   --page-background: #d8c59f;
-
   --invitation-paper: #efe0bc;
+
   --invitation-green: #28513f;
   --invitation-red: #a63019;
   --invitation-gold: #a78042;
 
   --body-offset-closed: 24px;
   --body-offset-open: 50px;
-
   --open-flap-scale-x: 1.09;
-
   --card-width: 80%;
 }
 
-
-/* =========================================================
-   RESET
-========================================================= */
-
+/* RESET */
 * {
   box-sizing: border-box;
 }
-
 
 html,
 body {
   width: 100%;
   height: 100%;
-
   margin: 0;
   padding: 0;
 }
-
 
 html {
   background: var(--page-background);
 }
 
-
 body {
   display: grid;
-
   place-items: center;
-
   overflow: hidden;
-
-  background:
-    var(--page-background);
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  -webkit-tap-highlight-color:
-    transparent;
+  background: var(--page-background);
+  font-family: Georgia, "Times New Roman", serif;
+  -webkit-tap-highlight-color: transparent;
 }
-
 
 button,
 a {
   font: inherit;
 }
 
-
 a {
   color: inherit;
   text-decoration: none;
 }
 
-
-/* =========================================================
-   SITE SHELL
-========================================================= */
-
-.site-shell {
-  position: relative;
-
-  width:
-    var(--render-width);
-
-  height:
-    var(--render-height);
-
-  overflow: hidden;
-
-  background:
-    var(--paper);
-
-  isolation: isolate;
-
-  opacity: 0;
-
-  box-shadow:
-    0 0 40px
-    rgba(80, 46, 24, .12);
-
-  transition:
-    opacity .08s linear;
+img {
+  -webkit-user-drag: none;
 }
 
+/* SITE / FIXED ARTBOARD */
+.site-shell {
+  position: relative;
+  width: var(--render-width);
+  height: var(--render-height);
+  overflow: hidden;
+  background: var(--paper);
+  isolation: isolate;
+  opacity: 0;
+  box-shadow: 0 0 40px rgba(80, 46, 24, 0.12);
+  transition: opacity 0.08s linear;
+}
 
 .site-shell.is-scale-ready {
   opacity: 1;
 }
 
-
-/* =========================================================
-   GLOBAL FIXED ARTBOARD SCALE
-========================================================= */
-
 .site-scale {
   position: absolute;
-
   left: 0;
   top: 0;
-
-  width:
-    var(--design-width);
-
-  height:
-    var(--design-height);
-
-  transform-origin:
-    0 0;
-
-  transform:
-    scale(
-      var(--design-scale)
-    );
-
+  width: var(--design-width);
+  height: var(--design-height);
+  transform-origin: 0 0;
+  transform: scale(var(--design-scale));
   will-change: transform;
 }
 
-
 .design-stage {
   position: relative;
-
-  width:
-    var(--design-width);
-
-  height:
-    var(--design-height);
-
+  width: var(--design-width);
+  height: var(--design-height);
   overflow: hidden;
-
-  background:
-    var(--paper);
-
+  background: var(--paper);
   isolation: isolate;
 }
 
-
 /* =========================================================
-   PAGE 01
+   PAGE 01 — OPENING
 ========================================================= */
 
 .opening-page {
   position: absolute;
-
   inset: 0;
-
   z-index: 2;
-
   overflow: hidden;
 
-  background-color:
-    #ead5ad;
-
-  background-image:
-    url("./assets/page01-bg-optimized.webp");
-
-  background-repeat:
-    no-repeat;
-
-  background-position:
-    center center;
-
-  background-size:
-    cover;
+  background-color: #ead5ad;
+  background-image: url("./assets/page01-bg-optimized.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 
   opacity: 1;
-
-  transform:
-    translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
 
   transition:
-    opacity .48s ease,
-    transform .58s
-      cubic-bezier(.22, .61, .36, 1);
+    opacity 0.48s ease,
+    transform 0.58s cubic-bezier(0.22, 0.61, 0.36, 1);
 
-  will-change:
-    opacity,
-    transform;
+  will-change: opacity, transform;
 }
-
-
-/* =========================================================
-   PAGE 02+ SCROLL CONTAINER
-
-   QUAN TRỌNG:
-   tất cả Page 02, 03, 04 scroll ở đây.
-========================================================= */
-
-.page-02 {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 1;
-
-  width: 390px;
-  height: 680px;
-
-  overflow-x: hidden;
-  overflow-y: auto;
-
-  background:
-    var(--invitation-paper);
-
-  opacity: 0;
-
-  transform:
-    translate3d(0, 18px, 0);
-
-  pointer-events:
-    none;
-
-  scrollbar-width: none;
-
-  overscroll-behavior:
-    contain;
-
-  touch-action:
-    pan-y;
-
-  -webkit-overflow-scrolling:
-    touch;
-
-  transition:
-    opacity .48s ease,
-    transform .58s
-      cubic-bezier(.22, .61, .36, 1);
-
-  will-change:
-    opacity,
-    transform;
-}
-
-
-.page-02::-webkit-scrollbar {
-  display: none;
-}
-
-
-/* =========================================================
-   PAGE TRANSITION
-========================================================= */
-
-.site-shell.is-page-02
-.opening-page {
-  opacity: 0;
-
-  transform:
-    translate3d(0, -16px, 0);
-
-  pointer-events: none;
-}
-
-
-.site-shell.is-page-02
-.page-02 {
-  z-index: 3;
-
-  opacity: 1;
-
-  transform:
-    translate3d(0, 0, 0);
-
-  pointer-events: auto;
-}
-
-
-/* =========================================================
-   INVITATION FLOW
-
-   KHÔNG fixed height.
-   4 page tự xếp nối tiếp theo chiều dọc.
-========================================================= */
-
-.invitation-flow {
-  position: relative;
-
-  width: 390px;
-
-  height: auto;
-  min-height: 2720px;
-
-  overflow: visible;
-
-  background:
-    #f1dfbd;
-
-  isolation: isolate;
-}
-
-
-/* =========================================================
-   GENERIC PAGE
-========================================================= */
-
-.invitation-page {
-  position: relative;
-
-  display: block;
-
-  flex: none;
-
-  width: 390px;
-  height: 680px;
-
-  overflow: hidden;
-
-  margin: 0;
-  padding: 0;
-
-  background:
-    #f1dfbd;
-}
-
-
-/* =========================================================
-   =========================================================
-   PAGE 02
-   =========================================================
-========================================================= */
-
-.page02-layout {
-  z-index: 1;
-
-  isolation: isolate;
-}
-
-
-/* BACKGROUND */
-
-.p02-background {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 0;
-
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  max-width: none;
-
-  object-fit: cover;
-
-  object-position:
-    center center;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* FRAME */
-
-.p02-frame {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 4;
-
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  max-width: none;
-
-  object-fit: fill;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* COMMON IMAGE */
-
-.p02-cloud,
-.p02-bamboo,
-.p02-procession-item,
-.p02-bottom-ornament {
-  position: absolute;
-
-  display: block;
-
-  max-width: none;
-
-  height: auto;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* CLOUDS */
-
-.p02-cloud--01 {
-  z-index: 8;
-
-  left: 6px;
-  top: 143px;
-
-  width: 88px;
-}
-
-
-.p02-cloud--02 {
-  z-index: 8;
-
-  right: -7px;
-  top: 153px;
-
-  width: 97px;
-}
-
-
-.p02-cloud--03 {
-  z-index: 8;
-
-  left: 16px;
-  top: 211px;
-
-  width: 48px;
-}
-
-
-.p02-cloud--04 {
-  z-index: 8;
-
-  right: 53px;
-  top: 286px;
-
-  width: 46px;
-}
-
-
-/* BAMBOO */
-
-.p02-bamboo-window {
-  position: absolute;
-
-  z-index: 9;
-
-  overflow: hidden;
-
-  pointer-events: none;
-}
-
-
-.p02-bamboo-window--left {
-  left: -12px;
-  top: 230px;
-
-  width: 124px;
-  height: 280px;
-}
-
-
-.p02-bamboo-window--right {
-  right: -13px;
-  top: 202px;
-
-  width: 203px;
-  height: 308px;
-}
-
-
-.p02-bamboo {
-  top: 0;
-
-  width: 100%;
-}
-
-
-/* TEXT COMMON */
-
-.p02-invite,
-.p02-to,
-.p02-wedding-title,
-.p02-couple-names,
-.p02-date {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-
-  width: 320px;
-
-  margin: 0;
-
-  text-align: center;
-
-  transform-origin:
-    50% 50%;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-weight: 400;
-
-  color:
-    var(--invitation-green);
-}
-
-
-.p02-invite {
-  top: 68px;
-
-  font-size: 12px;
-
-  line-height: 1.15;
-
-  letter-spacing:
-    .015em;
-
-  transform:
-    translateX(-50%)
-    scaleX(.94);
-}
-
-
-.p02-divider {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 126px;
-
-  width: 220px;
-  height: 1px;
-
-  transform:
-    translateX(-50%);
-
-  background:
-    rgba(153, 111, 52, .72);
-}
-
-
-.p02-divider::after {
-  content: "•••";
-
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  padding:
-    0 4px;
-
-  transform:
-    translate(-50%, -56%);
-
-  background:
-    #f1dfbd;
-
-  color:
-    var(--invitation-gold);
-
-  font-size: 7px;
-
-  line-height: 1;
-}
-
-
-.p02-to {
-  top: 149px;
-
-  font-size: 19px;
-
-  line-height: 1;
-
-  transform:
-    translateX(-50%)
-    scaleX(.80);
-}
-
-
-.p02-wedding-title {
-  top: 183px;
-
-  font-size: 18px;
-
-  line-height: 1;
-
-  transform:
-    translateX(-50%)
-    scaleX(.77);
-}
-
-
-.p02-couple-names {
-  top: 216px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  color:
-    var(--invitation-red);
-
-  line-height: .89;
-
-  transform:
-    translateX(-50%);
-}
-
-
-.p02-name {
-  display: block;
-
-  font-size: 42px;
-
-  font-weight: 400;
-
-  transform:
-    scaleX(.76);
-
-  transform-origin:
-    50% 50%;
-}
-
-
-.p02-ampersand {
-  display: block;
-
-  margin:
-    4px 0;
-
-  font-size: 33px;
-
-  line-height: .92;
-
-  color:
-    var(--invitation-green);
-
-  transform:
-    scaleX(.92);
-}
-
-
-.p02-date {
-  top: 326px;
-
-  font-size: 19px;
-
-  line-height: 1;
-
-  color:
-    var(--invitation-red);
-
-  letter-spacing:
-    .035em;
-
-  transform:
-    translateX(-50%)
-    scaleX(.90);
-}
-
-
-.p02-date-divider {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 347px;
-
-  width: 53px;
-  height: 1px;
-
-  transform:
-    translateX(-50%);
-
-  background:
-    rgba(153, 111, 52, .56);
-}
-
-
-.p02-date-divider::after {
-  content: "◇";
-
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  padding:
-    0 3px;
-
-  transform:
-    translate(-50%, -51%);
-
-  background:
-    #f1dfbd;
-
-  color:
-    var(--invitation-gold);
-
-  font-size: 8px;
-}
-
-
-/* FLOWER SOURCE */
-
-.p02-flower-source {
-  position: absolute;
-
-  left: -9999px;
-  top: -9999px;
-
-  width: 1px;
-  height: 1px;
-
-  opacity: 0;
-
-  pointer-events: none;
-}
-
-
-/* PETALS */
-
-.p02-petals {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 14;
-
-  pointer-events: none;
-}
-
-
-.p02-petal {
-  position: absolute;
-
-  display: block;
-
-  overflow: hidden;
-
-  opacity: 0;
-
-  pointer-events: none;
-
-  background-repeat:
-    no-repeat;
-
-  filter:
-    blur(.12px)
-    saturate(.98);
-}
-
-
-.page-02.is-assets-ready
-.p02-petal {
-  background-image:
-    url("./assets/page02-flowers.png");
-
-  opacity:
-    var(--petal-opacity, .38);
-}
-
-
-.p02-petal--01 {
-  left: 101px;
-  top: 374px;
-
-  width: 9px;
-
-  aspect-ratio: 32 / 26;
-
-  background-size:
-    3918.75% auto;
-
-  background-position:
-    15.794% 64.169%;
-
-  --petal-opacity: .42;
-
-  transform:
-    rotate(-18deg);
-}
-
-
-.p02-petal--02 {
-  left: 191px;
-  top: 388px;
-
-  width: 10px;
-
-  aspect-ratio: 44 / 36;
-
-  background-size:
-    2850% auto;
-
-  background-position:
-    20.744% 60.920%;
-
-  --petal-opacity: .40;
-
-  transform:
-    rotate(21deg);
-}
-
-
-.p02-petal--03 {
-  left: 238px;
-  top: 401px;
-
-  width: 8px;
-
-  aspect-ratio: 35 / 43;
-
-  background-size:
-    3582.857% auto;
-
-  background-position:
-    47.170% 58.134%;
-
-  --petal-opacity: .36;
-
-  transform:
-    rotate(-37deg);
-}
-
-
-.p02-petal--04 {
-  left: 164px;
-  top: 414px;
-
-  width: 8px;
-
-  aspect-ratio: 39 / 59;
-
-  background-size:
-    3215.385% auto;
-
-  background-position:
-    62.634% 67.782%;
-
-  --petal-opacity: .38;
-
-  transform:
-    rotate(17deg);
-}
-
-
-.p02-petal--05 {
-  left: 125px;
-  top: 427px;
-
-  width: 9px;
-
-  aspect-ratio: 58 / 42;
-
-  background-size:
-    2162.069% auto;
-
-  background-position:
-    48.997% 70.710%;
-
-  --petal-opacity: .43;
-
-  transform:
-    rotate(-26deg);
-}
-
-
-.p02-petal--06 {
-  left: 215px;
-  top: 435px;
-
-  width: 7px;
-
-  aspect-ratio: 27 / 20;
-
-  background-size:
-    4644.444% auto;
-
-  background-position:
-    59.250% 72.123%;
-
-  --petal-opacity: .35;
-
-  transform:
-    rotate(44deg);
-}
-
-
-.p02-petal--07 {
-  left: 277px;
-  top: 442px;
-
-  width: 9px;
-
-  aspect-ratio: 56 / 52;
-
-  background-size:
-    2239.286% auto;
-
-  background-position:
-    24.791% 79.035%;
-
-  --petal-opacity: .39;
-
-  transform:
-    rotate(-14deg);
-}
-
-
-.p02-petal--08 {
-  left: 90px;
-  top: 449px;
-
-  width: 8px;
-
-  aspect-ratio: 55 / 61;
-
-  background-size:
-    2280% auto;
-
-  background-position:
-    43.620% 79.883%;
-
-  --petal-opacity: .34;
-
-  transform:
-    rotate(31deg);
-}
-
-
-.p02-petal--09 {
-  left: 183px;
-  top: 456px;
-
-  width: 7px;
-
-  aspect-ratio: 34 / 35;
-
-  background-size:
-    3688.235% auto;
-
-  background-position:
-    17.049% 81.706%;
-
-  --petal-opacity: .38;
-
-  transform:
-    rotate(-42deg);
-}
-
-
-.p02-petal--10 {
-  left: 250px;
-  top: 463px;
-
-  width: 8px;
-
-  aspect-ratio: 56 / 50;
-
-  background-size:
-    2239.286% auto;
-
-  background-position:
-    7.596% 84.967%;
-
-  --petal-opacity: .37;
-
-  transform:
-    rotate(26deg);
-}
-
-
-.p02-petal--11 {
-  left: 140px;
-  top: 470px;
-
-  width: 8px;
-
-  aspect-ratio: 59 / 44;
-
-  background-size:
-    2125.424% auto;
-
-  background-position:
-    50.293% 87.438%;
-
-  --petal-opacity: .32;
-
-  transform:
-    rotate(-21deg);
-}
-
-
-.p02-petal--12 {
-  left: 207px;
-  top: 477px;
-
-  width: 7px;
-
-  aspect-ratio: 50 / 49;
-
-  background-size:
-    2508% auto;
-
-  background-position:
-    29.734% 93.444%;
-
-  --petal-opacity: .36;
-
-  transform:
-    rotate(39deg);
-}
-
-
-.p02-petal--13 {
-  left: 289px;
-  top: 484px;
-
-  width: 8px;
-
-  aspect-ratio: 57 / 47;
-
-  background-size:
-    2200% auto;
-
-  background-position:
-    63.241% 95.443%;
-
-  --petal-opacity: .35;
-
-  transform:
-    rotate(-33deg);
-}
-
-
-.p02-petal--14 {
-  left: 70px;
-  top: 477px;
-
-  width: 7px;
-
-  aspect-ratio: 55 / 44;
-
-  background-size:
-    2280% auto;
-
-  background-position:
-    50.125% 95.785%;
-
-  --petal-opacity: .30;
-
-  transform:
-    rotate(19deg);
-}
-
-
-/* PROCESSION */
-
-.p02-procession {
-  position: absolute;
-
-  z-index: 30;
-
-  left: 0;
-  bottom: 39px;
-
-  width: 390px;
-  height: 196px;
-
-  pointer-events: none;
-}
-
-
-.p02-procession-item {
-  bottom: 0;
-
-  width: auto;
-
-  max-width: none;
-
-  object-fit: contain;
-
-  transform-origin:
-    50% 100%;
-}
-
-
-.p02-flag-bearer {
-  z-index: 31;
-
-  left: -8px;
-
-  height: 163px;
-}
-
-
-.p02-couple {
-  z-index: 34;
-
-  left: 88px;
-
-  height: 123px;
-}
-
-
-.p02-lion-dance {
-  z-index: 33;
-
-  left: 127px;
-  bottom: 1px;
-
-  height: 174px;
-}
-
-
-.p02-drummer {
-  z-index: 32;
-
-  right: -6px;
-
-  height: 122px;
-}
-
-
-.p02-bottom-ornament {
-  z-index: 36;
-
-  left: 50%;
-  bottom: -16px;
-
-  width: 168px;
-
-  transform:
-    translateX(-50%);
-}
-
-
-/* =========================================================
-   =========================================================
-   PAGE 03 — AGENDA
-   =========================================================
-========================================================= */
-
-.page03-layout {
-  position: relative;
-
-  z-index: 1;
-
-  width: 390px;
-  height: 680px;
-
-  overflow: hidden;
-
-  background:
-    #f1dfbd;
-
-  isolation: isolate;
-}
-
-
-.p03-background {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 0;
-
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-
-  pointer-events: none;
-}
-
-
-.p03-frame {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 5;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: fill;
-
-  pointer-events: none;
-}
-
-
-.p03-cloud,
-.p03-title-divider,
-.p03-timeline,
-.p03-number,
-.p03-illustration,
-.p03-bottom-ornament {
-  position: absolute;
-
-  display: block;
-
-  max-width: none;
-
-  height: auto;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-.p03-title {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 38px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 30px;
-
-  line-height: 1;
-
-  font-weight: 400;
-
-  letter-spacing:
-    .03em;
-
-  color:
-    #405d48;
-}
-
-
-.p03-title-divider {
-  z-index: 20;
-
-  left: 50%;
-  top: 81px;
-
-  width: 112px;
-
-  transform:
-    translateX(-50%);
-}
-
-
-.p03-cloud {
-  z-index: 8;
-
-  opacity: .82;
-}
-
-
-.p03-cloud--01 {
-  left: 25px;
-  top: 68px;
-
-  width: 72px;
-}
-
-
-.p03-cloud--02 {
-  left: 38px;
-  top: 142px;
-
-  width: 47px;
-}
-
-
-.p03-cloud--03 {
-  right: 22px;
-  top: 144px;
-
-  width: 66px;
-}
-
-
-.p03-cloud--04 {
-  right: 26px;
-  top: 284px;
-
-  width: 49px;
-}
-
-
-.p03-timeline {
-  z-index: 14;
-
-  left: 142px;
-  top: 105px;
-
-  width: auto;
-  height: 466px;
-}
-
-
-.p03-number {
-  z-index: 18;
-
-  width: 25px;
-}
-
-
-.p03-number--01 {
-  left: 130px;
-  top: 116px;
-}
-
-
-.p03-number--02 {
-  left: 130px;
-  top: 258px;
-}
-
-
-.p03-number--03 {
-  left: 130px;
-  top: 383px;
-}
-
-
-.p03-number--04 {
-  left: 130px;
-  top: 494px;
-}
-
-
-.p03-illustration {
-  z-index: 12;
-}
-
-
-.p03-trap {
-  left: 34px;
-  top: 151px;
-
-  width: 116px;
-}
-
-
-.p03-kieu {
-  left: 27px;
-  top: 286px;
-
-  width: 123px;
-}
-
-
-.p03-mam-co {
-  left: 30px;
-  top: 420px;
-
-  width: 122px;
-}
-
-
-.p03-cheers {
-  left: 68px;
-  top: 519px;
-
-  width: 65px;
-}
-
-
-.p03-event {
-  position: absolute;
-
-  z-index: 22;
-
-  left: 201px;
-
-  width: 165px;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  color:
-    #304c3c;
-}
-
-
-.p03-event h3,
-.p03-event p {
-  margin: 0;
-}
-
-
-.p03-event-title {
-  margin-bottom:
-    8px !important;
-
-  color:
-    #ad4629;
-
-  font-size: 17px;
-
-  line-height: 1;
-
-  font-weight: 400;
-
-  white-space: nowrap;
-}
-
-
-.p03-event-date {
-  margin-bottom:
-    5px !important;
-
-  color:
-    #ad4629;
-
-  font-size: 12px;
-
-  line-height: 1.1;
-
-  white-space: nowrap;
-}
-
-
-.p03-event-time {
-  margin-bottom:
-    10px !important;
-
-  color:
-    #304c3c;
-
-  font-size: 11px;
-
-  line-height: 1.1;
-
-  white-space: nowrap;
-}
-
-
-.p03-event--01 {
-  top: 119px;
-}
-
-
-.p03-event--02 {
-  top: 270px;
-}
-
-
-.p03-event--03 {
-  top: 392px;
-}
-
-
-.p03-event--04 {
-  top: 501px;
-}
-
-
-.p03-location {
-  position: relative;
-
-  display: flex;
-
-  align-items:
-    flex-start;
-
-  gap: 8px;
-
-  margin-top: 7px;
-
-  font-size: 9.5px;
-
-  line-height: 1.42;
-
-  color:
-    #304c3c;
-}
-
-
-.p03-location > div {
-  display: flex;
-
-  flex-direction: column;
-
-  min-width: 0;
-}
-
-
-.p03-location strong {
-  display: block;
-
-  margin-bottom: 2px;
-
-  font-size: 10px;
-
-  font-weight: 400;
-}
-
-
-.p03-location span {
-  display: block;
-}
-
-
-.p03-location-pin {
-  position: relative;
-
-  flex:
-    0 0 auto;
-
-  width: 8px;
-  height: 8px;
-
-  margin-top: 2px;
-
-  border-radius:
-    50% 50% 50% 0;
-
-  background:
-    #b64b2d;
-
-  transform:
-    rotate(-45deg);
-}
-
-
-.p03-location-pin::after {
-  content: "";
-
-  position: absolute;
-
-  left: 2.5px;
-  top: 2.5px;
-
-  width: 3px;
-  height: 3px;
-
-  border-radius: 50%;
-
-  background:
-    #f3dfb8;
-}
-
-
-.p03-dress-code {
-  position: absolute;
-
-  z-index: 21;
-
-  left: 50%;
-  bottom: 36px;
-
-  width: 250px;
-  height: 70px;
-
-  transform:
-    translateX(-50%);
-
-  padding:
-    8px 14px 7px;
-
-  background:
-    rgba(248, 237, 211, .88);
-
-  box-shadow:
-    0 4px 12px
-    rgba(104, 74, 38, .08);
-
-  text-align: center;
-}
-
-
-.p03-dress-code::before {
-  content: "";
-
-  position: absolute;
-
-  left: -11px;
-  top: -5px;
-
-  width: 33px;
-  height: 10px;
-
-  background:
-    rgba(207, 165, 102, .32);
-
-  transform:
-    rotate(-34deg);
-}
-
-
-.p03-dress-title {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 8px;
-
-  margin:
-    0 0 7px;
-
-  color:
-    #405d48;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 12px;
-
-  line-height: 1;
-
-  font-weight: 600;
-}
-
-
-.p03-dress-title span {
-  color:
-    #c38d31;
-
-  font-size: 9px;
-}
-
-
-.p03-color-list {
-  display: flex;
-
-  justify-content: center;
-
-  gap: 13px;
-}
-
-
-.p03-color-item {
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  gap: 3px;
-
-  color:
-    #3e4539;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 7px;
-
-  line-height: 1;
-}
-
-
-.p03-color {
-  display: block;
-
-  width: 27px;
-  height: 27px;
-
-  border-radius: 50%;
-}
-
-
-.p03-color--white {
-  background:
-    #f8f3e8;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, .95);
-}
-
-
-.p03-color--beige {
-  background:
-    #e5c9a6;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, .75);
-}
-
-
-.p03-color--black {
-  background:
-    #273528;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, .6);
-}
-
-
-.p03-color--gold {
-  background:
-    #d09a42;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, .65);
-}
-
-
-.p03-bottom-ornament {
-  z-index: 30;
-
-  left: 50%;
-  bottom: -14px;
-
-  width: 158px;
-
-  transform:
-    translateX(-50%);
-}
-
-
-/* =========================================================
-   =========================================================
-   PAGE 04 — LOCATION
-   =========================================================
-========================================================= */
-
-.page04-layout {
-  position: relative;
-
-  z-index: 1;
-
-  width: 390px;
-  height: 680px;
-
-  overflow: hidden;
-
-  background:
-    #f1dfbd;
-
-  isolation: isolate;
-}
-
-
-/* BACKGROUND */
-
-.p04-background {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 0;
-
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-
-  object-position:
-    center;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* FRAME */
-
-.p04-frame {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 5;
-
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: fill;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* COMMON */
-
-.p04-cloud,
-.p04-map,
-.p04-card-frame,
-.p04-card-icon,
-.p04-arrow,
-.p04-bottom-ornament {
-  position: absolute;
-
-  display: block;
-
-  max-width: none;
-
-  height: auto;
-
-  user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* =========================================================
-   PAGE 04 CLOUDS
-========================================================= */
-
-.p04-cloud {
-  z-index: 8;
-
-  pointer-events: none;
-
-  opacity: .76;
-}
-
-
-.p04-cloud--01 {
-  left: 67px;
-  top: 55px;
-
-  width: 69px;
-}
-
-
-.p04-cloud--02 {
-  right: 55px;
-  top: 42px;
-
-  width: 65px;
-}
-
-
-/* =========================================================
-   PAGE 04 TITLE
-========================================================= */
-
-.p04-couple-label {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 77px;
-
-  width: 250px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  color:
-    #a23c23;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 19px;
-
-  line-height: 1;
-
-  font-weight: 400;
-}
-
-
-.p04-title-ampersand {
-  color:
-    #315544;
-}
-
-
-.p04-title {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 103px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%)
-    scaleX(.88);
-
-  transform-origin:
-    50% 50%;
-
-  color:
-    #9f301c;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 38px;
-
-  line-height: .95;
-
-  font-weight: 400;
-
-  letter-spacing:
-    .015em;
-}
-
-
-.p04-subtitle {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 149px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 7px;
-
-  width: 340px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  color:
-    #345849;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 10.5px;
-
-  line-height: 1;
-
-  font-weight: 600;
-
-  white-space: nowrap;
-}
-
-
-.p04-subtitle-symbol {
-  color:
-    #a43c24;
-
-  font-size: 10px;
-}
-
-
-/* =========================================================
-   PAGE 04 MAP
-
-   Asset được giữ nguyên tỷ lệ.
-   Không stretch.
-========================================================= */
-
-.p04-map {
-  z-index: 10;
-
-  left: 50%;
-  top: 169px;
-
-  width: 276px;
-
-  transform:
-    translateX(-50%);
-
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   PAGE 04 INFO CARDS
-========================================================= */
-
-.p04-info-card {
-  position: absolute;
-
-  z-index: 25;
-
-  top: 579px;
-
-  width: 170px;
-  height: 64px;
-
-  overflow: hidden;
-
-  background:
-    rgba(244, 229, 197, .16);
-}
-
-
-.p04-hotel-card {
-  left: 20px;
-}
-
-
-.p04-link-card {
-  right: 20px;
-
-  cursor: pointer;
-
-  touch-action:
-    manipulation;
-}
-
-
-.p04-card-frame {
-  z-index: 0;
-
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: fill;
-
-  pointer-events: none;
-}
-
-
-.p04-card-content {
-  position: absolute;
-
-  z-index: 2;
-
-  inset: 0;
-
-  display: flex;
-
-  align-items: center;
-
-  padding:
-    8px 9px;
-}
-
-
-/* =========================================================
-   PAGE 04 HOTEL CARD
-========================================================= */
-
-.p04-card-icon {
-  position: relative;
-
-  flex:
-    0 0 auto;
-
-  pointer-events: none;
-}
-
-
-.p04-hotel-icon {
-  width: 27px;
-  height: 32px;
-
-  object-fit: contain;
-}
-
-
-.p04-card-text {
-  display: flex;
-
-  flex: 1 1 auto;
-
-  flex-direction: column;
-
-  justify-content: center;
-
-  min-width: 0;
-
-  margin-left: 7px;
-}
-
-
-.p04-card-title {
-  display: block;
-
-  margin-bottom: 5px;
-
-  color:
-    #a13a23;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 9.4px;
-
-  line-height: 1.05;
-
-  font-weight: 600;
-
-  white-space: nowrap;
-}
-
-
-.p04-card-description {
-  display: block;
-
-  color:
-    #345447;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 7.7px;
-
-  line-height: 1.28;
-
-  white-space: nowrap;
-}
-
-
-/* =========================================================
-   PAGE 04 LINK CARD
-========================================================= */
-
-.p04-location-icon {
-  width: 29px;
-  height: 31px;
-
-  object-fit: contain;
-}
-
-
-.p04-link-card
-.p04-card-text {
-  margin-left: 8px;
-
-  padding-right: 17px;
-}
-
-
-.p04-link-card
-.p04-card-title {
-  margin-bottom: 7px;
-
-  font-size: 10.5px;
-}
-
-
-.p04-link-card
-.p04-card-description {
-  font-size: 8.5px;
-}
-
-
-.p04-arrow {
-  position: absolute;
-
-  z-index: 3;
-
-  right: 10px;
-  top: 50%;
-
-  width: 17px;
-
-  transform:
-    translateY(-50%);
-
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   PAGE 04 BOTTOM ORNAMENT
-========================================================= */
-
-.p04-bottom-ornament {
-  z-index: 32;
-
-  left: 50%;
-  bottom: -14px;
-
-  width: 158px;
-
-  transform:
-    translateX(-50%);
-
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   =========================================================
-   PAGE 01 ENVELOPE
-   =========================================================
-========================================================= */
 
 .envelope-button {
   position: absolute;
-
   left: 50%;
-
-  top:
-    calc(14.5% + 18px);
-
+  top: calc(14.5% + 18px);
   width: 82%;
-
   max-width: 352px;
-
-  aspect-ratio:
-    2 / 3;
-
-  transform:
-    translateX(-50%);
-
+  aspect-ratio: 2 / 3;
+  transform: translateX(-50%);
   margin: 0;
   padding: 0;
-
   border: 0;
   outline: none;
-
-  background:
-    transparent;
-
+  background: transparent;
   cursor: pointer;
-
-  touch-action:
-    manipulation;
-
+  touch-action: manipulation;
   overflow: visible;
 }
-
 
 .envelope-stage {
   position: absolute;
-
   inset: 0;
-
   display: block;
-
   overflow: visible;
-
-  transform:
-    translateZ(0);
-
-  transform-origin:
-    50% 58%;
-
-  filter:
-    drop-shadow(
-      0 12px 9px
-      rgba(62, 24, 14, .16)
-    );
-
-  transition:
-    filter .62s ease;
+  transform: translateZ(0);
+  transform-origin: 50% 58%;
+  filter: drop-shadow(0 12px 9px rgba(62, 24, 14, 0.16));
+  transition: filter 0.62s ease;
 }
-
 
 .envelope-closed,
 .envelope-open-body,
@@ -2347,2760 +162,361 @@ a {
 .envelope-open-flap,
 .invitation-card {
   position: absolute;
-
   display: block;
-
   max-width: none;
-
   user-select: none;
-
   pointer-events: none;
-
-  -webkit-user-select:
-    none;
-
-  -webkit-user-drag:
-    none;
 }
-
 
 .envelope-closed {
   z-index: 30;
-
   inset: 0;
-
   width: 100%;
   height: 100%;
-
-  object-fit:
-    contain;
-
+  object-fit: contain;
   opacity: 1;
-
-  transform:
-    translate3d(
-      0,
-      var(--body-offset-closed),
-      0
-    )
-    scale(1);
-
-  transform-origin:
-    50% 50%;
+  transform: translate3d(0, var(--body-offset-closed), 0) scale(1);
+  transform-origin: 50% 50%;
 
   animation:
     closedEnvelopeCue
     2.6s
-    cubic-bezier(.22, .75, .22, 1)
+    cubic-bezier(0.22, 0.75, 0.22, 1)
     infinite;
 
   transition:
-    opacity .28s ease,
-    transform .56s
-      cubic-bezier(.22, .61, .36, 1);
+    opacity 0.28s ease,
+    transform 0.56s cubic-bezier(0.22, 0.61, 0.36, 1);
 
-  will-change:
-    transform,
-    opacity;
+  will-change: transform, opacity;
 }
-
 
 .envelope-open {
   position: absolute;
-
   inset: 0;
-
   z-index: 10;
-
   width: 100%;
   height: 100%;
-
   overflow: visible;
-
   opacity: 0;
-
   pointer-events: none;
-
-  transition:
-    opacity .18s ease;
+  transition: opacity 0.18s ease;
 }
 
-
-.envelope-button.is-open
-.envelope-open {
+.envelope-button.is-open .envelope-open {
   pointer-events: auto;
 }
 
-
 .envelope-open-flap {
   z-index: 9;
-
   left: 50%;
   bottom: 80%;
-
   width: 68%;
   height: auto;
-
   opacity: 0;
-
-  transform-origin:
-    50% 100%;
+  transform-origin: 50% 100%;
 
   transform:
     translateX(-50%)
     translateY(6px)
-    scaleX(.97)
-    scaleY(.03);
+    scaleX(0.97)
+    scaleY(0.03);
 
   transition:
-    transform .52s
-      cubic-bezier(.22, .61, .36, 1),
-    opacity .12s ease;
+    transform 0.52s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.12s ease;
 
-  will-change:
-    transform,
-    opacity;
+  will-change: transform, opacity;
 }
-
 
 .envelope-open-body {
   z-index: 11;
-
   left: 0;
   top: 0;
-
   width: 100%;
   height: 100%;
-
-  object-fit:
-    contain;
-
+  object-fit: contain;
   opacity: 1;
-
-  transform:
-    translate3d(
-      0,
-      var(--body-offset-closed),
-      0
-    );
-
-  transform-origin:
-    50% 50%;
+  transform: translate3d(0, var(--body-offset-closed), 0);
+  transform-origin: 50% 50%;
 
   transition:
-    transform .56s
-      cubic-bezier(.22, .61, .36, 1),
-    opacity .22s ease;
+    transform 0.56s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.22s ease;
 
-  will-change:
-    transform;
+  will-change: transform;
 }
-
 
 .invitation-card {
   z-index: 13;
-
   top: 0;
-
-  left:
-    calc(
-      (100% - var(--card-width))
-      / 2
-    );
-
-  width:
-    var(--card-width);
-
+  left: calc((100% - var(--card-width)) / 2);
+  width: var(--card-width);
   height: auto;
-
   opacity: 0;
 
   transform:
     translate3d(
       0,
-      calc(
-        var(--body-offset-open)
-        + 128px
-      ),
+      calc(var(--body-offset-open) + 128px),
       0
     );
 
-  transform-origin:
-    50% 50%;
-
-  filter:
-    drop-shadow(
-      0 8px 8px
-      rgba(77, 42, 22, .08)
-    );
+  transform-origin: 50% 50%;
+  filter: drop-shadow(0 8px 8px rgba(77, 42, 22, 0.08));
 
   transition:
-    transform .62s
-      cubic-bezier(.16, .78, .18, 1),
-    opacity .16s ease;
+    transform 0.62s cubic-bezier(0.16, 0.78, 0.18, 1),
+    opacity 0.16s ease;
 
-  will-change:
-    transform,
-    opacity;
+  will-change: transform, opacity;
 }
 
-
-.envelope-button.is-open
-.invitation-card {
+.envelope-button.is-open .invitation-card {
   pointer-events: auto;
-
   cursor: pointer;
 }
 
-
-/* IMPORTANT:
-   front giữ đúng baseline đã chốt */
-
+/* Baseline đã chốt: front không shift ngang / không scaleX */
 .envelope-open-front {
   z-index: 14;
-
   left: 0;
   top: 0;
-
   width: 100%;
   height: 100%;
-
-  object-fit:
-    contain;
-
+  object-fit: contain;
   opacity: 1;
-
-  transform:
-    translate3d(
-      0,
-      var(--body-offset-closed),
-      0
-    );
-
-  transform-origin:
-    50% 50%;
+  transform: translate3d(0, var(--body-offset-closed), 0);
+  transform-origin: 50% 50%;
 
   transition:
-    transform .56s
-      cubic-bezier(.22, .61, .36, 1),
-    opacity .22s ease;
+    transform 0.56s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.22s ease;
 
-  will-change:
-    transform;
+  will-change: transform;
 }
-
 
 .monogram-pulse {
   position: absolute;
-
   z-index: 40;
-
   left: 50%;
-
-  top:
-    calc(
-      60.5%
-      + var(--body-offset-closed)
-    );
-
+  top: calc(60.5% + var(--body-offset-closed));
   width: 31%;
-
-  aspect-ratio:
-    1;
-
-  border-radius:
-    50%;
-
-  transform:
-    translate(-50%, -50%);
-
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
   pointer-events: none;
 
   transition:
-    opacity .22s ease,
-    transform .22s ease;
+    opacity 0.22s ease,
+    transform 0.22s ease;
 }
-
 
 .monogram-pulse::before,
 .monogram-pulse::after {
   content: "";
-
   position: absolute;
-
   inset: 0;
-
-  border:
-    1.5px solid
-    rgba(237, 196, 96, .52);
-
-  border-radius:
-    50%;
-
+  border: 1.5px solid rgba(237, 196, 96, 0.52);
+  border-radius: 50%;
   opacity: 0;
-
-  animation:
-    tapRing
-    2.4s
-    ease-out
-    infinite;
+  animation: tapRing 2.4s ease-out infinite;
 }
-
 
 .monogram-pulse::after {
-  animation-delay:
-    1.2s;
+  animation-delay: 1.2s;
 }
 
-
-/* =========================================================
-   PAGE 01 INTERACTION
-========================================================= */
-
-.envelope-button:not(.is-open):hover
-.envelope-stage,
-
-.envelope-button:not(.is-open):focus-visible
-.envelope-stage {
-  filter:
-    drop-shadow(
-      0 16px 12px
-      rgba(62, 24, 14, .20)
-    );
+.envelope-button:not(.is-open):hover .envelope-stage,
+.envelope-button:not(.is-open):focus-visible .envelope-stage {
+  filter: drop-shadow(0 16px 12px rgba(62, 24, 14, 0.20));
 }
 
-
-.envelope-button:not(.is-open):hover
-.envelope-closed,
-
-.envelope-button:not(.is-open):focus-visible
-.envelope-closed {
-  animation-play-state:
-    paused;
-
+.envelope-button:not(.is-open):hover .envelope-closed,
+.envelope-button:not(.is-open):focus-visible .envelope-closed {
+  animation-play-state: paused;
   transform:
-    translate3d(
-      0,
-      calc(
-        var(--body-offset-closed)
-        - 4px
-      ),
-      0
-    )
+    translate3d(0, calc(var(--body-offset-closed) - 4px), 0)
     scale(1.01);
 }
 
-
-.envelope-button:not(.is-open):active
-.envelope-closed {
+.envelope-button:not(.is-open):active .envelope-closed {
   transform:
-    translate3d(
-      0,
-      calc(
-        var(--body-offset-closed)
-        - 1px
-      ),
-      0
-    )
-    scale(.997);
+    translate3d(0, calc(var(--body-offset-closed) - 1px), 0)
+    scale(0.997);
 }
-
 
 .envelope-button:focus-visible {
   outline: none;
 }
 
-
-/* OPEN */
-
-.envelope-button.is-open
-.envelope-stage {
-  filter:
-    drop-shadow(
-      0 14px 10px
-      rgba(62, 24, 14, .18)
-    );
+.envelope-button.is-open .envelope-stage {
+  filter: drop-shadow(0 14px 10px rgba(62, 24, 14, 0.18));
 }
 
-
-.envelope-button.is-open
-.envelope-open {
+.envelope-button.is-open .envelope-open {
   opacity: 1;
-
-  transition-delay:
-    .02s;
+  transition-delay: 0.02s;
 }
 
-
-.envelope-button.is-open
-.envelope-closed {
+.envelope-button.is-open .envelope-closed {
   animation: none;
-
   opacity: 0;
-
-  transform:
-    translate3d(
-      0,
-      var(--body-offset-open),
-      0
-    )
-    scale(1);
+  transform: translate3d(0, var(--body-offset-open), 0) scale(1);
 }
 
-
-.envelope-button.is-open
-.envelope-open-body {
-  transform:
-    translate3d(
-      0,
-      var(--body-offset-open),
-      0
-    );
+.envelope-button.is-open .envelope-open-body {
+  transform: translate3d(0, var(--body-offset-open), 0);
 }
 
-
-.envelope-button.is-open
-.invitation-card {
+.envelope-button.is-open .invitation-card {
   opacity: 1;
-
-  transform:
-    translate3d(
-      0,
-      calc(
-        var(--body-offset-open)
-        - 36px
-      ),
-      0
-    );
-
-  transition-delay:
-    .16s;
+  transform: translate3d(0, calc(var(--body-offset-open) - 36px), 0);
+  transition-delay: 0.16s;
 }
 
-
-.envelope-button.is-open
-.envelope-open-front {
-  transform:
-    translate3d(
-      0,
-      var(--body-offset-open),
-      0
-    );
+.envelope-button.is-open .envelope-open-front {
+  transform: translate3d(0, var(--body-offset-open), 0);
 }
 
-
-.envelope-button.is-open
-.envelope-open-flap {
+.envelope-button.is-open .envelope-open-flap {
   opacity: 1;
-
   transform:
     translateX(-50%)
     translateY(0)
-    scaleX(
-      var(--open-flap-scale-x)
-    )
+    scaleX(var(--open-flap-scale-x))
     scaleY(1);
 }
 
-
-.envelope-button.is-open
-.monogram-pulse {
+.envelope-button.is-open .monogram-pulse {
   opacity: 0;
-
-  transform:
-    translate(-50%, -50%);
-}
-
-
-/* =========================================================
-   ANIMATIONS
-========================================================= */
-
-@keyframes closedEnvelopeCue {
-
-  0%,
-  60%,
-  100% {
-    transform:
-      translate3d(
-        0,
-        var(--body-offset-closed),
-        0
-      )
-      scale(1)
-      rotate(0deg);
-  }
-
-  70% {
-    transform:
-      translate3d(
-        0,
-        calc(
-          var(--body-offset-closed)
-          - 4px
-        ),
-        0
-      )
-      scale(1.012)
-      rotate(0deg);
-  }
-
-  78% {
-    transform:
-      translate3d(
-        0,
-        calc(
-          var(--body-offset-closed)
-          - 4px
-        ),
-        0
-      )
-      scale(1.012)
-      rotate(-.35deg);
-  }
-
-  86% {
-    transform:
-      translate3d(
-        0,
-        calc(
-          var(--body-offset-closed)
-          - 4px
-        ),
-        0
-      )
-      scale(1.012)
-      rotate(.35deg);
-  }
-
-  94% {
-    transform:
-      translate3d(
-        0,
-        var(--body-offset-closed),
-        0
-      )
-      scale(1)
-      rotate(0deg);
-  }
-}
-
-
-@keyframes tapRing {
-
-  0% {
-    transform:
-      scale(.52);
-
-    opacity: 0;
-  }
-
-  18% {
-    opacity: .5;
-  }
-
-  72% {
-    opacity: .14;
-  }
-
-  100% {
-    transform:
-      scale(1.18);
-
-    opacity: 0;
-  }
-}
-
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-@media
-(prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
-    animation-duration:
-      .001ms !important;
-
-    animation-iteration-count:
-      1 !important;
-
-    transition-duration:
-      .001ms !important;
-  }
-
+  transform: translate(-50%, -50%);
 }
 
 /* =========================================================
-   INVITATION FLOW
-   NATURAL HEIGHT
-
-   Từ Page 05 trở đi không cần tính tổng height bằng tay.
+   PAGE 02+ — SINGLE SCROLL CONTAINER
 ========================================================= */
+
+.page-02 {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 390px;
+  height: 680px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  background: var(--invitation-paper);
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  pointer-events: none;
+
+  scrollbar-width: none;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+
+  transition:
+    opacity 0.48s ease,
+    transform 0.58s cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  will-change: opacity, transform;
+}
+
+.page-02::-webkit-scrollbar {
+  display: none;
+}
+
+.site-shell.is-page-02 .opening-page {
+  opacity: 0;
+  transform: translate3d(0, -16px, 0);
+  pointer-events: none;
+}
+
+.site-shell.is-page-02 .page-02 {
+  z-index: 3;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  pointer-events: auto;
+}
 
 .invitation-flow {
+  position: relative;
+  width: 390px;
   height: auto;
   min-height: 0;
-}
-
-
-/* =========================================================
-   =========================================================
-   PAGE 05 — OUR LOVE STORY
-   =========================================================
-========================================================= */
-
-.page05-layout {
-  position: relative;
-
-  z-index: 1;
-
-  width: 390px;
-  height: 680px;
-
-  overflow: hidden;
-
-  background:
-    #f1dfbd;
-
+  overflow: visible;
+  background: #f1dfbd;
   isolation: isolate;
 }
 
-
-/* =========================================================
-   PAGE 05 BACKGROUND
-========================================================= */
-
-.p05-background {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 0;
-
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  max-width: none;
-
-  object-fit: cover;
-
-  object-position:
-    center center;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* =========================================================
-   PAGE 05 OUTER FRAME
-
-   Dùng page02-frame.png
-========================================================= */
-
-.p05-frame {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 5;
-
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  max-width: none;
-
-  object-fit: fill;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* =========================================================
-   PAGE 05 TITLE
-========================================================= */
-
-.p05-title {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 40px;
-
-  width: 350px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%)
-    scaleX(.91);
-
-  transform-origin:
-    50% 50%;
-
-  text-align: center;
-
-  color:
-    #9f301c;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 31px;
-
-  line-height: 1;
-
-  font-weight: 400;
-
-  letter-spacing:
-    .01em;
-
-  white-space: nowrap;
-}
-
-
-/* =========================================================
-   PAGE 05 TITLE DIVIDER
-========================================================= */
-
-.p05-title-divider {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 79px;
-
-  width: 82px;
-  height: 10px;
-
-  transform:
-    translateX(-50%);
-
-  pointer-events: none;
-}
-
-
-.p05-title-divider::before,
-.p05-title-divider::after {
-  content: "";
-
-  position: absolute;
-
-  top: 50%;
-
-  width: 32px;
-  height: 1px;
-
-  background:
-    rgba(169, 125, 57, .72);
-}
-
-
-.p05-title-divider::before {
-  left: 0;
-}
-
-
-.p05-title-divider::after {
-  right: 0;
-}
-
-
-.p05-title-divider span {
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 6px;
-  height: 6px;
-
-  border:
-    1px solid
-    #ad823f;
-
-  transform:
-    translate(-50%, -50%)
-    rotate(45deg);
-}
-
-
-.p05-title-divider span::before {
-  content: "";
-
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 2px;
-  height: 2px;
-
-  border-radius: 50%;
-
-  background:
-    #ad823f;
-
-  transform:
-    translate(-50%, -50%);
-}
-
-
-/* =========================================================
-   PAGE 05 QUOTE
-========================================================= */
-
-.p05-quote {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 91px;
-
-  width: 330px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  color:
-    #3c5b49;
-
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
-
-  font-size: 11.5px;
-
-  line-height: 1.34;
-
-  font-style: italic;
-
-  font-weight: 400;
-}
-
-
-/* =========================================================
-   PAGE 05 PHOTO WRAP
-========================================================= */
-
-.p05-photo-wrap {
-  position: absolute;
-
-  z-index: 15;
-
-  left: 50%;
-  top: 128px;
-
-  width: 246px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-}
-
-
-/* =========================================================
-   PHOTO PLACEHOLDER
-
-   Hiện chưa có ảnh cô dâu chú rể.
-========================================================= */
-
-.p05-photo-placeholder {
-  position: absolute;
-
-  z-index: 1;
-
-  left: 7px;
-  right: 7px;
-
-  top: 7px;
-  bottom: 7px;
-
-  overflow: hidden;
-
-  background:
-    rgba(234, 213, 173, .28);
-}
-
-
-/* =========================================================
-   MAIN PHOTO — dùng sau này
-========================================================= */
-
-.p05-main-photo {
-  position: absolute;
-
-  inset: 0;
-
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-
-  object-position:
-    center center;
-}
-
-
-/* =========================================================
-   PHOTO FRAME
-========================================================= */
-
-.p05-photo-frame {
+.invitation-page {
   position: relative;
-
-  z-index: 3;
-
   display: block;
-
-  width: 100%;
-  height: auto;
-
-  max-width: none;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* =========================================================
-   LOTUS COMMON
-========================================================= */
-
-.p05-lotus {
-  position: absolute;
-
-  display: block;
-
-  z-index: 22;
-
-  max-width: none;
-
-  height: auto;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* =========================================================
-   LOTUS LEFT
-========================================================= */
-
-.p05-lotus--left {
-  left: -8px;
-  top: 298px;
-
-  width: 115px;
-
-  transform:
-    rotate(-1deg);
-
-  transform-origin:
-    50% 100%;
-}
-
-
-/* =========================================================
-   LOTUS RIGHT
-========================================================= */
-
-.p05-lotus--right {
-  right: -8px;
-  top: 291px;
-
-  width: 117px;
-
-  transform:
-    rotate(1deg);
-
-  transform-origin:
-    50% 100%;
-}
-
-
-/* =========================================================
-   STORY COPY
-========================================================= */
-
-.p05-story-copy {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 397px;
-
-  width: 350px;
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  color:
-    #345447;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-}
-
-
-.p05-story-copy p {
-  margin: 0;
-
-  font-size: 8.9px;
-
-  line-height: 1.43;
-
-  font-weight: 400;
-
-  letter-spacing:
-    .003em;
-}
-
-
-/* =========================================================
-   PAGE 05 BOTTOM DIVIDER
-========================================================= */
-
-.p05-bottom-divider {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 567px;
-
-  width: 178px;
-  height: 10px;
-
-  transform:
-    translateX(-50%);
-
-  pointer-events: none;
-}
-
-
-.p05-bottom-divider::before,
-.p05-bottom-divider::after {
-  content: "";
-
-  position: absolute;
-
-  top: 50%;
-
-  width: 78px;
-  height: 1px;
-
-  background:
-    rgba(169, 125, 57, .65);
-}
-
-
-.p05-bottom-divider::before {
-  left: 0;
-}
-
-
-.p05-bottom-divider::after {
-  right: 0;
-}
-
-
-.p05-bottom-divider span {
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 6px;
-  height: 6px;
-
-  border:
-    1px solid
-    #ad823f;
-
-  transform:
-    translate(-50%, -50%)
-    rotate(45deg);
-}
-
-
-.p05-bottom-divider span::after {
-  content: "";
-
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 2px;
-  height: 2px;
-
-  border-radius: 50%;
-
-  background:
-    #ad823f;
-
-  transform:
-    translate(-50%, -50%);
-}
-
-
-/* =========================================================
-   PAGE 05 NAMES
-========================================================= */
-
-.p05-names {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 586px;
-
-  display: flex;
-
-  align-items: baseline;
-
-  justify-content: center;
-
-  gap: 10px;
-
-  width: 340px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  line-height: 1;
-
-  white-space: nowrap;
-}
-
-
-.p05-name {
-  color:
-    #9f301c;
-
-  font-size: 29px;
-
-  font-weight: 400;
-
-  transform:
-    scaleX(.87);
-
-  transform-origin:
-    50% 50%;
-}
-
-
-.p05-ampersand {
-  color:
-    #345447;
-
-  font-size: 29px;
-
-  font-weight: 400;
-}
-
-
-/* =========================================================
-   PAGE 05 DATE
-========================================================= */
-
-.p05-date {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 627px;
-
-  width: 250px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  color:
-    #9f301c;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 15px;
-
-  line-height: 1;
-
-  font-weight: 400;
-
-  letter-spacing:
-    .035em;
-}
-
-
-/* =========================================================
-   PAGE 05 BOTTOM ORNAMENT
-========================================================= */
-
-.p05-bottom-ornament {
-  position: absolute;
-
-  z-index: 32;
-
-  left: 50%;
-  bottom: -14px;
-
-  display: block;
-
-  width: 158px;
-  height: auto;
-
-  max-width: none;
-
-  transform:
-    translateX(-50%);
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-/* =========================================================
-   =========================================================
-   PAGE 06 — LUCKY NUMBER
-   =========================================================
-========================================================= */
-
-.page06-layout {
-  position: relative;
-
-  z-index: 1;
-
   width: 390px;
   height: 680px;
-
   overflow: hidden;
-
-  background:
-    #f1dfbd;
-
-  isolation: isolate;
-}
-
-
-/* =========================================================
-   BACKGROUND
-========================================================= */
-
-.p06-background {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 0;
-
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  max-width: none;
-
-  object-fit: cover;
-
-  object-position:
-    center center;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* =========================================================
-   CONFETTI
-========================================================= */
-
-.p06-confetti {
-  position: absolute;
-
-  z-index: 4;
-
-  left: 20px;
-  top: 25px;
-
-  width: 350px;
-  height: 600px;
-
-  object-fit: fill;
-
-  opacity: .86;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* =========================================================
-   CLOUD COMMON
-========================================================= */
-
-.p06-cloud {
-  position: absolute;
-
-  z-index: 8;
-
-  display: block;
-
-  max-width: none;
-
-  height: auto;
-
-  opacity: .72;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* TOP RIGHT */
-
-.p06-cloud--01 {
-  right: 35px;
-  top: 37px;
-
-  width: 92px;
-}
-
-
-/* LEFT MIDDLE */
-
-.p06-cloud--02 {
-  left: 18px;
-  top: 127px;
-
-  width: 67px;
-}
-
-
-/* RIGHT LOWER */
-
-.p06-cloud--03 {
-  right: -10px;
-  top: 332px;
-
-  width: 74px;
-}
-
-
-/* LEFT LOWER */
-
-.p06-cloud--04 {
-  left: -5px;
-  top: 409px;
-
-  width: 70px;
-}
-
-
-/* =========================================================
-   CARD WRAP
-========================================================= */
-
-.p06-card-wrap {
-  position: absolute;
-
-  z-index: 16;
-
-  left: 50%;
-  top: 158px;
-
-  width: 246px;
-
-  transform:
-    translateX(-50%);
-
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   LUCKY CARD IMAGE
-========================================================= */
-
-.p06-lucky-card {
-  position: relative;
-
-  z-index: 1;
-
-  display: block;
-
-  width: 100%;
-  height: auto;
-
-  max-width: none;
-
-  filter:
-    drop-shadow(
-      0
-      6px
-      6px
-      rgba(
-        91,
-        59,
-        24,
-        .14
-      )
-    );
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* =========================================================
-   LUCKY NUMBER TITLE
-========================================================= */
-
-.p06-title {
-  position: absolute;
-
-  z-index: 5;
-
-  left: 50%;
-  top: 86px;
-
-  width: 220px;
-
   margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  color:
-    #315747;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 23px;
-
-  line-height: 1;
-
-  font-weight: 400;
-
-  letter-spacing:
-    .005em;
-}
-
-
-/* =========================================================
-   RANDOM NUMBER SLOT
-
-   HIỆN ĐỂ TRỐNG.
-
-   Sau này set textContent bằng JS.
-========================================================= */
-
-.p06-number-slot {
-  position: absolute;
-
-  z-index: 6;
-
-  left: 50%;
-  top: 160px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  width: 205px;
-  height: 125px;
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  color:
-    #a52f15;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 94px;
-
-  line-height: 1;
-
-  font-weight: 400;
-
-  letter-spacing:
-    -.04em;
-
-  font-variant-numeric:
-    lining-nums;
-}
-
-
-/* =========================================================
-   LUCKY ITEMS COMMON
-========================================================= */
-
-.p06-lucky-item {
-  position: absolute;
-
-  display: block;
-
-  max-width: none;
-
-  height: auto;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* =========================================================
-   GOLD INGOTS
-========================================================= */
-
-.p06-ingots {
-  z-index: 25;
-
-  left: 35px;
-  bottom: 47px;
-
-  width: 75px;
-}
-
-
-/* =========================================================
-   LUCKY KNOT
-========================================================= */
-
-.p06-knot {
-  z-index: 28;
-
-  left: 97px;
-  bottom: 39px;
-
-  width: 77px;
-
-  transform:
-    rotate(-7deg);
-
-  transform-origin:
-    50% 50%;
-}
-
-
-/* =========================================================
-   LUCKY BAG
-========================================================= */
-
-.p06-bag {
-  z-index: 26;
-
-  right: 33px;
-  bottom: 46px;
-
-  width: 105px;
-}
-
-
-/* =========================================================
-   GOLD COINS
-========================================================= */
-
-.p06-coins {
-  z-index: 29;
-
-  right: 109px;
-  bottom: 38px;
-
-  width: 53px;
-
-  transform:
-    rotate(5deg);
-
-  transform-origin:
-    50% 50%;
-}
-
-
-/* =========================================================
-   FRAME
-
-   ĐỂ GẦN CUỐI LAYER
-========================================================= */
-
-.p06-frame {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 40;
-
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  max-width: none;
-
-  object-fit: fill;
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* =========================================================
-   BOTTOM ORNAMENT
-========================================================= */
-
-.p06-bottom-ornament {
-  position: absolute;
-
-  z-index: 45;
-
-  left: 50%;
-  bottom: -14px;
-
-  display: block;
-
-  width: 158px;
-  height: auto;
-
-  max-width: none;
-
-  transform:
-    translateX(-50%);
-
-  pointer-events: none;
-
-  user-select: none;
-
-  -webkit-user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-/* =========================================================
-   PAGE 07
-   GỬI LỜI CHÚC MỪNG
-   ARTBOARD: 390 x 680
-========================================================= */
-
-.page07-layout {
-  position: relative;
-
-  width: 390px;
-  height: 680px;
-
-  overflow: hidden;
-
-  background: #f4e1ba;
-
-  isolation: isolate;
-}
-
-
-/* =========================================================
-   BACKGROUND
-========================================================= */
-
-.p07-background {
-  position: absolute;
-
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-
-  z-index: 0;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-/* =========================================================
-   FRAME
-========================================================= */
-
-.p07-frame {
-  position: absolute;
-
-  left: 5px;
-  top: 5px;
-
-  width: 380px;
-  height: 670px;
-
-  object-fit: fill;
-
-  z-index: 40;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-/* =========================================================
-   CLOUDS
-========================================================= */
-
-.p07-cloud {
-  position: absolute;
-
-  height: auto;
-
-  object-fit: contain;
-
-  opacity: 0.72;
-
-  z-index: 2;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-/* top right */
-
-.p07-cloud--01 {
-  width: 82px;
-
-  top: 31px;
-  right: 40px;
-}
-
-
-/* middle left */
-
-.p07-cloud--02 {
-  width: 68px;
-
-  top: 164px;
-  left: 3px;
-}
-
-
-/* lower left */
-
-.p07-cloud--03 {
-  width: 67px;
-
-  top: 522px;
-  left: 24px;
-
-  opacity: 0.55;
-}
-
-
-/* lower right */
-
-.p07-cloud--04 {
-  width: 66px;
-
-  top: 548px;
-  right: 28px;
-
-  opacity: 0.52;
-}
-
-
-/* =========================================================
-   HANGING KNOT
-========================================================= */
-
-.p07-hanging-knot {
-  position: absolute;
-
-  width: 35px;
-  height: auto;
-
-  top: -1px;
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  z-index: 7;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-/* =========================================================
-   TITLE ORNAMENT
-========================================================= */
-
-.p07-title-ornament {
-  position: absolute;
-
-  width: 173px;
-  height: auto;
-
-  left: 50%;
-  top: 91px;
-
-  transform: translateX(-50%);
-
-  z-index: 5;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-/* =========================================================
-   TITLE
-========================================================= */
-
-.p07-title {
-  position: absolute;
-
-  width: 280px;
-
-  left: 50%;
-  top: 121px;
-
-  transform: translateX(-50%);
-
-  margin: 0;
-
-  text-align: center;
-
-  color: #9f2d17;
-
-  font-family:
-    "Times New Roman",
-    "Noto Serif",
-    serif;
-
-  font-size: 29px;
-  font-weight: 500;
-
-  line-height: 1.06;
-
-  letter-spacing: 0.2px;
-
-  z-index: 8;
-}
-
-
-/* =========================================================
-   HEADING DIVIDER
-========================================================= */
-
-.p07-heading-divider {
-  position: absolute;
-
-  width: 150px;
-  height: auto;
-
-  top: 190px;
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  z-index: 6;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-/* =========================================================
-   DESCRIPTION
-========================================================= */
-
-.p07-description {
-  position: absolute;
-
-  width: 325px;
-
-  top: 216px;
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  margin: 0;
-
-  text-align: center;
-
-  color: #5a4732;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  font-size: 11px;
-  font-weight: 400;
-
-  line-height: 1.55;
-
-  z-index: 8;
-}
-
-
-/* =========================================================
-   COMMON CARD
-========================================================= */
-
-.p07-card {
-  position: absolute;
-
-  left: 46px;
-
-  width: 298px;
-  height: 104px;
-
   padding: 0;
-
-  border: 0;
-
-  background: transparent;
-
-  appearance: none;
-
-  cursor: pointer;
-
-  text-align: left;
-
-  z-index: 12;
-}
-
-
-.p07-card--message {
-  top: 269px;
-}
-
-
-.p07-card--video {
-  top: 388px;
-}
-
-
-/* actual decorative frame */
-
-.p07-card-frame {
-  position: absolute;
-
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: fill;
-
-  z-index: 0;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-/* =========================================================
-   CARD ICON
-========================================================= */
-
-.p07-card-icon {
-  position: absolute;
-
-  object-fit: contain;
-
-  z-index: 2;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-.p07-card-icon--message {
-  width: 74px;
-
-  left: 22px;
-  top: 23px;
-}
-
-
-.p07-card-icon--video {
-  width: 78px;
-
-  left: 21px;
-  top: 29px;
-}
-
-
-/* =========================================================
-   CARD TEXT
-========================================================= */
-
-.p07-card-copy {
-  position: absolute;
-
-  display: block;
-
-  width: 152px;
-
-  left: 121px;
-  top: 27px;
-
-  z-index: 3;
-}
-
-
-.p07-card-title {
-  display: block;
-
-  color: #a2341e;
-
-  font-family:
-    "Times New Roman",
-    "Noto Serif",
-    serif;
-
-  font-size: 15px;
-  font-weight: 600;
-
-  line-height: 1.2;
-
-  white-space: nowrap;
-}
-
-
-.p07-card-description {
-  display: block;
-
-  margin-top: 8px;
-
-  color: #6c5138;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  font-size: 10.5px;
-  font-weight: 400;
-
-  line-height: 1.4;
-}
-
-
-/* =========================================================
-   CARD ARROW
-========================================================= */
-
-.p07-card-arrow {
-  position: absolute;
-
-  width: 28px;
-  height: 28px;
-
-  right: 18px;
-  top: 39px;
-
-  object-fit: contain;
-
-  z-index: 4;
-
-  pointer-events: none;
-}
-
-
-/* =========================================================
-   BUTTON INTERACTION
-========================================================= */
-
-.p07-card {
-  transition:
-    transform 160ms ease,
-    filter 160ms ease;
-}
-
-
-.p07-card:active {
-  transform: scale(0.985);
-}
-
-
-@media (hover: hover) {
-
-  .p07-card:hover {
-    filter: brightness(1.025);
-  }
-
-}
-
-
-/* =========================================================
-   FLOWER SCATTER
-========================================================= */
-
-.p07-flower-scatter {
-  position: absolute;
-
-  width: 310px;
-  height: auto;
-
-  left: 50%;
-  top: 505px;
-
-  transform: translateX(-50%);
-
-  opacity: 0.52;
-
-  z-index: 5;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-/* =========================================================
-   COUPLE
-   DÙNG page02-couple.png
-========================================================= */
-
-.p07-couple {
-  position: absolute;
-
-  width: 187px;
-  height: auto;
-
-  left: 50%;
-  bottom: -42px;
-
-  transform: translateX(-50%);
-
-  object-fit: contain;
-
-  z-index: 11;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-/* =========================================================
-   BOTTOM ORNAMENT
-========================================================= */
-
-.p07-bottom-ornament {
-  position: absolute;
-
-  width: 150px;
-  height: auto;
-
-  left: 50%;
-  bottom: -6px;
-
-  transform: translateX(-50%);
-
-  z-index: 41;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-
-/* =========================================================
-   PAGE 08
-   CẢM ƠN MỌI NGƯỜI
-   ARTBOARD: 390 x 680
-========================================================= */
-
-.page08-layout {
-  position: relative;
-
-  width: 390px;
-  height: 680px;
-
-  overflow: hidden;
-
-  background: #f4e1ba;
-
+  background: #f1dfbd;
   isolation: isolate;
 }
 
-
-/* =========================================================
-   BACKGROUND
-========================================================= */
-
+/* SHARED BACKGROUNDS */
+.p02-background,
+.p03-background,
+.p04-background,
+.p05-background,
+.p06-background,
+.p07-background,
 .p08-background {
   position: absolute;
-
   inset: 0;
-
+  z-index: 0;
+  display: block;
   width: 100%;
   height: 100%;
-
+  max-width: none;
   object-fit: cover;
-
-  z-index: 0;
-
+  object-position: center;
   pointer-events: none;
   user-select: none;
 }
 
-
-/* =========================================================
-   MAIN TEXT
-========================================================= */
-
-.p08-content {
-  position: absolute;
-
-  width: 330px;
-
-  left: 50%;
-  top: 103px;
-
-  transform: translateX(-50%);
-
-  text-align: center;
-
-  z-index: 15;
-}
-
-
-/* =========================================================
-   TITLE
-========================================================= */
-
-.p08-title {
-  margin: 0;
-
-  color: #972b15;
-
-  font-family:
-    "Times New Roman",
-    "Noto Serif",
-    serif;
-
-  font-size: 31px;
-  font-weight: 500;
-
-  line-height: 1.1;
-
-  letter-spacing: 0.8px;
-}
-
-
-/* =========================================================
-   DIVIDERS
-========================================================= */
-
-.p08-divider {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 150px;
-
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-.p08-divider span {
-  display: block;
-
-  width: 50px;
-  height: 1px;
-
-  background: #b54d31;
-}
-
-
-.p08-divider b {
-  display: block;
-
-  margin: 0 8px;
-
-  color: #a9341e;
-
-  font-size: 13px;
-  font-weight: 400;
-}
-
-
-.p08-divider--01 {
-  margin-top: 21px;
-}
-
-
-.p08-divider--02 {
-  margin-top: 19px;
-}
-
-
-/* =========================================================
-   SAVE THE DATE
-========================================================= */
-
-.p08-save-date {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  margin-top: 20px;
-
-  color: #3f6044;
-
-  font-family:
-    "Times New Roman",
-    "Noto Serif",
-    serif;
-
-  font-size: 17px;
-  font-weight: 600;
-
-  line-height: 1;
-
-  white-space: nowrap;
-}
-
-
-.p08-save-leaf {
-  display: inline-block;
-
-  color: #59704b;
-
-  font-size: 20px;
-}
-
-
-.p08-save-leaf--left {
-  margin-right: 6px;
-
-  transform: rotate(-35deg);
-}
-
-
-.p08-save-leaf--right {
-  margin-left: 6px;
-
-  transform: scaleX(-1) rotate(-35deg);
-}
-
-
-.p08-save-dot {
-  margin: 0 7px;
-
-  color: #9b321c;
-
-  font-size: 16px;
-}
-
-
-/* =========================================================
-   NAMES
-========================================================= */
-
-.p08-names {
-  margin: 22px 0 0;
-
-  color: #9b331e;
-
-  font-family:
-    "Brush Script MT",
-    "Segoe Script",
-    "Snell Roundhand",
-    cursive;
-
-  font-size: 41px;
-  font-weight: 400;
-
-  line-height: 1;
-
-  white-space: nowrap;
-}
-
-
-.p08-names span {
-  color: #4a674b;
-
-  font-family:
-    "Times New Roman",
-    serif;
-
-  font-size: 25px;
-
-  vertical-align: 5px;
-
-  margin: 0 3px;
-}
-
-
-/* =========================================================
-   DATE
-========================================================= */
-
-.p08-date {
-  margin: 16px 0 0;
-
-  color: #496647;
-
-  font-family:
-    "Times New Roman",
-    "Noto Serif",
-    serif;
-
-  font-size: 19px;
-  font-weight: 500;
-
-  letter-spacing: 2px;
-}
-
-
-/* =========================================================
-   CLOUDS
-========================================================= */
-
-.p08-cloud {
-  position: absolute;
-
-  height: auto;
-
-  opacity: 0.74;
-
-  object-fit: contain;
-
-  z-index: 4;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-.p08-cloud--left {
-  width: 77px;
-
-  left: 36px;
-  top: 402px;
-}
-
-
-.p08-cloud--right {
-  width: 68px;
-
-  right: 31px;
-  top: 365px;
-}
-
-
-/* =========================================================
-   WATER / GROUND
-========================================================= */
-
-.p08-water-ground {
-  position: absolute;
-
-  width: 300px;
-  height: auto;
-
-  left: 50%;
-  bottom: 34px;
-
-  transform: translateX(-50%);
-
-  object-fit: contain;
-
-  z-index: 4;
-
-  opacity: 0.74;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-/* =========================================================
-   TEMPLE
-========================================================= */
-
-.p08-temple-gate {
-  position: absolute;
-
-  width: 172px;
-  height: auto;
-
-  left: 52%;
-  bottom: 72px;
-
-  transform: translateX(-50%);
-
-  object-fit: contain;
-
-  z-index: 7;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-/* =========================================================
-   BAMBOO
-========================================================= */
-
-.p08-bamboo {
-  position: absolute;
-
-  width: 58px;
-  height: auto;
-
-  right: 37px;
-  bottom: 81px;
-
-  object-fit: contain;
-
-  z-index: 6;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-/* =========================================================
-   COUPLE BACK
-========================================================= */
-
-.p08-couple {
-  position: absolute;
-
-  width: 112px;
-  height: auto;
-
-  left: 76px;
-  bottom: 50px;
-
-  object-fit: contain;
-
-  z-index: 10;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-/* =========================================================
-   LOTUS LEFT
-========================================================= */
-
-.p08-lotus {
-  position: absolute;
-
-  height: auto;
-
-  object-fit: contain;
-
-  z-index: 9;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-.p08-lotus--left {
-  width: 91px;
-
-  left: 14px;
-  bottom: 36px;
-}
-
-
-.p08-lotus--right {
-  width: 112px;
-
-  right: 2px;
-  bottom: 28px;
-}
-
-
-/* =========================================================
-   FRAME
-========================================================= */
-
+/* SHARED FRAMES */
+.p02-frame,
+.p03-frame,
+.p04-frame,
+.p05-frame,
+.p06-frame,
+.p07-frame,
 .p08-frame {
   position: absolute;
-
-  left: 5px;
-  top: 5px;
-
-  width: 380px;
-  height: 670px;
-
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
   object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
 
+.p02-frame,
+.p03-frame,
+.p04-frame,
+.p05-frame {
+  z-index: 5;
+}
+
+.p06-frame,
+.p07-frame,
+.p08-frame {
   z-index: 40;
-
-  pointer-events: none;
-  user-select: none;
 }
 
-
-/* =========================================================
-   BOTTOM ORNAMENT
-========================================================= */
-
-.p08-bottom-ornament {
-  position: absolute;
-
-  width: 150px;
-  height: auto;
-
-  left: 50%;
-  bottom: -6px;
-
-  transform: translateX(-50%);
-
-  z-index: 41;
-
-  pointer-events: none;
-  user-select: none;
-}
-
-
-
-/* =========================================================
-   PAGE 07 + PAGE 08
-   IMAGE DEFAULT
-========================================================= */
-
-.page07-layout img,
-.page08-layout img {
-  -webkit-user-drag: none;
-}
-
-
-/* =========================================================
-   ACCESSIBILITY
-========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  .p07-card {
-    transition: none;
-  }
-
-}
-
-/* =========================================================
-   GLOBAL BOTTOM ORNAMENT
-   MATCH PAGE 02
-========================================================= */
-
+/* GLOBAL BOTTOM ORNAMENT — match Page 02 */
 .p02-bottom-ornament,
 .p03-bottom-ornament,
 .p04-bottom-ornament,
@@ -5108,50 +524,33 @@ a {
 .p06-bottom-ornament,
 .p07-bottom-ornament,
 .p08-bottom-ornament {
-  position: absolute !important;
-
-  z-index: 36 !important;
-
-  left: 50% !important;
-  right: auto !important;
-
-  top: auto !important;
-  bottom: -1px !important;
-
-  width: 120px !important;
-  height: auto !important;
-
-  max-width: none !important;
-
-  transform: translateX(-50%) !important;
-
-  opacity: 1 !important;
-
+  position: absolute;
+  z-index: 36;
+  left: 50%;
+  right: auto;
+  top: auto;
+  bottom: -1px;
+  display: block;
+  width: 120px;
+  height: auto;
+  max-width: none;
+  transform: translateX(-50%);
+  opacity: 1;
   pointer-events: none;
   user-select: none;
 }
 
-/* =========================================================
-   GLOBAL CLOUD ANIMATION
-   ALL PAGES
-========================================================= */
-
+/* GLOBAL CLOUD ANIMATION */
 @keyframes wedding-cloud-float {
-  0% {
-    transform: translateY(0px);
+  0%,
+  100% {
+    transform: translateY(0);
   }
 
   50% {
     transform: translateY(-5px);
   }
-
-  100% {
-    transform: translateY(0px);
-  }
 }
-
-
-/* ALL CLOUDS */
 
 .p02-cloud,
 .p03-cloud,
@@ -5159,78 +558,93 @@ a {
 .p06-cloud,
 .p07-cloud,
 .p08-cloud {
-  opacity: 1 !important;
-
-  animation-name: wedding-cloud-float !important;
-  animation-duration: 1750ms !important;
-  animation-timing-function: ease-in-out !important;
-  animation-iteration-count: infinite !important;
-  animation-delay: 0ms !important;
-}
-
-/* PAGE 03 — HIDE DRESS CODE TAPE */
-
-.p03-dress-code::before {
-  display: none !important;
+  opacity: 1;
+  animation: wedding-cloud-float 1750ms ease-in-out infinite;
 }
 
 /* =========================================================
-   PAGE 02 — CONFETTI
+   PAGE 02 — FINAL
 ========================================================= */
 
-.p02-confetti {
+.p02-cloud,
+.p02-bamboo,
+.p02-confetti,
+.p02-procession-item {
   position: absolute;
-
-  z-index: 14;
-
-  left: 50%;
-  top: 382px;
-
-  width: 320px;
-  height: auto;
-
-  transform: translateX(-50%);
-
-  opacity: 0.9;
-
-  object-fit: contain;
-
+  display: block;
+  max-width: none;
   pointer-events: none;
   user-select: none;
 }
 
-/* =========================================================
-   PAGE 02 — BAMBOO SWAY
-========================================================= */
+.p02-cloud {
+  z-index: 8;
+  height: auto;
+}
+
+.p02-cloud--01 {
+  left: 6px;
+  top: 116px;
+  width: 88px;
+}
+
+.p02-cloud--02 {
+  right: 2px;
+  top: 133px;
+  width: 80px;
+}
+
+.p02-cloud--03 {
+  left: 5px;
+  top: 190px;
+  width: 65px;
+}
+
+.p02-cloud--04 {
+  right: 25px;
+  top: 265px;
+  width: 65px;
+}
+
+.p02-bamboo-window {
+  position: absolute;
+  z-index: 9;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.p02-bamboo-window--left {
+  left: -4px;
+  top: 237px;
+  width: 85px;
+  height: 550px;
+}
+
+.p02-bamboo-window--right {
+  right: -8px;
+  top: 200px;
+  width: 110px;
+  height: 308px;
+}
+
+.p02-bamboo {
+  top: 0;
+  width: 100%;
+  height: auto;
+}
 
 @keyframes bamboo-sway-left {
   0%,
-  100% {
-    transform: rotate(0deg);
-  }
-
-  25% {
-    transform: rotate(-1.2deg);
-  }
-
-  75% {
-    transform: rotate(1deg);
-  }
+  100% { transform: rotate(0deg); }
+  25% { transform: rotate(-1.2deg); }
+  75% { transform: rotate(1deg); }
 }
 
 @keyframes bamboo-sway-right {
   0%,
-  100% {
-    transform: rotate(0deg);
-  }
-
-  25% {
-    transform: rotate(1.2deg);
-  }
-
-  75% {
-    transform: rotate(-1deg);
-  }
+  100% { transform: rotate(0deg); }
+  25% { transform: rotate(1.2deg); }
+  75% { transform: rotate(-1deg); }
 }
 
 .p02-bamboo-window--left .p02-bamboo {
@@ -5243,22 +657,1489 @@ a {
   animation: bamboo-sway-right 1750ms ease-in-out infinite;
 }
 
+.p02-invite,
+.p02-to,
+.p02-wedding-title,
+.p02-couple-names,
+.p02-date {
+  position: absolute;
+  z-index: 20;
+  left: 50%;
+  width: 320px;
+  margin: 0;
+  text-align: center;
+  transform-origin: 50% 50%;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: 400;
+  color: var(--invitation-green);
+}
+
+.p02-invite {
+  top: 45px;
+  font-size: 15px;
+  line-height: 1.15;
+  letter-spacing: 0.015em;
+  transform: translateX(-50%) scaleX(0.94);
+}
+
+.p02-divider {
+  position: absolute;
+  z-index: 20;
+  left: 50%;
+  top: 110px;
+  width: 220px;
+  height: 1px;
+  transform: translateX(-50%);
+  background: rgba(153, 111, 52, 0.72);
+}
+
+.p02-divider::after {
+  content: "•••";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  padding: 0 4px;
+  transform: translate(-50%, -56%);
+  background: #f1dfbd;
+  color: var(--invitation-gold);
+  font-size: 7px;
+  line-height: 1;
+}
+
+.p02-to {
+  top: 137px;
+  font-size: 16px;
+  line-height: 1;
+  transform: translateX(-50%) scaleX(0.8);
+}
+
+.p02-wedding-title {
+  top: 177px;
+  font-size: 22px;
+  line-height: 1;
+  transform: translateX(-50%) scaleX(0.77);
+}
+
+.p02-couple-names {
+  top: 215px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--invitation-red);
+  line-height: 0.89;
+  transform: translateX(-50%);
+}
+
+.p02-name {
+  display: block;
+  font-size: 40px;
+  font-weight: 400;
+  transform: scaleX(0.76);
+  transform-origin: 50% 50%;
+}
+
+.p02-ampersand {
+  display: block;
+  margin: 4px 0;
+  font-size: 30px;
+  line-height: 0.99;
+  color: var(--invitation-green);
+  transform: scaleX(0.92);
+}
+
+.p02-date-divider {
+  position: absolute;
+  z-index: 20;
+  left: 50%;
+  top: 340px;
+  width: 53px;
+  height: 1px;
+  transform: translateX(-50%);
+  background: rgba(153, 111, 52, 0.56);
+}
+
+.p02-date-divider::after {
+  content: "◇";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  padding: 0 3px;
+  transform: translate(-50%, -51%);
+  background: #f1dfbd;
+  color: var(--invitation-gold);
+  font-size: 8px;
+}
+
+.p02-date {
+  top: 358px;
+  font-size: 20px;
+  line-height: 1;
+  color: var(--invitation-red);
+  letter-spacing: 0.035em;
+  transform: translateX(-50%) scaleX(0.9);
+}
+
+/* Confetti giống Page 06 */
+.p02-confetti {
+  z-index: 14;
+  left: 20px;
+  top: 25px;
+  width: 350px;
+  height: 600px;
+  object-fit: fill;
+  opacity: 0.86;
+}
+
+.p02-procession {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  bottom: 39px;
+  width: 390px;
+  height: 196px;
+  pointer-events: none;
+}
+
+.p02-procession-item {
+  bottom: 0;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  transform-origin: 50% 100%;
+}
+
+.p02-flag-bearer {
+  z-index: 31;
+  left: -9px;
+  bottom: 7px;
+  height: 175px;
+}
+
+.p02-couple {
+  z-index: 34;
+  left: 74px;
+  height: 150px;
+}
+
+.p02-lion-dance {
+  z-index: 33;
+  left: 120px;
+  bottom: 6px;
+  height: 185px;
+}
+
+.p02-drummer {
+  z-index: 32;
+  right: -2px;
+  bottom: 7px;
+  height: 122px;
+}
+
+
 /* =========================================================
-   PAGE 05 — MAIN PHOTO
+   PAGE 03 — AGENDA / FINAL DEVTOOLS VALUES
 ========================================================= */
+
+.p03-cloud,
+.p03-title-divider,
+.p03-timeline,
+.p03-illustration {
+  position: absolute;
+  display: block;
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.p03-cloud {
+  z-index: 8;
+}
+
+.p03-cloud--01 {
+  left: 38px;
+  top: 68px;
+  width: 72px;
+}
+
+.p03-cloud--02 {
+  left: 16px;
+  top: 315px;
+  width: 53px;
+}
+
+.p03-cloud--03 {
+  right: 2px;
+  top: 144px;
+  width: 60px;
+}
+
+.p03-cloud--04 {
+  right: 46px;
+  top: 534px;
+  width: 59px;
+}
+
+.p03-title {
+  position: absolute;
+  z-index: 20;
+  left: 50%;
+  top: 38px;
+  margin: 0;
+  transform: translateX(-50%);
+  font-family: "Times New Roman", Times, serif;
+  font-size: 26px;
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  color: #405d48;
+}
+
+.p03-title-divider {
+  z-index: 20;
+  left: 50%;
+  top: 81px;
+  width: 112px;
+  transform: translateX(-50%);
+}
+
+.p03-timeline {
+  z-index: 14;
+  left: 142px;
+  top: 100px;
+  width: auto;
+  height: 466px;
+}
+
+.p03-illustration {
+  z-index: 12;
+}
+
+.p03-trap {
+  left: 39px;
+  top: 135px;
+  width: 125px;
+}
+
+.p03-kieu {
+  left: 195px;
+  top: 225px;
+  width: 130px;
+}
+
+.p03-mam-co {
+  left: 30px;
+  top: 330px;
+  width: 127px;
+}
+
+.p03-cheers {
+  left: 200px;
+  top: 458px;
+  width: 90px;
+}
+
+.p03-event {
+  position: absolute;
+  z-index: 22;
+  left: 201px;
+  width: 165px;
+  font-family: "Times New Roman", Times, serif;
+  color: #304c3c;
+}
+
+.p03-event h3,
+.p03-event p {
+  margin: 0;
+}
+
+.p03-event-title {
+  margin-bottom: 8px !important;
+  color: #ad4629;
+  font-size: 17px;
+  line-height: 1;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.p03-event-date {
+  margin-bottom: 5px !important;
+  color: #ad4629;
+  font-size: 12px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.p03-event-time {
+  position: relative;
+  left: 60px;
+  top: -17px;
+  margin-bottom: 10px !important;
+  color: #304c3c;
+  font-size: 11px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.p03-event--01 {
+  top: 119px;
+}
+
+.p03-event--02 {
+  left: 85px;
+  top: 257px;
+}
+
+.p03-event--03 {
+  top: 350px;
+}
+
+.p03-event--04 {
+  left: 37px;
+  top: 467px;
+}
+
+.p03-location {
+  position: relative;
+  top: -20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 7px;
+  font-size: 9.5px;
+  line-height: 1.42;
+  color: #304c3c;
+}
+
+.p03-event--01 .p03-location {
+  top: -22px;
+}
+
+.p03-location > div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.p03-location strong {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.p03-location > div > span {
+  position: relative;
+  left: -15px;
+  display: block;
+}
+
+.p03-event--04 .p03-location > div > span {
+  left: 0;
+}
+
+.p03-location-pin {
+  position: relative;
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  margin-top: 2px;
+  border-radius: 50% 50% 50% 0;
+  background: #b64b2d;
+  transform: rotate(-45deg);
+}
+
+.p03-location-pin::after {
+  content: "";
+  position: absolute;
+  left: 2.5px;
+  top: 2.5px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #f3dfb8;
+}
+
+.p03-dress-code {
+  position: absolute;
+  z-index: 21;
+  left: 50%;
+  bottom: 36px;
+  width: 250px;
+  height: 65px;
+  transform: translateX(-50%);
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  text-align: center;
+}
+
+.p03-dress-code::before {
+  display: none;
+}
+
+.p03-dress-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 0 7px;
+  color: #405d48;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 600;
+}
+
+.p03-dress-title span {
+  color: #c38d31;
+  font-size: 9px;
+}
+
+.p03-color-list {
+  display: flex;
+  justify-content: center;
+  gap: 13px;
+}
+
+.p03-color-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: #3e4539;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 9px;
+  line-height: 1;
+}
+
+.p03-color {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+
+.p03-color--white {
+  background: #f8f3e8;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+}
+
+.p03-color--beige {
+  background: #e5c9a6;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+.p03-color--black {
+  background: #273528;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+}
+
+
+/* =========================================================
+   PAGE 04 — LOCATION
+========================================================= */
+
+.p04-cloud,
+.p04-map,
+.p04-card-frame,
+.p04-card-icon {
+  position: absolute;
+  display: block;
+  max-width: none;
+  height: auto;
+  user-select: none;
+}
+
+.p04-cloud {
+  z-index: 8;
+  pointer-events: none;
+}
+
+.p04-cloud--01 {
+  left: 38px;
+  top: 48px;
+  width: 69px;
+}
+
+.p04-cloud--02 {
+  left: 283px;
+  top: 90px;
+  width: 65px;
+}
+
+.p04-title {
+  position: absolute;
+  z-index: 20;
+  left: 50%;
+  top: 70px;
+  margin: 0;
+  transform: translateX(-50%) scaleX(0.88);
+  transform-origin: 50% 50%;
+  color: #9f301c;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 36px;
+  line-height: 0.95;
+  font-weight: 400;
+  letter-spacing: 0.015em;
+}
+
+.p04-map {
+  z-index: 10;
+  left: 50%;
+  top: 125px;
+  width: 290px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.p04-info-card {
+  position: absolute;
+  z-index: 25;
+  top: 579px;
+  width: 170px;
+  height: 64px;
+  background: rgba(244, 229, 197, 0.16);
+}
+
+.p04-hotel-card {
+  left: 33px;
+  overflow: visible;
+}
+
+.p04-link-card {
+  left: 213px;
+  overflow: hidden;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.p04-card-frame {
+  z-index: 0;
+  pointer-events: none;
+  object-fit: fill;
+  opacity: 0.6;
+}
+
+.p04-hotel-card-frame {
+  inset: 0;
+  left: 5px;
+  top: -3px;
+  width: 100%;
+  height: 115%;
+}
+
+.p04-link-card-frame {
+  inset: 0;
+  left: 10px;
+  top: -3px;
+  width: 75%;
+  height: 115%;
+}
+
+.p04-card-content {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: 8px 9px;
+}
+
+.p04-card-icon {
+  position: relative;
+  flex: 0 0 auto;
+  pointer-events: none;
+}
+
+.p04-hotel-icon {
+  top: -3px;
+  width: 27px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.p04-location-icon {
+  left: 7px;
+  top: -5px;
+  width: 27px;
+  height: 31px;
+  object-fit: contain;
+}
+
+.p04-card-text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  margin-left: 7px;
+}
+
+.p04-card-title {
+  position: relative;
+  display: block;
+  margin-bottom: 5px;
+  color: #a13a23;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 9.4px;
+  line-height: 1.05;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.p04-hotel-card .p04-card-title,
+.p04-hotel-card .p04-card-description {
+  right: 4px;
+}
+
+.p04-link-card .p04-card-title {
+  left: 4px;
+  margin-bottom: 0;
+  font-size: 10.5px;
+}
+
+.p04-card-description {
+  position: relative;
+  top: -2px;
+  display: block;
+  color: #345447;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 7.7px;
+  line-height: 1.28;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   PAGE 05 — OUR LOVE STORY
+========================================================= */
+
+.p05-title {
+  position: absolute;
+  z-index: 20;
+  left: 50%;
+  top: 40px;
+  width: 350px;
+  margin: 0;
+  transform: translateX(-50%) scaleX(0.91);
+  transform-origin: 50% 50%;
+  text-align: center;
+  color: #9f301c;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 31px;
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.p05-title-divider {
+  position: absolute;
+  z-index: 20;
+  left: 50%;
+  top: 79px;
+  width: 82px;
+  height: 10px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.p05-title-divider::before,
+.p05-title-divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 32px;
+  height: 1px;
+  background: rgba(169, 125, 57, 0.72);
+}
+
+.p05-title-divider::before {
+  left: 0;
+}
+
+.p05-title-divider::after {
+  right: 0;
+}
+
+.p05-title-divider span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border: 1px solid #ad823f;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.p05-title-divider span::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #ad823f;
+  transform: translate(-50%, -50%);
+}
+
+.p05-photo-wrap {
+  position: absolute;
+  z-index: 15;
+  left: 50%;
+  top: 128px;
+  width: 246px;
+  margin: 0;
+  transform: translateX(-50%);
+}
 
 .p05-photo-placeholder {
   position: absolute;
-  inset: 0;
+  z-index: 1;
+  left: 7px;
+  right: 7px;
+  top: 7px;
+  bottom: 7px;
   overflow: hidden;
+  background: rgba(234, 213, 173, 0.28);
 }
 
 .p05-main-photo {
+  position: absolute;
+  inset: 0;
   display: block;
-
   width: 100%;
   height: 100%;
-
   object-fit: cover;
   object-position: 50% 50%;
+}
+
+.p05-photo-frame {
+  position: relative;
+  z-index: 3;
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+  user-select: none;
+}
+
+.p05-story-copy {
+  position: absolute;
+  z-index: 20;
+  left: 50%;
+  top: 397px;
+  width: 350px;
+  transform: translateX(-50%);
+  text-align: center;
+  color: #345447;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.p05-story-copy p {
+  margin: 0;
+  font-size: 8.9px;
+  line-height: 1.43;
+  font-weight: 400;
+  letter-spacing: 0.003em;
+}
+
+.p05-bottom-divider {
+  position: absolute;
+  z-index: 20;
+  left: 50%;
+  top: 567px;
+  width: 178px;
+  height: 10px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.p05-bottom-divider::before,
+.p05-bottom-divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 78px;
+  height: 1px;
+  background: rgba(169, 125, 57, 0.65);
+}
+
+.p05-bottom-divider::before {
+  left: 0;
+}
+
+.p05-bottom-divider::after {
+  right: 0;
+}
+
+.p05-bottom-divider span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border: 1px solid #ad823f;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.p05-bottom-divider span::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: #ad823f;
+  transform: translate(-50%, -50%);
+}
+
+
+/* =========================================================
+   PAGE 06 — LUCKY NUMBER
+========================================================= */
+
+.p06-confetti {
+  position: absolute;
+  z-index: 4;
+  left: 20px;
+  top: 25px;
+  width: 350px;
+  height: 600px;
+  object-fit: fill;
+  opacity: 0.86;
+  pointer-events: none;
+  user-select: none;
+}
+
+.p06-cloud {
+  position: absolute;
+  z-index: 8;
+  display: block;
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.p06-cloud--01 {
+  right: 35px;
+  top: 37px;
+  width: 92px;
+}
+
+.p06-cloud--02 {
+  left: 18px;
+  top: 127px;
+  width: 67px;
+}
+
+.p06-cloud--03 {
+  right: -10px;
+  top: 332px;
+  width: 74px;
+}
+
+.p06-cloud--04 {
+  left: -5px;
+  top: 409px;
+  width: 70px;
+}
+
+.p06-card-wrap {
+  position: absolute;
+  z-index: 16;
+  left: 50%;
+  top: 158px;
+  width: 246px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.p06-lucky-card {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  filter: drop-shadow(0 6px 6px rgba(91, 59, 24, 0.14));
+  pointer-events: none;
+  user-select: none;
+}
+
+.p06-title {
+  position: absolute;
+  z-index: 5;
+  left: 50%;
+  top: 86px;
+  width: 220px;
+  margin: 0;
+  transform: translateX(-50%);
+  text-align: center;
+  color: #315747;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 23px;
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+}
+
+.p06-number-slot {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  top: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 205px;
+  height: 125px;
+  transform: translateX(-50%);
+  text-align: center;
+  color: #a52f15;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 94px;
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  font-variant-numeric: lining-nums;
+}
+
+.p06-lucky-item {
+  position: absolute;
+  display: block;
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.p06-ingots {
+  z-index: 25;
+  left: 35px;
+  bottom: 47px;
+  width: 75px;
+}
+
+.p06-knot {
+  z-index: 28;
+  left: 97px;
+  bottom: 39px;
+  width: 77px;
+  transform: rotate(-7deg);
+  transform-origin: 50% 50%;
+}
+
+.p06-bag {
+  z-index: 26;
+  right: 33px;
+  bottom: 46px;
+  width: 105px;
+}
+
+.p06-coins {
+  z-index: 29;
+  right: 109px;
+  bottom: 38px;
+  width: 53px;
+  transform: rotate(5deg);
+  transform-origin: 50% 50%;
+}
+
+
+/* =========================================================
+   PAGE 07 — GỬI LỜI CHÚC MỪNG / FINAL
+========================================================= */
+
+.p07-cloud {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.p07-cloud--01 {
+  width: 82px;
+  top: 31px;
+  right: 40px;
+}
+
+.p07-cloud--02 {
+  width: 68px;
+  top: 164px;
+  left: 3px;
+}
+
+.p07-hanging-knot {
+  position: absolute;
+  z-index: 7;
+  width: 35px;
+  height: auto;
+  top: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.p07-title-ornament {
+  position: absolute;
+  z-index: 5;
+  width: 173px;
+  height: auto;
+  left: 50%;
+  top: 91px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.p07-title {
+  position: absolute;
+  z-index: 8;
+  width: 280px;
+  left: 50%;
+  top: 121px;
+  margin: 0;
+  transform: translateX(-50%);
+  text-align: center;
+  color: #9f2d17;
+  font-family: "Times New Roman", "Noto Serif", serif;
+  font-size: 29px;
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: 0.2px;
+}
+
+.p07-heading-divider {
+  position: absolute;
+  z-index: 6;
+  width: 150px;
+  height: auto;
+  top: 190px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.p07-description {
+  position: absolute;
+  z-index: 8;
+  width: 325px;
+  top: 216px;
+  left: 50%;
+  margin: 0;
+  transform: translateX(-50%);
+  text-align: center;
+  color: #5a4732;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.p07-card {
+  position: absolute;
+  z-index: 12;
+  left: 46px;
+  width: 298px;
+  height: 104px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  appearance: none;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    transform 160ms ease,
+    filter 160ms ease;
+}
+
+.p07-card--message {
+  top: 269px;
+}
+
+.p07-card--video {
+  top: 388px;
+}
+
+.p07-card-frame {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.p07-card-icon {
+  position: absolute;
+  z-index: 2;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.p07-card-icon--message {
+  width: 74px;
+  left: 22px;
+  top: 23px;
+}
+
+.p07-card-icon--video {
+  width: 78px;
+  left: 21px;
+  top: 29px;
+}
+
+.p07-card-copy {
+  position: absolute;
+  z-index: 3;
+  display: block;
+}
+
+/* Card 01: đúng thông số DevTools đã chốt */
+.p07-card-copy--message {
+  width: 160px;
+  left: 111px;
+  top: 20px;
+}
+
+/* Card 02: giữ thông số bản đã chốt */
+.p07-card-copy--video {
+  width: 152px;
+  left: 121px;
+  top: 27px;
+}
+
+.p07-card-title,
+.p07-card-title-line2 {
+  display: block;
+  color: #a2341e;
+  font-family: "Times New Roman", "Noto Serif", serif;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.p07-card-title {
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.p07-card-title--message {
+  line-height: 1.5;
+}
+
+.p07-card-title-line2 {
+  font-size: 18px;
+}
+
+.p07-card-title-line2--message {
+  line-height: 0.95;
+}
+
+.p07-card-title-line2--video {
+  line-height: 1.1;
+}
+
+.p07-card-arrow {
+  position: absolute;
+  z-index: 4;
+  width: 28px;
+  height: 28px;
+  right: 18px;
+  top: 39px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.p07-card:active {
+  transform: scale(0.985);
+}
+
+@media (hover: hover) {
+  .p07-card:hover {
+    filter: brightness(1.025);
+  }
+}
+
+.p07-couple {
+  position: absolute;
+  z-index: 11;
+  width: 187px;
+  height: 250px;
+  left: 50%;
+  bottom: -12px;
+  transform: translateX(-50%);
+  object-fit: contain;
+  clip-path: inset(0 0 30px 0);
+  pointer-events: none;
+  user-select: none;
+}
+
+
+/* =========================================================
+   PAGE 08 — CẢM ƠN / FINAL DEVTOOLS VALUES
+========================================================= */
+
+.p08-content {
+  position: absolute;
+  z-index: 15;
+  width: 330px;
+  left: 50%;
+  top: 103px;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.p08-title {
+  margin: 0;
+  color: #972b15;
+  font-family: "Times New Roman", "Noto Serif", serif;
+  font-size: 38px;
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: 0.9px;
+}
+
+.p08-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.p08-divider span {
+  display: block;
+  width: 50px;
+  height: 1px;
+  background: #b54d31;
+}
+
+.p08-divider b {
+  display: block;
+  margin: 0 8px;
+  color: #a9341e;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.p08-divider--01 {
+  margin-top: 21px;
+}
+
+.p08-divider--02 {
+  margin-top: 19px;
+}
+
+.p08-names {
+  margin: 22px 0 0;
+  color: #9b331e;
+  font-family: "Times New Roman", "Segoe Script", "Snell Roundhand", cursive;
+  font-size: 43px;
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.p08-names span {
+  color: #9b331e;
+  font-family: "Times New Roman", serif;
+  font-size: 30px;
+  vertical-align: 2px;
+  margin: 0 3px;
+}
+
+.p08-date {
+  margin: 17px 0 0;
+  color: #496647;
+  font-family: "Times New Roman", "Noto Serif", serif;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 3px;
+}
+
+.p08-cloud {
+  position: absolute;
+  z-index: 4;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.p08-cloud--left {
+  width: 77px;
+  left: 36px;
+  top: 402px;
+}
+
+.p08-cloud--right {
+  width: 68px;
+  right: 31px;
+  top: 365px;
+}
+
+.p08-water-ground {
+  position: absolute;
+  z-index: 4;
+  width: 450px;
+  height: auto;
+  left: 187px;
+  bottom: 6px;
+  transform: translateX(-50%);
+  object-fit: contain;
+  opacity: 0.47;
+  pointer-events: none;
+  user-select: none;
+}
+
+.p08-temple-gate {
+  position: absolute;
+  z-index: 7;
+  width: 210px;
+  height: auto;
+  left: 233px;
+  bottom: 120px;
+  transform: translateX(-50%);
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.p08-bamboo {
+  position: absolute;
+  z-index: 6;
+  width: 75px;
+  height: auto;
+  right: 36px;
+  bottom: 120px;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.p08-couple {
+  position: absolute;
+  z-index: 10;
+  width: 120px;
+  height: auto;
+  left: 67px;
+  bottom: 50px;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.p08-lotus {
+  position: absolute;
+  z-index: 9;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.p08-lotus--left {
+  width: 120px;
+  left: 1px;
+  bottom: 40px;
+}
+
+.p08-lotus--right {
+  width: 122px;
+  right: 4px;
+  bottom: 25px;
+}
+
+
+/* =========================================================
+   PAGE 01 ANIMATIONS
+========================================================= */
+
+@keyframes closedEnvelopeCue {
+  0%,
+  60%,
+  100% {
+    transform:
+      translate3d(0, var(--body-offset-closed), 0)
+      scale(1)
+      rotate(0deg);
+  }
+
+  70% {
+    transform:
+      translate3d(0, calc(var(--body-offset-closed) - 4px), 0)
+      scale(1.012)
+      rotate(0deg);
+  }
+
+  78% {
+    transform:
+      translate3d(0, calc(var(--body-offset-closed) - 4px), 0)
+      scale(1.012)
+      rotate(-0.35deg);
+  }
+
+  86% {
+    transform:
+      translate3d(0, calc(var(--body-offset-closed) - 4px), 0)
+      scale(1.012)
+      rotate(0.35deg);
+  }
+
+  94% {
+    transform:
+      translate3d(0, var(--body-offset-closed), 0)
+      scale(1)
+      rotate(0deg);
+  }
+}
+
+@keyframes tapRing {
+  0% {
+    transform: scale(0.52);
+    opacity: 0;
+  }
+
+  18% {
+    opacity: 0.5;
+  }
+
+  72% {
+    opacity: 0.14;
+  }
+
+  100% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
