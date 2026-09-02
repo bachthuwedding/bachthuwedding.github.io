@@ -3881,238 +3881,7 @@ img {
 
 
 /* =========================================================
-   =========================================================
-   PAGE 07 — GỬI LỜI CHÚC
-   ARTBOARD: 390 × 680
-   FINAL TUNED VERSION
-   =========================================================
-========================================================= */
-
-
-/* =========================================================
-   PAGE
-========================================================= */
-
-.page07-layout {
-  position: relative;
-
-  width: 390px;
-  height: 680px;
-
-  overflow: hidden;
-
-  margin: 0;
-  padding: 0;
-
-  background: #f1dfbd;
-
-  isolation: isolate;
-}
-
-
-/* =========================================================
-   BACKGROUND
-========================================================= */
-
-.p07-background {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 0;
-
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  max-width: none;
-
-  object-fit: cover;
-  object-position: center;
-
-  pointer-events: none;
-  user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* =========================================================
-   CLOUD COMMON
-========================================================= */
-
-.p07-cloud {
-  position: absolute;
-
-  display: block;
-
-  height: auto;
-  max-width: none;
-
-  object-fit: contain;
-
-  opacity: 1;
-
-  pointer-events: none;
-  user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* CLOUD 01 */
-
-.p07-cloud--01 {
-  z-index: 2;
-
-  width: 82px;
-
-  top: 31px;
-  right: 40px;
-}
-
-
-/* CLOUD 02 */
-
-.p07-cloud--02 {
-  z-index: 1;
-
-  width: 68px;
-
-  top: 164px;
-  left: 3px;
-}
-
-
-/* =========================================================
-   TITLE ORNAMENT
-========================================================= */
-
-.p07-title-ornament {
-  position: absolute;
-
-  z-index: 5;
-
-  width: 173px;
-  height: auto;
-
-  left: 50%;
-  top: 50px;
-
-  transform:
-    translateX(-50%);
-
-  pointer-events: none;
-  user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* =========================================================
-   TITLE
-========================================================= */
-
-.p07-title {
-  position: absolute;
-
-  z-index: 8;
-
-  width: 280px;
-
-  left: 50%;
-  top: 110px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  color: #9f2d17;
-
-  font-family:
-    "Times New Roman",
-    "Noto Serif",
-    serif;
-
-  font-size: 29px;
-
-  font-weight: 500;
-
-  line-height: 1.06;
-
-  letter-spacing: 0.2px;
-
-  white-space: nowrap;
-}
-
-
-/* =========================================================
-   HEADING DIVIDER
-========================================================= */
-
-.p07-heading-divider {
-  position: absolute;
-
-  z-index: 6;
-
-  width: 150px;
-  height: auto;
-
-  top: 144px;
-  left: 50%;
-
-  transform:
-    translateX(-50%);
-
-  pointer-events: none;
-  user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* =========================================================
-   DESCRIPTION
-========================================================= */
-
-.p07-description {
-  position: absolute;
-
-  z-index: 8;
-
-  width: 325px;
-
-  top: 195px;
-  left: 50%;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  color: #5a4732;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  font-size: 11px;
-
-  font-weight: 400;
-
-  line-height: 1.55;
-}
-
-
-/* =========================================================
-   CARD COMMON
+   PAGE 07 — CARD COMMON
 ========================================================= */
 
 .p07-card {
@@ -4214,9 +3983,7 @@ img {
 }
 
 
-/* =========================================================
-   MESSAGE ICON
-========================================================= */
+/* MESSAGE ICON */
 
 .p07-card-icon--message {
   width: 60px;
@@ -4226,9 +3993,7 @@ img {
 }
 
 
-/* =========================================================
-   VIDEO ICON
-========================================================= */
+/* VIDEO ICON */
 
 .p07-card-icon--video {
   width: 65px;
@@ -4239,7 +4004,7 @@ img {
 
 
 /* =========================================================
-   CARD COPY COMMON
+   CARD COPY
 ========================================================= */
 
 .p07-card-copy {
@@ -4251,9 +4016,7 @@ img {
 }
 
 
-/* =========================================================
-   MESSAGE COPY
-========================================================= */
+/* MESSAGE TEXT */
 
 .p07-card-copy--message {
   width: 320px;
@@ -4263,9 +4026,7 @@ img {
 }
 
 
-/* =========================================================
-   VIDEO COPY
-========================================================= */
+/* VIDEO TEXT */
 
 .p07-card-copy--video {
   width: 152px;
@@ -4276,7 +4037,7 @@ img {
 
 
 /* =========================================================
-   CARD TITLE COMMON
+   CARD TITLE
 ========================================================= */
 
 .p07-card-title {
@@ -4318,103 +4079,16 @@ img {
 ========================================================= */
 
 .p07-card:active {
-  transform:
-    scale(0.985);
+  transform: scale(0.985);
 }
 
 
 @media (hover: hover) {
 
   .p07-card:hover {
-    filter:
-      brightness(1.025);
+    filter: brightness(1.025);
   }
 
-}
-
-
-/* =========================================================
-   COUPLE
-========================================================= */
-
-.p07-couple {
-  position: absolute;
-
-  z-index: 11;
-
-  width: 187px;
-  height: 250px;
-
-  left: 50%;
-  bottom: -12px;
-
-  transform:
-    translateX(-50%);
-
-  object-fit: contain;
-
-  clip-path:
-    inset(0 0 30px 0);
-
-  pointer-events: none;
-  user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* =========================================================
-   FRAME
-========================================================= */
-
-.p07-frame {
-  position: absolute;
-
-  z-index: 40;
-
-  left: 5px;
-  top: 5px;
-
-  width: 380px;
-  height: 670px;
-
-  max-width: none;
-
-  object-fit: fill;
-
-  pointer-events: none;
-  user-select: none;
-
-  -webkit-user-drag: none;
-}
-
-
-/* =========================================================
-   BOTTOM ORNAMENT
-========================================================= */
-
-.p07-bottom-ornament {
-  position: absolute;
-
-  z-index: 36;
-
-  left: 50%;
-  bottom: -1px;
-
-  width: 120px;
-  height: auto;
-
-  max-width: none;
-
-  transform:
-    translateX(-50%);
-
-  opacity: 1;
-
-  pointer-events: none;
-  user-select: none;
-
-  -webkit-user-drag: none;
 }
 
 
