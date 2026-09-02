@@ -810,14 +810,303 @@ img {
 }
 
 /* Confetti giống Page 06 */
-.p02-confetti {
+/* =========================================================
+   PAGE 02 — CROPPED CONFETTI
+========================================================= */
+
+.p02-confetti-source {
+  position: absolute;
+
+  left: -9999px;
+  top: -9999px;
+
+  width: 1px;
+  height: 1px;
+
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+
+/* vùng chứa confetti */
+
+.p02-confetti-cluster {
+  position: absolute;
+
   z-index: 14;
-  left: 20px;
-  top: 25px;
-  width: 350px;
-  height: 600px;
-  object-fit: fill;
-  opacity: 0.86;
+
+  inset: 0;
+
+  overflow: visible;
+
+  pointer-events: none;
+}
+
+
+/* từng mảnh crop từ page06-confetti.png */
+
+.p02-confetti-piece {
+  position: absolute;
+
+  display: block;
+
+  overflow: hidden;
+
+  background-repeat: no-repeat;
+
+  /*
+    Ảnh gốc: 853 × 1844
+    scale sprite xuống khoảng 55%
+  */
+  background-size:
+    469.2px
+    1014.2px;
+
+  opacity: 0.92;
+
+  pointer-events: none;
+
+  /*
+    Dùng CHÍNH animation của đám mây
+  */
+  animation:
+    wedding-cloud-float
+    1750ms
+    ease-in-out
+    infinite;
+
+  animation-delay: 0ms;
+
+  will-change: transform;
+}
+
+
+/*
+  Chỉ hiện sprite khi Page 02 assets đã load.
+  page06-confetti.png chỉ download một lần.
+*/
+
+.page-02.is-assets-ready
+.p02-confetti-piece {
+  background-image:
+    url("./assets/page06-confetti.png");
+}
+
+
+/* =========================================================
+   CONFETTI 01
+========================================================= */
+
+.p02-confetti-piece--01 {
+  left: 101px;
+  top: 394px;
+
+  width: 13.2px;
+  height: 13.8px;
+
+  background-position:
+    -151.8px -49px;
+
+  rotate: -18deg;
+}
+
+
+/* =========================================================
+   CONFETTI 02
+========================================================= */
+
+.p02-confetti-piece--02 {
+  left: 191px;
+  top: 407px;
+
+  width: 13.2px;
+  height: 12.7px;
+
+  background-position:
+    -89.7px -85.8px;
+
+  rotate: 22deg;
+}
+
+
+/* =========================================================
+   CONFETTI 03
+========================================================= */
+
+.p02-confetti-piece--03 {
+  left: 238px;
+  top: 420px;
+
+  width: 14.9px;
+  height: 13.8px;
+
+  background-position:
+    -201.3px -123.8px;
+
+  rotate: -12deg;
+}
+
+
+/* =========================================================
+   CONFETTI 04
+========================================================= */
+
+.p02-confetti-piece--04 {
+  left: 164px;
+  top: 435px;
+
+  width: 13.2px;
+  height: 12.7px;
+
+  background-position:
+    -97.4px -146.9px;
+
+  rotate: 16deg;
+}
+
+
+/* =========================================================
+   CONFETTI 05
+========================================================= */
+
+.p02-confetti-piece--05 {
+  left: 125px;
+  top: 447px;
+
+  width: 13.2px;
+  height: 9.9px;
+
+  background-position:
+    -393.3px -149.6px;
+
+  rotate: -27deg;
+}
+
+
+/* =========================================================
+   CONFETTI 06
+========================================================= */
+
+.p02-confetti-piece--06 {
+  left: 215px;
+  top: 452px;
+
+  width: 13.8px;
+  height: 13.8px;
+
+  background-position:
+    -255.2px -173.2px;
+
+  rotate: 32deg;
+}
+
+
+/* =========================================================
+   CONFETTI 07
+========================================================= */
+
+.p02-confetti-piece--07 {
+  left: 315px;
+  top: 460px;
+
+  width: 9.4px;
+  height: 9.4px;
+
+  background-position:
+    -146.3px -190.9px;
+
+  rotate: -15deg;
+}
+
+
+/* =========================================================
+   CONFETTI 08
+========================================================= */
+
+.p02-confetti-piece--08 {
+  left: 90px;
+  top: 470px;
+
+  width: 13.2px;
+  height: 12.7px;
+
+  background-position:
+    -44px -348.2px;
+
+  rotate: 27deg;
+}
+
+
+/* =========================================================
+   CONFETTI 09
+========================================================= */
+
+.p02-confetti-piece--09 {
+  left: 183px;
+  top: 478px;
+
+  width: 13.2px;
+  height: 12.7px;
+
+  background-position:
+    -413.6px -426.3px;
+
+  rotate: -35deg;
+}
+
+
+/* =========================================================
+   CONFETTI 10
+========================================================= */
+
+.p02-confetti-piece--10 {
+  left: 300px;
+  top: 423px;
+
+  width: 12.7px;
+  height: 12.7px;
+
+  background-position:
+    -42.4px -537.9px;
+
+  rotate: 18deg;
+}
+
+
+/* =========================================================
+   CONFETTI 11
+========================================================= */
+
+.p02-confetti-piece--11 {
+  left: 140px;
+  top: 492px;
+
+  width: 12.7px;
+  height: 12.1px;
+
+  background-position:
+    -405.9px -632px;
+
+  rotate: -21deg;
+}
+
+
+/* =========================================================
+   CONFETTI 12
+========================================================= */
+
+.p02-confetti-piece--12 {
+  left: 56px;
+  top: 438px;
+
+  width: 13.2px;
+  height: 12.7px;
+
+  background-position:
+    -49px -751.3px;
+
+  rotate: 31deg;
 }
 
 .p02-procession {
