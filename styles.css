@@ -665,7 +665,7 @@ img {
 
   animation:
     bamboo-sway-left
-    2000ms
+    1900ms
     ease-in-out
     infinite;
 
@@ -679,7 +679,7 @@ img {
 
   animation:
     bamboo-sway-right
-    2000ms
+    1900ms
     ease-in-out
     infinite;
 
