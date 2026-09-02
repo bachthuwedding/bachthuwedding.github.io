@@ -886,7 +886,8 @@ img {
 
 /* =========================================================
    GLOBAL BOTTOM ORNAMENT
-   MATCH PAGE 02
+   PAGE 02 → PAGE 08
+   MATCH PAGE 02 EXACTLY
 ========================================================= */
 
 .p02-bottom-ornament,
@@ -896,32 +897,34 @@ img {
 .p06-bottom-ornament,
 .p07-bottom-ornament,
 .p08-bottom-ornament {
-  position: absolute;
+  position: absolute !important;
 
-  z-index: 36;
+  z-index: 36 !important;
 
-  left: 50%;
+  left: 50% !important;
+  right: auto !important;
 
-  right: auto;
-  top: auto;
+  top: auto !important;
+  bottom: -1px !important;
 
-  bottom: -1px;
+  display: block !important;
 
-  display: block;
+  width: 120px !important;
+  height: auto !important;
 
-  width: 120px;
-  height: auto;
+  max-width: none !important;
 
-  max-width: none;
+  transform: translateX(-50%) !important;
 
-  transform:
-    translateX(-50%);
+  opacity: 1 !important;
 
-  opacity: 1;
+  object-fit: contain;
 
   pointer-events: none;
 
   user-select: none;
+
+  -webkit-user-drag: none;
 }
 
 
@@ -1790,19 +1793,6 @@ img {
 .p03-title-divider,
 .p03-timeline,
 .p03-illustration,
-.p03-bottom-ornament {
-  position: absolute;
-
-  display: block;
-
-  max-width: none;
-
-  height: auto;
-
-  pointer-events: none;
-
-  user-select: none;
-}
 
 
 /* CLOUDS */
@@ -2316,7 +2306,16 @@ img {
 
 
 /* =========================================================
+   =========================================================
    PAGE 04 — ĐỊA ĐIỂM
+   ARTBOARD: 390 × 680
+   FINAL DEVTOOLS VERSION
+   =========================================================
+========================================================= */
+
+
+/* =========================================================
+   PAGE
 ========================================================= */
 
 .page04-layout {
@@ -2338,7 +2337,9 @@ img {
 }
 
 
-/* BACKGROUND */
+/* =========================================================
+   BACKGROUND
+========================================================= */
 
 .p04-background {
   position: absolute;
@@ -2358,12 +2359,15 @@ img {
   object-position: center;
 
   pointer-events: none;
-
   user-select: none;
+
+  -webkit-user-drag: none;
 }
 
 
-/* FRAME */
+/* =========================================================
+   FRAME
+========================================================= */
 
 .p04-frame {
   position: absolute;
@@ -2382,40 +2386,47 @@ img {
   object-fit: fill;
 
   pointer-events: none;
-
   user-select: none;
+
+  -webkit-user-drag: none;
 }
 
 
-/* COMMON IMAGES */
-
-.p04-cloud,
-.p04-map,
-.p04-card-frame,
-.p04-card-icon,
-.p04-bottom-ornament {
-  display: block;
-
-  max-width: none;
-
-  user-select: none;
-}
-
-
-/* CLOUDS */
+/* =========================================================
+   CLOUDS
+========================================================= */
 
 .p04-cloud {
   position: absolute;
 
-  z-index: 8;
+  /*
+    Clouds đang được chốt nằm trên cùng
+  */
+  z-index: 60;
+
+  display: block;
 
   height: auto;
+  max-width: none;
+
+  object-fit: contain;
 
   opacity: 1;
 
   pointer-events: none;
+  user-select: none;
+
+  -webkit-user-drag: none;
+
+  animation:
+    wedding-cloud-float
+    1750ms
+    ease-in-out
+    infinite;
 }
 
+
+/* CLOUD 01 */
 
 .p04-cloud--01 {
   left: 38px;
@@ -2425,6 +2436,8 @@ img {
 }
 
 
+/* CLOUD 02 */
+
 .p04-cloud--02 {
   left: 283px;
   top: 90px;
@@ -2433,7 +2446,9 @@ img {
 }
 
 
-/* TITLE */
+/* =========================================================
+   TITLE
+========================================================= */
 
 .p04-title {
   position: absolute;
@@ -2449,8 +2464,7 @@ img {
     translateX(-50%)
     scaleX(0.88);
 
-  transform-origin:
-    50% 50%;
+  transform-origin: 50% 50%;
 
   color: #9f301c;
 
@@ -2473,7 +2487,9 @@ img {
 }
 
 
-/* MAP */
+/* =========================================================
+   MAP
+========================================================= */
 
 .p04-map {
   position: absolute;
@@ -2483,21 +2499,33 @@ img {
   left: 50%;
   top: 125px;
 
+  display: block;
+
   width: 290px;
   height: auto;
 
-  transform:
-    translateX(-50%);
+  max-width: none;
+
+  transform: translateX(-50%);
 
   object-fit: contain;
 
   pointer-events: none;
-
   user-select: none;
+
+  -webkit-user-drag: none;
 }
 
+
 /* =========================================================
-   PAGE 04 — MAP TEXT LABELS
+   MAP LABEL LAYER
+
+   Cùng:
+   left = 50%
+   top = 125
+   width = 290
+
+   với p04-map
 ========================================================= */
 
 .p04-map-label-layer {
@@ -2511,8 +2539,7 @@ img {
   width: 290px;
 
   /*
-    Tỷ lệ gần với artwork map hiện tại.
-    Layer này nằm đúng trên .p04-map.
+    Giữ layer cùng tỷ lệ với artwork map
   */
   aspect-ratio: 713 / 1080;
 
@@ -2524,7 +2551,7 @@ img {
 
 
 /* =========================================================
-   COMMON LABEL
+   MAP LABEL COMMON
 ========================================================= */
 
 .p04-map-label {
@@ -2534,16 +2561,16 @@ img {
 
   margin: 0;
 
-  color: #171512;
+  color: #28513f;
 
   font-family:
-    Arial,
+    "Times New Roman",
     Helvetica,
     sans-serif;
 
-  font-size: 6px;
+  font-style: italic;
 
-  font-weight: 600;
+  font-weight: 500;
 
   line-height: 1;
 
@@ -2558,14 +2585,16 @@ img {
 ========================================================= */
 
 .p04-map-label--note {
-  left: 50%;
-  top: 7%;
+  left: 140px;
+  top: 12px;
 
   transform: translateX(-50%);
 
-  font-size: 7px;
-  font-style: italic;
-  font-weight: 600;
+  font-size: 10px;
+
+  font-weight: 550;
+
+  color: #28513f;
 }
 
 
@@ -2574,10 +2603,14 @@ img {
 ========================================================= */
 
 .p04-map-label--phu-tay-ho {
-  left: 24%;
-  top: 35%;
+  left: 72px;
+  top: 168px;
 
-  font-size: 5.5px;
+  transform: translateX(-50%);
+
+  font-size: 9px;
+
+  font-weight: 500;
 }
 
 
@@ -2586,11 +2619,14 @@ img {
 ========================================================= */
 
 .p04-map-label--tay-ho {
-  left: 25%;
-  top: 59%;
+  left: 100px;
+  top: 335px;
 
-  font-size: 8px;
-  font-weight: 700;
+  transform: translateX(-50%);
+
+  font-size: 9px;
+
+  font-weight: 500;
 }
 
 
@@ -2599,14 +2635,16 @@ img {
 ========================================================= */
 
 .p04-map-label--lac-long-quan {
-  left: 1%;
-  top: 54%;
+  left: 7px;
+  top: 220px;
+
+  font-size: 10px;
+
+  font-weight: 500;
 
   transform:
     translate(-50%, -50%)
     rotate(-90deg);
-
-  font-size: 5.5px;
 }
 
 
@@ -2615,15 +2653,16 @@ img {
 ========================================================= */
 
 .p04-map-label--song-hong {
-  left: 77%;
-  top: 40%;
+  left: 240px;
+  top: 210px;
+
+  font-size: 12px;
+
+  font-weight: 500;
 
   transform:
     translate(-50%, -50%)
     rotate(61deg);
-
-  font-size: 9px;
-  font-weight: 700;
 }
 
 
@@ -2632,45 +2671,34 @@ img {
 ========================================================= */
 
 .p04-map-label--au-co {
-  left: 70%;
-  top: 57%;
+  left: 160px;
+  top: 170px;
+
+  font-size: 10px;
+
+  font-weight: 500;
 
   transform:
     translate(-50%, -50%)
     rotate(61deg);
-
-  font-size: 5.5px;
 }
 
 
 /* =========================================================
-   SHERATON
+   SHERATON HANOI HOTEL
 ========================================================= */
 
 .p04-map-label--sheraton {
-  left: 70%;
-  top: 74%;
+  left: 190px;
+  top: 245px;
 
   transform: translateX(-50%);
 
-  font-size: 6px;
-  font-weight: 700;
-}
+  color: #9b331e;
 
+  font-size: 10px;
 
-/* =========================================================
-   TỪ HOA
-========================================================= */
-
-.p04-map-label--tu-hoa {
-  left: 76%;
-  top: 79%;
-
-  transform:
-    translate(-50%, -50%)
-    rotate(42deg);
-
-  font-size: 4.5px;
+  font-weight: 600;
 }
 
 
@@ -2679,12 +2707,14 @@ img {
 ========================================================= */
 
 .p04-map-label--tran-quoc {
-  left: 58%;
-  top: 86%;
+  left: 215px;
+  top: 360px;
 
   transform: translateX(-50%);
 
-  font-size: 5.5px;
+  font-size: 8px;
+
+  font-weight: 500;
 }
 
 
@@ -2693,12 +2723,14 @@ img {
 ========================================================= */
 
 .p04-map-label--quan-thanh {
-  left: 55%;
-  top: 94%;
+  left: 160px;
+  top: 406px;
 
   transform: translateX(-50%);
 
-  font-size: 5.5px;
+  font-size: 8px;
+
+  font-weight: 500;
 }
 
 
@@ -2707,29 +2739,22 @@ img {
 ========================================================= */
 
 .p04-map-label--thuy-khue {
-  left: 27%;
-  top: 91%;
+  left: 80px;
+  top: 413px;
+
+  font-size: 10px;
+
+  font-weight: 500;
 
   transform:
     translate(-50%, -50%)
     rotate(15deg);
-
-  font-size: 5px;
 }
 
 
 /* =========================================================
-   HỒ TRÚC BẠCH
+   INFO CARD COMMON
 ========================================================= */
-
-.p04-map-label--truc-bach {
-  left: 72%;
-  top: 92%;
-
-  font-size: 3.5px;
-}
-
-/* CARDS */
 
 .p04-info-card {
   position: absolute;
@@ -2746,12 +2771,20 @@ img {
 }
 
 
+/* =========================================================
+   HOTEL CARD
+========================================================= */
+
 .p04-hotel-card {
   left: 33px;
 
   overflow: visible;
 }
 
+
+/* =========================================================
+   LINK CARD
+========================================================= */
 
 .p04-link-card {
   left: 213px;
@@ -2761,10 +2794,16 @@ img {
   cursor: pointer;
 
   touch-action: manipulation;
+
+  transition:
+    transform 160ms ease,
+    filter 160ms ease;
 }
 
 
-/* CARD FRAME */
+/* =========================================================
+   CARD FRAME COMMON
+========================================================= */
 
 .p04-card-frame {
   position: absolute;
@@ -2775,13 +2814,20 @@ img {
 
   height: 115%;
 
+  max-width: none;
+
   object-fit: fill;
 
   opacity: 0.6;
 
   pointer-events: none;
+  user-select: none;
+
+  -webkit-user-drag: none;
 }
 
+
+/* HOTEL FRAME */
 
 .p04-hotel-card-frame {
   inset: 0;
@@ -2794,6 +2840,8 @@ img {
 }
 
 
+/* LINK FRAME */
+
 .p04-link-card-frame {
   inset: 0;
 
@@ -2805,29 +2853,24 @@ img {
 }
 
 
-/* CARD CONTENT COMMON */
+/* =========================================================
+   CARD CONTENT COMMON
+========================================================= */
 
 .p04-card-content {
-  position: absolute;
-
   z-index: 2;
-
-  inset: 0;
 
   display: flex;
 
   align-items: center;
 
-  padding:
-    8px 9px;
+  padding: 8px 9px;
 }
 
 
-/*
-  ĐÚNG DEVTOOLS:
-  position relative + left/top,
-  không dùng transform.
-*/
+/* =========================================================
+   HOTEL CONTENT
+========================================================= */
 
 .p04-hotel-card-content {
   position: relative;
@@ -2837,53 +2880,17 @@ img {
 }
 
 
-.p04-link-card-content {
+/* =========================================================
+   HOTEL TEXT
+========================================================= */
+
+.p04-hotel-card-text {
   position: relative;
 
-  left: 9px;
-  top: 10px;
-}
+  left: 5px;
+  top: -2px;
 
-
-/* ICON */
-
-.p04-card-icon {
-  position: relative;
-
-  flex: 0 0 auto;
-
-  height: auto;
-
-  object-fit: contain;
-
-  pointer-events: none;
-}
-
-
-.p04-hotel-icon {
-  width: 27px;
-  height: 32px;
-
-  top: -3px;
-}
-
-
-.p04-location-icon {
-  width: 27px;
-  height: 31px;
-
-  left: 7px;
-  top: -6px;
-}
-
-
-/* TEXT */
-
-.p04-card-text {
   display: flex;
-
-  flex:
-    1 1 auto;
 
   flex-direction: column;
 
@@ -2895,8 +2902,15 @@ img {
 }
 
 
+/* =========================================================
+   HOTEL TITLE
+========================================================= */
+
+.p04-hotel-card
 .p04-card-title {
   position: relative;
+
+  right: 4px;
 
   display: block;
 
@@ -2909,7 +2923,7 @@ img {
     Times,
     serif;
 
-  font-size: 9.4px;
+  font-size: 11px;
 
   font-weight: 600;
 
@@ -2919,19 +2933,17 @@ img {
 }
 
 
-.p04-hotel-card
-.p04-card-title {
-  right: 4px;
-}
-
+/* =========================================================
+   HOTEL DESCRIPTION
+========================================================= */
 
 .p04-card-description {
   position: relative;
 
-  display: block;
-
   right: 4px;
   top: -2px;
+
+  display: block;
 
   color: #345447;
 
@@ -2940,7 +2952,7 @@ img {
     Times,
     serif;
 
-  font-size: 7.7px;
+  font-size: 9px;
 
   font-weight: 400;
 
@@ -2950,10 +2962,64 @@ img {
 }
 
 
+/* =========================================================
+   LINK CARD CONTENT
+========================================================= */
+
+.p04-link-card-content {
+  position: relative;
+
+  left: 9px;
+  top: 10px;
+}
+
+
+/* =========================================================
+   LOCATION ICON
+========================================================= */
+
+.p04-location-icon {
+  position: relative;
+
+  flex: 0 0 auto;
+
+  left: 7px;
+  top: -6px;
+
+  display: block;
+
+  width: 27px;
+  height: 31px;
+
+  max-width: none;
+
+  object-fit: contain;
+
+  pointer-events: none;
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   LINK TEXT
+========================================================= */
+
 .p04-link-card-text {
   position: relative;
 
   top: -4px;
+
+  display: flex;
+
+  flex: 1 1 auto;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  min-width: 0;
 
   margin-left: 8px;
 
@@ -2961,43 +3027,61 @@ img {
 }
 
 
+/* =========================================================
+   LINK TITLE
+========================================================= */
+
 .p04-link-card
 .p04-card-title {
   position: relative;
 
   left: 4px;
 
-  margin-bottom: 0;
+  display: block;
+
+  margin: 0;
+
+  color: #a13a23;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
 
   font-size: 10.5px;
 
+  font-weight: 600;
+
   line-height: 1.05;
+
+  white-space: nowrap;
 }
 
 
-/* LINK INTERACTION */
-
-.p04-link-card {
-  transition:
-    transform 160ms ease,
-    filter 160ms ease;
-}
-
+/* =========================================================
+   LINK INTERACTION
+========================================================= */
 
 .p04-link-card:active {
-  transform:
-    scale(0.985);
+  transform: scale(0.985);
 }
 
 
 @media (hover: hover) {
 
   .p04-link-card:hover {
-    filter:
-      brightness(1.025);
+    filter: brightness(1.025);
   }
 
 }
+
+
+/* =========================================================
+   BOTTOM ORNAMENT
+
+   Không đặt thông số riêng ở đây.
+   Bạn chỉnh bằng global rule hoặc tự tune sau.
+========================================================= */
 
 
 /* =========================================================
@@ -3589,36 +3673,6 @@ img {
   background: #ad823f;
 
   transform: translate(-50%, -50%);
-}
-
-
-/* =========================================================
-   BOTTOM ORNAMENT
-========================================================= */
-
-.p05-bottom-ornament {
-  position: absolute;
-
-  z-index: 36;
-
-  left: 50%;
-  bottom: -1px;
-
-  display: block;
-
-  width: 120px;
-  height: auto;
-
-  max-width: none;
-
-  transform: translateX(-50%);
-
-  opacity: 1;
-
-  pointer-events: none;
-  user-select: none;
-
-  -webkit-user-drag: none;
 }
 
 
