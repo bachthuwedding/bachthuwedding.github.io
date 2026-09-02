@@ -2769,7 +2769,94 @@ img {
 
 
 /* =========================================================
-   PAGE 05 — OUR LOVE STORY
+   =========================================================
+   PAGE 05 — CHUYỆN CỦA CHÚNG MÌNH
+   ARTBOARD: 390 × 680
+   FINAL TUNED VERSION
+   =========================================================
+========================================================= */
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page05-layout {
+  position: relative;
+
+  z-index: 1;
+
+  width: 390px;
+  height: 680px;
+
+  overflow: hidden;
+
+  margin: 0;
+  padding: 0;
+
+  background: #f1dfbd;
+
+  isolation: isolate;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.p05-background {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: none;
+
+  object-fit: cover;
+  object-position: center;
+
+  pointer-events: none;
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   FRAME
+========================================================= */
+
+.p05-frame {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 5;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: none;
+
+  object-fit: fill;
+
+  pointer-events: none;
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   TITLE
 ========================================================= */
 
 .p05-title {
@@ -2778,7 +2865,7 @@ img {
   z-index: 20;
 
   left: 50%;
-  top: 40px;
+  top: 60px;
 
   width: 350px;
 
@@ -2800,7 +2887,7 @@ img {
     Times,
     serif;
 
-  font-size: 31px;
+  font-size: 24px;
 
   line-height: 1;
 
@@ -2812,13 +2899,18 @@ img {
 }
 
 
+/* =========================================================
+   TITLE DIVIDER
+   TẠM GIỮ VERSION HIỆN TẠI
+========================================================= */
+
 .p05-title-divider {
   position: absolute;
 
   z-index: 20;
 
   left: 50%;
-  top: 79px;
+  top: 94px;
 
   width: 82px;
   height: 10px;
@@ -2894,13 +2986,17 @@ img {
 }
 
 
+/* =========================================================
+   PHOTO WRAPPER
+========================================================= */
+
 .p05-photo-wrap {
   position: absolute;
 
   z-index: 15;
 
   left: 50%;
-  top: 128px;
+  top: 120px;
 
   width: 246px;
 
@@ -2911,22 +3007,131 @@ img {
 }
 
 
+/* =========================================================
+   PHOTO CROP
+========================================================= */
+
 .p05-photo-placeholder {
   position: absolute;
 
   z-index: 1;
 
-  left: 7px;
-  right: 7px;
-  top: 7px;
-  bottom: 7px;
+  left: 46px;
+  right: 46px;
+
+  top: 12px;
+  bottom: 12px;
 
   overflow: hidden;
 
   background:
     rgba(234, 213, 173, 0.28);
+
+
+  /*
+    Góc crop hiện tại bạn đã tune trong DevTools
+  */
+
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 14px;
+
+
+  clip-path: polygon(
+
+    /* TOP */
+
+    var(--s3) 0,
+    calc(100% - var(--s3)) 0,
+
+
+    /* TOP RIGHT */
+
+    calc(100% - var(--s3)) var(--s1),
+    calc(100% - var(--s2)) var(--s1),
+
+    calc(100% - var(--s2)) var(--s2),
+    calc(100% - var(--s1)) var(--s2),
+
+    calc(100% - var(--s1)) var(--s3),
+    100% var(--s3),
+
+
+    /* RIGHT */
+
+    100% calc(100% - var(--s3)),
+
+
+    /* BOTTOM RIGHT */
+
+    calc(100% - var(--s1))
+    calc(100% - var(--s3)),
+
+    calc(100% - var(--s1))
+    calc(100% - var(--s2)),
+
+    calc(100% - var(--s2))
+    calc(100% - var(--s2)),
+
+    calc(100% - var(--s2))
+    calc(100% - var(--s1)),
+
+    calc(100% - var(--s3))
+    calc(100% - var(--s1)),
+
+    calc(100% - var(--s3))
+    100%,
+
+
+    /* BOTTOM */
+
+    var(--s3) 100%,
+
+
+    /* BOTTOM LEFT */
+
+    var(--s3)
+    calc(100% - var(--s1)),
+
+    var(--s2)
+    calc(100% - var(--s1)),
+
+    var(--s2)
+    calc(100% - var(--s2)),
+
+    var(--s1)
+    calc(100% - var(--s2)),
+
+    var(--s1)
+    calc(100% - var(--s3)),
+
+    0
+    calc(100% - var(--s3)),
+
+
+    /* LEFT */
+
+    0 var(--s3),
+
+
+    /* TOP LEFT */
+
+    var(--s1) var(--s3),
+
+    var(--s1) var(--s2),
+
+    var(--s2) var(--s2),
+
+    var(--s2) var(--s1),
+
+    var(--s3) var(--s1)
+  );
 }
 
+
+/* =========================================================
+   MAIN PHOTO
+========================================================= */
 
 .p05-main-photo {
   position: absolute;
@@ -2938,12 +3143,24 @@ img {
   width: 100%;
   height: 100%;
 
+  max-width: none;
+
   object-fit: cover;
 
   object-position:
     50% 50%;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
 }
 
+
+/* =========================================================
+   PHOTO FRAME
+========================================================= */
 
 .p05-photo-frame {
   position: relative;
@@ -2960,8 +3177,14 @@ img {
   pointer-events: none;
 
   user-select: none;
+
+  -webkit-user-drag: none;
 }
 
+
+/* =========================================================
+   STORY COPY
+========================================================= */
 
 .p05-story-copy {
   position: absolute;
@@ -2969,7 +3192,7 @@ img {
   z-index: 20;
 
   left: 50%;
-  top: 397px;
+  top: 378px;
 
   width: 350px;
 
@@ -2990,9 +3213,9 @@ img {
 .p05-story-copy p {
   margin: 0;
 
-  font-size: 8.9px;
+  font-size: 10px;
 
-  line-height: 1.43;
+  line-height: 1.4;
 
   font-weight: 400;
 
@@ -3000,13 +3223,66 @@ img {
 }
 
 
+/* =========================================================
+   LOTUS COMMON
+========================================================= */
+
+.p05-lotus {
+  position: absolute;
+
+  z-index: 12;
+
+  display: block;
+
+  height: auto;
+
+  max-width: none;
+
+  object-fit: contain;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   LOTUS LEFT
+========================================================= */
+
+.p05-lotus--left {
+  left: -15px;
+  bottom: 30px;
+
+  width: 125px;
+}
+
+
+/* =========================================================
+   LOTUS RIGHT
+========================================================= */
+
+.p05-lotus--right {
+  right: -15px;
+  bottom: 25px;
+
+  width: 130px;
+}
+
+
+/* =========================================================
+   BOTTOM DIVIDER
+========================================================= */
+
 .p05-bottom-divider {
   position: absolute;
 
   z-index: 20;
 
   left: 50%;
-  top: 567px;
+  top: 625px;
 
   width: 178px;
   height: 10px;
@@ -3079,6 +3355,38 @@ img {
 
   transform:
     translate(-50%, -50%);
+}
+
+
+/* =========================================================
+   BOTTOM ORNAMENT
+========================================================= */
+
+.p05-bottom-ornament {
+  position: absolute;
+
+  z-index: 36;
+
+  left: 50%;
+  bottom: -1px;
+
+  display: block;
+
+  width: 120px;
+  height: auto;
+
+  max-width: none;
+
+  transform:
+    translateX(-50%);
+
+  opacity: 1;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
 }
 
 
