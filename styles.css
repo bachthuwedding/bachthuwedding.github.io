@@ -921,8 +921,8 @@ img {
 ========================================================= */
 
 .p02-confetti-piece--02 {
-  left: 191px;
-  top: 388px;
+  left: 338px;
+  top: 485px;
 
   width: 11.01px;
   height: 10.59px;
@@ -937,8 +937,8 @@ img {
 ========================================================= */
 
 .p02-confetti-piece--03 {
-  left: 238px;
-  top: 401px;
+  left: 255px;
+  top: 420px;
 
   width: 12.28px;
   height: 11.43px;
@@ -1001,8 +1001,8 @@ img {
 ========================================================= */
 
 .p02-confetti-piece--07 {
-  left: 315px;
-  top: 460px;
+  left: 325px;
+  top: 455px;
 
   width: 8.05px;
   height: 8.05px;
@@ -1018,14 +1018,7 @@ img {
 ========================================================= */
 
 .p02-confetti-piece--08 {
-  left: 90px;
-  top: 449px;
-
-  width: 20.33px;
-  height: 14.82px;
-
-  background-position:
-    -294.76px -229.54px;
+display: none;
 }
 
 
@@ -1098,8 +1091,8 @@ img {
 ========================================================= */
 
 .p02-confetti-piece--13 {
-  left: 56px;
-  top: 430px;
+  left: 90px;
+  top: 450px;
 
   width: 11.01px;
   height: 10.59px;
@@ -1115,7 +1108,7 @@ img {
 
 .p02-confetti-piece--14 {
   left: 70px;
-  top: 477px;
+  top: 420px;
 
   width: 11.86px;
   height: 9.74px;
