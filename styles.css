@@ -810,187 +810,318 @@ img {
 }
 
 /* =========================================================
-   PAGE 02 — CONFETTI CLUSTER
-   scale chốt tương đương 0.77, không dùng transform scale
-   để tránh chạy vị trí
+   PAGE 02 — CONFETTI
+   GIỮ HÌNH DÁNG GỐC
+   SIZE = 0.77 BẢN TRƯỚC
 ========================================================= */
 
 .p02-confetti-cluster {
   position: absolute;
+
   inset: 0;
+
   z-index: 14;
+
   pointer-events: none;
   user-select: none;
 }
+
+
+/* =========================================================
+   COMMON CONFETTI PIECE
+
+   page06-confetti.png gốc: 853 × 1844
+
+   Bản crop trước dùng scale ảnh ~0.55
+   Bản mới:
+   0.55 × 0.77 = 0.4235
+
+   => background-size mới:
+   853 × .4235  = 361.25
+   1844 × .4235 = 780.93
+========================================================= */
 
 .p02-confetti-piece {
   position: absolute;
+
   display: block;
+
+  overflow: hidden;
+
+  background-image:
+    url("./assets/page06-confetti.png");
+
+  background-repeat:
+    no-repeat;
+
+  background-size:
+    361.25px 780.93px;
+
+  opacity: 1;
+
+  /*
+    Tươi hơn ảnh gốc một chút,
+    nhưng không rực bằng nhân vật
+  */
+  filter:
+    saturate(1.18)
+    brightness(1.02)
+    contrast(1.03);
+
   pointer-events: none;
   user-select: none;
-  transform: rotate(var(--rotate));
-  transform-origin: 50% 50%;
+
+  will-change: translate;
+
+  animation:
+    p02-confetti-float
+    1750ms
+    ease-in-out
+    infinite;
 }
 
-.p02-confetti-piece::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: var(--radius, 999px);
-  background: var(--color);
-  opacity: 1;
-  animation: p02-confetti-float 1750ms ease-in-out infinite;
-}
 
-/* animation giống mây */
+/* =========================================================
+   ANIMATION
+   GIỐNG NHỊP CLOUD
+========================================================= */
+
 @keyframes p02-confetti-float {
-  0% {
-    transform: translateY(0px);
+
+  0%,
+  100% {
+    translate: 0 0;
   }
 
   50% {
-    transform: translateY(-5px);
+    translate: 0 -5px;
   }
 
-  100% {
-    transform: translateY(0px);
-  }
 }
 
+
 /* =========================================================
-   CONFETTI PIECES
-   gom xuống dưới khu vực cô dâu chú rể
+   PIECE 01
 ========================================================= */
 
 .p02-confetti-piece--01 {
-  left: 54px;
-  top: 432px;
-  width: 7px;
-  height: 13px;
-  --color: #b94733;
-  --rotate: -22deg;
+  left: 101px;
+  top: 394px;
+
+  width: 11.01px;
+  height: 11.43px;
+
+  background-position:
+    -116.46px -37.27px;
 }
+
+
+/* =========================================================
+   PIECE 02
+========================================================= */
 
 .p02-confetti-piece--02 {
-  left: 82px;
-  top: 406px;
-  width: 8px;
-  height: 14px;
-  --color: #d3a23a;
-  --rotate: 16deg;
+  left: 191px;
+  top: 388px;
+
+  width: 11.01px;
+  height: 10.59px;
+
+  background-position:
+    -68.61px -65.64px;
 }
+
+
+/* =========================================================
+   PIECE 03
+========================================================= */
 
 .p02-confetti-piece--03 {
-  left: 108px;
-  top: 392px;
-  width: 7px;
-  height: 12px;
-  --color: #456d50;
-  --rotate: -14deg;
+  left: 238px;
+  top: 401px;
+
+  width: 12.28px;
+  height: 11.43px;
+
+  background-position:
+    -154.58px -94.86px;
 }
+
+
+/* =========================================================
+   PIECE 04
+========================================================= */
 
 .p02-confetti-piece--04 {
-  left: 132px;
-  top: 444px;
-  width: 7px;
-  height: 13px;
-  --color: #c15138;
-  --rotate: 21deg;
+  left: 164px;
+  top: 414px;
+
+  width: 11.01px;
+  height: 10.59px;
+
+  background-position:
+    -74.54px -112.65px;
 }
+
+
+/* =========================================================
+   PIECE 05
+========================================================= */
 
 .p02-confetti-piece--05 {
-  left: 156px;
-  top: 419px;
-  width: 8px;
-  height: 14px;
-  --color: #d8aa43;
-  --rotate: -27deg;
+  left: 125px;
+  top: 427px;
+
+  width: 11.01px;
+  height: 8.47px;
+
+  background-position:
+    -302.38px -114.77px;
 }
+
+
+/* =========================================================
+   PIECE 06
+========================================================= */
 
 .p02-confetti-piece--06 {
-  left: 181px;
-  top: 454px;
-  width: 7px;
-  height: 12px;
-  --color: #4b7556;
-  --rotate: 30deg;
+  left: 215px;
+  top: 435px;
+
+  width: 11.43px;
+  height: 11.43px;
+
+  background-position:
+    -196.08px -132.98px;
 }
+
+
+/* =========================================================
+   PIECE 07
+========================================================= */
 
 .p02-confetti-piece--07 {
-  left: 206px;
-  top: 404px;
-  width: 8px;
-  height: 14px;
-  --color: #bb4935;
-  --rotate: -19deg;
+  left: 315px;
+  top: 460px;
+
+  width: 8.05px;
+  height: 8.05px;
+
+  background-position:
+    -112.23px -146.53px;
 }
+
+
+/* =========================================================
+   PIECE 08
+   MẢNH DÀI / CONG GIỮ NGUYÊN HÌNH GỐC
+========================================================= */
 
 .p02-confetti-piece--08 {
-  left: 228px;
-  top: 432px;
-  width: 7px;
-  height: 12px;
-  --color: #cfa33f;
-  --rotate: 11deg;
+  left: 90px;
+  top: 449px;
+
+  width: 20.33px;
+  height: 14.82px;
+
+  background-position:
+    -294.76px -229.54px;
 }
+
+
+/* =========================================================
+   PIECE 09
+========================================================= */
 
 .p02-confetti-piece--09 {
-  left: 252px;
-  top: 398px;
-  width: 8px;
-  height: 14px;
-  --color: #486f51;
-  --rotate: -24deg;
+  left: 183px;
+  top: 456px;
+
+  width: 11.01px;
+  height: 10.59px;
+
+  background-position:
+    -33.46px -267.65px;
 }
+
+
+/* =========================================================
+   PIECE 10
+========================================================= */
 
 .p02-confetti-piece--10 {
-  left: 276px;
-  top: 446px;
-  width: 7px;
-  height: 13px;
-  --color: #c44e37;
-  --rotate: 26deg;
+  left: 300px;
+  top: 423px;
+
+  width: 11.01px;
+  height: 10.59px;
+
+  background-position:
+    -318.05px -327.79px;
 }
+
+
+/* =========================================================
+   PIECE 11
+========================================================= */
 
 .p02-confetti-piece--11 {
-  left: 299px;
-  top: 420px;
-  width: 8px;
-  height: 15px;
-  --color: #d8ab45;
-  --rotate: -13deg;
+  left: 140px;
+  top: 460px;
+
+  width: 10.59px;
+  height: 10.59px;
+
+  background-position:
+    -32.19px -413.76px;
 }
+
+
+/* =========================================================
+   PIECE 12
+========================================================= */
 
 .p02-confetti-piece--12 {
-  left: 317px;
-  top: 458px;
-  width: 7px;
-  height: 12px;
-  --color: #4b7557;
-  --rotate: 17deg;
+  left: 207px;
+  top: 477px;
+
+  width: 10.59px;
+  height: 10.16px;
+
+  background-position:
+    -312.12px -486.18px;
 }
+
+
+/* =========================================================
+   PIECE 13
+========================================================= */
 
 .p02-confetti-piece--13 {
-  left: 142px;
-  top: 474px;
-  width: 8px;
-  height: 8px;
-  --color: #bd4a36;
-  --rotate: 0deg;
-  --radius: 50%;
+  left: 56px;
+  top: 430px;
+
+  width: 11.01px;
+  height: 10.59px;
+
+  background-position:
+    -37.27px -578.08px;
 }
 
+
+/* =========================================================
+   PIECE 14
+========================================================= */
+
 .p02-confetti-piece--14 {
-  left: 236px;
-  top: 474px;
-  width: 8px;
-  height: 8px;
-  --color: #d2a23f;
-  --rotate: 0deg;
-  --radius: 50%;
+  left: 70px;
+  top: 477px;
+
+  width: 11.86px;
+  height: 9.74px;
+
+  background-position:
+    -57.60px -739.01px;
 }
 
 .p02-procession {
@@ -1040,477 +1171,1309 @@ img {
 
 
 /* =========================================================
-   PAGE 03 — AGENDA / FINAL DEVTOOLS VALUES
+   =========================================================
+   PAGE 03 — LỊCH TRÌNH
+   ARTBOARD: 390 × 680
+   FINAL TUNED VERSION
+   =========================================================
+========================================================= */
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page03-layout {
+  position: relative;
+
+  z-index: 1;
+
+  width: 390px;
+  height: 680px;
+
+  overflow: hidden;
+
+  margin: 0;
+  padding: 0;
+
+  background: #f1dfbd;
+
+  isolation: isolate;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.p03-background {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: none;
+
+  object-fit: cover;
+  object-position: center;
+
+  pointer-events: none;
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   FRAME
+========================================================= */
+
+.p03-frame {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 5;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: none;
+
+  object-fit: fill;
+
+  pointer-events: none;
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   COMMON IMAGE SETTINGS
 ========================================================= */
 
 .p03-cloud,
 .p03-title-divider,
 .p03-timeline,
-.p03-illustration {
+.p03-illustration,
+.p03-bottom-ornament {
   position: absolute;
+
   display: block;
+
   max-width: none;
+
   height: auto;
+
   pointer-events: none;
+
   user-select: none;
+
+  -webkit-user-drag: none;
 }
+
+
+/* =========================================================
+   CLOUDS
+========================================================= */
 
 .p03-cloud {
   z-index: 8;
+
+  opacity: 1;
 }
+
+
+/* CLOUD 01 */
 
 .p03-cloud--01 {
   left: 38px;
   top: 68px;
+
   width: 72px;
 }
+
+
+/* CLOUD 02 */
 
 .p03-cloud--02 {
   left: 16px;
   top: 315px;
+
   width: 53px;
 }
+
+
+/* CLOUD 03 */
 
 .p03-cloud--03 {
   right: 2px;
   top: 144px;
+
   width: 60px;
 }
 
+
+/* CLOUD 04 */
+
 .p03-cloud--04 {
-  right: 46px;
-  top: 534px;
+  right: 40px;
+  top: 545px;
+
   width: 59px;
 }
 
+
+/* =========================================================
+   TITLE
+========================================================= */
+
 .p03-title {
   position: absolute;
+
   z-index: 20;
+
   left: 50%;
   top: 38px;
+
+  width: auto;
+
   margin: 0;
+
   transform: translateX(-50%);
-  font-family: "Times New Roman", Times, serif;
-  font-size: 26px;
-  line-height: 1;
-  font-weight: 400;
-  letter-spacing: 0.03em;
+
   color: #405d48;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 26px;
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  letter-spacing: 0.03em;
+
+  white-space: nowrap;
+
+  text-align: center;
 }
+
+
+/* =========================================================
+   TITLE DIVIDER
+========================================================= */
 
 .p03-title-divider {
   z-index: 20;
+
   left: 50%;
   top: 81px;
+
   width: 112px;
+
   transform: translateX(-50%);
 }
 
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
 .p03-timeline {
   z-index: 14;
-  left: 142px;
+
+  left: 157px;
   top: 100px;
+
   width: auto;
   height: 466px;
 }
 
+
+/* =========================================================
+   EVENT ILLUSTRATIONS
+========================================================= */
+
 .p03-illustration {
   z-index: 12;
+
+  object-fit: contain;
 }
 
+
+/* EVENT 01 — TRÁP */
+
 .p03-trap {
-  left: 39px;
+  left: 33px;
   top: 135px;
+
   width: 125px;
 }
 
+
+/* EVENT 02 — KIỆU */
+
 .p03-kieu {
-  left: 195px;
+  left: 210px;
   top: 225px;
-  width: 130px;
+
+  width: 140px;
 }
+
+
+/* EVENT 03 — MÂM CỖ */
 
 .p03-mam-co {
-  left: 30px;
+  left: 38px;
   top: 330px;
-  width: 127px;
+
+  width: 135px;
 }
 
+
+/* EVENT 04 — CHEERS */
+
 .p03-cheers {
-  left: 200px;
+  left: 190px;
   top: 458px;
-  width: 90px;
+
+  width: 115px;
 }
+
+
+/* =========================================================
+   EVENT COMMON
+========================================================= */
 
 .p03-event {
   position: absolute;
+
   z-index: 22;
-  left: 201px;
+
   width: 165px;
-  font-family: "Times New Roman", Times, serif;
+
   color: #304c3c;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
 }
+
 
 .p03-event h3,
 .p03-event p {
   margin: 0;
 }
 
+
+/* =========================================================
+   EVENT TITLE
+========================================================= */
+
 .p03-event-title {
   margin-bottom: 8px !important;
+
   color: #ad4629;
+
   font-size: 17px;
-  line-height: 1;
+
   font-weight: 400;
+
+  line-height: 1;
+
   white-space: nowrap;
 }
+
+
+/* =========================================================
+   EVENT DATE
+========================================================= */
 
 .p03-event-date {
   margin-bottom: 5px !important;
+
   color: #ad4629;
+
   font-size: 12px;
+
+  font-weight: 400;
+
   line-height: 1.1;
+
   white-space: nowrap;
 }
+
+
+/* =========================================================
+   EVENT TIME
+========================================================= */
 
 .p03-event-time {
   position: relative;
+
   left: 60px;
   top: -17px;
+
   margin-bottom: 10px !important;
+
   color: #304c3c;
+
   font-size: 11px;
+
+  font-weight: 400;
+
   line-height: 1.1;
+
   white-space: nowrap;
 }
 
+
+/* =========================================================
+   EVENT POSITIONS
+========================================================= */
+
+
+/* EVENT 01 — ĂN HỎI */
+
 .p03-event--01 {
+  left: 223px;
   top: 119px;
 }
 
+
+/* EVENT 02 — ĐÓN DÂU */
+
 .p03-event--02 {
-  left: 85px;
+  left: 100px;
   top: 257px;
 }
 
+
+/* EVENT 03 — TIỆC CƯỚI */
+
 .p03-event--03 {
+  left: 215px;
   top: 350px;
 }
 
+
+/* EVENT 04 — AFTER PARTY */
+
 .p03-event--04 {
-  left: 37px;
+  left: 50px;
   top: 467px;
 }
 
+
+/* =========================================================
+   LOCATION
+========================================================= */
+
 .p03-location {
   position: relative;
+
   top: -20px;
+
   display: flex;
+
   align-items: flex-start;
+
   gap: 8px;
+
   margin-top: 7px;
-  font-size: 9.5px;
-  line-height: 1.42;
+
   color: #304c3c;
+
+  font-size: 9.5px;
+
+  font-weight: 400;
+
+  line-height: 1.42;
 }
+
+
+/* Event 01 location hơi cao hơn */
 
 .p03-event--01 .p03-location {
   top: -22px;
 }
 
+
+/* =========================================================
+   LOCATION TEXT CONTAINER
+========================================================= */
+
 .p03-location > div {
   display: flex;
+
   flex-direction: column;
+
   min-width: 0;
-}
-
-.p03-location strong {
-  display: block;
-  margin-bottom: 2px;
-  font-size: 10px;
-  font-weight: 400;
-}
-
-.p03-location > div > span {
-  position: relative;
-  left: -15px;
-  display: block;
-}
-
-.p03-event--04 .p03-location > div > span {
-  left: 0;
-}
-
-.p03-location-pin {
-  position: relative;
-  flex: 0 0 auto;
-  width: 8px;
-  height: 8px;
-  margin-top: 2px;
-  border-radius: 50% 50% 50% 0;
-  background: #b64b2d;
-  transform: rotate(-45deg);
-}
-
-.p03-location-pin::after {
-  content: "";
-  position: absolute;
-  left: 2.5px;
-  top: 2.5px;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: #f3dfb8;
-}
-
-.p03-dress-code {
-  position: absolute;
-  z-index: 21;
-  left: 50%;
-  bottom: 36px;
-  width: 250px;
-  height: 65px;
-  transform: translateX(-50%);
-  padding: 0;
-  background: transparent;
-  box-shadow: none;
-  text-align: center;
-}
-
-.p03-dress-code::before {
-  display: none;
-}
-
-.p03-dress-title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin: 0 0 7px;
-  color: #405d48;
-  font-family: "Times New Roman", Times, serif;
-  font-size: 12px;
-  line-height: 1;
-  font-weight: 600;
-}
-
-.p03-dress-title span {
-  color: #c38d31;
-  font-size: 9px;
-}
-
-.p03-color-list {
-  display: flex;
-  justify-content: center;
-  gap: 13px;
-}
-
-.p03-color-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  color: #3e4539;
-  font-family: "Times New Roman", Times, serif;
-  font-size: 9px;
-  line-height: 1;
-}
-
-.p03-color {
-  display: block;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-}
-
-.p03-color--white {
-  background: #f8f3e8;
-  border: 1px solid rgba(255, 255, 255, 0.95);
-}
-
-.p03-color--beige {
-  background: #e5c9a6;
-  border: 1px solid rgba(255, 255, 255, 0.75);
-}
-
-.p03-color--black {
-  background: #273528;
-  border: 1px solid rgba(255, 255, 255, 0.95);
 }
 
 
 /* =========================================================
-   PAGE 04 — LOCATION
+   LOCATION HOTEL / VENUE TITLE
+========================================================= */
+
+.p03-location strong {
+  display: block;
+
+  margin-bottom: 2px;
+
+  font-size: 10px;
+
+  font-weight: 400;
+
+  line-height: 1.2;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   LOCATION ADDRESS LINES
+========================================================= */
+
+.p03-location > div > span {
+  position: relative;
+
+  left: -15px;
+
+  display: block;
+
+  white-space: nowrap;
+}
+
+
+/* AFTER PARTY giữ "(dự kiến)" ở vị trí bình thường */
+
+.p03-event--04
+.p03-location > div > span {
+  left: 0;
+}
+
+
+/* =========================================================
+   LOCATION PIN
+========================================================= */
+
+.p03-location-pin {
+  position: relative;
+
+  flex: 0 0 auto;
+
+  width: 8px;
+  height: 8px;
+
+  margin-top: 2px;
+
+  border-radius:
+    50% 50% 50% 0;
+
+  background: #b64b2d;
+
+  transform: rotate(-45deg);
+}
+
+
+/* DOT INSIDE PIN */
+
+.p03-location-pin::after {
+  content: "";
+
+  position: absolute;
+
+  left: 2.5px;
+  top: 2.5px;
+
+  width: 3px;
+  height: 3px;
+
+  border-radius: 50%;
+
+  background: #f3dfb8;
+}
+
+
+/* =========================================================
+   DRESS CODE
+========================================================= */
+
+.p03-dress-code {
+  position: absolute;
+
+  z-index: 21;
+
+  left: 50%;
+  bottom: 36px;
+
+  width: 250px;
+  height: 65px;
+
+  transform: translateX(-50%);
+
+  padding: 0;
+
+  background: transparent;
+
+  box-shadow: none;
+
+  text-align: center;
+}
+
+
+/* Tape cũ — HIDE */
+
+.p03-dress-code::before {
+  display: none;
+
+  content: none;
+}
+
+
+/* =========================================================
+   DRESS CODE TITLE
+========================================================= */
+
+.p03-dress-title {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  margin:
+    0 0 7px;
+
+  color: #405d48;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  line-height: 1;
+}
+
+
+.p03-dress-title span {
+  color: #c38d31;
+
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   DRESS CODE COLOR LIST
+========================================================= */
+
+.p03-color-list {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: center;
+
+  gap: 13px;
+}
+
+
+/* =========================================================
+   COLOR ITEM
+========================================================= */
+
+.p03-color-item {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 3px;
+
+  color: #3e4539;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 9px;
+
+  font-weight: 400;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   COLOR CIRCLE COMMON
+========================================================= */
+
+.p03-color {
+  display: block;
+
+  width: 22px;
+  height: 22px;
+
+  border-radius: 50%;
+}
+
+
+/* WHITE */
+
+.p03-color--white {
+  background: #f8f3e8;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.95);
+}
+
+
+/* BEIGE */
+
+.p03-color--beige {
+  background: #e5c9a6;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.75);
+}
+
+
+/* BLACK / DARK GREEN */
+
+.p03-color--black {
+  background: #273528;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.95);
+}
+
+
+/* =========================================================
+   BOTTOM ORNAMENT
+   MATCH PAGE 02
+========================================================= */
+
+.p03-bottom-ornament {
+  position: absolute;
+
+  z-index: 36;
+
+  left: 50%;
+  bottom: -1px;
+
+  width: 120px;
+  height: auto;
+
+  max-width: none;
+
+  transform: translateX(-50%);
+
+  opacity: 1;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   =========================================================
+   PAGE 04 — ĐỊA ĐIỂM
+   ARTBOARD: 390 × 680
+   FINAL TUNED VERSION
+   =========================================================
+========================================================= */
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page04-layout {
+  position: relative;
+
+  z-index: 1;
+
+  width: 390px;
+  height: 680px;
+
+  overflow: hidden;
+
+  margin: 0;
+  padding: 0;
+
+  background: #f1dfbd;
+
+  isolation: isolate;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.p04-background {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: none;
+
+  object-fit: cover;
+  object-position: center;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   FRAME
+========================================================= */
+
+.p04-frame {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 5;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: none;
+
+  object-fit: fill;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+
+/* =========================================================
+   COMMON IMAGE SETTINGS
 ========================================================= */
 
 .p04-cloud,
 .p04-map,
 .p04-card-frame,
-.p04-card-icon {
-  position: absolute;
+.p04-card-icon,
+.p04-bottom-ornament {
   display: block;
+
   max-width: none;
-  height: auto;
+
   user-select: none;
+
+  -webkit-user-drag: none;
 }
 
+
+/* =========================================================
+   CLOUDS
+========================================================= */
+
 .p04-cloud {
+  position: absolute;
+
   z-index: 8;
+
+  height: auto;
+
+  opacity: 1;
+
   pointer-events: none;
 }
+
+
+/* CLOUD 01 */
 
 .p04-cloud--01 {
   left: 38px;
   top: 48px;
+
   width: 69px;
 }
+
+
+/* CLOUD 02 */
 
 .p04-cloud--02 {
   left: 283px;
   top: 90px;
+
   width: 65px;
 }
 
+
+/* =========================================================
+   TITLE
+========================================================= */
+
 .p04-title {
   position: absolute;
+
   z-index: 20;
+
   left: 50%;
   top: 70px;
+
   margin: 0;
-  transform: translateX(-50%) scaleX(0.88);
-  transform-origin: 50% 50%;
+
+  transform:
+    translateX(-50%)
+    scaleX(0.88);
+
+  transform-origin:
+    50% 50%;
+
   color: #9f301c;
-  font-family: "Times New Roman", Times, serif;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
   font-size: 36px;
-  line-height: 0.95;
+
   font-weight: 400;
+
+  line-height: 0.95;
+
   letter-spacing: 0.015em;
+
+  white-space: nowrap;
+
+  text-align: center;
 }
 
+
+/* =========================================================
+   MAP
+========================================================= */
+
 .p04-map {
+  position: absolute;
+
   z-index: 10;
+
   left: 50%;
   top: 125px;
+
   width: 290px;
+  height: auto;
+
   transform: translateX(-50%);
+
+  object-fit: contain;
+
   pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
 }
+
+
+/* =========================================================
+   INFO CARD COMMON
+========================================================= */
 
 .p04-info-card {
   position: absolute;
+
   z-index: 25;
+
   top: 579px;
+
   width: 170px;
   height: 64px;
-  background: rgba(244, 229, 197, 0.16);
+
+  background:
+    rgba(244, 229, 197, 0.16);
 }
+
+
+/* =========================================================
+   HOTEL CARD
+========================================================= */
 
 .p04-hotel-card {
   left: 33px;
+
   overflow: visible;
 }
 
+
+/* =========================================================
+   LOCATION LINK CARD
+========================================================= */
+
 .p04-link-card {
   left: 213px;
+
   overflow: hidden;
+
   cursor: pointer;
+
   touch-action: manipulation;
 }
 
+
+/* =========================================================
+   CARD FRAME COMMON
+========================================================= */
+
 .p04-card-frame {
+  position: absolute;
+
   z-index: 0;
-  pointer-events: none;
+
+  display: block;
+
+  height: 115%;
+
   object-fit: fill;
+
   opacity: 0.6;
+
+  pointer-events: none;
 }
+
+
+/* =========================================================
+   HOTEL CARD FRAME
+========================================================= */
 
 .p04-hotel-card-frame {
   inset: 0;
+
   left: 5px;
   top: -3px;
+
   width: 100%;
   height: 115%;
 }
 
+
+/* =========================================================
+   LINK CARD FRAME
+========================================================= */
+
 .p04-link-card-frame {
   inset: 0;
+
   left: 10px;
   top: -3px;
+
   width: 75%;
   height: 115%;
 }
 
+
+/* =========================================================
+   CARD CONTENT COMMON
+========================================================= */
+
 .p04-card-content {
   position: absolute;
+
   z-index: 2;
+
   inset: 0;
+
   display: flex;
+
   align-items: center;
-  padding: 8px 9px;
+
+  padding:
+    8px 9px;
 }
+
+
+/* =========================================================
+   HOTEL CARD CONTENT
+   DevTools:
+   left +3
+   top +6
+========================================================= */
+
+.p04-hotel-card-content {
+  transform:
+    translate(3px, 6px);
+}
+
+
+/* =========================================================
+   LINK CARD CONTENT
+   DevTools:
+   left +9
+   top +10
+========================================================= */
+
+.p04-link-card-content {
+  transform:
+    translate(9px, 10px);
+}
+
+
+/* =========================================================
+   CARD ICON COMMON
+========================================================= */
 
 .p04-card-icon {
   position: relative;
+
   flex: 0 0 auto;
+
+  height: auto;
+
+  object-fit: contain;
+
   pointer-events: none;
 }
 
+
+/* =========================================================
+   HOTEL ICON
+========================================================= */
+
 .p04-hotel-icon {
-  top: -3px;
   width: 27px;
   height: 32px;
-  object-fit: contain;
+
+  top: -3px;
 }
 
+
+/* =========================================================
+   LOCATION ICON
+========================================================= */
+
 .p04-location-icon {
-  left: 7px;
-  top: -5px;
   width: 27px;
   height: 31px;
-  object-fit: contain;
+
+  left: 7px;
+  top: -6px;
 }
+
+
+/* =========================================================
+   CARD TEXT COMMON
+========================================================= */
 
 .p04-card-text {
   display: flex;
+
   flex: 1 1 auto;
+
   flex-direction: column;
+
   justify-content: center;
+
   min-width: 0;
+
   margin-left: 7px;
 }
 
+
+/* =========================================================
+   CARD TITLE COMMON
+========================================================= */
+
 .p04-card-title {
   position: relative;
+
   display: block;
+
   margin-bottom: 5px;
+
   color: #a13a23;
-  font-family: "Times New Roman", Times, serif;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
   font-size: 9.4px;
-  line-height: 1.05;
+
   font-weight: 600;
+
+  line-height: 1.05;
+
   white-space: nowrap;
 }
 
-.p04-hotel-card .p04-card-title,
-.p04-hotel-card .p04-card-description {
+
+/* =========================================================
+   HOTEL CARD TITLE
+========================================================= */
+
+.p04-hotel-card
+.p04-card-title {
   right: 4px;
 }
 
-.p04-link-card .p04-card-title {
-  left: 4px;
-  margin-bottom: 0;
-  font-size: 10.5px;
-}
+
+/* =========================================================
+   HOTEL CARD DESCRIPTION
+========================================================= */
 
 .p04-card-description {
   position: relative;
-  top: -2px;
+
   display: block;
+
+  right: 4px;
+  top: -2px;
+
   color: #345447;
-  font-family: "Times New Roman", Times, serif;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
   font-size: 7.7px;
+
+  font-weight: 400;
+
   line-height: 1.28;
+
   white-space: nowrap;
+}
+
+
+/* =========================================================
+   LINK CARD TEXT
+   DevTools: top -4
+========================================================= */
+
+.p04-link-card-text {
+  position: relative;
+
+  top: -4px;
+
+  margin-left: 8px;
+
+  padding-right: 17px;
+}
+
+
+/* =========================================================
+   LINK CARD TITLE
+========================================================= */
+
+.p04-link-card
+.p04-card-title {
+  position: relative;
+
+  left: 4px;
+
+  margin-bottom: 0;
+
+  font-size: 10.5px;
+
+  line-height: 1.05;
+}
+
+
+/* =========================================================
+   LINK CARD INTERACTION
+========================================================= */
+
+.p04-link-card {
+  transition:
+    transform 160ms ease,
+    filter 160ms ease;
+}
+
+
+.p04-link-card:active {
+  transform: scale(0.985);
+}
+
+
+@media (hover: hover) {
+
+  .p04-link-card:hover {
+    filter: brightness(1.025);
+  }
+
+}
+
+
+/* =========================================================
+   BOTTOM ORNAMENT
+   MATCH PAGE 02
+========================================================= */
+
+.p04-bottom-ornament {
+  position: absolute;
+
+  z-index: 36;
+
+  left: 50%;
+  bottom: -1px;
+
+  width: 120px;
+  height: auto;
+
+  max-width: none;
+
+  transform: translateX(-50%);
+
+  opacity: 1;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
 }
 
 
