@@ -633,28 +633,58 @@ img {
   height: auto;
 }
 
+/* =========================================================
+   PAGE 02 — BAMBOO SWAY SMOOTH
+========================================================= */
+
 @keyframes bamboo-sway-left {
   0%,
-  100% { transform: rotate(0deg); }
-  25% { transform: rotate(-1.2deg); }
-  75% { transform: rotate(1deg); }
+  100% {
+    transform: translateZ(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateZ(0) rotate(-1deg);
+  }
 }
 
 @keyframes bamboo-sway-right {
   0%,
-  100% { transform: rotate(0deg); }
-  25% { transform: rotate(1.2deg); }
-  75% { transform: rotate(-1deg); }
+  100% {
+    transform: translateZ(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateZ(0) rotate(1deg);
+  }
 }
+
 
 .p02-bamboo-window--left .p02-bamboo {
   transform-origin: 15% 100%;
-  animation: bamboo-sway-left 1750ms ease-in-out infinite;
+
+  animation:
+    bamboo-sway-left
+    2200ms
+    ease-in-out
+    infinite;
+
+  will-change: transform;
+  backface-visibility: hidden;
 }
+
 
 .p02-bamboo-window--right .p02-bamboo {
   transform-origin: 85% 100%;
-  animation: bamboo-sway-right 1750ms ease-in-out infinite;
+
+  animation:
+    bamboo-sway-right
+    2200ms
+    ease-in-out
+    infinite;
+
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
 .p02-invite,
