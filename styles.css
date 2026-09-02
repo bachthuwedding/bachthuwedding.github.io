@@ -2496,6 +2496,238 @@ img {
   user-select: none;
 }
 
+/* =========================================================
+   PAGE 04 — MAP TEXT LABELS
+========================================================= */
+
+.p04-map-label-layer {
+  position: absolute;
+
+  z-index: 11;
+
+  left: 50%;
+  top: 125px;
+
+  width: 290px;
+
+  /*
+    Tỷ lệ gần với artwork map hiện tại.
+    Layer này nằm đúng trên .p04-map.
+  */
+  aspect-ratio: 713 / 1080;
+
+  transform: translateX(-50%);
+
+  pointer-events: none;
+  user-select: none;
+}
+
+
+/* =========================================================
+   COMMON LABEL
+========================================================= */
+
+.p04-map-label {
+  position: absolute;
+
+  display: block;
+
+  margin: 0;
+
+  color: #171512;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  font-size: 6px;
+
+  font-weight: 600;
+
+  line-height: 1;
+
+  white-space: nowrap;
+
+  transform-origin: center center;
+}
+
+
+/* =========================================================
+   NOTE
+========================================================= */
+
+.p04-map-label--note {
+  left: 50%;
+  top: 7%;
+
+  transform: translateX(-50%);
+
+  font-size: 7px;
+  font-style: italic;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   PHỦ TÂY HỒ
+========================================================= */
+
+.p04-map-label--phu-tay-ho {
+  left: 24%;
+  top: 35%;
+
+  font-size: 5.5px;
+}
+
+
+/* =========================================================
+   TÂY HỒ
+========================================================= */
+
+.p04-map-label--tay-ho {
+  left: 25%;
+  top: 59%;
+
+  font-size: 8px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   LẠC LONG QUÂN
+========================================================= */
+
+.p04-map-label--lac-long-quan {
+  left: 1%;
+  top: 54%;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(-90deg);
+
+  font-size: 5.5px;
+}
+
+
+/* =========================================================
+   SÔNG HỒNG
+========================================================= */
+
+.p04-map-label--song-hong {
+  left: 77%;
+  top: 40%;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(61deg);
+
+  font-size: 9px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   ÂU CƠ
+========================================================= */
+
+.p04-map-label--au-co {
+  left: 70%;
+  top: 57%;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(61deg);
+
+  font-size: 5.5px;
+}
+
+
+/* =========================================================
+   SHERATON
+========================================================= */
+
+.p04-map-label--sheraton {
+  left: 70%;
+  top: 74%;
+
+  transform: translateX(-50%);
+
+  font-size: 6px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   TỪ HOA
+========================================================= */
+
+.p04-map-label--tu-hoa {
+  left: 76%;
+  top: 79%;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(42deg);
+
+  font-size: 4.5px;
+}
+
+
+/* =========================================================
+   CHÙA TRẤN QUỐC
+========================================================= */
+
+.p04-map-label--tran-quoc {
+  left: 58%;
+  top: 86%;
+
+  transform: translateX(-50%);
+
+  font-size: 5.5px;
+}
+
+
+/* =========================================================
+   ĐỀN QUÁN THÁNH
+========================================================= */
+
+.p04-map-label--quan-thanh {
+  left: 55%;
+  top: 94%;
+
+  transform: translateX(-50%);
+
+  font-size: 5.5px;
+}
+
+
+/* =========================================================
+   THỤY KHUÊ
+========================================================= */
+
+.p04-map-label--thuy-khue {
+  left: 27%;
+  top: 91%;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(15deg);
+
+  font-size: 5px;
+}
+
+
+/* =========================================================
+   HỒ TRÚC BẠCH
+========================================================= */
+
+.p04-map-label--truc-bach {
+  left: 72%;
+  top: 92%;
+
+  font-size: 3.5px;
+}
 
 /* CARDS */
 
