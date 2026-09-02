@@ -5,43 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#ead5ad" />
   <meta name="description" content="Thiệp cưới Bách & Thư" />
-
   <title>Bách & Thư</title>
 
   <link rel="icon" type="image/png" href="./assets/favicon.png" />
 
-  <link
-    rel="preload"
-    href="./assets/page01-bg-optimized.webp"
-    as="image"
-    type="image/webp"
-    fetchpriority="high"
-  />
+  <!-- Chỉ preload 2 asset thật sự cần cho first paint -->
+  <link rel="preload" href="./assets/page01-bg-optimized.webp" as="image" type="image/webp" fetchpriority="high" />
+  <link rel="preload" href="./assets/envelope-closed-optimized.png" as="image" type="image/png" fetchpriority="high" />
 
-  <link
-    rel="preload"
-    href="./assets/envelope-closed-optimized.png"
-    as="image"
-    type="image/png"
-    fetchpriority="high"
-  />
-
-  <link rel="stylesheet" href="./styles.css?v=20260902-3" />
+  <link rel="stylesheet" href="./styles.css?v=20260902-5" />
+  <script src="./script.js?v=20260902-5" defer></script>
 </head>
-
 <body>
   <main class="site-shell" id="siteShell">
     <div class="site-scale" id="siteScale">
       <div class="design-stage">
 
-        <!-- =================================================
+        <!-- =====================================================
              PAGE 01 — OPENING
-        ================================================== -->
-        <section
-          class="opening-page"
-          id="opening"
-          aria-label="Mở thiệp cưới Bách và Thư"
-        >
+        ====================================================== -->
+        <section class="opening-page" id="opening" aria-label="Mở thiệp cưới Bách và Thư">
           <button
             class="envelope-button"
             id="envelopeButton"
@@ -51,46 +34,10 @@
           >
             <span class="envelope-stage" aria-hidden="true">
               <span class="envelope-open">
-                <img
-                  class="envelope-open-flap deferred-opening-asset"
-                  data-src="./assets/envelope-open-flap-optimized.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                  width="900"
-                  height="600"
-                />
-
-                <img
-                  class="envelope-open-body deferred-opening-asset"
-                  data-src="./assets/envelope-open-body-optimized.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                  width="800"
-                  height="1200"
-                />
-
-                <img
-                  class="invitation-card deferred-opening-asset"
-                  id="invitationCard"
-                  data-src="./assets/invitation-card-optimized.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                  width="720"
-                  height="960"
-                />
-
-                <img
-                  class="envelope-open-front deferred-opening-asset"
-                  data-src="./assets/envelope-open-front-optimized.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                  width="800"
-                  height="1200"
-                />
+                <img class="envelope-open-flap deferred-opening-asset" data-src="./assets/envelope-open-flap-optimized.png" alt="" draggable="false" decoding="async" width="900" height="600" />
+                <img class="envelope-open-body deferred-opening-asset" data-src="./assets/envelope-open-body-optimized.png" alt="" draggable="false" decoding="async" width="800" height="1200" />
+                <img class="invitation-card deferred-opening-asset" id="invitationCard" data-src="./assets/invitation-card-optimized.png" alt="" draggable="false" decoding="async" width="720" height="960" />
+                <img class="envelope-open-front deferred-opening-asset" data-src="./assets/envelope-open-front-optimized.png" alt="" draggable="false" decoding="async" width="800" height="1200" />
               </span>
 
               <img
@@ -110,35 +57,18 @@
           </button>
         </section>
 
-        <!-- =================================================
-             PAGE 02+ — ONE SCROLL CONTAINER
-        ================================================== -->
+        <!-- =====================================================
+             PAGE 02–08 — ONE SCROLL CONTAINER
+        ====================================================== -->
         <section class="page-02" id="page02" aria-hidden="true">
           <div class="invitation-flow" id="invitationFlow">
 
             <!-- =================================================
-                 PAGE 02
+                 PAGE 02 — LỄ THÀNH HÔN
             ================================================== -->
-            <section
-              class="invitation-page page02-layout"
-              id="page02Layout"
-              aria-label="Lễ thành hôn Bách và Thư"
-            >
-              <img
-                class="p02-background deferred-page02-asset"
-                data-src="./assets/page02-bg.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
-
-              <img
-                class="p02-frame deferred-page02-asset"
-                data-src="./assets/page02-frame.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+            <section class="invitation-page page02-layout" id="page02Layout" aria-label="Lễ thành hôn Bách và Thư">
+              <img class="p02-background deferred-page02-asset" data-src="./assets/page02-bg.png" alt="" draggable="false" decoding="async" />
+              <img class="p02-frame deferred-page02-asset" data-src="./assets/page02-frame.png" alt="" draggable="false" decoding="async" />
 
               <img class="p02-cloud p02-cloud--01 deferred-page02-asset" data-src="./assets/page02-cloud-01.png" alt="" draggable="false" decoding="async" />
               <img class="p02-cloud p02-cloud--02 deferred-page02-asset" data-src="./assets/page02-cloud-02.png" alt="" draggable="false" decoding="async" />
@@ -167,7 +97,8 @@
               <div class="p02-date-divider" aria-hidden="true"></div>
               <p class="p02-date">24.11.2026</p>
 
-              <div class="p02-confetti-cluster" aria-hidden="true">
+              <!-- Sprite chỉ được tải khi Page 02 được warm-up -->
+              <div class="p02-confetti-cluster" data-sprite-src="./assets/page06-confetti.png" aria-hidden="true">
                 <span class="p02-confetti-piece p02-confetti-piece--01"></span>
                 <span class="p02-confetti-piece p02-confetti-piece--02"></span>
                 <span class="p02-confetti-piece p02-confetti-piece--03"></span>
@@ -284,13 +215,7 @@
 
               <h2 class="p04-title">ĐỊA ĐIỂM</h2>
 
-              <img
-                class="p04-map deferred-page04-asset"
-                data-src="./assets/page03-map-background@2x.webp"
-                alt="Bản đồ minh họa khu vực Hồ Tây và Sheraton Hanoi Hotel"
-                draggable="false"
-                decoding="async"
-              />
+              <img class="p04-map deferred-page04-asset" data-src="./assets/page03-map-background@2x.webp" alt="Bản đồ minh họa khu vực Hồ Tây và Sheraton Hanoi Hotel" draggable="false" decoding="async" />
 
               <div class="p04-map-label-layer" aria-hidden="true">
                 <span class="p04-map-label p04-map-label--note">Hình ảnh chỉ mang tính chất minh họa</span>
@@ -316,19 +241,11 @@
                 </div>
               </article>
 
-              <a
-                class="p04-info-card p04-link-card"
-                href="https://maps.app.goo.gl/3wnJCs5RyLuVNG2a7"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Mở vị trí Sheraton Hanoi Hotel trên Google Maps"
-              >
+              <a class="p04-info-card p04-link-card" href="https://maps.app.goo.gl/3wnJCs5RyLuVNG2a7" target="_blank" rel="noopener noreferrer" aria-label="Mở vị trí Sheraton Hanoi Hotel trên Google Maps">
                 <img class="p04-card-frame p04-link-card-frame deferred-page04-asset" data-src="./assets/page03-card-frame.png" alt="" draggable="false" decoding="async" />
                 <div class="p04-card-content p04-link-card-content">
                   <img class="p04-card-icon p04-location-icon deferred-page04-asset" data-src="./assets/page03-icon-location.svg" alt="" draggable="false" decoding="async" />
-                  <div class="p04-card-text p04-link-card-text">
-                    <strong class="p04-card-title">LINK VỊ TRÍ</strong>
-                  </div>
+                  <div class="p04-card-text p04-link-card-text"><strong class="p04-card-title">LINK VỊ TRÍ</strong></div>
                 </div>
               </a>
 
@@ -343,7 +260,6 @@
               <img class="p05-frame deferred-page05-asset" data-src="./assets/page02-frame.png" alt="" draggable="false" decoding="async" />
 
               <h2 class="p05-title">CHUYỆN CỦA CHÚNG MÌNH</h2>
-
               <div class="p05-title-divider" aria-hidden="true"><span></span></div>
 
               <figure class="p05-photo-wrap" aria-label="Ảnh Bách và Thư">
@@ -358,18 +274,14 @@
                   Có những cuộc gặp gỡ bắt đầu rất đỗi bình thường,<br />
                   nhưng rồi lại trở thành một phần không thể thiếu<br />
                   trong câu chuyện của mỗi người.<br /><br />
-
                   Từ những ngày đầu còn nhiều bỡ ngỡ,<br />
                   chúng mình đã cùng nhau đi qua niềm vui, thử thách<br />
                   và cả những khoảnh khắc rất nhỏ của cuộc sống.<br /><br />
-
                   Càng đi cùng nhau, chúng mình càng hiểu rằng<br />
                   điều quý giá nhất không phải là một hành trình hoàn hảo,<br />
                   mà là có một người luôn muốn cùng mình bước tiếp.<br /><br />
-
                   Và giữa rất nhiều người trên thế giới này,<br />
                   chúng mình đã chọn nhau để cùng xây dựng một mái nhà.<br /><br />
-
                   Cảm ơn bạn vì đã trở thành<br />
                   một phần trong câu chuyện của Bách &amp; Thư.
                 </p>
@@ -379,7 +291,6 @@
               <img class="p05-lotus p05-lotus--right deferred-page05-asset" data-src="./assets/page05-lotus-right.png" alt="" draggable="false" decoding="async" />
 
               <div class="p05-bottom-divider" aria-hidden="true"><span></span></div>
-
               <img class="p05-bottom-ornament deferred-page05-asset" data-src="./assets/page02-bottom-ornament.png" alt="" draggable="false" decoding="async" />
             </section>
 
@@ -414,85 +325,66 @@
                  PAGE 07 — GỬI LỜI CHÚC
             ================================================== -->
             <section class="invitation-page page07-layout" id="page07" aria-label="Gửi lời chúc mừng">
-              <img class="p07-background" src="./assets/page02-bg.png" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="p07-background deferred-page07-asset" data-src="./assets/page02-bg.png" alt="" draggable="false" decoding="async" />
 
-              <img class="p07-cloud p07-cloud--01" src="./assets/page02-cloud-01.png" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="p07-cloud p07-cloud--02" src="./assets/page02-cloud-02.png" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="p07-cloud p07-cloud--01 deferred-page07-asset" data-src="./assets/page02-cloud-01.png" alt="" draggable="false" decoding="async" />
+              <img class="p07-cloud p07-cloud--02 deferred-page07-asset" data-src="./assets/page02-cloud-02.png" alt="" draggable="false" decoding="async" />
 
-              <img class="p07-title-ornament" src="./assets/page07-title-ornament.png" alt="" draggable="false" loading="lazy" decoding="async" />
-
+              <img class="p07-title-ornament deferred-page07-asset" data-src="./assets/page07-title-ornament.png" alt="" draggable="false" decoding="async" />
               <h2 class="p07-title">GỬI LỜI CHÚC</h2>
+              <img class="p07-heading-divider deferred-page07-asset" data-src="./assets/page07-heading-divider.png" alt="" draggable="false" decoding="async" />
 
-              <img class="p07-heading-divider" src="./assets/page07-heading-divider.png" alt="" draggable="false" loading="lazy" decoding="async" />
-
-              <p class="p07-description">
-                Bạn có lời gì muốn gửi tới chúng mình không.<br />
-                Nếu có hãy cho chúng mình biết nhé!
-              </p>
+              <p class="p07-description">Bạn có lời gì muốn gửi tới chúng mình không.<br />Nếu có hãy cho chúng mình biết nhé!</p>
 
               <button class="p07-card p07-card--message" type="button" aria-label="Gửi lời chúc">
-                <img class="p07-card-frame" src="./assets/page07-card-frame.png" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="p07-card-icon p07-card-icon--message" src="./assets/page07-icon-message.png" alt="" draggable="false" loading="lazy" decoding="async" />
-                <span class="p07-card-copy p07-card-copy--message">
-                  <strong class="p07-card-title p07-card-title--message">GỬI LỜI NHẮN</strong>
-                </span>
+                <img class="p07-card-frame deferred-page07-asset" data-src="./assets/page07-card-frame.png" alt="" draggable="false" decoding="async" />
+                <img class="p07-card-icon p07-card-icon--message deferred-page07-asset" data-src="./assets/page07-icon-message.png" alt="" draggable="false" decoding="async" />
+                <span class="p07-card-copy p07-card-copy--message"><strong class="p07-card-title p07-card-title--message">GỬI LỜI NHẮN</strong></span>
               </button>
 
               <button class="p07-card p07-card--video" type="button" aria-label="Gửi video chúc mừng">
-                <img class="p07-card-frame" src="./assets/page07-card-frame.png" alt="" draggable="false" loading="lazy" decoding="async" />
-                <img class="p07-card-icon p07-card-icon--video" src="./assets/page07-icon-video.png" alt="" draggable="false" loading="lazy" decoding="async" />
-                <span class="p07-card-copy p07-card-copy--video">
-                  <strong class="p07-card-title p07-card-title--video">GỬI VIDEO</strong>
-                </span>
+                <img class="p07-card-frame deferred-page07-asset" data-src="./assets/page07-card-frame.png" alt="" draggable="false" decoding="async" />
+                <img class="p07-card-icon p07-card-icon--video deferred-page07-asset" data-src="./assets/page07-icon-video.png" alt="" draggable="false" decoding="async" />
+                <span class="p07-card-copy p07-card-copy--video"><strong class="p07-card-title p07-card-title--video">GỬI VIDEO</strong></span>
               </button>
 
-              <img class="p07-couple" src="./assets/page02-couple.png" alt="Bách và Thư" draggable="false" loading="lazy" decoding="async" />
-              <img class="p07-frame" src="./assets/page02-frame.png" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="p07-bottom-ornament" src="./assets/page02-bottom-ornament.png" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="p07-couple deferred-page07-asset" data-src="./assets/page02-couple.png" alt="Bách và Thư" draggable="false" decoding="async" />
+              <img class="p07-frame deferred-page07-asset" data-src="./assets/page02-frame.png" alt="" draggable="false" decoding="async" />
+              <img class="p07-bottom-ornament deferred-page07-asset" data-src="./assets/page02-bottom-ornament.png" alt="" draggable="false" decoding="async" />
             </section>
 
             <!-- =================================================
                  PAGE 08 — CẢM ƠN
             ================================================== -->
             <section class="invitation-page page08-layout" id="page08" aria-label="Cảm ơn mọi người">
-              <img class="p08-background" src="./assets/page02-bg.png" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="p08-background deferred-page08-asset" data-src="./assets/page02-bg.png" alt="" draggable="false" decoding="async" />
 
               <div class="p08-content">
                 <h2 class="p08-title">CẢM ƠN<br />MỌI NGƯỜI</h2>
-
-                <div class="p08-divider p08-divider--01" aria-hidden="true">
-                  <span></span><b>❀</b><span></span>
-                </div>
-
+                <div class="p08-divider p08-divider--01" aria-hidden="true"><span></span><b>❀</b><span></span></div>
                 <p class="p08-names">Bách <span>&amp;</span> Thư</p>
                 <p class="p08-date">24.11.2026</p>
-
-                <div class="p08-divider p08-divider--02" aria-hidden="true">
-                  <span></span><b>❀</b><span></span>
-                </div>
+                <div class="p08-divider p08-divider--02" aria-hidden="true"><span></span><b>❀</b><span></span></div>
               </div>
 
-              <img class="p08-cloud p08-cloud--left" src="./assets/page02-cloud-03.png" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="p08-cloud p08-cloud--right" src="./assets/page02-cloud-01.png" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="p08-cloud p08-cloud--left deferred-page08-asset" data-src="./assets/page02-cloud-03.png" alt="" draggable="false" decoding="async" />
+              <img class="p08-cloud p08-cloud--right deferred-page08-asset" data-src="./assets/page02-cloud-01.png" alt="" draggable="false" decoding="async" />
 
-              <img class="p08-water-ground" src="./assets/page08-water-ground.png" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="p08-temple-gate" src="./assets/page08-temple-gate.png" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="p08-bamboo" src="./assets/page08-bamboo.png" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="p08-couple" src="./assets/page08-couple-back.png" alt="Bách và Thư" draggable="false" loading="lazy" decoding="async" />
-              <img class="p08-lotus p08-lotus--left" src="./assets/page08-lotus-left.png" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="p08-lotus p08-lotus--right" src="./assets/page08-lotus-right.png" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="p08-water-ground deferred-page08-asset" data-src="./assets/page08-water-ground.png" alt="" draggable="false" decoding="async" />
+              <img class="p08-temple-gate deferred-page08-asset" data-src="./assets/page08-temple-gate.png" alt="" draggable="false" decoding="async" />
+              <img class="p08-bamboo deferred-page08-asset" data-src="./assets/page08-bamboo.png" alt="" draggable="false" decoding="async" />
+              <img class="p08-couple deferred-page08-asset" data-src="./assets/page08-couple-back.png" alt="Bách và Thư" draggable="false" decoding="async" />
+              <img class="p08-lotus p08-lotus--left deferred-page08-asset" data-src="./assets/page08-lotus-left.png" alt="" draggable="false" decoding="async" />
+              <img class="p08-lotus p08-lotus--right deferred-page08-asset" data-src="./assets/page08-lotus-right.png" alt="" draggable="false" decoding="async" />
 
-              <img class="p08-frame" src="./assets/page02-frame.png" alt="" draggable="false" loading="lazy" decoding="async" />
-              <img class="p08-bottom-ornament" src="./assets/page02-bottom-ornament.png" alt="" draggable="false" loading="lazy" decoding="async" />
+              <img class="p08-frame deferred-page08-asset" data-src="./assets/page02-frame.png" alt="" draggable="false" decoding="async" />
+              <img class="p08-bottom-ornament deferred-page08-asset" data-src="./assets/page02-bottom-ornament.png" alt="" draggable="false" decoding="async" />
             </section>
 
           </div>
         </section>
-
       </div>
     </div>
   </main>
-
-  <script src="./script.js"></script>
 </body>
 </html>
