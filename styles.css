@@ -699,13 +699,11 @@ img {
   overflow-x: hidden;
   overflow-y: auto;
 
-  background:
-    var(--invitation-paper);
+  background: var(--invitation-paper);
 
   opacity: 0;
 
-  transform:
-    translate3d(0, 18px, 0);
+  transform: translate3d(0, 18px, 0);
 
   pointer-events: none;
 
@@ -718,15 +716,13 @@ img {
   -webkit-overflow-scrolling: touch;
 
   transition:
-    opacity 0.48s ease,
-    transform 0.58s
-      cubic-bezier(0.22, 0.61, 0.36, 1);
+    opacity .48s ease,
+    transform .58s cubic-bezier(.22, .61, .36, 1);
 
   will-change:
     opacity,
     transform;
 }
-
 
 .page-02::-webkit-scrollbar {
   display: none;
@@ -779,6 +775,8 @@ img {
 
   display: block;
 
+  flex: none;
+
   width: 390px;
   height: 680px;
 
@@ -788,8 +786,6 @@ img {
   padding: 0;
 
   background: #f1dfbd;
-
-  isolation: isolate;
 }
 
 
