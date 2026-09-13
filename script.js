@@ -1,12 +1,27 @@
 (() => {
   "use strict";
 
+
   /* =======================================================
      CONFIG
   ======================================================= */
 
   const DESIGN_WIDTH = 390;
   const DESIGN_HEIGHT = 680;
+
+
+  /*
+    Lucky Number range.
+
+    Hiện tại:
+    01 → 99
+
+    Sau này muốn 001 → 999
+    thì chỉ cần đổi ở đây.
+  */
+
+  const LUCKY_MIN = 1;
+  const LUCKY_MAX = 99;
 
 
   /* =======================================================
@@ -16,38 +31,99 @@
   const root =
     document.documentElement;
 
+
   const siteShell =
-    document.getElementById("siteShell");
+    document.getElementById(
+      "siteShell"
+    );
+
 
   const openingCardButton =
-    document.getElementById("openingCardButton");
+    document.getElementById(
+      "openingCardButton"
+    );
+
 
   const pageScroller =
-    document.getElementById("page02");
+    document.getElementById(
+      "page02"
+    );
 
 
   /*
-    Page 05 đã bỏ.
+    PAGE 05 đã bỏ.
 
-    Thứ tự hiện tại:
-    02 → 03 → 04 → 06 → 07 → 08
+    Current flow:
+
+    02
+    03
+    04
+    06
+    07
+    08
   */
 
   const pages = [
 
-    document.getElementById("page02Layout"),
+    document.getElementById(
+      "page02Layout"
+    ),
 
-    document.getElementById("page03"),
+    document.getElementById(
+      "page03"
+    ),
 
-    document.getElementById("page04"),
+    document.getElementById(
+      "page04"
+    ),
 
-    document.getElementById("page06"),
+    document.getElementById(
+      "page06"
+    ),
 
-    document.getElementById("page07"),
+    document.getElementById(
+      "page07"
+    ),
 
-    document.getElementById("page08"),
+    document.getElementById(
+      "page08"
+    ),
 
   ].filter(Boolean);
+
+
+  /* =======================================================
+     LUCKY NUMBER DOM
+  ======================================================= */
+
+  const luckyCard =
+    document.getElementById(
+      "luckyCard"
+    );
+
+
+  const luckyNumber =
+    document.getElementById(
+      "luckyNumber"
+    );
+
+
+  const luckyHint =
+    document.getElementById(
+      "luckyHint"
+    );
+
+
+  const luckyTrigger =
+    document.getElementById(
+      "luckyTrigger"
+    );
+
+
+  const luckyFireworks =
+    document.getElementById(
+      "luckyFireworks"
+    );
 
 
   /* =======================================================
@@ -57,8 +133,10 @@
   const imagePromises =
     new WeakMap();
 
+
   const pagePromises =
     new WeakMap();
+
 
   const urlPromises =
     new Map();
@@ -73,6 +151,15 @@
   let activePageIndex = -1;
 
 
+  /* LUCKY STATE */
+
+  let luckyIdleTimer = null;
+
+  let luckyRolling = false;
+
+  let luckyLocked = false;
+
+
   /* =======================================================
      SCALE
   ======================================================= */
@@ -82,19 +169,29 @@
     const viewport =
       window.visualViewport;
 
+
     const viewportWidth =
-      viewport?.width ||
+      viewport?.width
+      ||
       window.innerWidth;
 
+
     const viewportHeight =
-      viewport?.height ||
+      viewport?.height
+      ||
       window.innerHeight;
 
 
     const scale =
       Math.min(
-        viewportWidth / DESIGN_WIDTH,
-        viewportHeight / DESIGN_HEIGHT
+
+        viewportWidth
+        /
+        DESIGN_WIDTH,
+
+        viewportHeight
+        /
+        DESIGN_HEIGHT
       );
 
 
@@ -116,9 +213,11 @@
     );
 
 
-    siteShell?.classList.add(
-      "is-scale-ready"
-    );
+    siteShell
+      ?.classList
+      .add(
+        "is-scale-ready"
+      );
   }
 
 
@@ -168,7 +267,7 @@
 
 
   /* =======================================================
-     IDLE
+     IDLE HELPER
   ======================================================= */
 
   function runWhenIdle(
@@ -200,8 +299,7 @@
 
 
   /* =======================================================
-     PRELOAD URL
-     Dùng cho sprite confetti Page 02
+     URL PRELOAD
   ======================================================= */
 
   function preloadUrl(
@@ -210,6 +308,7 @@
   ) {
 
     if (!url) {
+
       return Promise.resolve();
     }
 
@@ -243,23 +342,24 @@
           } catch (_) {}
 
 
-          const finish = () => {
+          const finish =
+            () => {
 
-            if (
-              typeof image.decode
-              === "function"
-            ) {
+              if (
+                typeof image.decode
+                === "function"
+              ) {
 
-              image
-                .decode()
-                .catch(() => {})
-                .finally(resolve);
+                image
+                  .decode()
+                  .catch(() => {})
+                  .finally(resolve);
 
-            } else {
+              } else {
 
-              resolve();
-            }
-          };
+                resolve();
+              }
+            };
 
 
           image.addEventListener(
@@ -314,6 +414,7 @@
   ) {
 
     if (!image) {
+
       return Promise.resolve();
     }
 
@@ -332,6 +433,7 @@
 
 
     if (!source) {
+
       return Promise.resolve();
     }
 
@@ -348,23 +450,24 @@
           } catch (_) {}
 
 
-          const finish = () => {
+          const finish =
+            () => {
 
-            if (
-              typeof image.decode
-              === "function"
-            ) {
+              if (
+                typeof image.decode
+                === "function"
+              ) {
 
-              image
-                .decode()
-                .catch(() => {})
-                .finally(resolve);
+                image
+                  .decode()
+                  .catch(() => {})
+                  .finally(resolve);
 
-            } else {
+              } else {
 
-              resolve();
-            }
-          };
+                resolve();
+              }
+            };
 
 
           image.addEventListener(
@@ -384,11 +487,6 @@
             }
           );
 
-
-          /*
-            Gắn src chỉ khi page
-            thực sự cần load.
-          */
 
           image.src =
             source;
@@ -429,6 +527,7 @@
   ) {
 
     if (!page) {
+
       return Promise.resolve();
     }
 
@@ -461,6 +560,7 @@
         const jobs =
           images.map(
             (image) =>
+
               loadImage(
                 image,
                 priority
@@ -469,11 +569,7 @@
 
 
         /*
-          Page 02:
-          confetti dùng sprite CSS.
-
-          Không tải sprite này
-          ngay lúc mở website.
+          PAGE 02 confetti sprite
         */
 
         const spriteHost =
@@ -496,21 +592,24 @@
               spriteUrl,
               priority
             )
-              .then(() => {
 
-                spriteHost
-                  .style
-                  .setProperty(
-                    "--p02-confetti-sprite",
-                    `url("${spriteUrl}")`
-                  );
+              .then(
+                () => {
+
+                  spriteHost
+                    .style
+                    .setProperty(
+                      "--p02-confetti-sprite",
+                      `url("${spriteUrl}")`
+                    );
 
 
-                spriteHost
-                  .removeAttribute(
-                    "data-sprite-src"
-                  );
-              })
+                  spriteHost
+                    .removeAttribute(
+                      "data-sprite-src"
+                    );
+                }
+              )
           );
         }
 
@@ -542,7 +641,7 @@
 
 
   /* =======================================================
-     ACTIVE / NEARBY PAGE
+     NEARBY PAGES
   ======================================================= */
 
   function setNearbyPages(
@@ -550,13 +649,16 @@
   ) {
 
     if (!pages.length) {
+
       return;
     }
 
 
     const safeIndex =
       Math.max(
+
         0,
+
         Math.min(
           index,
           pages.length - 1
@@ -564,28 +666,30 @@
       );
 
 
-    /*
-      Chỉ page hiện tại
-      và page sát bên
-      được chạy animation.
-    */
-
     pages.forEach(
-      (page, pageIndex) => {
+      (
+        page,
+        pageIndex
+      ) => {
 
         page.classList.toggle(
+
           "is-nearby",
+
           Math.abs(
-            pageIndex - safeIndex
-          ) <= 1
+            pageIndex
+            -
+            safeIndex
+          )
+          <=
+          1
         );
       }
     );
 
 
     /*
-      Page đang xem:
-      high priority
+      CURRENT
     */
 
     loadPage(
@@ -595,8 +699,7 @@
 
 
     /*
-      Chỉ preload đúng
-      1 page kế tiếp.
+      NEXT
     */
 
     if (
@@ -616,19 +719,23 @@
 
 
   /* =======================================================
-     CURRENT PAGE
+     GET CURRENT PAGE
   ======================================================= */
 
   function getCurrentPageIndex() {
 
     if (!pageScroller) {
+
       return 0;
     }
 
 
     return Math.max(
+
       0,
+
       Math.min(
+
         pages.length - 1,
 
         Math.round(
@@ -648,6 +755,7 @@
   function onPageScroll() {
 
     if (scrollRaf) {
+
       return;
     }
 
@@ -693,13 +801,13 @@
 
 
   /* =======================================================
-     ENTER INVITATION
-     PAGE 01 → PAGE 02 DIRECTLY
+     PAGE 01 → PAGE 02
   ======================================================= */
 
   function enterInvitation() {
 
     if (pageMode) {
+
       return;
     }
 
@@ -707,19 +815,15 @@
     pageMode = true;
 
 
-    /*
-      Không đợi animation mở nắp.
-      Không đợi ảnh load xong.
-      Chuyển Page 02 ngay.
-    */
-
     loadPage(
       pages[0],
       "high"
     );
 
 
-    if (pageScroller) {
+    if (
+      pageScroller
+    ) {
 
       pageScroller.scrollTop =
         0;
@@ -748,11 +852,6 @@
     );
 
 
-    /*
-      Sau khi đã vào Page 02,
-      warm Page 03.
-    */
-
     runWhenIdle(
       () => {
 
@@ -771,20 +870,10 @@
   }
 
 
-  /* =======================================================
-     PAGE 01 INTERACTION
-  ======================================================= */
-
   openingCardButton
     ?.addEventListener(
       "pointerdown",
       () => {
-
-        /*
-          User vừa chạm thiệp:
-          bắt đầu tải Page 02
-          ngay trước click.
-        */
 
         loadPage(
           pages[0],
@@ -813,14 +902,6 @@
      INITIAL WARM-UP
   ======================================================= */
 
-  /*
-    First paint:
-    chỉ Page 01 bg + envelope.
-
-    Sau first paint:
-    browser rảnh thì bắt đầu warm Page 02.
-  */
-
   runWhenIdle(
     () => {
 
@@ -831,6 +912,857 @@
     },
     450
   );
+
+
+  /* =======================================================
+     LUCKY NUMBER — GUEST ID
+  ======================================================= */
+
+  function getGuestToken() {
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    /*
+      Hỗ trợ cả:
+
+      ?guest=nguyen-van-a
+
+      hoặc
+
+      ?g=nguyen-van-a
+    */
+
+    const token =
+      (
+        params.get("guest")
+        ||
+        params.get("g")
+        ||
+        "default"
+      )
+        .trim()
+        .toLowerCase();
+
+
+    return (
+      token
+      ||
+      "default"
+    );
+  }
+
+
+  function getLuckyStorageKey() {
+
+    return (
+      "bach-thu-wedding:lucky:"
+      +
+      getGuestToken()
+    );
+  }
+
+
+  /* =======================================================
+     LUCKY NUMBER — STORAGE
+  ======================================================= */
+
+  function readStoredLuckyNumber() {
+
+    try {
+
+      const raw =
+        window.localStorage
+          .getItem(
+            getLuckyStorageKey()
+          );
+
+
+      if (
+        raw === null
+      ) {
+
+        return null;
+      }
+
+
+      const value =
+        Number(raw);
+
+
+      if (
+        !Number.isInteger(value)
+        ||
+        value < LUCKY_MIN
+        ||
+        value > LUCKY_MAX
+      ) {
+
+        return null;
+      }
+
+
+      return value;
+
+    } catch (_) {
+
+      return null;
+    }
+  }
+
+
+  function saveLuckyNumber(
+    value
+  ) {
+
+    try {
+
+      window.localStorage
+        .setItem(
+          getLuckyStorageKey(),
+          String(value)
+        );
+
+      return true;
+
+    } catch (_) {
+
+      return false;
+    }
+  }
+
+
+  /* =======================================================
+     LUCKY NUMBER — RANDOM
+  ======================================================= */
+
+  function randomLuckyNumber() {
+
+    const range =
+      LUCKY_MAX
+      -
+      LUCKY_MIN
+      +
+      1;
+
+
+    /*
+      crypto nếu browser hỗ trợ.
+    */
+
+    if (
+      window.crypto
+      &&
+      typeof window.crypto
+        .getRandomValues
+        === "function"
+    ) {
+
+      const array =
+        new Uint32Array(1);
+
+
+      window.crypto
+        .getRandomValues(
+          array
+        );
+
+
+      return (
+        LUCKY_MIN
+        +
+        (
+          array[0]
+          %
+          range
+        )
+      );
+    }
+
+
+    return (
+      LUCKY_MIN
+      +
+      Math.floor(
+        Math.random()
+        *
+        range
+      )
+    );
+  }
+
+
+  /* =======================================================
+     LUCKY NUMBER — FORMAT
+  ======================================================= */
+
+  function formatLuckyNumber(
+    value
+  ) {
+
+    /*
+      1 → 01
+      7 → 07
+      23 → 23
+    */
+
+    return String(value)
+      .padStart(
+        2,
+        "0"
+      );
+  }
+
+
+  function showLuckyNumber(
+    value
+  ) {
+
+    if (!luckyNumber) {
+
+      return;
+    }
+
+
+    luckyNumber.textContent =
+      formatLuckyNumber(
+        value
+      );
+  }
+
+
+  /* =======================================================
+     LUCKY — IDLE SHUFFLE
+  ======================================================= */
+
+  function stopLuckyIdleShuffle() {
+
+    if (
+      luckyIdleTimer
+      !==
+      null
+    ) {
+
+      window.clearInterval(
+        luckyIdleTimer
+      );
+
+
+      luckyIdleTimer =
+        null;
+    }
+
+
+    luckyCard
+      ?.classList
+      .remove(
+        "is-idle-shuffling"
+      );
+  }
+
+
+  function startLuckyIdleShuffle() {
+
+    if (
+      !luckyCard
+      ||
+      !luckyNumber
+      ||
+      luckyLocked
+      ||
+      luckyRolling
+    ) {
+
+      return;
+    }
+
+
+    stopLuckyIdleShuffle();
+
+
+    luckyCard
+      .classList
+      .add(
+        "is-idle-shuffling"
+      );
+
+
+    showLuckyNumber(
+      randomLuckyNumber()
+    );
+
+
+    luckyIdleTimer =
+      window.setInterval(
+        () => {
+
+          if (
+            luckyLocked
+            ||
+            luckyRolling
+          ) {
+
+            return;
+          }
+
+
+          showLuckyNumber(
+            randomLuckyNumber()
+          );
+        },
+        105
+      );
+  }
+
+
+  /* =======================================================
+     FIREWORK
+  ======================================================= */
+
+  function clearLuckyFireworks() {
+
+    if (!luckyFireworks) {
+
+      return;
+    }
+
+
+    luckyFireworks
+      .replaceChildren();
+  }
+
+
+  function fireLuckyFireworks() {
+
+    if (!luckyFireworks) {
+
+      return;
+    }
+
+
+    clearLuckyFireworks();
+
+
+    const colors = [
+      "#a63019",
+      "#c99633",
+      "#e5b747",
+      "#315747",
+      "#d76b35",
+      "#f0d37b",
+    ];
+
+
+    const particleCount =
+      42;
+
+
+    const fragment =
+      document
+        .createDocumentFragment();
+
+
+    for (
+      let index = 0;
+      index < particleCount;
+      index += 1
+    ) {
+
+      const particle =
+        document
+          .createElement(
+            "span"
+          );
+
+
+      particle.className =
+        "p06-firework-particle";
+
+
+      const angle =
+        (
+          Math.PI
+          *
+          2
+          *
+          index
+        )
+        /
+        particleCount
+        +
+        (
+          Math.random()
+          *
+          .2
+        );
+
+
+      const distance =
+        58
+        +
+        Math.random()
+        *
+        78;
+
+
+      const x =
+        Math.cos(angle)
+        *
+        distance;
+
+
+      /*
+        Hơi ưu tiên bắn lên trên
+        để nhìn như pháo hoa.
+      */
+
+      const y =
+        Math.sin(angle)
+        *
+        distance
+        -
+        18
+        -
+        Math.random()
+        *
+        22;
+
+
+      const size =
+        2
+        +
+        Math.random()
+        *
+        4;
+
+
+      const delay =
+        Math.random()
+        *
+        120;
+
+
+      const rotation =
+        (
+          Math.random()
+          *
+          540
+        )
+        -
+        270;
+
+
+      const color =
+        colors[
+          Math.floor(
+            Math.random()
+            *
+            colors.length
+          )
+        ];
+
+
+      particle.style.setProperty(
+        "--x",
+        `${x.toFixed(2)}px`
+      );
+
+
+      particle.style.setProperty(
+        "--y",
+        `${y.toFixed(2)}px`
+      );
+
+
+      particle.style.setProperty(
+        "--size",
+        `${size.toFixed(2)}px`
+      );
+
+
+      particle.style.setProperty(
+        "--delay",
+        `${delay.toFixed(0)}ms`
+      );
+
+
+      particle.style.setProperty(
+        "--rotation",
+        `${rotation.toFixed(0)}deg`
+      );
+
+
+      particle.style.setProperty(
+        "--particle-color",
+        color
+      );
+
+
+      fragment.appendChild(
+        particle
+      );
+    }
+
+
+    luckyFireworks
+      .appendChild(
+        fragment
+      );
+
+
+    window.setTimeout(
+      clearLuckyFireworks,
+      1500
+    );
+  }
+
+
+  /* =======================================================
+     LOCK FINAL NUMBER
+  ======================================================= */
+
+  function lockLuckyNumber(
+    value,
+    {
+      animate = true,
+      save = true,
+    } = {}
+  ) {
+
+    stopLuckyIdleShuffle();
+
+
+    luckyRolling =
+      false;
+
+
+    luckyLocked =
+      true;
+
+
+    if (save) {
+
+      saveLuckyNumber(
+        value
+      );
+    }
+
+
+    showLuckyNumber(
+      value
+    );
+
+
+    luckyCard
+      ?.classList
+      .remove(
+        "is-rolling"
+      );
+
+
+    luckyCard
+      ?.classList
+      .add(
+        "is-locked"
+      );
+
+
+    if (
+      animate
+    ) {
+
+      luckyCard
+        ?.classList
+        .remove(
+          "is-revealed"
+        );
+
+
+      /*
+        restart CSS animation
+      */
+
+      void luckyCard
+        ?.offsetWidth;
+
+
+      luckyCard
+        ?.classList
+        .add(
+          "is-revealed"
+        );
+
+
+      fireLuckyFireworks();
+    }
+
+
+    if (
+      luckyHint
+    ) {
+
+      luckyHint.textContent =
+        "Số may mắn của bạn";
+    }
+
+
+    if (
+      luckyTrigger
+    ) {
+
+      luckyTrigger.disabled =
+        true;
+
+
+      luckyTrigger.setAttribute(
+        "aria-label",
+        `Số may mắn của bạn là ${formatLuckyNumber(value)}`
+      );
+    }
+  }
+
+
+  /* =======================================================
+     ROLL LUCKY NUMBER
+  ======================================================= */
+
+  function rollLuckyNumber() {
+
+    if (
+      !luckyCard
+      ||
+      !luckyNumber
+      ||
+      luckyRolling
+      ||
+      luckyLocked
+    ) {
+
+      return;
+    }
+
+
+    stopLuckyIdleShuffle();
+
+
+    luckyRolling =
+      true;
+
+
+    luckyCard
+      .classList
+      .remove(
+        "is-revealed"
+      );
+
+
+    luckyCard
+      .classList
+      .add(
+        "is-rolling"
+      );
+
+
+    if (
+      luckyHint
+    ) {
+
+      luckyHint.textContent =
+        "Đang tìm số may mắn...";
+    }
+
+
+    /*
+      Chọn số cuối ngay từ đầu,
+      nhưng chưa show cho đến cuối.
+
+      Như vậy click chỉ sinh
+      đúng một kết quả.
+    */
+
+    const finalNumber =
+      randomLuckyNumber();
+
+
+    const duration =
+      1850;
+
+
+    const startTime =
+      performance.now();
+
+
+    let lastChange =
+      0;
+
+
+    function frame(now) {
+
+      const elapsed =
+        now
+        -
+        startTime;
+
+
+      const progress =
+        Math.min(
+          elapsed
+          /
+          duration,
+          1
+        );
+
+
+      /*
+        Đầu quay cực nhanh,
+        gần cuối chậm dần.
+      */
+
+      const interval =
+        35
+        +
+        (
+          progress
+          *
+          progress
+          *
+          progress
+          *
+          145
+        );
+
+
+      if (
+        now
+        -
+        lastChange
+        >=
+        interval
+      ) {
+
+        lastChange =
+          now;
+
+
+        showLuckyNumber(
+          randomLuckyNumber()
+        );
+      }
+
+
+      if (
+        progress
+        <
+        1
+      ) {
+
+        requestAnimationFrame(
+          frame
+        );
+
+        return;
+      }
+
+
+      /*
+        FINAL
+      */
+
+      lockLuckyNumber(
+        finalNumber,
+        {
+          animate: true,
+          save: true,
+        }
+      );
+    }
+
+
+    requestAnimationFrame(
+      frame
+    );
+  }
+
+
+  /* =======================================================
+     INITIALISE LUCKY NUMBER
+  ======================================================= */
+
+  function initialiseLuckyNumber() {
+
+    if (
+      !luckyCard
+      ||
+      !luckyNumber
+      ||
+      !luckyTrigger
+    ) {
+
+      return;
+    }
+
+
+    const storedNumber =
+      readStoredLuckyNumber();
+
+
+    /*
+      Đã roll trước đó:
+      show luôn kết quả,
+      không cho roll lại.
+    */
+
+    if (
+      storedNumber
+      !==
+      null
+    ) {
+
+      lockLuckyNumber(
+        storedNumber,
+        {
+          animate: false,
+          save: false,
+        }
+      );
+
+
+      return;
+    }
+
+
+    /*
+      Chưa roll:
+      số chạy loạn từ đầu.
+    */
+
+    luckyLocked =
+      false;
+
+
+    luckyRolling =
+      false;
+
+
+    luckyHint.textContent =
+      "Nhấn để nhận số may mắn";
+
+
+    startLuckyIdleShuffle();
+
+
+    luckyTrigger
+      .addEventListener(
+        "click",
+        rollLuckyNumber
+      );
+  }
+
+
+  initialiseLuckyNumber();
 
 
   /* =======================================================
@@ -847,6 +1779,37 @@
           "is-document-hidden",
           document.hidden
         );
+
+
+      /*
+        Không cần để timer số chạy
+        khi user chuyển tab.
+      */
+
+      if (
+        document.hidden
+      ) {
+
+        if (
+          !luckyLocked
+          &&
+          !luckyRolling
+        ) {
+
+          stopLuckyIdleShuffle();
+        }
+
+      } else {
+
+        if (
+          !luckyLocked
+          &&
+          !luckyRolling
+        ) {
+
+          startLuckyIdleShuffle();
+        }
+      }
     }
   );
 
