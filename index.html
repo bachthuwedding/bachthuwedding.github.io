@@ -27,10 +27,7 @@
     href="./assets/favicon.png"
   />
 
-  <!-- =====================================================
-       FIRST PAINT
-       Chỉ preload 2 asset thật sự cần cho Page 01
-  ====================================================== -->
+  <!-- PAGE 01 — ONLY CRITICAL ASSETS -->
 
   <link
     rel="preload"
@@ -50,11 +47,11 @@
 
   <link
     rel="stylesheet"
-    href="./styles.css?v=20260905-2"
+    href="./styles.css?v=20260913-1"
   />
 
   <script
-    src="./script.js?v=20260905-2"
+    src="./script.js?v=20260913-1"
     defer
   ></script>
 </head>
@@ -75,10 +72,9 @@
       <div class="design-stage">
 
 
-        <!-- =====================================================
+        <!-- =================================================
              PAGE 01
-             CLICK → PAGE 02 DIRECTLY
-        ====================================================== -->
+        ================================================== -->
 
         <section
           class="opening-page"
@@ -115,10 +111,10 @@
         </section>
 
 
-        <!-- =====================================================
+        <!-- =================================================
              PAGE 02 → 08
              ONE SCROLL CONTAINER
-        ====================================================== -->
+        ================================================== -->
 
         <section
           class="page-02"
@@ -133,7 +129,7 @@
 
 
             <!-- =================================================
-                 PAGE 02 — LỄ THÀNH HÔN
+                 PAGE 02
             ================================================== -->
 
             <section
@@ -355,7 +351,7 @@
 
 
             <!-- =================================================
-                 PAGE 03 — LỊCH TRÌNH
+                 PAGE 03
             ================================================== -->
 
             <section
@@ -416,8 +412,6 @@
               />
 
 
-              <!-- TITLE -->
-
               <h2 class="p03-title">
                 LỊCH TRÌNH
               </h2>
@@ -430,8 +424,6 @@
                 decoding="async"
               />
 
-
-              <!-- TIMELINE -->
 
               <img
                 class="p03-timeline deferred-page03-asset"
@@ -598,9 +590,13 @@
               >
 
                 <h3 class="p03-dress-title">
+
                   <span>✦</span>
+
                   DRESS CODE
+
                   <span>✦</span>
+
                 </h3>
 
                 <div class="p03-color-list">
@@ -637,7 +633,7 @@
 
 
             <!-- =================================================
-                 PAGE 04 — ĐỊA ĐIỂM
+                 PAGE 04
             ================================================== -->
 
             <section
@@ -663,8 +659,6 @@
               />
 
 
-              <!-- CLOUDS -->
-
               <img
                 class="p04-cloud p04-cloud--01 deferred-page04-asset"
                 data-src="./assets/page02-cloud-03.png"
@@ -682,14 +676,10 @@
               />
 
 
-              <!-- TITLE -->
-
               <h2 class="p04-title">
                 ĐỊA ĐIỂM
               </h2>
 
-
-              <!-- MAP -->
 
               <img
                 class="p04-map deferred-page04-asset"
@@ -699,8 +689,6 @@
                 decoding="async"
               />
 
-
-              <!-- MAP LABELS -->
 
               <div
                 class="p04-map-label-layer"
@@ -750,7 +738,7 @@
               </div>
 
 
-              <!-- HOTEL CARD -->
+              <!-- HOTEL -->
 
               <article class="p04-info-card p04-hotel-card">
 
@@ -785,7 +773,7 @@
               </article>
 
 
-              <!-- GOOGLE MAPS -->
+              <!-- MAP LINK -->
 
               <a
                 class="p04-info-card p04-link-card"
@@ -855,6 +843,9 @@
                 decoding="async"
               />
 
+
+              <!-- CONFETTI -->
+
               <img
                 class="p06-confetti deferred-page06-asset"
                 data-src="./assets/page06-confetti.png"
@@ -899,9 +890,12 @@
               />
 
 
-              <!-- CARD -->
+              <!-- LUCKY CARD -->
 
-              <div class="p06-card-wrap">
+              <div
+                class="p06-card-wrap"
+                id="luckyCard"
+              >
 
                 <img
                   class="p06-lucky-card deferred-page06-asset"
@@ -911,21 +905,52 @@
                   decoding="async"
                 />
 
+
                 <h2 class="p06-title">
                   Lucky number
                 </h2>
+
 
                 <div
                   class="p06-number-slot"
                   id="luckyNumber"
                   aria-live="polite"
-                  aria-label="Lucky number result"
+                  aria-atomic="true"
+                >
+                  88
+                </div>
+
+
+                <p
+                  class="p06-number-hint"
+                  id="luckyHint"
+                >
+                  Nhấn để nhận số may mắn
+                </p>
+
+
+                <!-- FIREWORK PARTICLES -->
+
+                <div
+                  class="p06-fireworks"
+                  id="luckyFireworks"
+                  aria-hidden="true"
                 ></div>
+
+
+                <!-- FULL CARD CLICK TARGET -->
+
+                <button
+                  class="p06-lucky-trigger"
+                  id="luckyTrigger"
+                  type="button"
+                  aria-label="Nhấn để nhận số may mắn"
+                ></button>
 
               </div>
 
 
-              <!-- DECORATIONS -->
+              <!-- BOTTOM DECORATIONS -->
 
               <img
                 class="p06-lucky-item p06-ingots deferred-page06-asset"
@@ -980,7 +1005,7 @@
 
 
             <!-- =================================================
-                 PAGE 07 — GỬI LỜI CHÚC
+                 PAGE 07
             ================================================== -->
 
             <section
@@ -997,8 +1022,6 @@
                 decoding="async"
               />
 
-
-              <!-- CLOUDS -->
 
               <img
                 class="p07-cloud p07-cloud--01 deferred-page07-asset"
@@ -1017,8 +1040,6 @@
               />
 
 
-              <!-- TITLE -->
-
               <img
                 class="p07-title-ornament deferred-page07-asset"
                 data-src="./assets/page07-title-ornament.png"
@@ -1027,9 +1048,11 @@
                 decoding="async"
               />
 
+
               <h2 class="p07-title">
                 GỬI LỜI CHÚC
               </h2>
+
 
               <img
                 class="p07-heading-divider deferred-page07-asset"
@@ -1046,7 +1069,7 @@
               </p>
 
 
-              <!-- MESSAGE CARD -->
+              <!-- MESSAGE -->
 
               <button
                 class="p07-card p07-card--message"
@@ -1081,7 +1104,7 @@
               </button>
 
 
-              <!-- VIDEO CARD -->
+              <!-- VIDEO -->
 
               <button
                 class="p07-card p07-card--video"
@@ -1116,8 +1139,6 @@
               </button>
 
 
-              <!-- COUPLE -->
-
               <img
                 class="p07-couple deferred-page07-asset"
                 data-src="./assets/page02-couple.png"
@@ -1147,7 +1168,7 @@
 
 
             <!-- =================================================
-                 PAGE 08 — CẢM ƠN
+                 PAGE 08
             ================================================== -->
 
             <section
@@ -1164,8 +1185,6 @@
                 decoding="async"
               />
 
-
-              <!-- CONTENT -->
 
               <div class="p08-content">
 
@@ -1209,8 +1228,6 @@
               </div>
 
 
-              <!-- CLOUDS -->
-
               <img
                 class="p08-cloud p08-cloud--left deferred-page08-asset"
                 data-src="./assets/page02-cloud-03.png"
@@ -1227,8 +1244,6 @@
                 decoding="async"
               />
 
-
-              <!-- SCENE -->
 
               <img
                 class="p08-water-ground deferred-page08-asset"
