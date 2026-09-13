@@ -10,18 +10,29 @@
   const DESIGN_HEIGHT = 680;
 
 
-  /*
-    Lucky Number range.
-
-    Hiện tại:
-    01 → 99
-
-    Sau này muốn 001 → 999
-    thì chỉ cần đổi ở đây.
-  */
+  /* =======================================================
+     LUCKY NUMBER CONFIG
+  ======================================================= */
 
   const LUCKY_MIN = 1;
   const LUCKY_MAX = 99;
+
+
+  /*
+    =======================================================
+    TEST MODE
+
+    true:
+    - không đọc localStorage
+    - không lưu localStorage
+    - reload là test lại từ đầu
+
+    false:
+    - bật lại cơ chế khóa số theo guest
+    =======================================================
+  */
+
+  const LUCKY_TEST_MODE = true;
 
 
   /* =======================================================
@@ -51,9 +62,7 @@
 
 
   /*
-    PAGE 05 đã bỏ.
-
-    Current flow:
+    CURRENT FLOW:
 
     02
     03
@@ -151,7 +160,9 @@
   let activePageIndex = -1;
 
 
-  /* LUCKY STATE */
+  /* =======================================================
+     LUCKY STATE
+  ======================================================= */
 
   let luckyIdleTimer = null;
 
@@ -299,7 +310,7 @@
 
 
   /* =======================================================
-     URL PRELOAD
+     PRELOAD URL
   ======================================================= */
 
   function preloadUrl(
@@ -569,7 +580,7 @@
 
 
         /*
-          PAGE 02 confetti sprite
+          PAGE 02 CONFETTI SPRITE
         */
 
         const spriteHost =
@@ -689,7 +700,7 @@
 
 
     /*
-      CURRENT
+      CURRENT PAGE
     */
 
     loadPage(
@@ -699,7 +710,7 @@
 
 
     /*
-      NEXT
+      NEXT PAGE
     */
 
     if (
@@ -719,7 +730,7 @@
 
 
   /* =======================================================
-     GET CURRENT PAGE
+     CURRENT PAGE
   ======================================================= */
 
   function getCurrentPageIndex() {
@@ -899,7 +910,7 @@
 
 
   /* =======================================================
-     INITIAL WARM-UP
+     INITIAL PAGE WARM-UP
   ======================================================= */
 
   runWhenIdle(
@@ -915,7 +926,7 @@
 
 
   /* =======================================================
-     LUCKY NUMBER — GUEST ID
+     LUCKY NUMBER — GUEST TOKEN
   ======================================================= */
 
   function getGuestToken() {
@@ -925,16 +936,6 @@
         window.location.search
       );
 
-
-    /*
-      Hỗ trợ cả:
-
-      ?guest=nguyen-van-a
-
-      hoặc
-
-      ?g=nguyen-van-a
-    */
 
     const token =
       (
@@ -971,6 +972,19 @@
   ======================================================= */
 
   function readStoredLuckyNumber() {
+
+    /*
+      TEST MODE:
+      luôn coi như chưa từng quay.
+    */
+
+    if (
+      LUCKY_TEST_MODE
+    ) {
+
+      return null;
+    }
+
 
     try {
 
@@ -1018,6 +1032,19 @@
     value
   ) {
 
+    /*
+      TEST MODE:
+      không lưu kết quả.
+    */
+
+    if (
+      LUCKY_TEST_MODE
+    ) {
+
+      return true;
+    }
+
+
     try {
 
       window.localStorage
@@ -1025,6 +1052,7 @@
           getLuckyStorageKey(),
           String(value)
         );
+
 
       return true;
 
@@ -1036,7 +1064,7 @@
 
 
   /* =======================================================
-     LUCKY NUMBER — RANDOM
+     RANDOM NUMBER
   ======================================================= */
 
   function randomLuckyNumber() {
@@ -1048,10 +1076,6 @@
       +
       1;
 
-
-    /*
-      crypto nếu browser hỗ trợ.
-    */
 
     if (
       window.crypto
@@ -1096,18 +1120,12 @@
 
 
   /* =======================================================
-     LUCKY NUMBER — FORMAT
+     FORMAT NUMBER
   ======================================================= */
 
   function formatLuckyNumber(
     value
   ) {
-
-    /*
-      1 → 01
-      7 → 07
-      23 → 23
-    */
 
     return String(value)
       .padStart(
@@ -1135,7 +1153,7 @@
 
 
   /* =======================================================
-     LUCKY — IDLE SHUFFLE
+     IDLE SHUFFLE
   ======================================================= */
 
   function stopLuckyIdleShuffle() {
@@ -1212,6 +1230,7 @@
           showLuckyNumber(
             randomLuckyNumber()
           );
+
         },
         105
       );
@@ -1219,7 +1238,7 @@
 
 
   /* =======================================================
-     FIREWORK
+     FIREWORKS
   ======================================================= */
 
   function clearLuckyFireworks() {
@@ -1247,12 +1266,14 @@
 
 
     const colors = [
+
       "#a63019",
       "#c99633",
       "#e5b747",
       "#315747",
       "#d76b35",
       "#f0d37b",
+
     ];
 
 
@@ -1313,11 +1334,6 @@
         *
         distance;
 
-
-      /*
-        Hơi ưu tiên bắn lên trên
-        để nhìn như pháo hoa.
-      */
 
       const y =
         Math.sin(angle)
@@ -1421,7 +1437,7 @@
 
 
   /* =======================================================
-     LOCK FINAL NUMBER
+     FINAL NUMBER
   ======================================================= */
 
   function lockLuckyNumber(
@@ -1439,11 +1455,21 @@
       false;
 
 
+    /*
+      Trong cùng một lần load,
+      vẫn khóa nút sau khi quay xong.
+
+      Reload trang khi TEST MODE=true
+      sẽ reset lại hoàn toàn.
+    */
+
     luckyLocked =
       true;
 
 
-    if (save) {
+    if (
+      save
+    ) {
 
       saveLuckyNumber(
         value
@@ -1481,10 +1507,6 @@
         );
 
 
-      /*
-        restart CSS animation
-      */
-
       void luckyCard
         ?.offsetWidth;
 
@@ -1504,8 +1526,18 @@
       luckyHint
     ) {
 
-      luckyHint.textContent =
-        "Số may mắn của bạn";
+      if (
+        LUCKY_TEST_MODE
+      ) {
+
+        luckyHint.textContent =
+          "Reload trang để thử lại";
+
+      } else {
+
+        luckyHint.textContent =
+          "Số may mắn của bạn";
+      }
     }
 
 
@@ -1526,7 +1558,7 @@
 
 
   /* =======================================================
-     ROLL LUCKY NUMBER
+     ROLL
   ======================================================= */
 
   function rollLuckyNumber() {
@@ -1575,14 +1607,6 @@
     }
 
 
-    /*
-      Chọn số cuối ngay từ đầu,
-      nhưng chưa show cho đến cuối.
-
-      Như vậy click chỉ sinh
-      đúng một kết quả.
-    */
-
     const finalNumber =
       randomLuckyNumber();
 
@@ -1599,7 +1623,9 @@
       0;
 
 
-    function frame(now) {
+    function frame(
+      now
+    ) {
 
       const elapsed =
         now
@@ -1609,17 +1635,14 @@
 
       const progress =
         Math.min(
+
           elapsed
           /
           duration,
+
           1
         );
 
-
-      /*
-        Đầu quay cực nhanh,
-        gần cuối chậm dần.
-      */
 
       const interval =
         35
@@ -1663,13 +1686,10 @@
           frame
         );
 
+
         return;
       }
 
-
-      /*
-        FINAL
-      */
 
       lockLuckyNumber(
         finalNumber,
@@ -1705,15 +1725,14 @@
     }
 
 
+    /*
+      TEST MODE=true:
+      storedNumber luôn null.
+    */
+
     const storedNumber =
       readStoredLuckyNumber();
 
-
-    /*
-      Đã roll trước đó:
-      show luôn kết quả,
-      không cho roll lại.
-    */
 
     if (
       storedNumber
@@ -1734,16 +1753,15 @@
     }
 
 
-    /*
-      Chưa roll:
-      số chạy loạn từ đầu.
-    */
-
     luckyLocked =
       false;
 
 
     luckyRolling =
+      false;
+
+
+    luckyTrigger.disabled =
       false;
 
 
@@ -1766,7 +1784,7 @@
 
 
   /* =======================================================
-     TAB VISIBILITY
+     VISIBILITY
   ======================================================= */
 
   document.addEventListener(
@@ -1780,11 +1798,6 @@
           document.hidden
         );
 
-
-      /*
-        Không cần để timer số chạy
-        khi user chuyển tab.
-      */
 
       if (
         document.hidden
