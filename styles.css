@@ -2,8 +2,8 @@
    BÁCH & THƯ WEDDING
    MASTER ARTBOARD: 390 × 680
 
-   CURRENT FLOW:
-   PAGE 01 → 02 → 03 → 04 → 06 → 07 → 08
+   FLOW:
+   01 → 02 → 03 → 04 → 06 → 07 → 08
 ========================================================= */
 
 :root {
@@ -79,7 +79,7 @@ img {
 
 
 /* =========================================================
-   FIXED ARTBOARD
+   ARTBOARD
 ========================================================= */
 
 .site-shell {
@@ -140,10 +140,7 @@ img {
 
 
 /* =========================================================
-   =========================================================
    PAGE 01
-   CLICK → PAGE 02 DIRECTLY
-   =========================================================
 ========================================================= */
 
 .opening-page {
@@ -174,10 +171,6 @@ img {
   will-change: opacity;
 }
 
-
-/* =========================================================
-   PAGE 01 — BUTTON
-========================================================= */
 
 .opening-card-button {
   position: absolute;
@@ -210,11 +203,6 @@ img {
   overflow: visible;
 }
 
-
-/* =========================================================
-   PAGE 01 — ENVELOPE
-   STRONG SHAKE
-========================================================= */
 
 .opening-card-image {
   position: absolute;
@@ -260,15 +248,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 01 — STRONG SHAKE ANIMATION
-========================================================= */
-
 @keyframes opening-card-shake {
-
-  /*
-    Đứng yên một lúc
-  */
 
   0%,
   55%,
@@ -278,11 +258,6 @@ img {
       rotate(0deg)
       scale(1);
   }
-
-
-  /*
-    Bắt đầu rung mạnh
-  */
 
   60% {
     transform:
@@ -336,7 +311,7 @@ img {
   88% {
     transform:
       translate3d(3px, 23px, 0)
-      rotate(0.8deg)
+      rotate(.8deg)
       scale(1.006);
   }
 
@@ -349,10 +324,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 01 — HOVER / TOUCH
-========================================================= */
-
 .opening-card-button:hover
 .opening-card-image,
 .opening-card-button:focus-visible
@@ -362,12 +333,6 @@ img {
   transform:
     translate3d(0, 19px, 0)
     scale(1.025);
-
-  filter:
-    drop-shadow(
-      0 17px 13px
-      rgba(62, 24, 14, 0.22)
-    );
 }
 
 
@@ -377,7 +342,7 @@ img {
 
   transform:
     translate3d(0, 24px, 0)
-    scale(0.975);
+    scale(.975);
 }
 
 
@@ -386,9 +351,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 01 — TAP CUE
-========================================================= */
+/* TAP RING */
 
 .monogram-pulse {
   position: absolute;
@@ -421,7 +384,7 @@ img {
 
   border:
     1.5px solid
-    rgba(237, 196, 96, 0.52);
+    rgba(237, 196, 96, .52);
 
   border-radius: 50%;
 
@@ -444,17 +407,17 @@ img {
 
   0% {
     transform:
-      scale(0.52);
+      scale(.52);
 
     opacity: 0;
   }
 
   18% {
-    opacity: 0.5;
+    opacity: .5;
   }
 
   72% {
-    opacity: 0.14;
+    opacity: .14;
   }
 
   100% {
@@ -467,10 +430,7 @@ img {
 
 
 /* =========================================================
-   =========================================================
    PAGE 02+
-   ONE SCROLL CONTAINER
-   =========================================================
 ========================================================= */
 
 .page-02 {
@@ -564,7 +524,7 @@ img {
 
 
 /* =========================================================
-   SHARED BACKGROUNDS
+   SHARED BACKGROUND
 ========================================================= */
 
 .p02-background,
@@ -596,7 +556,7 @@ img {
 
 
 /* =========================================================
-   SHARED FRAMES
+   SHARED FRAME
 ========================================================= */
 
 .p02-frame,
@@ -654,7 +614,7 @@ img {
 
 
 /* =========================================================
-   GLOBAL BOTTOM ORNAMENT
+   BOTTOM ORNAMENT
 ========================================================= */
 
 .p02-bottom-ornament,
@@ -691,9 +651,7 @@ img {
 
 
 /* =========================================================
-   GLOBAL CLOUDS
-   OPACITY 1
-   TOP LAYER
+   CLOUD ANIMATION
 ========================================================= */
 
 @keyframes wedding-cloud-float {
@@ -744,14 +702,7 @@ img {
 
 
 /* =========================================================
-   =========================================================
    PAGE 02
-   =========================================================
-========================================================= */
-
-
-/* =========================================================
-   PAGE 02 — CLOUDS
 ========================================================= */
 
 .p02-cloud--01 {
@@ -786,9 +737,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 02 — BAMBOO
-========================================================= */
+/* BAMBOO */
 
 .p02-bamboo-window {
   position: absolute;
@@ -874,11 +823,9 @@ img {
 
   animation:
     bamboo-sway-left
-    2200ms
+    1900ms
     ease-in-out
     infinite;
-
-  backface-visibility: hidden;
 }
 
 
@@ -889,17 +836,13 @@ img {
 
   animation:
     bamboo-sway-right
-    2200ms
+    1900ms
     ease-in-out
     infinite;
-
-  backface-visibility: hidden;
 }
 
 
-/* =========================================================
-   PAGE 02 — TEXT COMMON
-========================================================= */
+/* PAGE 02 TEXT */
 
 .p02-invite,
 .p02-to,
@@ -933,8 +876,6 @@ img {
 }
 
 
-/* INVITE */
-
 .p02-invite {
   top: 45px;
 
@@ -942,15 +883,13 @@ img {
 
   line-height: 1.15;
 
-  letter-spacing: 0.015em;
+  letter-spacing: .015em;
 
   transform:
     translateX(-50%)
-    scaleX(0.94);
+    scaleX(.94);
 }
 
-
-/* DIVIDER */
 
 .p02-divider {
   position: absolute;
@@ -967,7 +906,7 @@ img {
     translateX(-50%);
 
   background:
-    rgba(153, 111, 52, 0.72);
+    rgba(153, 111, 52, .72);
 }
 
 
@@ -996,8 +935,6 @@ img {
 }
 
 
-/* TO */
-
 .p02-to {
   top: 137px;
 
@@ -1007,11 +944,9 @@ img {
 
   transform:
     translateX(-50%)
-    scaleX(0.8);
+    scaleX(.8);
 }
 
-
-/* WEDDING TITLE */
 
 .p02-wedding-title {
   top: 177px;
@@ -1022,11 +957,9 @@ img {
 
   transform:
     translateX(-50%)
-    scaleX(0.77);
+    scaleX(.77);
 }
 
-
-/* NAMES */
 
 .p02-couple-names {
   top: 215px;
@@ -1040,7 +973,7 @@ img {
   color:
     var(--invitation-red);
 
-  line-height: 0.89;
+  line-height: .89;
 
   transform:
     translateX(-50%);
@@ -1055,10 +988,7 @@ img {
   font-weight: 400;
 
   transform:
-    scaleX(0.76);
-
-  transform-origin:
-    50% 50%;
+    scaleX(.76);
 }
 
 
@@ -1070,17 +1000,15 @@ img {
 
   font-size: 30px;
 
-  line-height: 0.99;
+  line-height: .99;
 
   color:
     var(--invitation-green);
 
   transform:
-    scaleX(0.92);
+    scaleX(.92);
 }
 
-
-/* DATE DIVIDER */
 
 .p02-date-divider {
   position: absolute;
@@ -1097,7 +1025,7 @@ img {
     translateX(-50%);
 
   background:
-    rgba(153, 111, 52, 0.56);
+    rgba(153, 111, 52, .56);
 }
 
 
@@ -1124,8 +1052,6 @@ img {
 }
 
 
-/* DATE */
-
 .p02-date {
   top: 358px;
 
@@ -1136,17 +1062,15 @@ img {
 
   line-height: 1;
 
-  letter-spacing: 0.035em;
+  letter-spacing: .035em;
 
   transform:
     translateX(-50%)
-    scaleX(0.9);
+    scaleX(.9);
 }
 
 
-/* =========================================================
-   PAGE 02 — CONFETTI
-========================================================= */
+/* PAGE 02 CONFETTI */
 
 .p02-confetti-cluster {
   position: absolute;
@@ -1156,8 +1080,6 @@ img {
   z-index: 14;
 
   pointer-events: none;
-
-  user-select: none;
 }
 
 
@@ -1175,8 +1097,7 @@ img {
     no-repeat;
 
   background-size:
-    361.25px
-    780.93px;
+    361.25px 780.93px;
 
   opacity: 1;
 
@@ -1184,10 +1105,6 @@ img {
     saturate(1.18)
     brightness(1.02)
     contrast(1.03);
-
-  pointer-events: none;
-
-  user-select: none;
 
   animation:
     p02-confetti-float
@@ -1201,13 +1118,11 @@ img {
 
   0%,
   100% {
-    translate:
-      0 0;
+    translate: 0 0;
   }
 
   50% {
-    translate:
-      0 -5px;
+    translate: 0 -5px;
   }
 }
 
@@ -1373,9 +1288,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 02 — PROCESSION
-========================================================= */
+/* PROCESSION */
 
 .p02-procession {
   position: absolute;
@@ -1395,8 +1308,6 @@ img {
 .p02-procession-item {
   position: absolute;
 
-  bottom: 0;
-
   display: block;
 
   width: auto;
@@ -1406,8 +1317,6 @@ img {
   object-fit: contain;
 
   pointer-events: none;
-
-  user-select: none;
 }
 
 
@@ -1425,6 +1334,7 @@ img {
   z-index: 34;
 
   left: 74px;
+  bottom: 0;
 
   height: 150px;
 }
@@ -1451,9 +1361,7 @@ img {
 
 
 /* =========================================================
-   =========================================================
-   PAGE 03 — LỊCH TRÌNH
-   =========================================================
+   PAGE 03
 ========================================================= */
 
 .p03-title-divider,
@@ -1468,14 +1376,8 @@ img {
   height: auto;
 
   pointer-events: none;
-
-  user-select: none;
 }
 
-
-/* =========================================================
-   PAGE 03 — CLOUDS
-========================================================= */
 
 .p03-cloud--01 {
   left: 38px;
@@ -1509,10 +1411,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 03 — TITLE
-========================================================= */
-
 .p03-title {
   position: absolute;
 
@@ -1539,7 +1437,7 @@ img {
 
   line-height: 1;
 
-  letter-spacing: 0.03em;
+  letter-spacing: .03em;
 
   white-space: nowrap;
 }
@@ -1558,10 +1456,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 03 — TIMELINE
-========================================================= */
-
 .p03-timeline {
   z-index: 14;
 
@@ -1572,10 +1466,6 @@ img {
   height: 466px;
 }
 
-
-/* =========================================================
-   PAGE 03 — ILLUSTRATIONS
-========================================================= */
 
 .p03-illustration {
   z-index: 12;
@@ -1615,10 +1505,6 @@ img {
   width: 115px;
 }
 
-
-/* =========================================================
-   PAGE 03 — EVENTS
-========================================================= */
 
 .p03-event {
   position: absolute;
@@ -1715,10 +1601,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 03 — LOCATION
-========================================================= */
-
 .p03-location {
   position: relative;
 
@@ -1785,10 +1667,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 03 — LOCATION PIN
-========================================================= */
-
 .p03-location-pin {
   position: relative;
 
@@ -1826,9 +1704,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 03 — DRESS CODE
-========================================================= */
+/* DRESS CODE */
 
 .p03-dress-code {
   position: absolute;
@@ -1844,20 +1720,7 @@ img {
   transform:
     translateX(-50%);
 
-  padding: 0;
-
-  background: transparent;
-
-  box-shadow: none;
-
   text-align: center;
-}
-
-
-.p03-dress-code::before {
-  display: none;
-
-  content: none;
 }
 
 
@@ -1883,8 +1746,6 @@ img {
   font-size: 12px;
 
   font-weight: 600;
-
-  line-height: 1;
 }
 
 
@@ -1921,8 +1782,6 @@ img {
     serif;
 
   font-size: 9px;
-
-  line-height: 1;
 }
 
 
@@ -1941,7 +1800,7 @@ img {
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.95);
+    rgba(255, 255, 255, .95);
 }
 
 
@@ -1950,7 +1809,7 @@ img {
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.75);
+    rgba(255, 255, 255, .75);
 }
 
 
@@ -1959,19 +1818,12 @@ img {
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.95);
+    rgba(255, 255, 255, .95);
 }
 
 
 /* =========================================================
-   =========================================================
-   PAGE 04 — ĐỊA ĐIỂM
-   =========================================================
-========================================================= */
-
-
-/* =========================================================
-   PAGE 04 — CLOUDS
+   PAGE 04
 ========================================================= */
 
 .p04-cloud--01 {
@@ -1990,10 +1842,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 04 — TITLE
-========================================================= */
-
 .p04-title {
   position: absolute;
 
@@ -2006,10 +1854,7 @@ img {
 
   transform:
     translateX(-50%)
-    scaleX(0.88);
-
-  transform-origin:
-    50% 50%;
+    scaleX(.88);
 
   color: #9f301c;
 
@@ -2022,17 +1867,11 @@ img {
 
   font-weight: 400;
 
-  line-height: 0.95;
-
-  letter-spacing: 0.015em;
+  line-height: .95;
 
   white-space: nowrap;
 }
 
-
-/* =========================================================
-   PAGE 04 — MAP
-========================================================= */
 
 .p04-map {
   position: absolute;
@@ -2055,14 +1894,8 @@ img {
   object-fit: contain;
 
   pointer-events: none;
-
-  user-select: none;
 }
 
-
-/* =========================================================
-   PAGE 04 — MAP LABEL LAYER
-========================================================= */
 
 .p04-map-label-layer {
   position: absolute;
@@ -2081,8 +1914,6 @@ img {
     translateX(-50%);
 
   pointer-events: none;
-
-  user-select: none;
 }
 
 
@@ -2107,13 +1938,8 @@ img {
   line-height: 1;
 
   white-space: nowrap;
-
-  transform-origin:
-    center center;
 }
 
-
-/* NOTE */
 
 .p04-map-label--note {
   left: 140px;
@@ -2122,15 +1948,11 @@ img {
   transform:
     translateX(-50%);
 
-  color: #28513f;
-
   font-size: 10px;
 
   font-weight: 550;
 }
 
-
-/* PHỦ TÂY HỒ */
 
 .p04-map-label--phu-tay-ho {
   left: 72px;
@@ -2143,8 +1965,6 @@ img {
 }
 
 
-/* TÂY HỒ */
-
 .p04-map-label--tay-ho {
   left: 100px;
   top: 335px;
@@ -2155,8 +1975,6 @@ img {
   font-size: 9px;
 }
 
-
-/* LẠC LONG QUÂN */
 
 .p04-map-label--lac-long-quan {
   left: 7px;
@@ -2170,8 +1988,6 @@ img {
 }
 
 
-/* SÔNG HỒNG */
-
 .p04-map-label--song-hong {
   left: 240px;
   top: 210px;
@@ -2184,8 +2000,6 @@ img {
 }
 
 
-/* ÂU CƠ */
-
 .p04-map-label--au-co {
   left: 160px;
   top: 170px;
@@ -2197,8 +2011,6 @@ img {
     rotate(61deg);
 }
 
-
-/* SHERATON */
 
 .p04-map-label--sheraton {
   left: 190px;
@@ -2215,8 +2027,6 @@ img {
 }
 
 
-/* CHÙA TRẤN QUỐC */
-
 .p04-map-label--tran-quoc {
   left: 215px;
   top: 360px;
@@ -2228,8 +2038,6 @@ img {
 }
 
 
-/* ĐỀN QUÁN THÁNH */
-
 .p04-map-label--quan-thanh {
   left: 160px;
   top: 406px;
@@ -2240,8 +2048,6 @@ img {
   font-size: 8px;
 }
 
-
-/* THỤY KHUÊ */
 
 .p04-map-label--thuy-khue {
   left: 80px;
@@ -2255,9 +2061,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 04 — CARDS
-========================================================= */
+/* PAGE 04 CARDS */
 
 .p04-info-card {
   position: absolute;
@@ -2270,7 +2074,7 @@ img {
   height: 64px;
 
   background:
-    rgba(244, 229, 197, 0.16);
+    rgba(244, 229, 197, .16);
 }
 
 
@@ -2287,18 +2091,8 @@ img {
   overflow: hidden;
 
   cursor: pointer;
-
-  touch-action: manipulation;
-
-  transition:
-    transform 160ms ease,
-    filter 160ms ease;
 }
 
-
-/* =========================================================
-   PAGE 04 — CARD FRAME
-========================================================= */
 
 .p04-card-frame {
   position: absolute;
@@ -2311,7 +2105,7 @@ img {
 
   object-fit: fill;
 
-  opacity: 0.6;
+  opacity: .6;
 
   pointer-events: none;
 }
@@ -2334,10 +2128,6 @@ img {
   height: 115%;
 }
 
-
-/* =========================================================
-   PAGE 04 — CARD CONTENT
-========================================================= */
 
 .p04-card-content {
   z-index: 2;
@@ -2367,18 +2157,12 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 04 — TEXT
-========================================================= */
-
 .p04-card-text {
   display: flex;
 
   flex-direction: column;
 
   justify-content: center;
-
-  min-width: 0;
 }
 
 
@@ -2417,8 +2201,6 @@ img {
   margin-bottom: 5px;
 
   font-size: 11px;
-
-  line-height: 1.05;
 }
 
 
@@ -2445,28 +2227,16 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 04 — LOCATION ICON
-========================================================= */
-
 .p04-location-icon {
   position: relative;
-
-  flex: 0 0 auto;
 
   left: 7px;
   top: -6px;
 
-  display: block;
-
   width: 27px;
   height: 31px;
 
-  max-width: none;
-
   object-fit: contain;
-
-  pointer-events: none;
 }
 
 
@@ -2485,34 +2255,18 @@ img {
 .p04-card-title {
   left: 4px;
 
-  margin: 0;
-
   font-size: 10.5px;
-
-  line-height: 1.05;
-}
-
-
-.p04-link-card:active {
-  transform:
-    scale(0.985);
-}
-
-
-@media (hover: hover) {
-
-  .p04-link-card:hover {
-    filter:
-      brightness(1.025);
-  }
 }
 
 
 /* =========================================================
-   =========================================================
    PAGE 06 — LUCKY NUMBER
-   =========================================================
 ========================================================= */
+
+
+/* CONFETTI
+   Bay giống cloud
+*/
 
 .p06-confetti {
   position: absolute;
@@ -2527,17 +2281,21 @@ img {
 
   object-fit: fill;
 
-  opacity: 0.86;
+  opacity: .86;
 
   pointer-events: none;
 
   user-select: none;
+
+  animation:
+    wedding-cloud-float
+    1750ms
+    ease-in-out
+    infinite;
 }
 
 
-/* =========================================================
-   PAGE 06 — CLOUDS
-========================================================= */
+/* CLOUDS */
 
 .p06-cloud--01 {
   right: 35px;
@@ -2588,9 +2346,18 @@ img {
   transform:
     translateX(-50%);
 
-  pointer-events: none;
+  border: 0;
+
+  background: transparent;
 }
 
+
+/*
+  FIX 4 GÓC TRẮNG.
+
+  Asset card là ảnh chữ nhật nhưng artwork có góc bo.
+  Clip trực tiếp image để 4 corner trắng biến mất.
+*/
 
 .p06-lucky-card {
   position: relative;
@@ -2604,10 +2371,13 @@ img {
 
   max-width: none;
 
+  clip-path:
+    inset(0 round 14px);
+
   filter:
     drop-shadow(
       0 6px 6px
-      rgba(91, 59, 24, 0.14)
+      rgba(91, 59, 24, .14)
     );
 
   pointer-events: none;
@@ -2615,6 +2385,8 @@ img {
   user-select: none;
 }
 
+
+/* TITLE */
 
 .p06-title {
   position: absolute;
@@ -2642,19 +2414,27 @@ img {
 
   font-size: 23px;
 
+  line-height: 1;
+
   font-weight: 400;
 
-  line-height: 1;
+  letter-spacing: .005em;
+
+  pointer-events: none;
 }
 
+
+/* =========================================================
+   PAGE 06 — RANDOM NUMBER
+========================================================= */
 
 .p06-number-slot {
   position: absolute;
 
-  z-index: 6;
+  z-index: 7;
 
   left: 50%;
-  top: 160px;
+  top: 150px;
 
   display: flex;
 
@@ -2679,16 +2459,407 @@ img {
 
   font-size: 94px;
 
-  font-weight: 400;
-
   line-height: 1;
 
-  letter-spacing: -0.04em;
+  font-weight: 400;
+
+  letter-spacing: -.04em;
+
+  font-variant-numeric:
+    lining-nums tabular-nums;
+
+  text-shadow:
+    0 1px 0
+    rgba(255, 244, 211, .6);
+
+  pointer-events: none;
+
+  user-select: none;
+
+  will-change:
+    transform,
+    opacity,
+    filter;
+}
+
+
+/* IDLE — số nhảy nhẹ */
+
+.p06-card-wrap.is-idle-shuffling
+.p06-number-slot {
+  animation:
+    lucky-idle-jitter
+    280ms
+    ease-in-out
+    infinite;
+}
+
+
+@keyframes lucky-idle-jitter {
+
+  0%,
+  100% {
+    transform:
+      translateX(-50%)
+      translateY(0)
+      scale(1);
+  }
+
+  33% {
+    transform:
+      translateX(calc(-50% - 2px))
+      translateY(-1px)
+      scale(1.025);
+  }
+
+  66% {
+    transform:
+      translateX(calc(-50% + 2px))
+      translateY(1px)
+      scale(.985);
+  }
+}
+
+
+/* ROLLING — loạn mạnh hơn */
+
+.p06-card-wrap.is-rolling
+.p06-number-slot {
+  animation:
+    lucky-rolling-chaos
+    110ms
+    linear
+    infinite;
+}
+
+
+@keyframes lucky-rolling-chaos {
+
+  0% {
+    transform:
+      translateX(-50%)
+      translate(-3px, -2px)
+      scale(.94);
+
+    filter:
+      blur(.2px);
+  }
+
+  25% {
+    transform:
+      translateX(-50%)
+      translate(3px, 1px)
+      scale(1.08);
+  }
+
+  50% {
+    transform:
+      translateX(-50%)
+      translate(-2px, 3px)
+      scale(.97);
+
+    filter:
+      blur(.6px);
+  }
+
+  75% {
+    transform:
+      translateX(-50%)
+      translate(4px, -1px)
+      scale(1.06);
+  }
+
+  100% {
+    transform:
+      translateX(-50%)
+      translate(0, 0)
+      scale(1);
+
+    filter:
+      blur(0);
+  }
+}
+
+
+/* FINAL REVEAL */
+
+.p06-card-wrap.is-revealed
+.p06-number-slot {
+  animation:
+    lucky-number-reveal
+    850ms
+    cubic-bezier(.16, .85, .25, 1);
+}
+
+
+@keyframes lucky-number-reveal {
+
+  0% {
+    transform:
+      translateX(-50%)
+      scale(.72);
+
+    opacity: .3;
+
+    filter:
+      blur(3px);
+  }
+
+  40% {
+    transform:
+      translateX(-50%)
+      scale(1.24);
+
+    opacity: 1;
+
+    filter:
+      blur(0);
+  }
+
+  63% {
+    transform:
+      translateX(-50%)
+      scale(.94);
+  }
+
+  82% {
+    transform:
+      translateX(-50%)
+      scale(1.07);
+  }
+
+  100% {
+    transform:
+      translateX(-50%)
+      scale(1);
+  }
 }
 
 
 /* =========================================================
-   PAGE 06 — DECORATIONS
+   PAGE 06 — HINT
+========================================================= */
+
+.p06-number-hint {
+  position: absolute;
+
+  z-index: 8;
+
+  left: 50%;
+  top: 275px;
+
+  width: 210px;
+
+  margin: 0;
+
+  transform:
+    translateX(-50%);
+
+  text-align: center;
+
+  color: #6b5a3d;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 11px;
+
+  font-style: italic;
+
+  font-weight: 400;
+
+  line-height: 1.25;
+
+  letter-spacing: .01em;
+
+  opacity: .82;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+
+.p06-card-wrap.is-rolling
+.p06-number-hint {
+  opacity: .58;
+
+  transform:
+    translateX(-50%)
+    translateY(2px);
+}
+
+
+.p06-card-wrap.is-locked
+.p06-number-hint {
+  color: #315747;
+
+  opacity: .82;
+}
+
+
+/* =========================================================
+   PAGE 06 — CLICK TARGET
+========================================================= */
+
+.p06-lucky-trigger {
+  position: absolute;
+
+  z-index: 10;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 14px;
+
+  background: transparent;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  cursor: pointer;
+
+  touch-action: manipulation;
+}
+
+
+.p06-lucky-trigger:focus-visible {
+  outline:
+    1px solid
+    rgba(166, 48, 25, .45);
+
+  outline-offset:
+    -8px;
+}
+
+
+.p06-lucky-trigger:disabled {
+  cursor: default;
+}
+
+
+/* =========================================================
+   PAGE 06 — FIREWORKS
+========================================================= */
+
+.p06-fireworks {
+  position: absolute;
+
+  z-index: 20;
+
+  left: 50%;
+  top: 214px;
+
+  width: 1px;
+  height: 1px;
+
+  pointer-events: none;
+
+  overflow: visible;
+}
+
+
+.p06-firework-particle {
+  --x: 0px;
+  --y: 0px;
+  --size: 4px;
+  --delay: 0ms;
+  --rotation: 0deg;
+  --particle-color: #b93b1e;
+
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: var(--size);
+  height: var(--size);
+
+  border-radius: 50%;
+
+  background:
+    var(--particle-color);
+
+  box-shadow:
+    0 0 3px
+    rgba(255, 218, 119, .55);
+
+  opacity: 0;
+
+  transform:
+    translate(-50%, -50%);
+
+  animation:
+    lucky-firework-burst
+    1050ms
+    cubic-bezier(.12, .72, .2, 1)
+    var(--delay)
+    forwards;
+}
+
+
+.p06-firework-particle:nth-child(3n) {
+  border-radius: 1px;
+}
+
+
+.p06-firework-particle:nth-child(4n) {
+  width:
+    calc(var(--size) * .55);
+
+  height:
+    calc(var(--size) * 1.7);
+}
+
+
+@keyframes lucky-firework-burst {
+
+  0% {
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      scale(.45)
+      rotate(0deg);
+  }
+
+  18% {
+    opacity: 1;
+  }
+
+  72% {
+    opacity: .95;
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(
+        calc(-50% + var(--x)),
+        calc(-50% + var(--y))
+      )
+      scale(.7)
+      rotate(var(--rotation));
+  }
+}
+
+
+/* =========================================================
+   PAGE 06 — BOTTOM ITEMS
 ========================================================= */
 
 .p06-lucky-item {
@@ -2753,14 +2924,7 @@ img {
 
 
 /* =========================================================
-   =========================================================
-   PAGE 07 — GỬI LỜI CHÚC
-   =========================================================
-========================================================= */
-
-
-/* =========================================================
-   PAGE 07 — CLOUDS
+   PAGE 07
 ========================================================= */
 
 .p07-cloud--01 {
@@ -2779,10 +2943,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 07 — TITLE ORNAMENT
-========================================================= */
-
 .p07-title-ornament {
   position: absolute;
 
@@ -2798,14 +2958,8 @@ img {
     translateX(-50%);
 
   pointer-events: none;
-
-  user-select: none;
 }
 
-
-/* =========================================================
-   PAGE 07 — TITLE
-========================================================= */
 
 .p07-title {
   position: absolute;
@@ -2835,17 +2989,9 @@ img {
 
   font-weight: 500;
 
-  line-height: 1.06;
-
-  letter-spacing: 0.2px;
-
   white-space: nowrap;
 }
 
-
-/* =========================================================
-   PAGE 07 — DIVIDER
-========================================================= */
 
 .p07-heading-divider {
   position: absolute;
@@ -2862,14 +3008,8 @@ img {
     translateX(-50%);
 
   pointer-events: none;
-
-  user-select: none;
 }
 
-
-/* =========================================================
-   PAGE 07 — DESCRIPTION
-========================================================= */
 
 .p07-description {
   position: absolute;
@@ -2897,15 +3037,9 @@ img {
 
   font-size: 11px;
 
-  font-weight: 400;
-
   line-height: 1.55;
 }
 
-
-/* =========================================================
-   PAGE 07 — CARD COMMON
-========================================================= */
 
 .p07-card {
   position: absolute;
@@ -2925,17 +3059,9 @@ img {
 
   appearance: none;
 
-  -webkit-appearance: none;
-
   cursor: pointer;
 
   text-align: left;
-
-  touch-action: manipulation;
-
-  transition:
-    transform 160ms ease,
-    filter 160ms ease;
 }
 
 
@@ -2949,10 +3075,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 07 — CARD FRAME
-========================================================= */
-
 .p07-card-frame {
   position: absolute;
 
@@ -2965,19 +3087,11 @@ img {
   width: 100%;
   height: 100%;
 
-  max-width: none;
-
   object-fit: fill;
 
   pointer-events: none;
-
-  user-select: none;
 }
 
-
-/* =========================================================
-   PAGE 07 — ICON
-========================================================= */
 
 .p07-card-icon {
   position: absolute;
@@ -2988,13 +3102,7 @@ img {
 
   height: auto;
 
-  max-width: none;
-
-  object-fit: contain;
-
   pointer-events: none;
-
-  user-select: none;
 }
 
 
@@ -3013,10 +3121,6 @@ img {
   top: 12px;
 }
 
-
-/* =========================================================
-   PAGE 07 — CARD COPY
-========================================================= */
 
 .p07-card-copy {
   position: absolute;
@@ -3043,10 +3147,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 07 — CARD TITLE
-========================================================= */
-
 .p07-card-title {
   display: block;
 
@@ -3067,34 +3167,10 @@ img {
 }
 
 
-.p07-card-title--message {
-  line-height: 1.2;
-}
-
-
 .p07-card-title--video {
   line-height: 1.3;
 }
 
-
-.p07-card:active {
-  transform:
-    scale(0.985);
-}
-
-
-@media (hover: hover) {
-
-  .p07-card:hover {
-    filter:
-      brightness(1.025);
-  }
-}
-
-
-/* =========================================================
-   PAGE 07 — COUPLE
-========================================================= */
 
 .p07-couple {
   position: absolute;
@@ -3116,20 +3192,11 @@ img {
     inset(0 0 30px 0);
 
   pointer-events: none;
-
-  user-select: none;
 }
 
 
 /* =========================================================
-   =========================================================
-   PAGE 08 — CẢM ƠN
-   =========================================================
-========================================================= */
-
-
-/* =========================================================
-   PAGE 08 — CONTENT
+   PAGE 08
 ========================================================= */
 
 .p08-content {
@@ -3148,10 +3215,6 @@ img {
   text-align: center;
 }
 
-
-/* =========================================================
-   PAGE 08 — TITLE
-========================================================= */
 
 .p08-title {
   margin: 0;
@@ -3172,10 +3235,6 @@ img {
   letter-spacing: 1px;
 }
 
-
-/* =========================================================
-   PAGE 08 — DIVIDER
-========================================================= */
 
 .p08-divider {
   display: flex;
@@ -3225,10 +3284,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 08 — NAMES
-========================================================= */
-
 .p08-names {
   margin:
     15px 0 0;
@@ -3263,15 +3318,9 @@ img {
 
   font-size: 35px;
 
-  font-weight: 400;
-
   vertical-align: 2px;
 }
 
-
-/* =========================================================
-   PAGE 08 — DATE
-========================================================= */
 
 .p08-date {
   margin:
@@ -3292,10 +3341,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 08 — CLOUDS
-========================================================= */
-
 .p08-cloud--left {
   width: 77px;
 
@@ -3312,10 +3357,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 08 — WATER / GROUND
-========================================================= */
-
 .p08-water-ground {
   position: absolute;
 
@@ -3330,19 +3371,11 @@ img {
   transform:
     translateX(-50%);
 
-  object-fit: contain;
-
-  opacity: 0.47;
+  opacity: .47;
 
   pointer-events: none;
-
-  user-select: none;
 }
 
-
-/* =========================================================
-   PAGE 08 — TEMPLE
-========================================================= */
 
 .p08-temple-gate {
   position: absolute;
@@ -3358,17 +3391,9 @@ img {
   transform:
     translateX(-50%);
 
-  object-fit: contain;
-
   pointer-events: none;
-
-  user-select: none;
 }
 
-
-/* =========================================================
-   PAGE 08 — BAMBOO
-========================================================= */
 
 .p08-bamboo {
   position: absolute;
@@ -3381,17 +3406,9 @@ img {
   right: 20px;
   bottom: 143px;
 
-  object-fit: contain;
-
   pointer-events: none;
-
-  user-select: none;
 }
 
-
-/* =========================================================
-   PAGE 08 — COUPLE
-========================================================= */
 
 .p08-couple {
   position: absolute;
@@ -3404,17 +3421,9 @@ img {
   left: 63px;
   bottom: 72px;
 
-  object-fit: contain;
-
   pointer-events: none;
-
-  user-select: none;
 }
 
-
-/* =========================================================
-   PAGE 08 — LOTUS
-========================================================= */
 
 .p08-lotus {
   position: absolute;
@@ -3425,13 +3434,7 @@ img {
 
   height: auto;
 
-  max-width: none;
-
-  object-fit: contain;
-
   pointer-events: none;
-
-  user-select: none;
 }
 
 
@@ -3452,10 +3455,7 @@ img {
 
 
 /* =========================================================
-   OFF-SCREEN PERFORMANCE
-
-   Chỉ page hiện tại + page bên cạnh
-   được chạy animation.
+   OFFSCREEN PERFORMANCE
 ========================================================= */
 
 .invitation-page:not(.is-nearby)
@@ -3480,14 +3480,17 @@ img {
 .p02-bamboo,
 
 .invitation-page:not(.is-nearby)
-.p02-confetti-piece {
+.p02-confetti-piece,
+
+.invitation-page:not(.is-nearby)
+.p06-confetti {
   animation-play-state:
     paused !important;
 }
 
 
 /* =========================================================
-   TAB HIDDEN PERFORMANCE
+   HIDDEN TAB PERFORMANCE
 ========================================================= */
 
 .is-document-hidden
@@ -3512,14 +3515,17 @@ img {
 .p02-bamboo,
 
 .is-document-hidden
-.p02-confetti-piece {
+.p02-confetti-piece,
+
+.is-document-hidden
+.p06-confetti {
   animation-play-state:
     paused !important;
 }
 
 
 /* =========================================================
-   ACCESSIBILITY
+   REDUCED MOTION
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
@@ -3528,12 +3534,12 @@ img {
   *::before,
   *::after {
     animation-duration:
-      0.001ms !important;
+      .001ms !important;
 
     animation-iteration-count:
       1 !important;
 
     transition-duration:
-      0.001ms !important;
+      .001ms !important;
   }
 }
