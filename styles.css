@@ -22,6 +22,11 @@
   --invitation-green: #28513f;
   --invitation-red: #a63019;
   --invitation-gold: #a78042;
+
+  --p07-red: #a52f21;
+  --p07-green: #2f6d6a;
+  --p07-gold: #b79565;
+  --p07-soft-gold: rgba(151, 115, 66, .55);
 }
 
 
@@ -37,7 +42,6 @@ html,
 body {
   width: 100%;
   height: 100%;
-
   margin: 0;
   padding: 0;
 }
@@ -48,9 +52,7 @@ html {
 
 body {
   display: grid;
-
   place-items: center;
-
   overflow: hidden;
 
   background: var(--page-background);
@@ -64,13 +66,20 @@ body {
 }
 
 button,
+input,
+textarea,
 a {
   font: inherit;
 }
 
+button,
+input,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
 a {
   color: inherit;
-
   text-decoration: none;
 }
 
@@ -99,17 +108,15 @@ img {
 
   box-shadow:
     0 0 40px
-    rgba(80, 46, 24, 0.12);
+    rgba(80, 46, 24, .12);
 
   transition:
     opacity 80ms linear;
 }
 
-
 .site-shell.is-scale-ready {
   opacity: 1;
 }
-
 
 .site-scale {
   position: absolute;
@@ -125,7 +132,6 @@ img {
   transform:
     scale(var(--design-scale));
 }
-
 
 .design-stage {
   position: relative;
@@ -147,7 +153,6 @@ img {
 
 .opening-page {
   position: absolute;
-
   inset: 0;
 
   z-index: 2;
@@ -160,9 +165,7 @@ img {
     url("./assets/page01-bg-optimized.webp");
 
   background-repeat: no-repeat;
-
   background-position: center;
-
   background-size: cover;
 
   opacity: 1;
@@ -171,17 +174,13 @@ img {
     opacity 280ms ease;
 }
 
-
 .opening-card-button {
   position: absolute;
 
   left: 50%;
-
-  top:
-    calc(14.5% + 18px);
+  top: calc(14.5% + 18px);
 
   width: 82%;
-
   max-width: 352px;
 
   aspect-ratio: 2 / 3;
@@ -193,7 +192,6 @@ img {
   padding: 0;
 
   border: 0;
-
   outline: none;
 
   background: transparent;
@@ -205,10 +203,8 @@ img {
   overflow: visible;
 }
 
-
 .opening-card-image {
   position: absolute;
-
   inset: 0;
 
   z-index: 2;
@@ -231,7 +227,7 @@ img {
   filter:
     drop-shadow(
       0 12px 9px
-      rgba(62, 24, 14, 0.16)
+      rgba(62, 24, 14, .16)
     );
 
   animation:
@@ -242,13 +238,9 @@ img {
 
   will-change: transform;
 
-  backface-visibility: hidden;
-
   pointer-events: none;
-
   user-select: none;
 }
-
 
 @keyframes opening-card-shake {
 
@@ -325,11 +317,8 @@ img {
   }
 }
 
-
-.opening-card-button:hover
-.opening-card-image,
-.opening-card-button:focus-visible
-.opening-card-image {
+.opening-card-button:hover .opening-card-image,
+.opening-card-button:focus-visible .opening-card-image {
   animation-play-state: paused;
 
   transform:
@@ -337,16 +326,13 @@ img {
     scale(1.025);
 }
 
-
-.opening-card-button:active
-.opening-card-image {
+.opening-card-button:active .opening-card-image {
   animation-play-state: paused;
 
   transform:
     translate3d(0, 24px, 0)
     scale(.975);
 }
-
 
 .opening-card-button:focus-visible {
   outline: none;
@@ -375,13 +361,11 @@ img {
   pointer-events: none;
 }
 
-
 .monogram-pulse::before,
 .monogram-pulse::after {
   content: "";
 
   position: absolute;
-
   inset: 0;
 
   border:
@@ -399,11 +383,9 @@ img {
     infinite;
 }
 
-
 .monogram-pulse::after {
   animation-delay: 1200ms;
 }
-
 
 @keyframes tap-ring {
 
@@ -437,7 +419,6 @@ img {
 
 .page-02 {
   position: absolute;
-
   inset: 0;
 
   z-index: 1;
@@ -467,11 +448,9 @@ img {
     opacity 280ms ease;
 }
 
-
 .page-02::-webkit-scrollbar {
   display: none;
 }
-
 
 .site-shell.is-page-02
 .opening-page {
@@ -479,7 +458,6 @@ img {
 
   pointer-events: none;
 }
-
 
 .site-shell.is-page-02
 .page-02 {
@@ -490,21 +468,18 @@ img {
   pointer-events: auto;
 }
 
-
 .invitation-flow {
   position: relative;
 
   width: 390px;
 
   height: auto;
-
   min-height: 0;
 
   overflow: visible;
 
   background: #f1dfbd;
 }
-
 
 .invitation-page {
   position: relative;
@@ -535,7 +510,6 @@ img {
 .p07-background,
 .p08-background {
   position: absolute;
-
   inset: 0;
 
   z-index: 0;
@@ -551,7 +525,6 @@ img {
   object-position: center;
 
   pointer-events: none;
-
   user-select: none;
 }
 
@@ -574,10 +547,8 @@ img {
   object-fit: fill;
 
   pointer-events: none;
-
   user-select: none;
 }
-
 
 .p02-frame,
 .p03-frame {
@@ -589,7 +560,6 @@ img {
   height: 100%;
 }
 
-
 .p06-frame {
   z-index: 40;
 
@@ -598,7 +568,6 @@ img {
   width: 100%;
   height: 100%;
 }
-
 
 .p07-frame,
 .p08-frame {
@@ -619,7 +588,6 @@ img {
 .p02-bottom-ornament,
 .p03-bottom-ornament,
 .p06-bottom-ornament,
-.p07-bottom-ornament,
 .p08-bottom-ornament {
   position: absolute;
 
@@ -643,7 +611,6 @@ img {
   object-fit: contain;
 
   pointer-events: none;
-
   user-select: none;
 }
 
@@ -666,11 +633,9 @@ img {
   }
 }
 
-
 .p02-cloud,
 .p03-cloud,
 .p06-cloud,
-.p07-cloud,
 .p08-cloud {
   position: absolute;
 
@@ -687,7 +652,6 @@ img {
   object-fit: contain;
 
   pointer-events: none;
-
   user-select: none;
 
   animation:
@@ -709,7 +673,6 @@ img {
   width: 88px;
 }
 
-
 .p02-cloud--02 {
   right: 2px;
   top: 133px;
@@ -717,14 +680,12 @@ img {
   width: 80px;
 }
 
-
 .p02-cloud--03 {
   left: 5px;
   top: 190px;
 
   width: 65px;
 }
-
 
 .p02-cloud--04 {
   right: 25px;
@@ -746,7 +707,6 @@ img {
   pointer-events: none;
 }
 
-
 .p02-bamboo-window--left {
   left: -4px;
   top: 237px;
@@ -754,7 +714,6 @@ img {
   width: 85px;
   height: 550px;
 }
-
 
 .p02-bamboo-window--right {
   right: -8px;
@@ -764,10 +723,8 @@ img {
   height: 308px;
 }
 
-
 .p02-bamboo {
   position: absolute;
-
   top: 0;
 
   display: block;
@@ -778,10 +735,8 @@ img {
   max-width: none;
 
   pointer-events: none;
-
   user-select: none;
 }
-
 
 @keyframes bamboo-sway-left {
 
@@ -797,7 +752,6 @@ img {
   }
 }
 
-
 @keyframes bamboo-sway-right {
 
   0%,
@@ -812,7 +766,6 @@ img {
   }
 }
 
-
 .p02-bamboo-window--left
 .p02-bamboo {
   transform-origin:
@@ -824,7 +777,6 @@ img {
     ease-in-out
     infinite;
 }
-
 
 .p02-bamboo-window--right
 .p02-bamboo {
@@ -839,9 +791,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 02 TEXT
-========================================================= */
+/* TEXT */
 
 .p02-invite,
 .p02-to,
@@ -871,7 +821,6 @@ img {
     var(--invitation-green);
 }
 
-
 .p02-invite {
   top: 45px;
 
@@ -887,7 +836,6 @@ img {
     translateX(-50%)
     scaleX(.94);
 }
-
 
 .p02-divider {
   position: absolute;
@@ -906,7 +854,6 @@ img {
   background:
     rgba(153, 111, 52, .72);
 }
-
 
 .p02-divider::after {
   content: "•••";
@@ -928,10 +875,8 @@ img {
     var(--invitation-gold);
 
   font-size: 7px;
-
   line-height: 1;
 }
-
 
 .p02-to {
   top: 137px;
@@ -946,7 +891,6 @@ img {
     translateX(-50%)
     scaleX(.8);
 }
-
 
 .p02-wedding-title {
   top: 177px;
@@ -985,7 +929,6 @@ img {
     translateX(-50%);
 }
 
-
 .p02-name {
   display: block;
 
@@ -1008,7 +951,6 @@ img {
   transform-origin:
     50% 50%;
 }
-
 
 .p02-ampersand {
   display: block;
@@ -1047,7 +989,6 @@ img {
   background:
     rgba(153, 111, 52, .56);
 }
-
 
 .p02-date-divider::after {
   content: "◇";
@@ -1097,11 +1038,9 @@ img {
   pointer-events: none;
 }
 
-
 .p02-ceremony-info p {
   margin: 0;
 }
-
 
 .p02-time-line {
   color:
@@ -1114,7 +1053,6 @@ img {
   line-height: 1.15;
 }
 
-
 .p02-time-line strong {
   margin-left: 3px;
 
@@ -1125,7 +1063,6 @@ img {
 
   font-weight: 400;
 }
-
 
 .p02-main-date {
   margin-top:
@@ -1141,7 +1078,6 @@ img {
   line-height: 1.1;
 }
 
-
 .p02-lunar-date {
   margin-top:
     3px !important;
@@ -1156,7 +1092,6 @@ img {
   line-height: 1.15;
 }
 
-
 .p02-at {
   margin-top:
     6px !important;
@@ -1168,7 +1103,6 @@ img {
 
   line-height: 1;
 }
-
 
 .p02-venue-name {
   margin-top:
@@ -1183,7 +1117,6 @@ img {
 
   line-height: 1.1;
 }
-
 
 .p02-venue-address {
   margin-top:
@@ -1211,9 +1144,7 @@ img {
   display: grid;
 
   grid-template-columns:
-    1fr
-    24px
-    1fr;
+    1fr 24px 1fr;
 
   align-items: start;
 
@@ -1235,11 +1166,9 @@ img {
   pointer-events: none;
 }
 
-
 .p02-family {
   min-width: 0;
 }
-
 
 .p02-family-title {
   margin: 0;
@@ -1256,7 +1185,6 @@ img {
   white-space: nowrap;
 }
 
-
 .p02-family-divider {
   width: 42px;
   height: 1px;
@@ -1267,7 +1195,6 @@ img {
   background:
     rgba(165, 120, 52, .76);
 }
-
 
 .p02-family p {
   margin: 0;
@@ -1284,7 +1211,6 @@ img {
   white-space: nowrap;
 }
 
-
 .p02-family-center-divider {
   position: relative;
 
@@ -1293,7 +1219,6 @@ img {
 
   margin-top: -1px;
 }
-
 
 .p02-family-center-divider::before,
 .p02-family-center-divider::after {
@@ -1313,16 +1238,13 @@ img {
     rgba(165, 120, 52, .7);
 }
 
-
 .p02-family-center-divider::before {
   top: 0;
 }
 
-
 .p02-family-center-divider::after {
   bottom: 0;
 }
-
 
 .p02-family-center-divider span {
   position: absolute;
@@ -1343,9 +1265,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 02 CONFETTI
-========================================================= */
+/* CONFETTI */
 
 .p02-confetti-cluster {
   position: absolute;
@@ -1356,7 +1276,6 @@ img {
 
   pointer-events: none;
 }
-
 
 .p02-confetti-piece {
   position: absolute;
@@ -1372,7 +1291,8 @@ img {
     no-repeat;
 
   background-size:
-    361.25px 780.93px;
+    361.25px
+    780.93px;
 
   opacity: 1;
 
@@ -1388,7 +1308,6 @@ img {
     infinite;
 }
 
-
 @keyframes p02-confetti-float {
 
   0%,
@@ -1403,171 +1322,116 @@ img {
   }
 }
 
-
 .p02-confetti-piece--01 {
   left: 101px;
   top: 394px;
-
   width: 11.01px;
   height: 11.43px;
-
-  background-position:
-    -116.46px -37.27px;
+  background-position: -116.46px -37.27px;
 }
-
 
 .p02-confetti-piece--02 {
   left: 338px;
   top: 485px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -68.61px -65.64px;
+  background-position: -68.61px -65.64px;
 }
-
 
 .p02-confetti-piece--03 {
   left: 255px;
   top: 420px;
-
   width: 12.28px;
   height: 11.43px;
-
-  background-position:
-    -154.58px -94.86px;
+  background-position: -154.58px -94.86px;
 }
-
 
 .p02-confetti-piece--04 {
   left: 164px;
   top: 414px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -74.54px -112.65px;
+  background-position: -74.54px -112.65px;
 }
-
 
 .p02-confetti-piece--05 {
   left: 125px;
   top: 427px;
-
   width: 11.01px;
   height: 8.47px;
-
-  background-position:
-    -302.38px -114.77px;
+  background-position: -302.38px -114.77px;
 }
-
 
 .p02-confetti-piece--06 {
   left: 215px;
   top: 435px;
-
   width: 11.43px;
   height: 11.43px;
-
-  background-position:
-    -196.08px -132.98px;
+  background-position: -196.08px -132.98px;
 }
-
 
 .p02-confetti-piece--07 {
   left: 325px;
   top: 455px;
-
   width: 8.05px;
   height: 8.05px;
-
-  background-position:
-    -112.23px -146.53px;
+  background-position: -112.23px -146.53px;
 }
-
 
 .p02-confetti-piece--08 {
   display: none;
 }
 
-
 .p02-confetti-piece--09 {
   left: 183px;
   top: 456px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -33.46px -267.65px;
+  background-position: -33.46px -267.65px;
 }
-
 
 .p02-confetti-piece--10 {
   left: 300px;
   top: 423px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -318.05px -327.79px;
+  background-position: -318.05px -327.79px;
 }
-
 
 .p02-confetti-piece--11 {
   left: 140px;
   top: 460px;
-
   width: 10.59px;
   height: 10.59px;
-
-  background-position:
-    -32.19px -413.76px;
+  background-position: -32.19px -413.76px;
 }
-
 
 .p02-confetti-piece--12 {
   left: 207px;
   top: 477px;
-
   width: 10.59px;
   height: 10.16px;
-
-  background-position:
-    -312.12px -486.18px;
+  background-position: -312.12px -486.18px;
 }
-
 
 .p02-confetti-piece--13 {
   left: 90px;
   top: 450px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -37.27px -578.08px;
+  background-position: -37.27px -578.08px;
 }
-
 
 .p02-confetti-piece--14 {
   left: 70px;
   top: 420px;
-
   width: 11.86px;
   height: 9.74px;
-
-  background-position:
-    -57.60px -739.01px;
+  background-position: -57.60px -739.01px;
 }
 
 
-/* =========================================================
-   PAGE 02 PROCESSION
-========================================================= */
+/* PROCESSION */
 
 .p02-procession {
   position: absolute;
@@ -1583,7 +1447,6 @@ img {
   pointer-events: none;
 }
 
-
 .p02-procession-item {
   position: absolute;
 
@@ -1596,10 +1459,8 @@ img {
   object-fit: contain;
 
   pointer-events: none;
-
   user-select: none;
 }
-
 
 .p02-flag-bearer {
   z-index: 31;
@@ -1610,7 +1471,6 @@ img {
   height: 175px;
 }
 
-
 .p02-couple {
   z-index: 34;
 
@@ -1620,7 +1480,6 @@ img {
   height: 150px;
 }
 
-
 .p02-lion-dance {
   z-index: 33;
 
@@ -1629,7 +1488,6 @@ img {
 
   height: 185px;
 }
-
 
 .p02-drummer {
   z-index: 32;
@@ -1659,14 +1517,12 @@ img {
   pointer-events: none;
 }
 
-
 .p03-cloud--01 {
   left: 38px;
   top: 68px;
 
   width: 72px;
 }
-
 
 .p03-cloud--02 {
   left: 16px;
@@ -1675,7 +1531,6 @@ img {
   width: 53px;
 }
 
-
 .p03-cloud--03 {
   right: 2px;
   top: 144px;
@@ -1683,14 +1538,12 @@ img {
   width: 60px;
 }
 
-
 .p03-cloud--04 {
   right: 40px;
   top: 545px;
 
   width: 59px;
 }
-
 
 .p03-title {
   position: absolute;
@@ -1723,7 +1576,6 @@ img {
   white-space: nowrap;
 }
 
-
 .p03-title-divider {
   z-index: 20;
 
@@ -1736,7 +1588,6 @@ img {
     translateX(-50%);
 }
 
-
 .p03-timeline {
   z-index: 14;
 
@@ -1747,13 +1598,11 @@ img {
   height: 466px;
 }
 
-
 .p03-illustration {
   z-index: 12;
 
   object-fit: contain;
 }
-
 
 .p03-trap {
   left: 33px;
@@ -1762,14 +1611,12 @@ img {
   width: 125px;
 }
 
-
 .p03-kieu {
   left: 210px;
   top: 225px;
 
   width: 140px;
 }
-
 
 .p03-mam-co {
   left: 38px;
@@ -1778,14 +1625,12 @@ img {
   width: 135px;
 }
 
-
 .p03-cheers {
   left: 190px;
   top: 458px;
 
   width: 115px;
 }
-
 
 .p03-event {
   position: absolute;
@@ -1802,12 +1647,10 @@ img {
     serif;
 }
 
-
 .p03-event h3,
 .p03-event p {
   margin: 0;
 }
-
 
 .p03-event-title {
   margin-bottom:
@@ -1824,7 +1667,6 @@ img {
   white-space: nowrap;
 }
 
-
 .p03-event-date {
   margin-bottom:
     5px !important;
@@ -1837,7 +1679,6 @@ img {
 
   white-space: nowrap;
 }
-
 
 .p03-event-time {
   position: relative;
@@ -1857,30 +1698,25 @@ img {
   white-space: nowrap;
 }
 
-
 .p03-event--01 {
   left: 223px;
   top: 119px;
 }
-
 
 .p03-event--02 {
   left: 100px;
   top: 257px;
 }
 
-
 .p03-event--03 {
   left: 215px;
   top: 350px;
 }
 
-
 .p03-event--04 {
   left: 50px;
   top: 467px;
 }
-
 
 .p03-location {
   position: relative;
@@ -1902,12 +1738,10 @@ img {
   line-height: 1.42;
 }
 
-
 .p03-event--01
 .p03-location {
   top: -22px;
 }
-
 
 .p03-location > div {
   display: flex;
@@ -1916,7 +1750,6 @@ img {
 
   min-width: 0;
 }
-
 
 .p03-location strong {
   display: block;
@@ -1930,7 +1763,6 @@ img {
   white-space: nowrap;
 }
 
-
 .p03-location > div > span {
   position: relative;
 
@@ -1941,12 +1773,10 @@ img {
   white-space: nowrap;
 }
 
-
 .p03-event--04
 .p03-location > div > span {
   left: 0;
 }
-
 
 .p03-location-pin {
   position: relative;
@@ -1966,7 +1796,6 @@ img {
   transform:
     rotate(-45deg);
 }
-
 
 .p03-location-pin::after {
   content: "";
@@ -2004,12 +1833,10 @@ img {
   text-align: center;
 }
 
-
 .p03-dress-title {
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   gap: 8px;
@@ -2029,13 +1856,11 @@ img {
   font-weight: 600;
 }
 
-
 .p03-dress-title span {
   color: #c38d31;
 
   font-size: 9px;
 }
-
 
 .p03-color-list {
   display: flex;
@@ -2044,7 +1869,6 @@ img {
 
   gap: 13px;
 }
-
 
 .p03-color-item {
   display: flex;
@@ -2065,7 +1889,6 @@ img {
   font-size: 9px;
 }
 
-
 .p03-color {
   display: block;
 
@@ -2075,7 +1898,6 @@ img {
   border-radius: 50%;
 }
 
-
 .p03-color--white {
   background: #f8f3e8;
 
@@ -2084,7 +1906,6 @@ img {
     rgba(255, 255, 255, .95);
 }
 
-
 .p03-color--beige {
   background: #e5c9a6;
 
@@ -2092,7 +1913,6 @@ img {
     1px solid
     rgba(255, 255, 255, .75);
 }
-
 
 .p03-color--black {
   background: #273528;
@@ -2123,7 +1943,6 @@ img {
   opacity: .86;
 
   pointer-events: none;
-
   user-select: none;
 
   animation:
@@ -2133,14 +1952,12 @@ img {
     infinite;
 }
 
-
 .p06-cloud--01 {
   right: 35px;
   top: 37px;
 
   width: 92px;
 }
-
 
 .p06-cloud--02 {
   left: 18px;
@@ -2149,14 +1966,12 @@ img {
   width: 67px;
 }
 
-
 .p06-cloud--03 {
   right: -10px;
   top: 332px;
 
   width: 74px;
 }
-
 
 .p06-cloud--04 {
   left: -5px;
@@ -2186,7 +2001,6 @@ img {
   background: transparent;
 }
 
-
 .p06-lucky-card {
   position: relative;
 
@@ -2209,10 +2023,8 @@ img {
     );
 
   pointer-events: none;
-
   user-select: none;
 }
-
 
 .p06-title {
   position: absolute;
@@ -2261,7 +2073,6 @@ img {
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   width: 205px;
@@ -2291,14 +2102,8 @@ img {
     tabular-nums;
 
   pointer-events: none;
-
   user-select: none;
-
-  will-change:
-    transform,
-    filter;
 }
-
 
 .p06-card-wrap.is-idle-shuffling
 .p06-number-slot {
@@ -2308,7 +2113,6 @@ img {
     ease-in-out
     infinite;
 }
-
 
 @keyframes lucky-idle-jitter {
 
@@ -2335,7 +2139,6 @@ img {
   }
 }
 
-
 .p06-card-wrap.is-rolling
 .p06-number-slot {
   animation:
@@ -2344,7 +2147,6 @@ img {
     linear
     infinite;
 }
-
 
 @keyframes lucky-rolling-chaos {
 
@@ -2392,7 +2194,6 @@ img {
   }
 }
 
-
 .p06-card-wrap.is-revealed
 .p06-number-slot {
   animation:
@@ -2400,7 +2201,6 @@ img {
     850ms
     cubic-bezier(.16, .85, .25, 1);
 }
-
 
 @keyframes lucky-number-reveal {
 
@@ -2483,12 +2283,8 @@ img {
   opacity: .82;
 
   pointer-events: none;
-
   user-select: none;
 }
-
-
-/* TRIGGER */
 
 .p06-lucky-trigger {
   position: absolute;
@@ -2504,20 +2300,16 @@ img {
   padding: 0;
 
   border: 0;
-
   border-radius: 14px;
 
   background: transparent;
 
   appearance: none;
 
-  -webkit-appearance: none;
-
   cursor: pointer;
 
   touch-action: manipulation;
 }
-
 
 .p06-lucky-trigger:disabled {
   cursor: default;
@@ -2542,7 +2334,6 @@ img {
   overflow: visible;
 }
 
-
 .p06-firework-particle {
   --x: 0px;
   --y: 0px;
@@ -2564,10 +2355,6 @@ img {
   background:
     var(--particle-color);
 
-  box-shadow:
-    0 0 3px
-    rgba(255, 218, 119, .55);
-
   opacity: 0;
 
   animation:
@@ -2577,7 +2364,6 @@ img {
     var(--delay)
     forwards;
 }
-
 
 @keyframes lucky-firework-burst {
 
@@ -2607,7 +2393,7 @@ img {
 }
 
 
-/* BOTTOM ITEMS */
+/* PAGE 06 ITEMS */
 
 .p06-lucky-item {
   position: absolute;
@@ -2619,10 +2405,8 @@ img {
   height: auto;
 
   pointer-events: none;
-
   user-select: none;
 }
-
 
 .p06-ingots {
   z-index: 25;
@@ -2632,7 +2416,6 @@ img {
 
   width: 75px;
 }
-
 
 .p06-knot {
   z-index: 28;
@@ -2646,7 +2429,6 @@ img {
     rotate(-7deg);
 }
 
-
 .p06-bag {
   z-index: 26;
 
@@ -2655,7 +2437,6 @@ img {
 
   width: 105px;
 }
-
 
 .p06-coins {
   z-index: 29;
@@ -2671,54 +2452,143 @@ img {
 
 
 /* =========================================================
-   PAGE 07
+   PAGE 07 — RSVP
 ========================================================= */
 
-.p07-cloud--01 {
-  width: 82px;
+.page07-layout {
+  color:
+    var(--p07-green);
 
-  top: 31px;
-  right: 40px;
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
 }
 
 
-.p07-cloud--02 {
-  width: 68px;
+/* =========================================================
+   PAGE 07 — DECORATIONS
+========================================================= */
 
-  top: 164px;
-  left: 3px;
-}
-
-
-.p07-title-ornament {
+.p07-top-left-decoration,
+.p07-butterfly,
+.p07-divider-ornament,
+.p07-field-lotus {
   position: absolute;
 
-  z-index: 5;
+  display: block;
 
-  width: 173px;
   height: auto;
 
-  left: 50%;
-  top: 50px;
-
-  transform:
-    translateX(-50%);
+  max-width: none;
 
   pointer-events: none;
 
   user-select: none;
 }
 
-
-.p07-title {
-  position: absolute;
-
+.p07-top-left-decoration {
   z-index: 8;
 
-  width: 280px;
+  left: 12px;
+  top: 14px;
+
+  width: 102px;
+}
+
+.p07-butterfly {
+  z-index: 8;
+
+  right: 11px;
+  top: 21px;
+
+  width: 88px;
+}
+
+
+/* =========================================================
+   PAGE 07 — TITLE
+========================================================= */
+
+.p07-rsvp-title {
+  position: absolute;
+
+  z-index: 10;
 
   left: 50%;
-  top: 110px;
+  top: 59px;
+
+  width: 260px;
+
+  margin: 0;
+
+  transform:
+    translateX(-50%);
+
+  color:
+    var(--p07-red);
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 36px;
+
+  font-weight: 400;
+
+  line-height: .88;
+
+  letter-spacing: -.01em;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   PAGE 07 — DIVIDERS
+========================================================= */
+
+.p07-divider-ornament {
+  z-index: 9;
+
+  left: 50%;
+
+  object-fit: contain;
+}
+
+.p07-divider-ornament--top {
+  top: 150px;
+
+  width: 143px;
+
+  transform:
+    translateX(-50%);
+}
+
+.p07-divider-ornament--bottom {
+  top: 598px;
+
+  width: 128px;
+
+  transform:
+    translateX(-50%);
+}
+
+
+/* =========================================================
+   PAGE 07 — SUBTITLE
+========================================================= */
+
+.p07-rsvp-subtitle {
+  position: absolute;
+
+  z-index: 10;
+
+  left: 50%;
+  top: 179px;
+
+  width: 290px;
 
   margin: 0;
 
@@ -2727,88 +2597,440 @@ img {
 
   text-align: center;
 
-  color: #9f2d17;
+  color:
+    var(--p07-green);
+
+  font-size: 11px;
+
+  font-style: italic;
+
+  font-weight: 400;
+
+  line-height: 1.22;
+}
+
+
+/* =========================================================
+   PAGE 07 — FORM
+========================================================= */
+
+.p07-rsvp-form {
+  position: absolute;
+
+  z-index: 15;
+
+  left: 50%;
+  top: 217px;
+
+  width: 316px;
+  height: 374px;
+
+  transform:
+    translateX(-50%);
+}
+
+.p07-form-group {
+  position: absolute;
+
+  left: 0;
+
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+}
+
+.p07-form-group--name {
+  top: 0;
+}
+
+.p07-form-group--attendance {
+  top: 62px;
+}
+
+.p07-form-group--count {
+  top: 127px;
+}
+
+.p07-form-group--message {
+  top: 190px;
+}
+
+.p07-form-group--video {
+  top: 270px;
+}
+
+
+/* =========================================================
+   PAGE 07 — LABELS
+========================================================= */
+
+.p07-form-label {
+  display: block;
+
+  margin:
+    0 0 5px;
+
+  padding: 0;
+
+  color:
+    var(--p07-green);
 
   font-family:
     "Times New Roman",
-    "Noto Serif",
+    Times,
     serif;
 
-  font-size: 29px;
+  font-size: 12px;
 
-  font-weight: 500;
+  font-weight: 400;
 
-  line-height: 1.06;
-
-  letter-spacing: .2px;
+  line-height: 1;
 
   white-space: nowrap;
 }
 
+fieldset.p07-form-group {
+  min-width: 0;
+}
 
-.p07-heading-divider {
+fieldset.p07-form-group
+.p07-form-label {
+  margin-bottom: 6px;
+}
+
+
+/* =========================================================
+   PAGE 07 — FIELD COMMON
+========================================================= */
+
+.p07-field,
+.p07-counter,
+.p07-video-field {
+  position: relative;
+
+  width: 100%;
+
+  border:
+    1px solid
+    rgba(154, 119, 72, .72);
+
+  border-radius: 3px;
+
+  background:
+    rgba(255, 250, 235, .38);
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(255, 255, 255, .42);
+
+  overflow: hidden;
+}
+
+.p07-field::before,
+.p07-counter::before,
+.p07-video-field::before {
+  content: "";
+
   position: absolute;
 
-  z-index: 6;
+  inset: 2px;
 
-  width: 150px;
-  height: auto;
+  border:
+    1px solid
+    rgba(192, 160, 112, .34);
 
-  top: 144px;
-  left: 50%;
-
-  transform:
-    translateX(-50%);
+  border-radius: 2px;
 
   pointer-events: none;
-
-  user-select: none;
 }
 
 
-.p07-description {
+/* =========================================================
+   PAGE 07 — INPUT ICON
+========================================================= */
+
+.p07-field-icon,
+.p07-counter-icon,
+.p07-video-icon {
   position: absolute;
 
-  z-index: 8;
+  z-index: 3;
 
-  width: 325px;
+  fill: none;
 
-  top: 195px;
-  left: 50%;
+  stroke:
+    rgba(143, 113, 76, .72);
 
-  margin: 0;
+  stroke-width: 1.7;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+
+  pointer-events: none;
+}
+
+.p07-field-icon {
+  left: 13px;
+  top: 50%;
+
+  width: 19px;
+  height: 19px;
 
   transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  color: #5a4732;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
-  font-size: 11px;
-
-  font-weight: 400;
-
-  line-height: 1.55;
+    translateY(-50%);
 }
 
 
-/* CARD */
+/* =========================================================
+   PAGE 07 — NAME
+========================================================= */
 
-.p07-card {
+.p07-field--name {
+  height: 35px;
+}
+
+.p07-text-input {
+  position: relative;
+
+  z-index: 2;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  padding:
+    0 48px
+    0 43px;
+
+  border: 0;
+  outline: none;
+
+  background: transparent;
+
+  color:
+    #51483e;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 11.5px;
+
+  font-style: italic;
+}
+
+.p07-text-input::placeholder {
+  color:
+    rgba(117, 92, 74, .46);
+
+  opacity: 1;
+}
+
+
+/* =========================================================
+   PAGE 07 — LOTUS
+========================================================= */
+
+.p07-field-lotus {
+  z-index: 4;
+
+  right: 3px;
+  bottom: -7px;
+
+  width: 39px;
+}
+
+.p07-field-lotus--message {
+  right: 1px;
+  bottom: -8px;
+
+  width: 42px;
+}
+
+.p07-field-lotus--video {
+  right: 2px;
+  bottom: -7px;
+
+  width: 36px;
+}
+
+
+/* =========================================================
+   PAGE 07 — ATTENDANCE
+========================================================= */
+
+.p07-attendance-options {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 12px;
+}
+
+.p07-attendance-option {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  height: 39px;
+
+  padding:
+    0 17px;
+
+  border:
+    1px solid
+    rgba(154, 119, 72, .64);
+
+  border-radius: 3px;
+
+  background:
+    rgba(255, 250, 235, .34);
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(255, 255, 255, .36);
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  transition:
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.p07-attendance-option input {
   position: absolute;
 
-  z-index: 12;
+  opacity: 0;
 
-  left: 55px;
+  pointer-events: none;
+}
 
-  width: 280px;
-  height: 90px;
+.p07-radio-mark {
+  position: relative;
+
+  flex: 0 0 auto;
+
+  width: 20px;
+  height: 20px;
+
+  margin-right: 14px;
+
+  border:
+    1.4px solid
+    var(--p07-green);
+
+  border-radius: 50%;
+}
+
+.p07-radio-mark::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 12px;
+  height: 12px;
+
+  border-radius: 50%;
+
+  background:
+    var(--p07-red);
+
+  transform:
+    translate(-50%, -50%)
+    scale(0);
+
+  transition:
+    transform 150ms ease;
+}
+
+.p07-attendance-text {
+  color:
+    var(--p07-green);
+
+  font-size: 16px;
+
+  line-height: 1;
+}
+
+.p07-attendance-option:has(input:checked) {
+  border-color:
+    rgba(171, 55, 34, .8);
+
+  background:
+    rgba(255, 246, 227, .48);
+}
+
+.p07-attendance-option
+input:checked
++
+.p07-radio-mark {
+  border-color:
+    var(--p07-red);
+}
+
+.p07-attendance-option
+input:checked
++
+.p07-radio-mark::after {
+  transform:
+    translate(-50%, -50%)
+    scale(1);
+}
+
+.p07-attendance-option
+input:checked
+~
+.p07-attendance-text {
+  color:
+    var(--p07-red);
+}
+
+
+/* =========================================================
+   PAGE 07 — COUNTER
+========================================================= */
+
+.p07-counter {
+  display: grid;
+
+  grid-template-columns:
+    46px 1fr 1fr 1fr;
+
+  align-items: center;
+
+  height: 38px;
+}
+
+.p07-counter-icon {
+  position: relative;
+
+  left: 14px;
+  top: auto;
+
+  width: 22px;
+  height: 20px;
+}
+
+.p07-counter-button {
+  position: relative;
+
+  z-index: 3;
+
+  height: 100%;
 
   padding: 0;
 
@@ -2816,170 +3038,405 @@ img {
 
   background: transparent;
 
-  appearance: none;
+  color:
+    var(--p07-green);
 
-  -webkit-appearance: none;
+  font-family:
+    Arial,
+    sans-serif;
+
+  font-size: 22px;
+
+  font-weight: 300;
 
   cursor: pointer;
+}
 
-  text-align: left;
+.p07-counter-value {
+  position: relative;
 
-  touch-action: manipulation;
+  z-index: 3;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+
+  color:
+    var(--p07-green);
+
+  font-size: 18px;
+
+  line-height: 1;
+
+  font-variant-numeric:
+    tabular-nums;
+}
+
+.p07-counter-button:disabled {
+  opacity: .32;
+
+  cursor: default;
 }
 
 
-.p07-card--message {
-  top: 269px;
+/* =========================================================
+   PAGE 07 — MESSAGE
+========================================================= */
+
+.p07-field--message {
+  height: 57px;
 }
 
+.p07-field-icon--message {
+  top: 13px;
 
-.p07-card--video {
-  top: 322px;
+  transform: none;
 }
 
+.p07-message-input {
+  position: relative;
 
-.p07-card-frame {
-  position: absolute;
-
-  z-index: 0;
-
-  inset: 0;
+  z-index: 2;
 
   display: block;
 
   width: 100%;
   height: 100%;
 
-  max-width: none;
+  padding:
+    10px 48px
+    8px 43px;
 
-  object-fit: fill;
+  border: 0;
+  outline: none;
 
-  pointer-events: none;
+  resize: none;
 
-  user-select: none;
+  background: transparent;
+
+  color:
+    #51483e;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 11px;
+
+  font-style: italic;
+
+  line-height: 1.3;
+}
+
+.p07-message-input::placeholder {
+  color:
+    rgba(117, 92, 74, .46);
+
+  opacity: 1;
 }
 
 
-.p07-card-icon {
-  position: absolute;
+/* =========================================================
+   PAGE 07 — VIDEO
+========================================================= */
+
+.p07-video-field {
+  display: flex;
+
+  align-items: center;
+
+  height: 38px;
+
+  cursor: pointer;
+}
+
+.p07-video-icon {
+  left: 13px;
+  top: 50%;
+
+  width: 23px;
+  height: 20px;
+
+  transform:
+    translateY(-50%);
+}
+
+.p07-video-text {
+  position: relative;
 
   z-index: 2;
 
   display: block;
 
-  height: auto;
+  width: 100%;
 
-  max-width: none;
+  padding:
+    0 48px
+    0 47px;
 
-  object-fit: contain;
+  overflow: hidden;
 
-  pointer-events: none;
+  color:
+    rgba(117, 92, 74, .54);
 
-  user-select: none;
-}
+  font-size: 10.5px;
 
+  font-style: italic;
 
-.p07-card-icon--message {
-  width: 60px;
+  line-height: 38px;
 
-  left: 22px;
-  top: 14px;
-}
-
-
-.p07-card-icon--video {
-  width: 65px;
-
-  left: 23px;
-  top: 12px;
-}
-
-
-.p07-card-copy {
-  position: absolute;
-
-  z-index: 3;
-
-  display: block;
-}
-
-
-.p07-card-copy--message {
-  width: 320px;
-
-  left: 101px;
-  top: 31px;
-}
-
-
-.p07-card-copy--video {
-  width: 152px;
-
-  left: 112px;
-  top: 31px;
-}
-
-
-.p07-card-title {
-  display: block;
-
-  margin: 0;
-
-  color: #a2341e;
-
-  font-family:
-    "Times New Roman",
-    "Noto Serif",
-    serif;
-
-  font-size: 18px;
-
-  font-weight: 600;
+  text-overflow: ellipsis;
 
   white-space: nowrap;
 }
 
-
-.p07-card-title--message {
-  line-height: 1.2;
-}
-
-
-.p07-card-title--video {
-  line-height: 1.3;
-}
-
-
-.p07-card:active {
-  transform:
-    scale(.985);
-}
-
-
-/* COUPLE */
-
-.p07-couple {
+.p07-video-input {
   position: absolute;
 
-  z-index: 11;
+  width: 1px;
+  height: 1px;
 
-  width: 187px;
-  height: 250px;
+  opacity: 0;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   PAGE 07 — SUBMIT
+========================================================= */
+
+.p07-submit {
+  position: absolute;
 
   left: 50%;
-  bottom: -12px;
+  top: 322px;
+
+  z-index: 5;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  width: 236px;
+  height: 40px;
 
   transform:
     translateX(-50%);
 
-  object-fit: contain;
+  border:
+    1px solid
+    #8f2f1c;
 
-  clip-path:
-    inset(0 0 30px 0);
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #b83d27 0%,
+      #9f2f20 100%
+    );
+
+  box-shadow:
+    inset 0 0 0 2px
+    rgba(238, 178, 87, .55),
+    0 2px 4px
+    rgba(77, 37, 17, .12);
+
+  color:
+    #fff9e9;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 15px;
+
+  font-weight: 400;
+
+  letter-spacing: .015em;
+
+  cursor: pointer;
+
+  touch-action: manipulation;
+
+  transition:
+    transform 140ms ease,
+    filter 140ms ease;
+}
+
+.p07-submit::before,
+.p07-submit::after {
+  content: "⌘";
+
+  position: absolute;
+
+  top: 50%;
+
+  transform:
+    translateY(-51%);
+
+  color:
+    rgba(237, 190, 100, .65);
+
+  font-size: 12px;
+}
+
+.p07-submit::before {
+  left: 8px;
+}
+
+.p07-submit::after {
+  right: 8px;
+}
+
+.p07-submit-icon {
+  width: 18px;
+  height: 18px;
+
+  fill: none;
+
+  stroke:
+    #fff9e9;
+
+  stroke-width: 1.8;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+}
+
+.p07-submit:active {
+  transform:
+    translateX(-50%)
+    scale(.975);
+}
+
+.p07-submit:disabled {
+  cursor: default;
+
+  opacity: .78;
+}
+
+
+/* =========================================================
+   PAGE 07 — STATUS
+========================================================= */
+
+.p07-submit-status {
+  position: absolute;
+
+  left: 50%;
+  top: 365px;
+
+  width: 290px;
+
+  margin: 0;
+
+  transform:
+    translateX(-50%);
+
+  text-align: center;
+
+  color:
+    var(--p07-green);
+
+  font-size: 9px;
+
+  font-style: italic;
+
+  line-height: 1.2;
+
+  opacity: 0;
 
   pointer-events: none;
 
-  user-select: none;
+  transition:
+    opacity 180ms ease;
+}
+
+.p07-submit-status.is-visible {
+  opacity: 1;
+}
+
+
+/* =========================================================
+   PAGE 07 — FOOTER MESSAGE
+========================================================= */
+
+.p07-footer-message {
+  position: absolute;
+
+  z-index: 12;
+
+  left: 50%;
+  top: 621px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 190px;
+  height: 47px;
+
+  transform:
+    translateX(-50%);
+
+  border:
+    1px solid
+    rgba(174, 130, 74, .72);
+
+  border-radius:
+    23px 23px 18px 18px;
+
+  background:
+    rgba(255, 249, 232, .38);
+
+  box-shadow:
+    inset 0 0 0 2px
+    rgba(255, 255, 255, .4);
+
+  color:
+    var(--p07-red);
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 13px;
+
+  font-weight: 400;
+
+  line-height: 1.1;
+
+  text-align: center;
+}
+
+.p07-footer-message::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 3px;
+
+  border:
+    1px solid
+    rgba(190, 152, 96, .35);
+
+  border-radius:
+    20px 20px 15px 15px;
+
+  pointer-events: none;
 }
 
 
@@ -3003,7 +3460,6 @@ img {
   text-align: center;
 }
 
-
 .p08-title {
   margin: 0;
 
@@ -3023,12 +3479,10 @@ img {
   letter-spacing: 1px;
 }
 
-
 .p08-divider {
   display: flex;
 
   align-items: center;
-
   justify-content: center;
 
   width: 150px;
@@ -3036,7 +3490,6 @@ img {
   margin-left: auto;
   margin-right: auto;
 }
-
 
 .p08-divider span {
   display: block;
@@ -3046,7 +3499,6 @@ img {
 
   background: #b54d31;
 }
-
 
 .p08-divider b {
   display: block;
@@ -3061,16 +3513,13 @@ img {
   font-weight: 400;
 }
 
-
 .p08-divider--01 {
   margin-top: 21px;
 }
 
-
 .p08-divider--02 {
   margin-top: 15px;
 }
-
 
 .p08-names {
   margin:
@@ -3093,7 +3542,6 @@ img {
   white-space: nowrap;
 }
 
-
 .p08-names span {
   margin:
     0 3px;
@@ -3106,11 +3554,8 @@ img {
 
   font-size: 35px;
 
-  font-weight: 400;
-
   vertical-align: 2px;
 }
-
 
 .p08-date {
   margin:
@@ -3130,7 +3575,6 @@ img {
   letter-spacing: 3px;
 }
 
-
 .p08-cloud--left {
   width: 77px;
 
@@ -3138,14 +3582,12 @@ img {
   top: 350px;
 }
 
-
 .p08-cloud--right {
   width: 68px;
 
   right: 31px;
   top: 300px;
 }
-
 
 .p08-water-ground {
   position: absolute;
@@ -3166,10 +3608,8 @@ img {
   opacity: .47;
 
   pointer-events: none;
-
   user-select: none;
 }
-
 
 .p08-temple-gate {
   position: absolute;
@@ -3188,10 +3628,8 @@ img {
   object-fit: contain;
 
   pointer-events: none;
-
   user-select: none;
 }
-
 
 .p08-bamboo {
   position: absolute;
@@ -3207,10 +3645,8 @@ img {
   object-fit: contain;
 
   pointer-events: none;
-
   user-select: none;
 }
-
 
 .p08-couple {
   position: absolute;
@@ -3226,10 +3662,8 @@ img {
   object-fit: contain;
 
   pointer-events: none;
-
   user-select: none;
 }
-
 
 .p08-lotus {
   position: absolute;
@@ -3245,10 +3679,8 @@ img {
   object-fit: contain;
 
   pointer-events: none;
-
   user-select: none;
 }
-
 
 .p08-lotus--left {
   width: 120px;
@@ -3256,7 +3688,6 @@ img {
   left: 1px;
   bottom: 52px;
 }
-
 
 .p08-lotus--right {
   width: 122px;
@@ -3278,9 +3709,6 @@ img {
 
 .invitation-page:not(.is-nearby)
 .p06-cloud,
-
-.invitation-page:not(.is-nearby)
-.p07-cloud,
 
 .invitation-page:not(.is-nearby)
 .p08-cloud,
@@ -3310,9 +3738,6 @@ img {
 
 .is-document-hidden
 .p06-cloud,
-
-.is-document-hidden
-.p07-cloud,
 
 .is-document-hidden
 .p08-cloud,
