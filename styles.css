@@ -1,9 +1,9 @@
 /* =========================================================
    BÁCH & THƯ WEDDING
-   MASTER ARTBOARD: 390 × 680
+   MASTER: 390 × 680
 
    FLOW:
-   01 → 02 → 03 → 04 → 06 → 07 → 08
+   01 → 02 → 03 → 06 → 07 → 08
 ========================================================= */
 
 :root {
@@ -167,8 +167,6 @@ img {
 
   transition:
     opacity 280ms ease;
-
-  will-change: opacity;
 }
 
 
@@ -529,7 +527,6 @@ img {
 
 .p02-background,
 .p03-background,
-.p04-background,
 .p06-background,
 .p07-background,
 .p08-background {
@@ -561,7 +558,6 @@ img {
 
 .p02-frame,
 .p03-frame,
-.p04-frame,
 .p06-frame,
 .p07-frame,
 .p08-frame {
@@ -580,8 +576,7 @@ img {
 
 
 .p02-frame,
-.p03-frame,
-.p04-frame {
+.p03-frame {
   z-index: 5;
 
   inset: 0;
@@ -619,7 +614,6 @@ img {
 
 .p02-bottom-ornament,
 .p03-bottom-ornament,
-.p04-bottom-ornament,
 .p06-bottom-ornament,
 .p07-bottom-ornament,
 .p08-bottom-ornament {
@@ -651,7 +645,7 @@ img {
 
 
 /* =========================================================
-   CLOUD ANIMATION
+   CLOUDS
 ========================================================= */
 
 @keyframes wedding-cloud-float {
@@ -671,7 +665,6 @@ img {
 
 .p02-cloud,
 .p03-cloud,
-.p04-cloud,
 .p06-cloud,
 .p07-cloud,
 .p08-cloud {
@@ -842,7 +835,7 @@ img {
 }
 
 
-/* PAGE 02 TEXT */
+/* TEXT */
 
 .p02-invite,
 .p02-to,
@@ -1070,7 +1063,7 @@ img {
 }
 
 
-/* PAGE 02 CONFETTI */
+/* CONFETTI */
 
 .p02-confetti-cluster {
   position: absolute;
@@ -1130,161 +1123,109 @@ img {
 .p02-confetti-piece--01 {
   left: 101px;
   top: 394px;
-
   width: 11.01px;
   height: 11.43px;
-
-  background-position:
-    -116.46px -37.27px;
+  background-position: -116.46px -37.27px;
 }
-
 
 .p02-confetti-piece--02 {
   left: 338px;
   top: 485px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -68.61px -65.64px;
+  background-position: -68.61px -65.64px;
 }
-
 
 .p02-confetti-piece--03 {
   left: 255px;
   top: 420px;
-
   width: 12.28px;
   height: 11.43px;
-
-  background-position:
-    -154.58px -94.86px;
+  background-position: -154.58px -94.86px;
 }
-
 
 .p02-confetti-piece--04 {
   left: 164px;
   top: 414px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -74.54px -112.65px;
+  background-position: -74.54px -112.65px;
 }
-
 
 .p02-confetti-piece--05 {
   left: 125px;
   top: 427px;
-
   width: 11.01px;
   height: 8.47px;
-
-  background-position:
-    -302.38px -114.77px;
+  background-position: -302.38px -114.77px;
 }
-
 
 .p02-confetti-piece--06 {
   left: 215px;
   top: 435px;
-
   width: 11.43px;
   height: 11.43px;
-
-  background-position:
-    -196.08px -132.98px;
+  background-position: -196.08px -132.98px;
 }
-
 
 .p02-confetti-piece--07 {
   left: 325px;
   top: 455px;
-
   width: 8.05px;
   height: 8.05px;
-
-  background-position:
-    -112.23px -146.53px;
+  background-position: -112.23px -146.53px;
 }
-
 
 .p02-confetti-piece--08 {
   display: none;
 }
 
-
 .p02-confetti-piece--09 {
   left: 183px;
   top: 456px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -33.46px -267.65px;
+  background-position: -33.46px -267.65px;
 }
-
 
 .p02-confetti-piece--10 {
   left: 300px;
   top: 423px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -318.05px -327.79px;
+  background-position: -318.05px -327.79px;
 }
-
 
 .p02-confetti-piece--11 {
   left: 140px;
   top: 460px;
-
   width: 10.59px;
   height: 10.59px;
-
-  background-position:
-    -32.19px -413.76px;
+  background-position: -32.19px -413.76px;
 }
-
 
 .p02-confetti-piece--12 {
   left: 207px;
   top: 477px;
-
   width: 10.59px;
   height: 10.16px;
-
-  background-position:
-    -312.12px -486.18px;
+  background-position: -312.12px -486.18px;
 }
-
 
 .p02-confetti-piece--13 {
   left: 90px;
   top: 450px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -37.27px -578.08px;
+  background-position: -37.27px -578.08px;
 }
-
 
 .p02-confetti-piece--14 {
   left: 70px;
   top: 420px;
-
   width: 11.86px;
   height: 9.74px;
-
-  background-position:
-    -57.60px -739.01px;
+  background-position: -57.60px -739.01px;
 }
 
 
@@ -1322,40 +1263,32 @@ img {
 
 .p02-flag-bearer {
   z-index: 31;
-
   left: -9px;
   bottom: 7px;
-
   height: 175px;
 }
 
 
 .p02-couple {
   z-index: 34;
-
   left: 74px;
   bottom: 0;
-
   height: 150px;
 }
 
 
 .p02-lion-dance {
   z-index: 33;
-
   left: 120px;
   bottom: 6px;
-
   height: 185px;
 }
 
 
 .p02-drummer {
   z-index: 32;
-
   right: -2px;
   bottom: 7px;
-
   height: 122px;
 }
 
@@ -1382,7 +1315,6 @@ img {
 .p03-cloud--01 {
   left: 38px;
   top: 68px;
-
   width: 72px;
 }
 
@@ -1390,7 +1322,6 @@ img {
 .p03-cloud--02 {
   left: 16px;
   top: 315px;
-
   width: 53px;
 }
 
@@ -1398,7 +1329,6 @@ img {
 .p03-cloud--03 {
   right: 2px;
   top: 144px;
-
   width: 60px;
 }
 
@@ -1406,7 +1336,6 @@ img {
 .p03-cloud--04 {
   right: 40px;
   top: 545px;
-
   width: 59px;
 }
 
@@ -1477,7 +1406,6 @@ img {
 .p03-trap {
   left: 33px;
   top: 135px;
-
   width: 125px;
 }
 
@@ -1485,7 +1413,6 @@ img {
 .p03-kieu {
   left: 210px;
   top: 225px;
-
   width: 140px;
 }
 
@@ -1493,7 +1420,6 @@ img {
 .p03-mam-co {
   left: 38px;
   top: 330px;
-
   width: 135px;
 }
 
@@ -1501,7 +1427,6 @@ img {
 .p03-cheers {
   left: 190px;
   top: 458px;
-
   width: 115px;
 }
 
@@ -1823,450 +1748,8 @@ img {
 
 
 /* =========================================================
-   PAGE 04
+   PAGE 06
 ========================================================= */
-
-.p04-cloud--01 {
-  left: 38px;
-  top: 48px;
-
-  width: 69px;
-}
-
-
-.p04-cloud--02 {
-  left: 283px;
-  top: 90px;
-
-  width: 65px;
-}
-
-
-.p04-title {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 70px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%)
-    scaleX(.88);
-
-  color: #9f301c;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 36px;
-
-  font-weight: 400;
-
-  line-height: .95;
-
-  white-space: nowrap;
-}
-
-
-.p04-map {
-  position: absolute;
-
-  z-index: 10;
-
-  left: 50%;
-  top: 125px;
-
-  display: block;
-
-  width: 290px;
-  height: auto;
-
-  max-width: none;
-
-  transform:
-    translateX(-50%);
-
-  object-fit: contain;
-
-  pointer-events: none;
-}
-
-
-.p04-map-label-layer {
-  position: absolute;
-
-  z-index: 11;
-
-  left: 50%;
-  top: 125px;
-
-  width: 290px;
-
-  aspect-ratio:
-    713 / 1080;
-
-  transform:
-    translateX(-50%);
-
-  pointer-events: none;
-}
-
-
-.p04-map-label {
-  position: absolute;
-
-  display: block;
-
-  margin: 0;
-
-  color: #28513f;
-
-  font-family:
-    "Times New Roman",
-    Helvetica,
-    sans-serif;
-
-  font-style: italic;
-
-  font-weight: 500;
-
-  line-height: 1;
-
-  white-space: nowrap;
-}
-
-
-.p04-map-label--note {
-  left: 140px;
-  top: 12px;
-
-  transform:
-    translateX(-50%);
-
-  font-size: 10px;
-
-  font-weight: 550;
-}
-
-
-.p04-map-label--phu-tay-ho {
-  left: 72px;
-  top: 168px;
-
-  transform:
-    translateX(-50%);
-
-  font-size: 9px;
-}
-
-
-.p04-map-label--tay-ho {
-  left: 100px;
-  top: 335px;
-
-  transform:
-    translateX(-50%);
-
-  font-size: 9px;
-}
-
-
-.p04-map-label--lac-long-quan {
-  left: 7px;
-  top: 220px;
-
-  font-size: 10px;
-
-  transform:
-    translate(-50%, -50%)
-    rotate(-90deg);
-}
-
-
-.p04-map-label--song-hong {
-  left: 240px;
-  top: 210px;
-
-  font-size: 12px;
-
-  transform:
-    translate(-50%, -50%)
-    rotate(61deg);
-}
-
-
-.p04-map-label--au-co {
-  left: 160px;
-  top: 170px;
-
-  font-size: 10px;
-
-  transform:
-    translate(-50%, -50%)
-    rotate(61deg);
-}
-
-
-.p04-map-label--sheraton {
-  left: 190px;
-  top: 245px;
-
-  transform:
-    translateX(-50%);
-
-  color: #9b331e;
-
-  font-size: 10px;
-
-  font-weight: 600;
-}
-
-
-.p04-map-label--tran-quoc {
-  left: 215px;
-  top: 360px;
-
-  transform:
-    translateX(-50%);
-
-  font-size: 8px;
-}
-
-
-.p04-map-label--quan-thanh {
-  left: 160px;
-  top: 406px;
-
-  transform:
-    translateX(-50%);
-
-  font-size: 8px;
-}
-
-
-.p04-map-label--thuy-khue {
-  left: 80px;
-  top: 413px;
-
-  font-size: 10px;
-
-  transform:
-    translate(-50%, -50%)
-    rotate(15deg);
-}
-
-
-/* PAGE 04 CARDS */
-
-.p04-info-card {
-  position: absolute;
-
-  z-index: 25;
-
-  top: 579px;
-
-  width: 170px;
-  height: 64px;
-
-  background:
-    rgba(244, 229, 197, .16);
-}
-
-
-.p04-hotel-card {
-  left: 33px;
-
-  overflow: visible;
-}
-
-
-.p04-link-card {
-  left: 213px;
-
-  overflow: hidden;
-
-  cursor: pointer;
-}
-
-
-.p04-card-frame {
-  position: absolute;
-
-  z-index: 0;
-
-  display: block;
-
-  max-width: none;
-
-  object-fit: fill;
-
-  opacity: .6;
-
-  pointer-events: none;
-}
-
-
-.p04-hotel-card-frame {
-  left: 5px;
-  top: -3px;
-
-  width: 100%;
-  height: 115%;
-}
-
-
-.p04-link-card-frame {
-  left: 10px;
-  top: -3px;
-
-  width: 75%;
-  height: 115%;
-}
-
-
-.p04-card-content {
-  z-index: 2;
-
-  display: flex;
-
-  align-items: center;
-
-  padding:
-    8px 9px;
-}
-
-
-.p04-hotel-card-content {
-  position: relative;
-
-  left: 3px;
-  top: 6px;
-}
-
-
-.p04-link-card-content {
-  position: relative;
-
-  left: 9px;
-  top: 10px;
-}
-
-
-.p04-card-text {
-  display: flex;
-
-  flex-direction: column;
-
-  justify-content: center;
-}
-
-
-.p04-hotel-card-text {
-  position: relative;
-
-  left: 5px;
-  top: -2px;
-
-  margin-left: 7px;
-}
-
-
-.p04-card-title {
-  position: relative;
-
-  display: block;
-
-  color: #a13a23;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-weight: 600;
-
-  white-space: nowrap;
-}
-
-
-.p04-hotel-card
-.p04-card-title {
-  right: 4px;
-
-  margin-bottom: 5px;
-
-  font-size: 11px;
-}
-
-
-.p04-card-description {
-  position: relative;
-
-  right: 4px;
-  top: -2px;
-
-  display: block;
-
-  color: #345447;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 9px;
-
-  line-height: 1.28;
-
-  white-space: nowrap;
-}
-
-
-.p04-location-icon {
-  position: relative;
-
-  left: 7px;
-  top: -6px;
-
-  width: 27px;
-  height: 31px;
-
-  object-fit: contain;
-}
-
-
-.p04-link-card-text {
-  position: relative;
-
-  top: -4px;
-
-  margin-left: 8px;
-
-  padding-right: 17px;
-}
-
-
-.p04-link-card
-.p04-card-title {
-  left: 4px;
-
-  font-size: 10.5px;
-}
-
-
-/* =========================================================
-   PAGE 06 — LUCKY NUMBER
-========================================================= */
-
-
-/* CONFETTI
-   Bay giống cloud
-*/
 
 .p06-confetti {
   position: absolute;
@@ -2295,12 +1778,9 @@ img {
 }
 
 
-/* CLOUDS */
-
 .p06-cloud--01 {
   right: 35px;
   top: 37px;
-
   width: 92px;
 }
 
@@ -2308,7 +1788,6 @@ img {
 .p06-cloud--02 {
   left: 18px;
   top: 127px;
-
   width: 67px;
 }
 
@@ -2316,7 +1795,6 @@ img {
 .p06-cloud--03 {
   right: -10px;
   top: 332px;
-
   width: 74px;
 }
 
@@ -2324,14 +1802,11 @@ img {
 .p06-cloud--04 {
   left: -5px;
   top: 409px;
-
   width: 70px;
 }
 
 
-/* =========================================================
-   PAGE 06 — CARD
-========================================================= */
+/* CARD */
 
 .p06-card-wrap {
   position: absolute;
@@ -2351,13 +1826,6 @@ img {
   background: transparent;
 }
 
-
-/*
-  FIX 4 GÓC TRẮNG.
-
-  Asset card là ảnh chữ nhật nhưng artwork có góc bo.
-  Clip trực tiếp image để 4 corner trắng biến mất.
-*/
 
 .p06-lucky-card {
   position: relative;
@@ -2385,8 +1853,6 @@ img {
   user-select: none;
 }
 
-
-/* TITLE */
 
 .p06-title {
   position: absolute;
@@ -2418,15 +1884,11 @@ img {
 
   font-weight: 400;
 
-  letter-spacing: .005em;
-
   pointer-events: none;
 }
 
 
-/* =========================================================
-   PAGE 06 — RANDOM NUMBER
-========================================================= */
+/* RANDOM NUMBER */
 
 .p06-number-slot {
   position: absolute;
@@ -2466,24 +1928,13 @@ img {
   letter-spacing: -.04em;
 
   font-variant-numeric:
-    lining-nums tabular-nums;
-
-  text-shadow:
-    0 1px 0
-    rgba(255, 244, 211, .6);
+    tabular-nums;
 
   pointer-events: none;
 
   user-select: none;
-
-  will-change:
-    transform,
-    opacity,
-    filter;
 }
 
-
-/* IDLE — số nhảy nhẹ */
 
 .p06-card-wrap.is-idle-shuffling
 .p06-number-slot {
@@ -2520,8 +1971,6 @@ img {
   }
 }
 
-
-/* ROLLING — loạn mạnh hơn */
 
 .p06-card-wrap.is-rolling
 .p06-number-slot {
@@ -2572,7 +2021,6 @@ img {
   100% {
     transform:
       translateX(-50%)
-      translate(0, 0)
       scale(1);
 
     filter:
@@ -2580,8 +2028,6 @@ img {
   }
 }
 
-
-/* FINAL REVEAL */
 
 .p06-card-wrap.is-revealed
 .p06-number-slot {
@@ -2636,9 +2082,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 06 — HINT
-========================================================= */
+/* HINT */
 
 .p06-number-hint {
   position: absolute;
@@ -2668,45 +2112,17 @@ img {
 
   font-style: italic;
 
-  font-weight: 400;
-
   line-height: 1.25;
-
-  letter-spacing: .01em;
 
   opacity: .82;
 
   pointer-events: none;
 
   user-select: none;
-
-  transition:
-    opacity 220ms ease,
-    transform 220ms ease;
 }
 
 
-.p06-card-wrap.is-rolling
-.p06-number-hint {
-  opacity: .58;
-
-  transform:
-    translateX(-50%)
-    translateY(2px);
-}
-
-
-.p06-card-wrap.is-locked
-.p06-number-hint {
-  color: #315747;
-
-  opacity: .82;
-}
-
-
-/* =========================================================
-   PAGE 06 — CLICK TARGET
-========================================================= */
+/* CLICK TARGET */
 
 .p06-lucky-trigger {
   position: absolute;
@@ -2728,21 +2144,10 @@ img {
   background: transparent;
 
   appearance: none;
-  -webkit-appearance: none;
 
   cursor: pointer;
 
   touch-action: manipulation;
-}
-
-
-.p06-lucky-trigger:focus-visible {
-  outline:
-    1px solid
-    rgba(166, 48, 25, .45);
-
-  outline-offset:
-    -8px;
 }
 
 
@@ -2751,9 +2156,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 06 — FIREWORKS
-========================================================= */
+/* FIREWORKS */
 
 .p06-fireworks {
   position: absolute;
@@ -2793,14 +2196,7 @@ img {
   background:
     var(--particle-color);
 
-  box-shadow:
-    0 0 3px
-    rgba(255, 218, 119, .55);
-
   opacity: 0;
-
-  transform:
-    translate(-50%, -50%);
 
   animation:
     lucky-firework-burst
@@ -2811,20 +2207,6 @@ img {
 }
 
 
-.p06-firework-particle:nth-child(3n) {
-  border-radius: 1px;
-}
-
-
-.p06-firework-particle:nth-child(4n) {
-  width:
-    calc(var(--size) * .55);
-
-  height:
-    calc(var(--size) * 1.7);
-}
-
-
 @keyframes lucky-firework-burst {
 
   0% {
@@ -2832,12 +2214,7 @@ img {
 
     transform:
       translate(-50%, -50%)
-      scale(.45)
-      rotate(0deg);
-  }
-
-  18% {
-    opacity: 1;
+      scale(.45);
   }
 
   72% {
@@ -2858,9 +2235,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 06 — BOTTOM ITEMS
-========================================================= */
+/* BOTTOM ITEMS */
 
 .p06-lucky-item {
   position: absolute;
@@ -2879,20 +2254,16 @@ img {
 
 .p06-ingots {
   z-index: 25;
-
   left: 35px;
   bottom: 47px;
-
   width: 75px;
 }
 
 
 .p06-knot {
   z-index: 28;
-
   left: 97px;
   bottom: 39px;
-
   width: 77px;
 
   transform:
@@ -2902,20 +2273,16 @@ img {
 
 .p06-bag {
   z-index: 26;
-
   right: 33px;
   bottom: 46px;
-
   width: 105px;
 }
 
 
 .p06-coins {
   z-index: 29;
-
   right: 109px;
   bottom: 38px;
-
   width: 53px;
 
   transform:
@@ -2929,7 +2296,6 @@ img {
 
 .p07-cloud--01 {
   width: 82px;
-
   top: 31px;
   right: 40px;
 }
@@ -2937,7 +2303,6 @@ img {
 
 .p07-cloud--02 {
   width: 68px;
-
   top: 164px;
   left: 3px;
 }
@@ -3108,7 +2473,6 @@ img {
 
 .p07-card-icon--message {
   width: 60px;
-
   left: 22px;
   top: 14px;
 }
@@ -3116,7 +2480,6 @@ img {
 
 .p07-card-icon--video {
   width: 65px;
-
   left: 23px;
   top: 12px;
 }
@@ -3133,7 +2496,6 @@ img {
 
 .p07-card-copy--message {
   width: 320px;
-
   left: 101px;
   top: 31px;
 }
@@ -3141,7 +2503,6 @@ img {
 
 .p07-card-copy--video {
   width: 152px;
-
   left: 112px;
   top: 31px;
 }
@@ -3343,7 +2704,6 @@ img {
 
 .p08-cloud--left {
   width: 77px;
-
   left: 36px;
   top: 350px;
 }
@@ -3351,7 +2711,6 @@ img {
 
 .p08-cloud--right {
   width: 68px;
-
   right: 31px;
   top: 300px;
 }
@@ -3440,7 +2799,6 @@ img {
 
 .p08-lotus--left {
   width: 120px;
-
   left: 1px;
   bottom: 52px;
 }
@@ -3448,7 +2806,6 @@ img {
 
 .p08-lotus--right {
   width: 122px;
-
   right: 4px;
   bottom: 48px;
 }
@@ -3463,9 +2820,6 @@ img {
 
 .invitation-page:not(.is-nearby)
 .p03-cloud,
-
-.invitation-page:not(.is-nearby)
-.p04-cloud,
 
 .invitation-page:not(.is-nearby)
 .p06-cloud,
@@ -3498,9 +2852,6 @@ img {
 
 .is-document-hidden
 .p03-cloud,
-
-.is-document-hidden
-.p04-cloud,
 
 .is-document-hidden
 .p06-cloud,
