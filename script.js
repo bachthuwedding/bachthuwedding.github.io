@@ -14,7 +14,7 @@
 
 
   /*
-    TEST MODE
+    Lucky Number TEST MODE
 
     true:
     reload → quay lại được
@@ -51,16 +51,6 @@
       "page02"
     );
 
-
-  /*
-    FLOW:
-
-    PAGE 02
-    PAGE 03
-    PAGE 06
-    PAGE 07
-    PAGE 08
-  */
 
   const pages = [
 
@@ -122,6 +112,82 @@
 
 
   /* =======================================================
+     RSVP DOM
+  ======================================================= */
+
+  const rsvpForm =
+    document.getElementById(
+      "rsvpForm"
+    );
+
+
+  const rsvpGuestName =
+    document.getElementById(
+      "rsvpGuestName"
+    );
+
+
+  const rsvpAttendanceYes =
+    document.getElementById(
+      "rsvpAttendanceYes"
+    );
+
+
+  const rsvpAttendanceNo =
+    document.getElementById(
+      "rsvpAttendanceNo"
+    );
+
+
+  const rsvpGuestCount =
+    document.getElementById(
+      "rsvpGuestCount"
+    );
+
+
+  const rsvpMinus =
+    document.getElementById(
+      "rsvpMinus"
+    );
+
+
+  const rsvpPlus =
+    document.getElementById(
+      "rsvpPlus"
+    );
+
+
+  const rsvpMessage =
+    document.getElementById(
+      "rsvpMessage"
+    );
+
+
+  const rsvpVideo =
+    document.getElementById(
+      "rsvpVideo"
+    );
+
+
+  const rsvpVideoLabel =
+    document.getElementById(
+      "rsvpVideoLabel"
+    );
+
+
+  const rsvpSubmit =
+    document.getElementById(
+      "rsvpSubmit"
+    );
+
+
+  const rsvpStatus =
+    document.getElementById(
+      "rsvpStatus"
+    );
+
+
+  /* =======================================================
      STATE
   ======================================================= */
 
@@ -151,6 +217,9 @@
   let luckyRolling = false;
 
   let luckyLocked = false;
+
+
+  let rsvpCount = 1;
 
 
   /* =======================================================
@@ -879,10 +948,6 @@
     );
 
 
-  /* =======================================================
-     INITIAL WARMUP
-  ======================================================= */
-
   runWhenIdle(
     () => {
 
@@ -927,6 +992,10 @@
   }
 
 
+  /* =======================================================
+     LUCKY STORAGE
+  ======================================================= */
+
   function getLuckyStorageKey() {
 
     return (
@@ -936,10 +1005,6 @@
     );
   }
 
-
-  /* =======================================================
-     STORAGE
-  ======================================================= */
 
   function readStoredLuckyNumber() {
 
@@ -1024,7 +1089,7 @@
 
 
   /* =======================================================
-     RANDOM
+     LUCKY RANDOM
   ======================================================= */
 
   function randomLuckyNumber() {
@@ -1109,7 +1174,7 @@
 
 
   /* =======================================================
-     IDLE SHUFFLE
+     LUCKY IDLE
   ======================================================= */
 
   function stopLuckyIdleShuffle() {
@@ -1194,7 +1259,7 @@
 
 
   /* =======================================================
-     FIREWORKS
+     LUCKY FIREWORKS
   ======================================================= */
 
   function clearLuckyFireworks() {
@@ -1393,7 +1458,7 @@
 
 
   /* =======================================================
-     FINAL NUMBER
+     LUCKY FINAL
   ======================================================= */
 
   function lockLuckyNumber(
@@ -1498,7 +1563,7 @@
 
 
   /* =======================================================
-     ROLL
+     LUCKY ROLL
   ======================================================= */
 
   function rollLuckyNumber() {
@@ -1721,6 +1786,448 @@
 
 
   initialiseLuckyNumber();
+
+
+  /* =======================================================
+     RSVP
+  ======================================================= */
+
+  function getRsvpStorageKey() {
+
+    return (
+      "bach-thu-wedding:rsvp:"
+      +
+      getGuestToken()
+    );
+  }
+
+
+  function updateRsvpCount() {
+
+    if (!rsvpGuestCount) {
+
+      return;
+    }
+
+
+    rsvpGuestCount.textContent =
+      String(rsvpCount);
+
+
+    if (rsvpMinus) {
+
+      rsvpMinus.disabled =
+        rsvpCount <= 1
+        ||
+        rsvpAttendanceNo?.checked;
+    }
+
+
+    if (rsvpPlus) {
+
+      rsvpPlus.disabled =
+        rsvpCount >= 10
+        ||
+        rsvpAttendanceNo?.checked;
+    }
+  }
+
+
+  function updateAttendanceState() {
+
+    if (
+      rsvpAttendanceNo
+      ?.checked
+    ) {
+
+      rsvpCount = 0;
+
+
+      if (rsvpGuestCount) {
+
+        rsvpGuestCount.textContent =
+          "0";
+      }
+
+
+      if (rsvpMinus) {
+
+        rsvpMinus.disabled =
+          true;
+      }
+
+
+      if (rsvpPlus) {
+
+        rsvpPlus.disabled =
+          true;
+      }
+
+
+      return;
+    }
+
+
+    if (
+      rsvpCount < 1
+    ) {
+
+      rsvpCount = 1;
+    }
+
+
+    updateRsvpCount();
+  }
+
+
+  rsvpMinus
+    ?.addEventListener(
+      "click",
+      () => {
+
+        if (
+          rsvpAttendanceNo
+          ?.checked
+        ) {
+
+          return;
+        }
+
+
+        rsvpCount =
+          Math.max(
+            1,
+            rsvpCount - 1
+          );
+
+
+        updateRsvpCount();
+      }
+    );
+
+
+  rsvpPlus
+    ?.addEventListener(
+      "click",
+      () => {
+
+        if (
+          rsvpAttendanceNo
+          ?.checked
+        ) {
+
+          return;
+        }
+
+
+        rsvpCount =
+          Math.min(
+            10,
+            rsvpCount + 1
+          );
+
+
+        updateRsvpCount();
+      }
+    );
+
+
+  rsvpAttendanceYes
+    ?.addEventListener(
+      "change",
+      updateAttendanceState
+    );
+
+
+  rsvpAttendanceNo
+    ?.addEventListener(
+      "change",
+      updateAttendanceState
+    );
+
+
+  rsvpVideo
+    ?.addEventListener(
+      "change",
+      () => {
+
+        const file =
+          rsvpVideo
+            .files?.[0];
+
+
+        if (
+          !rsvpVideoLabel
+        ) {
+
+          return;
+        }
+
+
+        rsvpVideoLabel.textContent =
+          file
+            ? file.name
+            : "Video lời chúc gửi tới cô dâu chú rể";
+      }
+    );
+
+
+  function restoreRsvp() {
+
+    if (
+      !rsvpForm
+    ) {
+
+      return;
+    }
+
+
+    try {
+
+      const raw =
+        window.localStorage
+          .getItem(
+            getRsvpStorageKey()
+          );
+
+
+      if (!raw) {
+
+        updateRsvpCount();
+
+        return;
+      }
+
+
+      const data =
+        JSON.parse(raw);
+
+
+      if (
+        rsvpGuestName
+        &&
+        typeof data.name
+        === "string"
+      ) {
+
+        rsvpGuestName.value =
+          data.name;
+      }
+
+
+      if (
+        rsvpMessage
+        &&
+        typeof data.message
+        === "string"
+      ) {
+
+        rsvpMessage.value =
+          data.message;
+      }
+
+
+      if (
+        data.attendance
+        === "no"
+      ) {
+
+        if (
+          rsvpAttendanceNo
+        ) {
+
+          rsvpAttendanceNo.checked =
+            true;
+        }
+
+
+        if (
+          rsvpAttendanceYes
+        ) {
+
+          rsvpAttendanceYes.checked =
+            false;
+        }
+
+
+        rsvpCount = 0;
+
+      } else {
+
+        if (
+          rsvpAttendanceYes
+        ) {
+
+          rsvpAttendanceYes.checked =
+            true;
+        }
+
+
+        rsvpCount =
+          Number.isInteger(
+            data.count
+          )
+            ? Math.min(
+                10,
+                Math.max(
+                  1,
+                  data.count
+                )
+              )
+            : 1;
+      }
+
+
+      updateAttendanceState();
+
+    } catch (_) {
+
+      updateRsvpCount();
+    }
+  }
+
+
+  rsvpForm
+    ?.addEventListener(
+      "submit",
+      (event) => {
+
+        event.preventDefault();
+
+
+        const name =
+          rsvpGuestName
+            ?.value
+            .trim()
+          ||
+          "";
+
+
+        if (!name) {
+
+          if (
+            rsvpStatus
+          ) {
+
+            rsvpStatus.textContent =
+              "Bạn nhập tên khách mời giúp chúng mình nhé.";
+
+            rsvpStatus
+              .classList
+              .add(
+                "is-visible"
+              );
+          }
+
+
+          rsvpGuestName
+            ?.focus();
+
+
+          return;
+        }
+
+
+        const attendance =
+          rsvpAttendanceNo
+            ?.checked
+              ? "no"
+              : "yes";
+
+
+        const data = {
+
+          name,
+
+          attendance,
+
+          count:
+            attendance === "yes"
+              ? rsvpCount
+              : 0,
+
+          message:
+            rsvpMessage
+              ?.value
+              .trim()
+            ||
+            "",
+
+          videoName:
+            rsvpVideo
+              ?.files?.[0]?.name
+            ||
+            "",
+
+          guestToken:
+            getGuestToken(),
+
+          submittedAt:
+            new Date()
+              .toISOString(),
+
+        };
+
+
+        /*
+          Hiện tại lưu LOCAL để test giao diện.
+
+          Sau này khi nối Google Sheet /
+          Supabase / API chỉ cần thay đoạn
+          lưu này bằng request tới server.
+        */
+
+        try {
+
+          window.localStorage
+            .setItem(
+              getRsvpStorageKey(),
+              JSON.stringify(
+                data
+              )
+            );
+
+        } catch (_) {}
+
+
+        if (
+          rsvpStatus
+        ) {
+
+          rsvpStatus.textContent =
+            attendance === "yes"
+              ? "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!"
+              : "Đã ghi nhận phản hồi của bạn. Cảm ơn bạn rất nhiều!";
+
+
+          rsvpStatus
+            .classList
+            .add(
+              "is-visible"
+            );
+        }
+
+
+        if (
+          rsvpSubmit
+        ) {
+
+          rsvpSubmit
+            .querySelector(
+              "span"
+            )
+            .textContent =
+              "ĐÃ GỬI XÁC NHẬN";
+
+
+          rsvpSubmit.disabled =
+            true;
+        }
+      }
+    );
+
+
+  restoreRsvp();
 
 
   /* =======================================================
