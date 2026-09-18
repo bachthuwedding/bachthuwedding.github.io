@@ -9,27 +9,18 @@
   const DESIGN_WIDTH = 390;
   const DESIGN_HEIGHT = 680;
 
-
-  /* =======================================================
-     LUCKY NUMBER CONFIG
-  ======================================================= */
-
   const LUCKY_MIN = 1;
   const LUCKY_MAX = 99;
 
 
   /*
-    =======================================================
     TEST MODE
 
     true:
-    - không đọc localStorage
-    - không lưu localStorage
-    - reload là test lại từ đầu
+    reload → quay lại được
 
     false:
-    - bật lại cơ chế khóa số theo guest
-    =======================================================
+    khóa số bằng localStorage
   */
 
   const LUCKY_TEST_MODE = true;
@@ -62,14 +53,13 @@
 
 
   /*
-    CURRENT FLOW:
+    FLOW:
 
-    02
-    03
-    04
-    06
-    07
-    08
+    PAGE 02
+    PAGE 03
+    PAGE 06
+    PAGE 07
+    PAGE 08
   */
 
   const pages = [
@@ -80,10 +70,6 @@
 
     document.getElementById(
       "page03"
-    ),
-
-    document.getElementById(
-      "page04"
     ),
 
     document.getElementById(
@@ -102,7 +88,7 @@
 
 
   /* =======================================================
-     LUCKY NUMBER DOM
+     LUCKY DOM
   ======================================================= */
 
   const luckyCard =
@@ -159,10 +145,6 @@
 
   let activePageIndex = -1;
 
-
-  /* =======================================================
-     LUCKY STATE
-  ======================================================= */
 
   let luckyIdleTimer = null;
 
@@ -278,7 +260,7 @@
 
 
   /* =======================================================
-     IDLE HELPER
+     IDLE
   ======================================================= */
 
   function runWhenIdle(
@@ -310,7 +292,7 @@
 
 
   /* =======================================================
-     PRELOAD URL
+     URL PRELOAD
   ======================================================= */
 
   function preloadUrl(
@@ -416,7 +398,7 @@
 
 
   /* =======================================================
-     DATA-SRC LOADER
+     IMAGE LOADER
   ======================================================= */
 
   function loadImage(
@@ -579,10 +561,6 @@
           );
 
 
-        /*
-          PAGE 02 CONFETTI SPRITE
-        */
-
         const spriteHost =
           page.querySelector(
             "[data-sprite-src]"
@@ -699,19 +677,11 @@
     );
 
 
-    /*
-      CURRENT PAGE
-    */
-
     loadPage(
       pages[safeIndex],
       "high"
     );
 
-
-    /*
-      NEXT PAGE
-    */
 
     if (
       pages[
@@ -910,7 +880,7 @@
 
 
   /* =======================================================
-     INITIAL PAGE WARM-UP
+     WARM PAGE 02
   ======================================================= */
 
   runWhenIdle(
@@ -926,7 +896,7 @@
 
 
   /* =======================================================
-     LUCKY NUMBER — GUEST TOKEN
+     GUEST TOKEN
   ======================================================= */
 
   function getGuestToken() {
@@ -968,15 +938,10 @@
 
 
   /* =======================================================
-     LUCKY NUMBER — STORAGE
+     STORAGE
   ======================================================= */
 
   function readStoredLuckyNumber() {
-
-    /*
-      TEST MODE:
-      luôn coi như chưa từng quay.
-    */
 
     if (
       LUCKY_TEST_MODE
@@ -1032,11 +997,6 @@
     value
   ) {
 
-    /*
-      TEST MODE:
-      không lưu kết quả.
-    */
-
     if (
       LUCKY_TEST_MODE
     ) {
@@ -1064,7 +1024,7 @@
 
 
   /* =======================================================
-     RANDOM NUMBER
+     RANDOM
   ======================================================= */
 
   function randomLuckyNumber() {
@@ -1118,10 +1078,6 @@
     );
   }
 
-
-  /* =======================================================
-     FORMAT NUMBER
-  ======================================================= */
 
   function formatLuckyNumber(
     value
@@ -1455,14 +1411,6 @@
       false;
 
 
-    /*
-      Trong cùng một lần load,
-      vẫn khóa nút sau khi quay xong.
-
-      Reload trang khi TEST MODE=true
-      sẽ reset lại hoàn toàn.
-    */
-
     luckyLocked =
       true;
 
@@ -1526,18 +1474,10 @@
       luckyHint
     ) {
 
-      if (
+      luckyHint.textContent =
         LUCKY_TEST_MODE
-      ) {
-
-        luckyHint.textContent =
-          "Reload trang để thử lại";
-
-      } else {
-
-        luckyHint.textContent =
-          "Số may mắn của bạn";
-      }
+          ? "Reload trang để thử lại"
+          : "Số may mắn của bạn";
     }
 
 
@@ -1708,7 +1648,7 @@
 
 
   /* =======================================================
-     INITIALISE LUCKY NUMBER
+     INIT LUCKY
   ======================================================= */
 
   function initialiseLuckyNumber() {
@@ -1724,11 +1664,6 @@
       return;
     }
 
-
-    /*
-      TEST MODE=true:
-      storedNumber luôn null.
-    */
 
     const storedNumber =
       readStoredLuckyNumber();
@@ -1784,7 +1719,7 @@
 
 
   /* =======================================================
-     VISIBILITY
+     TAB VISIBILITY
   ======================================================= */
 
   document.addEventListener(
