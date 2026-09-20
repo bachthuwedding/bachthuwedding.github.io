@@ -12,15 +12,9 @@
   const LUCKY_MIN = 1;
   const LUCKY_MAX = 99;
 
-
   /*
-    Lucky Number TEST MODE
-
-    true:
-    reload → quay lại được
-
-    false:
-    khóa số bằng localStorage
+    TRUE = test lại sau mỗi reload
+    FALSE = khóa số bằng localStorage
   */
 
   const LUCKY_TEST_MODE = true;
@@ -33,30 +27,30 @@
   const root =
     document.documentElement;
 
-
   const siteShell =
     document.getElementById(
       "siteShell"
     );
-
 
   const openingCardButton =
     document.getElementById(
       "openingCardButton"
     );
 
-
   const pageScroller =
     document.getElementById(
       "page02"
     );
 
+  const page02Layout =
+    document.getElementById(
+      "page02Layout"
+    );
+
 
   const pages = [
 
-    document.getElementById(
-      "page02Layout"
-    ),
+    page02Layout,
 
     document.getElementById(
       "page03"
@@ -86,24 +80,20 @@
       "luckyCard"
     );
 
-
   const luckyNumber =
     document.getElementById(
       "luckyNumber"
     );
-
 
   const luckyHint =
     document.getElementById(
       "luckyHint"
     );
 
-
   const luckyTrigger =
     document.getElementById(
       "luckyTrigger"
     );
-
 
   const luckyFireworks =
     document.getElementById(
@@ -112,7 +102,7 @@
 
 
   /* =======================================================
-     RSVP DOM
+     RSVP
   ======================================================= */
 
   const rsvpForm =
@@ -120,66 +110,55 @@
       "rsvpForm"
     );
 
-
   const rsvpGuestName =
     document.getElementById(
       "rsvpGuestName"
     );
-
 
   const rsvpAttendanceYes =
     document.getElementById(
       "rsvpAttendanceYes"
     );
 
-
   const rsvpAttendanceNo =
     document.getElementById(
       "rsvpAttendanceNo"
     );
-
 
   const rsvpGuestCount =
     document.getElementById(
       "rsvpGuestCount"
     );
 
-
   const rsvpMinus =
     document.getElementById(
       "rsvpMinus"
     );
-
 
   const rsvpPlus =
     document.getElementById(
       "rsvpPlus"
     );
 
-
   const rsvpMessage =
     document.getElementById(
       "rsvpMessage"
     );
-
 
   const rsvpVideo =
     document.getElementById(
       "rsvpVideo"
     );
 
-
   const rsvpVideoLabel =
     document.getElementById(
       "rsvpVideoLabel"
     );
 
-
   const rsvpSubmit =
     document.getElementById(
       "rsvpSubmit"
     );
-
 
   const rsvpStatus =
     document.getElementById(
@@ -194,10 +173,8 @@
   const imagePromises =
     new WeakMap();
 
-
   const pagePromises =
     new WeakMap();
-
 
   const urlPromises =
     new Map();
@@ -379,8 +356,9 @@
       urlPromises.has(url)
     ) {
 
-      return urlPromises
-        .get(url);
+      return urlPromises.get(
+        url
+      );
     }
 
 
@@ -467,7 +445,7 @@
 
 
   /* =======================================================
-     LOAD IMAGE
+     IMAGE LOADING
   ======================================================= */
 
   function loadImage(
@@ -485,8 +463,9 @@
       imagePromises.has(image)
     ) {
 
-      return imagePromises
-        .get(image);
+      return imagePromises.get(
+        image
+      );
     }
 
 
@@ -598,18 +577,14 @@
       pagePromises.has(page)
     ) {
 
-      return pagePromises
-        .get(page);
+      return pagePromises.get(
+        page
+      );
     }
 
 
     const promise =
       (async () => {
-
-        page.classList.add(
-          "is-loading-assets"
-        );
-
 
         const images =
           Array.from(
@@ -622,7 +597,6 @@
         const jobs =
           images.map(
             (image) =>
-
               loadImage(
                 image,
                 priority
@@ -650,35 +624,29 @@
               spriteUrl,
               priority
             )
+            .then(
+              () => {
 
-              .then(
-                () => {
-
-                  spriteHost
-                    .style
-                    .setProperty(
-                      "--p02-confetti-sprite",
-                      `url("${spriteUrl}")`
-                    );
+                spriteHost
+                  .style
+                  .setProperty(
+                    "--p02-confetti-sprite",
+                    `url("${spriteUrl}")`
+                  );
 
 
-                  spriteHost
-                    .removeAttribute(
-                      "data-sprite-src"
-                    );
-                }
-              )
+                spriteHost
+                  .removeAttribute(
+                    "data-sprite-src"
+                  );
+              }
+            )
           );
         }
 
 
         await Promise.allSettled(
           jobs
-        );
-
-
-        page.classList.remove(
-          "is-loading-assets"
         );
 
 
@@ -695,6 +663,51 @@
 
 
     return promise;
+  }
+
+
+  /* =======================================================
+     PAGE 02 ENTRANCE
+  ======================================================= */
+
+  function playPage02Entrance() {
+
+    if (!page02Layout) {
+
+      return;
+    }
+
+
+    page02Layout
+      .classList
+      .remove(
+        "is-entering"
+      );
+
+
+    /*
+      Force browser to register
+      starting state first.
+    */
+
+    void page02Layout.offsetWidth;
+
+
+    requestAnimationFrame(
+      () => {
+
+        requestAnimationFrame(
+          () => {
+
+            page02Layout
+              .classList
+              .add(
+                "is-entering"
+              );
+          }
+        );
+      }
+    );
   }
 
 
@@ -851,10 +864,10 @@
 
 
   /* =======================================================
-     PAGE 01 → PAGE 02
+     OPEN INVITATION
   ======================================================= */
 
-  function enterInvitation() {
+  async function enterInvitation() {
 
     if (pageMode) {
 
@@ -865,7 +878,7 @@
     pageMode = true;
 
 
-    loadPage(
+    await loadPage(
       pages[0],
       "high"
     );
@@ -902,6 +915,9 @@
     );
 
 
+    playPage02Entrance();
+
+
     runWhenIdle(
       () => {
 
@@ -915,7 +931,7 @@
           );
         }
       },
-      700
+      600
     );
   }
 
@@ -1019,10 +1035,9 @@
     try {
 
       const raw =
-        window.localStorage
-          .getItem(
-            getLuckyStorageKey()
-          );
+        localStorage.getItem(
+          getLuckyStorageKey()
+        );
 
 
       if (
@@ -1066,30 +1081,23 @@
       LUCKY_TEST_MODE
     ) {
 
-      return true;
+      return;
     }
 
 
     try {
 
-      window.localStorage
-        .setItem(
-          getLuckyStorageKey(),
-          String(value)
-        );
+      localStorage.setItem(
+        getLuckyStorageKey(),
+        String(value)
+      );
 
-
-      return true;
-
-    } catch (_) {
-
-      return false;
-    }
+    } catch (_) {}
   }
 
 
   /* =======================================================
-     LUCKY RANDOM
+     RANDOM
   ======================================================= */
 
   function randomLuckyNumber() {
@@ -1105,29 +1113,26 @@
     if (
       window.crypto
       &&
-      typeof window.crypto
+      window.crypto
         .getRandomValues
-        === "function"
     ) {
 
-      const array =
+      const values =
         new Uint32Array(1);
 
 
       window.crypto
         .getRandomValues(
-          array
+          values
         );
 
 
       return (
         LUCKY_MIN
         +
-        (
-          array[0]
-          %
-          range
-        )
+        values[0]
+        %
+        range
       );
     }
 
@@ -1144,18 +1149,6 @@
   }
 
 
-  function formatLuckyNumber(
-    value
-  ) {
-
-    return String(value)
-      .padStart(
-        2,
-        "0"
-      );
-  }
-
-
   function showLuckyNumber(
     value
   ) {
@@ -1167,14 +1160,16 @@
 
 
     luckyNumber.textContent =
-      formatLuckyNumber(
-        value
-      );
+      String(value)
+        .padStart(
+          2,
+          "0"
+        );
   }
 
 
   /* =======================================================
-     LUCKY IDLE
+     IDLE NUMBER SHUFFLE
   ======================================================= */
 
   function stopLuckyIdleShuffle() {
@@ -1185,7 +1180,7 @@
       null
     ) {
 
-      window.clearInterval(
+      clearInterval(
         luckyIdleTimer
       );
 
@@ -1207,8 +1202,6 @@
 
     if (
       !luckyCard
-      ||
-      !luckyNumber
       ||
       luckyLocked
       ||
@@ -1235,18 +1228,8 @@
 
 
     luckyIdleTimer =
-      window.setInterval(
+      setInterval(
         () => {
-
-          if (
-            luckyLocked
-            ||
-            luckyRolling
-          ) {
-
-            return;
-          }
-
 
           showLuckyNumber(
             randomLuckyNumber()
@@ -1259,19 +1242,13 @@
 
 
   /* =======================================================
-     LUCKY FIREWORKS
+     FIREWORKS — 3 BURSTS / 102 PARTICLES
   ======================================================= */
 
   function clearLuckyFireworks() {
 
-    if (!luckyFireworks) {
-
-      return;
-    }
-
-
     luckyFireworks
-      .replaceChildren();
+      ?.replaceChildren();
   }
 
 
@@ -1287,19 +1264,42 @@
 
 
     const colors = [
-
       "#a63019",
       "#c99633",
       "#e5b747",
       "#315747",
       "#d76b35",
-      "#f0d37b",
-
+      "#f0d37b"
     ];
 
 
-    const particleCount =
-      42;
+    const bursts = [
+
+      {
+        x: 0,
+        y: -4,
+        count: 42,
+        min: 68,
+        max: 145
+      },
+
+      {
+        x: -55,
+        y: 24,
+        count: 30,
+        min: 42,
+        max: 105
+      },
+
+      {
+        x: 55,
+        y: 24,
+        count: 30,
+        min: 42,
+        max: 105
+      }
+
+    ];
 
 
     const fragment =
@@ -1307,141 +1307,169 @@
         .createDocumentFragment();
 
 
-    for (
-      let index = 0;
-      index < particleCount;
-      index += 1
-    ) {
+    bursts.forEach(
+      (
+        burst,
+        burstIndex
+      ) => {
 
-      const particle =
-        document
-          .createElement(
-            "span"
-          );
+        for (
+          let i = 0;
+          i < burst.count;
+          i += 1
+        ) {
 
-
-      particle.className =
-        "p06-firework-particle";
-
-
-      const angle =
-        (
-          Math.PI
-          *
-          2
-          *
-          index
-        )
-        /
-        particleCount
-        +
-        (
-          Math.random()
-          *
-          .2
-        );
+          const particle =
+            document
+              .createElement(
+                "span"
+              );
 
 
-      const distance =
-        58
-        +
-        Math.random()
-        *
-        78;
+          particle.className =
+            "p06-firework-particle";
 
 
-      const x =
-        Math.cos(angle)
-        *
-        distance;
-
-
-      const y =
-        Math.sin(angle)
-        *
-        distance
-        -
-        18
-        -
-        Math.random()
-        *
-        22;
-
-
-      const size =
-        2
-        +
-        Math.random()
-        *
-        4;
-
-
-      const delay =
-        Math.random()
-        *
-        120;
-
-
-      const rotation =
-        (
-          Math.random()
-          *
-          540
-        )
-        -
-        270;
-
-
-      const color =
-        colors[
-          Math.floor(
+          const angle =
+            (
+              Math.PI
+              *
+              2
+              *
+              i
+            )
+            /
+            burst.count
+            +
             Math.random()
             *
-            colors.length
-          )
-        ];
+            .25;
 
 
-      particle.style.setProperty(
-        "--x",
-        `${x.toFixed(2)}px`
-      );
+          const distance =
+            burst.min
+            +
+            Math.random()
+            *
+            (
+              burst.max
+              -
+              burst.min
+            );
 
 
-      particle.style.setProperty(
-        "--y",
-        `${y.toFixed(2)}px`
-      );
+          const x =
+            Math.cos(angle)
+            *
+            distance;
 
 
-      particle.style.setProperty(
-        "--size",
-        `${size.toFixed(2)}px`
-      );
+          const y =
+            Math.sin(angle)
+            *
+            distance
+            -
+            12;
 
 
-      particle.style.setProperty(
-        "--delay",
-        `${delay.toFixed(0)}ms`
-      );
+          const size =
+            2
+            +
+            Math.random()
+            *
+            4.8;
 
 
-      particle.style.setProperty(
-        "--rotation",
-        `${rotation.toFixed(0)}deg`
-      );
+          const delay =
+            burstIndex
+            *
+            80
+            +
+            Math.random()
+            *
+            140;
 
 
-      particle.style.setProperty(
-        "--particle-color",
-        color
-      );
+          const rotation =
+            Math.random()
+            *
+            720
+            -
+            360;
 
 
-      fragment.appendChild(
-        particle
-      );
-    }
+          const color =
+            colors[
+              Math.floor(
+                Math.random()
+                *
+                colors.length
+              )
+            ];
+
+
+          particle.style
+            .setProperty(
+              "--ox",
+              `${burst.x}px`
+            );
+
+
+          particle.style
+            .setProperty(
+              "--oy",
+              `${burst.y}px`
+            );
+
+
+          particle.style
+            .setProperty(
+              "--x",
+              `${x.toFixed(2)}px`
+            );
+
+
+          particle.style
+            .setProperty(
+              "--y",
+              `${y.toFixed(2)}px`
+            );
+
+
+          particle.style
+            .setProperty(
+              "--size",
+              `${size.toFixed(2)}px`
+            );
+
+
+          particle.style
+            .setProperty(
+              "--delay",
+              `${delay.toFixed(0)}ms`
+            );
+
+
+          particle.style
+            .setProperty(
+              "--rotation",
+              `${rotation.toFixed(0)}deg`
+            );
+
+
+          particle.style
+            .setProperty(
+              "--particle-color",
+              color
+            );
+
+
+          fragment.appendChild(
+            particle
+          );
+        }
+      }
+    );
 
 
     luckyFireworks
@@ -1450,9 +1478,9 @@
       );
 
 
-    window.setTimeout(
+    setTimeout(
       clearLuckyFireworks,
-      1500
+      1750
     );
   }
 
@@ -1463,10 +1491,7 @@
 
   function lockLuckyNumber(
     value,
-    {
-      animate = true,
-      save = true,
-    } = {}
+    animate = true
   ) {
 
     stopLuckyIdleShuffle();
@@ -1480,14 +1505,9 @@
       true;
 
 
-    if (
-      save
-    ) {
-
-      saveLuckyNumber(
-        value
-      );
-    }
+    saveLuckyNumber(
+      value
+    );
 
 
     showLuckyNumber(
@@ -1512,17 +1532,6 @@
     if (
       animate
     ) {
-
-      luckyCard
-        ?.classList
-        .remove(
-          "is-revealed"
-        );
-
-
-      void luckyCard
-        ?.offsetWidth;
-
 
       luckyCard
         ?.classList
@@ -1552,27 +1561,17 @@
 
       luckyTrigger.disabled =
         true;
-
-
-      luckyTrigger.setAttribute(
-        "aria-label",
-        `Số may mắn của bạn là ${formatLuckyNumber(value)}`
-      );
     }
   }
 
 
   /* =======================================================
-     LUCKY ROLL
+     ROLL NUMBER
   ======================================================= */
 
   function rollLuckyNumber() {
 
     if (
-      !luckyCard
-      ||
-      !luckyNumber
-      ||
       luckyRolling
       ||
       luckyLocked
@@ -1590,14 +1589,7 @@
 
 
     luckyCard
-      .classList
-      .remove(
-        "is-revealed"
-      );
-
-
-    luckyCard
-      .classList
+      ?.classList
       .add(
         "is-rolling"
       );
@@ -1620,11 +1612,11 @@
       1850;
 
 
-    const startTime =
+    const start =
       performance.now();
 
 
-    let lastChange =
+    let last =
       0;
 
 
@@ -1632,19 +1624,15 @@
       now
     ) {
 
-      const elapsed =
-        now
-        -
-        startTime;
-
-
       const progress =
         Math.min(
-
-          elapsed
+          (
+            now
+            -
+            start
+          )
           /
           duration,
-
           1
         );
 
@@ -1652,26 +1640,23 @@
       const interval =
         35
         +
-        (
-          progress
-          *
-          progress
-          *
-          progress
-          *
-          145
-        );
+        Math.pow(
+          progress,
+          3
+        )
+        *
+        145;
 
 
       if (
         now
         -
-        lastChange
+        last
         >=
         interval
       ) {
 
-        lastChange =
+        last =
           now;
 
 
@@ -1691,17 +1676,13 @@
           frame
         );
 
-
         return;
       }
 
 
       lockLuckyNumber(
         finalNumber,
-        {
-          animate: true,
-          save: true,
-        }
+        true
       );
     }
 
@@ -1721,8 +1702,6 @@
     if (
       !luckyCard
       ||
-      !luckyNumber
-      ||
       !luckyTrigger
     ) {
 
@@ -1730,47 +1709,20 @@
     }
 
 
-    const storedNumber =
+    const stored =
       readStoredLuckyNumber();
 
 
     if (
-      storedNumber
-      !==
-      null
+      stored !== null
     ) {
 
       lockLuckyNumber(
-        storedNumber,
-        {
-          animate: false,
-          save: false,
-        }
+        stored,
+        false
       );
 
-
       return;
-    }
-
-
-    luckyLocked =
-      false;
-
-
-    luckyRolling =
-      false;
-
-
-    luckyTrigger.disabled =
-      false;
-
-
-    if (
-      luckyHint
-    ) {
-
-      luckyHint.textContent =
-        "Nhấn để nhận số may mắn";
     }
 
 
@@ -1789,18 +1741,8 @@
 
 
   /* =======================================================
-     RSVP
+     RSVP COUNTER
   ======================================================= */
-
-  function getRsvpStorageKey() {
-
-    return (
-      "bach-thu-wedding:rsvp:"
-      +
-      getGuestToken()
-    );
-  }
-
 
   function updateRsvpCount() {
 
@@ -1819,7 +1761,8 @@
       rsvpMinus.disabled =
         rsvpCount <= 1
         ||
-        rsvpAttendanceNo?.checked;
+        rsvpAttendanceNo
+          ?.checked;
     }
 
 
@@ -1828,7 +1771,8 @@
       rsvpPlus.disabled =
         rsvpCount >= 10
         ||
-        rsvpAttendanceNo?.checked;
+        rsvpAttendanceNo
+          ?.checked;
     }
   }
 
@@ -1837,31 +1781,27 @@
 
     if (
       rsvpAttendanceNo
-      ?.checked
+        ?.checked
     ) {
 
       rsvpCount = 0;
 
 
-      if (rsvpGuestCount) {
+      if (
+        rsvpGuestCount
+      ) {
 
-        rsvpGuestCount.textContent =
+        rsvpGuestCount
+          .textContent =
           "0";
       }
 
 
-      if (rsvpMinus) {
+      rsvpMinus.disabled =
+        true;
 
-        rsvpMinus.disabled =
-          true;
-      }
-
-
-      if (rsvpPlus) {
-
-        rsvpPlus.disabled =
-          true;
-      }
+      rsvpPlus.disabled =
+        true;
 
 
       return;
@@ -1885,15 +1825,6 @@
       "click",
       () => {
 
-        if (
-          rsvpAttendanceNo
-          ?.checked
-        ) {
-
-          return;
-        }
-
-
         rsvpCount =
           Math.max(
             1,
@@ -1910,15 +1841,6 @@
     ?.addEventListener(
       "click",
       () => {
-
-        if (
-          rsvpAttendanceNo
-          ?.checked
-        ) {
-
-          return;
-        }
-
 
         rsvpCount =
           Math.min(
@@ -1957,135 +1879,21 @@
 
 
         if (
-          !rsvpVideoLabel
+          rsvpVideoLabel
         ) {
 
-          return;
+          rsvpVideoLabel.textContent =
+            file
+              ? file.name
+              : "Video lời chúc gửi tới cô dâu chú rể";
         }
-
-
-        rsvpVideoLabel.textContent =
-          file
-            ? file.name
-            : "Video lời chúc gửi tới cô dâu chú rể";
       }
     );
 
 
-  function restoreRsvp() {
-
-    if (
-      !rsvpForm
-    ) {
-
-      return;
-    }
-
-
-    try {
-
-      const raw =
-        window.localStorage
-          .getItem(
-            getRsvpStorageKey()
-          );
-
-
-      if (!raw) {
-
-        updateRsvpCount();
-
-        return;
-      }
-
-
-      const data =
-        JSON.parse(raw);
-
-
-      if (
-        rsvpGuestName
-        &&
-        typeof data.name
-        === "string"
-      ) {
-
-        rsvpGuestName.value =
-          data.name;
-      }
-
-
-      if (
-        rsvpMessage
-        &&
-        typeof data.message
-        === "string"
-      ) {
-
-        rsvpMessage.value =
-          data.message;
-      }
-
-
-      if (
-        data.attendance
-        === "no"
-      ) {
-
-        if (
-          rsvpAttendanceNo
-        ) {
-
-          rsvpAttendanceNo.checked =
-            true;
-        }
-
-
-        if (
-          rsvpAttendanceYes
-        ) {
-
-          rsvpAttendanceYes.checked =
-            false;
-        }
-
-
-        rsvpCount = 0;
-
-      } else {
-
-        if (
-          rsvpAttendanceYes
-        ) {
-
-          rsvpAttendanceYes.checked =
-            true;
-        }
-
-
-        rsvpCount =
-          Number.isInteger(
-            data.count
-          )
-            ? Math.min(
-                10,
-                Math.max(
-                  1,
-                  data.count
-                )
-              )
-            : 1;
-      }
-
-
-      updateAttendanceState();
-
-    } catch (_) {
-
-      updateRsvpCount();
-    }
-  }
-
+  /* =======================================================
+     RSVP SUBMIT
+  ======================================================= */
 
   rsvpForm
     ?.addEventListener(
@@ -2105,19 +1913,15 @@
 
         if (!name) {
 
-          if (
-            rsvpStatus
-          ) {
+          rsvpStatus.textContent =
+            "Bạn nhập tên khách mời giúp chúng mình nhé.";
 
-            rsvpStatus.textContent =
-              "Bạn nhập tên khách mời giúp chúng mình nhé.";
 
-            rsvpStatus
-              .classList
-              .add(
-                "is-visible"
-              );
-          }
+          rsvpStatus
+            .classList
+            .add(
+              "is-visible"
+            );
 
 
           rsvpGuestName
@@ -2131,8 +1935,8 @@
         const attendance =
           rsvpAttendanceNo
             ?.checked
-              ? "no"
-              : "yes";
+          ? "no"
+          : "yes";
 
 
         const data = {
@@ -2142,9 +1946,13 @@
           attendance,
 
           count:
-            attendance === "yes"
-              ? rsvpCount
-              : 0,
+            attendance
+            ===
+            "yes"
+            ?
+            rsvpCount
+            :
+            0,
 
           message:
             rsvpMessage
@@ -2153,81 +1961,68 @@
             ||
             "",
 
-          videoName:
-            rsvpVideo
-              ?.files?.[0]?.name
-            ||
-            "",
-
-          guestToken:
+          guest:
             getGuestToken(),
 
-          submittedAt:
+          time:
             new Date()
-              .toISOString(),
+              .toISOString()
 
         };
 
 
-        /*
-          Hiện tại lưu LOCAL để test giao diện.
-
-          Sau này khi nối Google Sheet /
-          Supabase / API chỉ cần thay đoạn
-          lưu này bằng request tới server.
-        */
-
         try {
 
-          window.localStorage
-            .setItem(
-              getRsvpStorageKey(),
-              JSON.stringify(
-                data
-              )
-            );
+          localStorage.setItem(
+            "bach-thu-wedding:rsvp:"
+            +
+            getGuestToken(),
+
+            JSON.stringify(
+              data
+            )
+          );
 
         } catch (_) {}
 
 
-        if (
-          rsvpStatus
-        ) {
-
-          rsvpStatus.textContent =
-            attendance === "yes"
-              ? "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!"
-              : "Đã ghi nhận phản hồi của bạn. Cảm ơn bạn rất nhiều!";
+        rsvpStatus.textContent =
+          "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!";
 
 
-          rsvpStatus
-            .classList
-            .add(
-              "is-visible"
-            );
-        }
+        rsvpStatus
+          .classList
+          .add(
+            "is-visible"
+          );
 
 
         if (
           rsvpSubmit
         ) {
-
-          rsvpSubmit
-            .querySelector(
-              "span"
-            )
-            .textContent =
-              "ĐÃ GỬI XÁC NHẬN";
-
 
           rsvpSubmit.disabled =
             true;
+
+
+          const text =
+            rsvpSubmit
+              .querySelector(
+                "span"
+              );
+
+
+          if (text) {
+
+            text.textContent =
+              "ĐÃ GỬI XÁC NHẬN";
+          }
         }
       }
     );
 
 
-  restoreRsvp();
+  updateRsvpCount();
 
 
   /* =======================================================
@@ -2238,37 +2033,19 @@
     "visibilitychange",
     () => {
 
-      document.body
-        .classList
-        .toggle(
-          "is-document-hidden",
-          document.hidden
-        );
-
-
       if (
         document.hidden
       ) {
 
-        if (
-          !luckyLocked
-          &&
-          !luckyRolling
-        ) {
+        stopLuckyIdleShuffle();
 
-          stopLuckyIdleShuffle();
-        }
+      } else if (
+        !luckyLocked
+        &&
+        !luckyRolling
+      ) {
 
-      } else {
-
-        if (
-          !luckyLocked
-          &&
-          !luckyRolling
-        ) {
-
-          startLuckyIdleShuffle();
-        }
+        startLuckyIdleShuffle();
       }
     }
   );
