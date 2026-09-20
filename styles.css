@@ -23,13 +23,6 @@
   --p07-red: #a52f21;
   --p07-green: #2f6d6a;
 
-  /*
-    Shared ambient animation.
-
-    Cloud / confetti / people
-    đều dùng cùng duration + easing.
-  */
-
   --ambient-duration: 1850ms;
   --ambient-distance: -6px;
 
@@ -772,10 +765,6 @@ img {
 }
 
 
-/*
-  Tất cả mây dùng cùng một nhịp.
-*/
-
 .p02-cloud,
 .p03-cloud,
 .p06-cloud,
@@ -847,8 +836,6 @@ img {
 
 /* =========================================================
    PAGE 02 — ENTRY
-   CLOUD + CONFETTI + PEOPLE
-   SAME START / SAME SPEED
 ========================================================= */
 
 .page02-layout
@@ -872,8 +859,6 @@ img {
 }
 
 
-/* LEFT CLOUDS */
-
 .page02-layout
 .p02-cloud--01,
 
@@ -883,8 +868,6 @@ img {
     -85px 0;
 }
 
-
-/* RIGHT CLOUDS */
 
 .page02-layout
 .p02-cloud--02,
@@ -896,8 +879,6 @@ img {
 }
 
 
-/* CONFETTI ENTER FROM BELOW */
-
 .page02-layout
 .p02-confetti-cluster {
   translate:
@@ -905,18 +886,12 @@ img {
 }
 
 
-/* PEOPLE ENTER FROM BELOW */
-
 .page02-layout
 .p02-procession {
   translate:
     0 46px;
 }
 
-
-/*
-  Same delay for all decorative elements.
-*/
 
 .page02-layout.is-entering
 .p02-cloud,
@@ -1469,11 +1444,6 @@ img {
 }
 
 
-/*
-  Text vẫn lần lượt từ trên xuống,
-  nhưng khoảng cách delay nhỏ và mượt hơn.
-*/
-
 .page02-layout.is-entering
 .p02-invite {
   transition-delay:
@@ -1541,7 +1511,7 @@ img {
 
   inset: 0;
 
-  top: 78px;
+  top: 81px;
   left: 3px;
 
   scale:
@@ -1594,242 +1564,203 @@ img {
 
 
 /* 01 */
-
 .p02-confetti-piece--01 {
   left: 101px;
   top: 394px;
-
   width: 11.01px;
   height: 11.43px;
-
   background-position:
-    -116.46px
-    -37.27px;
+    -116.46px -37.27px;
 }
 
-
 /* 02 */
-
 .p02-confetti-piece--02 {
   left: 338px;
   top: 485px;
-
   width: 11.01px;
   height: 10.59px;
-
   background-position:
-    -68.61px
-    -65.64px;
+    -68.61px -65.64px;
 }
 
-
 /* 03 */
-
 .p02-confetti-piece--03 {
   left: 255px;
   top: 420px;
-
   width: 12.28px;
   height: 11.43px;
-
   background-position:
-    -154.58px
-    -94.86px;
+    -154.58px -94.86px;
 }
 
-
 /* 04 */
-
 .p02-confetti-piece--04 {
   left: 164px;
   top: 414px;
-
   width: 11.01px;
   height: 10.59px;
-
   background-position:
-    -74.54px
-    -112.65px;
+    -74.54px -112.65px;
 }
 
-
 /* 05 */
-
 .p02-confetti-piece--05 {
   left: 125px;
   top: 427px;
-
   width: 11.01px;
   height: 8.47px;
-
   background-position:
-    -302.38px
-    -114.77px;
+    -302.38px -114.77px;
 }
 
-
 /* 06 */
-
 .p02-confetti-piece--06 {
   left: 215px;
   top: 435px;
-
   width: 11.43px;
   height: 11.43px;
-
   background-position:
-    -196.08px
-    -132.98px;
+    -196.08px -132.98px;
 }
 
-
 /* 07 */
-
 .p02-confetti-piece--07 {
   left: 325px;
   top: 455px;
-
   width: 8.05px;
   height: 8.05px;
-
   background-position:
-    -112.23px
-    -146.53px;
+    -112.23px -146.53px;
 }
 
-
 /* 08 */
-
 .p02-confetti-piece--08 {
   left: 279px;
   top: 468px;
-
   width: 10.59px;
   height: 10.59px;
-
   background-position:
-    -32.19px
-    -413.76px;
+    -32.19px -413.76px;
 }
 
-
 /* 09 */
-
 .p02-confetti-piece--09 {
   left: 183px;
   top: 456px;
-
   width: 11.01px;
   height: 10.59px;
-
   background-position:
-    -33.46px
-    -267.65px;
+    -33.46px -267.65px;
 }
 
-
 /* 10 */
-
 .p02-confetti-piece--10 {
   left: 300px;
   top: 423px;
-
   width: 11.01px;
   height: 10.59px;
-
   background-position:
-    -318.05px
-    -327.79px;
+    -318.05px -327.79px;
 }
 
-
 /* 11 */
-
 .p02-confetti-piece--11 {
   left: 140px;
   top: 460px;
-
   width: 10.59px;
   height: 10.59px;
-
   background-position:
-    -32.19px
-    -413.76px;
+    -32.19px -413.76px;
 }
 
-
 /* 12 */
-
 .p02-confetti-piece--12 {
   left: 207px;
   top: 477px;
-
   width: 10.59px;
   height: 10.16px;
-
   background-position:
-    -312.12px
-    -486.18px;
+    -312.12px -486.18px;
 }
 
-
 /* 13 */
-
 .p02-confetti-piece--13 {
   left: 90px;
   top: 450px;
-
   width: 11.01px;
   height: 10.59px;
-
   background-position:
-    -37.27px
-    -578.08px;
+    -37.27px -578.08px;
 }
 
-
 /* 14 */
-
 .p02-confetti-piece--14 {
   left: 70px;
   top: 420px;
-
   width: 11.86px;
   height: 9.74px;
-
   background-position:
-    -57.60px
-    -739.01px;
+    -57.60px -739.01px;
 }
 
-
 /* 15 */
-
 .p02-confetti-piece--15 {
   left: 236px;
   top: 465px;
-
   width: 11.01px;
   height: 10.59px;
-
   background-position:
-    -68.61px
-    -65.64px;
+    -68.61px -65.64px;
 }
 
-
 /* 16 */
-
 .p02-confetti-piece--16 {
   left: 355px;
   top: 438px;
-
   width: 11.01px;
   height: 10.59px;
-
   background-position:
-    -37.27px
-    -578.08px;
+    -37.27px -578.08px;
+}
+
+/* 17 */
+.p02-confetti-piece--17 {
+  left: 116px;
+  top: 474px;
+  width: 10.59px;
+  height: 10.59px;
+  background-position:
+    -32.19px -413.76px;
+}
+
+/* 18 */
+.p02-confetti-piece--18 {
+  left: 156px;
+  top: 486px;
+  width: 11.01px;
+  height: 10.59px;
+  background-position:
+    -318.05px -327.79px;
+}
+
+/* 19 */
+.p02-confetti-piece--19 {
+  left: 271px;
+  top: 446px;
+  width: 11.43px;
+  height: 11.43px;
+  background-position:
+    -196.08px -132.98px;
+}
+
+/* 20 */
+.p02-confetti-piece--20 {
+  left: 334px;
+  top: 420px;
+  width: 11.01px;
+  height: 8.47px;
+  background-position:
+    -302.38px -114.77px;
 }
 
 
@@ -1843,7 +1774,7 @@ img {
   z-index: 30;
 
   left: 11px;
-  bottom: 33px;
+  bottom: 30px;
 
   width: 390px;
   height: 196px;
@@ -1870,17 +1801,6 @@ img {
 
   user-select:
     none;
-
-  /*
-    EXACT SAME FLOAT
-    AS CLOUD + CONFETTI
-  */
-
-  animation:
-    wedding-ambient-float
-    var(--ambient-duration)
-    ease-in-out
-    infinite;
 }
 
 
@@ -2049,7 +1969,6 @@ img {
 .p03-trap {
   left: 33px;
   top: 135px;
-
   width: 125px;
 }
 
@@ -2057,7 +1976,6 @@ img {
 .p03-kieu {
   left: 210px;
   top: 225px;
-
   width: 140px;
 }
 
@@ -2065,7 +1983,6 @@ img {
 .p03-mam-co {
   left: 38px;
   top: 330px;
-
   width: 135px;
 }
 
@@ -2073,7 +1990,6 @@ img {
 .p03-cheers {
   left: 190px;
   top: 458px;
-
   width: 115px;
 }
 
@@ -2479,7 +2395,6 @@ img {
 .p06-cloud--01 {
   right: 35px;
   top: 37px;
-
   width: 92px;
 }
 
@@ -2487,7 +2402,6 @@ img {
 .p06-cloud--02 {
   left: 18px;
   top: 127px;
-
   width: 67px;
 }
 
@@ -2495,7 +2409,6 @@ img {
 .p06-cloud--03 {
   right: -10px;
   top: 332px;
-
   width: 74px;
 }
 
@@ -2503,14 +2416,9 @@ img {
 .p06-cloud--04 {
   left: -5px;
   top: 409px;
-
   width: 70px;
 }
 
-
-/* =========================================================
-   PAGE 06 — CARD
-========================================================= */
 
 .p06-card-wrap {
   position: absolute;
@@ -2603,10 +2511,6 @@ img {
     none;
 }
 
-
-/* =========================================================
-   PAGE 06 — NUMBER
-========================================================= */
 
 .p06-number-slot {
   position: absolute;
@@ -2799,10 +2703,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 06 — HINT
-========================================================= */
-
 .p06-number-hint {
   position: absolute;
 
@@ -2875,10 +2775,6 @@ img {
     default;
 }
 
-
-/* =========================================================
-   PAGE 06 — FIREWORK
-========================================================= */
 
 .p06-fireworks {
   position: absolute;
@@ -2989,10 +2885,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 06 — ITEMS
-========================================================= */
-
 .p06-lucky-item {
   position: absolute;
 
@@ -3012,22 +2904,17 @@ img {
 
 .p06-ingots {
   z-index: 25;
-
   left: 35px;
   bottom: 47px;
-
   width: 75px;
 }
 
 
 .p06-knot {
   z-index: 28;
-
   left: 97px;
   bottom: 39px;
-
   width: 77px;
-
   transform:
     rotate(-7deg);
 }
@@ -3035,22 +2922,17 @@ img {
 
 .p06-bag {
   z-index: 26;
-
   right: 33px;
   bottom: 46px;
-
   width: 105px;
 }
 
 
 .p06-coins {
   z-index: 29;
-
   right: 109px;
   bottom: 38px;
-
   width: 53px;
-
   transform:
     rotate(5deg);
 }
@@ -3093,20 +2975,16 @@ img {
 
 .p07-top-left-decoration {
   z-index: 8;
-
   left: 12px;
   top: 14px;
-
   width: 102px;
 }
 
 
 .p07-butterfly {
   z-index: 8;
-
   right: 11px;
   top: 21px;
-
   width: 88px;
 
   animation:
@@ -3123,7 +3001,6 @@ img {
   100% {
     translate:
       0 0;
-
     rotate:
       -2deg;
   }
@@ -3131,7 +3008,6 @@ img {
   50% {
     translate:
       -5px -9px;
-
     rotate:
       4deg;
   }
@@ -3177,9 +3053,7 @@ img {
 
 .p07-divider-ornament {
   z-index: 9;
-
   left: 50%;
-
   object-fit:
     contain;
 }
@@ -3187,9 +3061,7 @@ img {
 
 .p07-divider-ornament--top {
   top: 150px;
-
   width: 143px;
-
   transform:
     translateX(-50%);
 }
@@ -3197,9 +3069,7 @@ img {
 
 .p07-divider-ornament--bottom {
   top: 598px;
-
   width: 128px;
-
   transform:
     translateX(-50%);
 }
@@ -3237,10 +3107,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 07 — FORM
-========================================================= */
-
 .p07-rsvp-form {
   position: absolute;
 
@@ -3261,7 +3127,6 @@ img {
   position: absolute;
 
   left: 0;
-
   width: 100%;
 
   margin: 0;
@@ -3390,10 +3255,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 07 — NAME
-========================================================= */
-
 .p07-field--name {
   height: 35px;
 }
@@ -3454,16 +3315,10 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 07 — LOTUS
-========================================================= */
-
 .p07-field-lotus {
   z-index: 4;
-
   right: 3px;
   bottom: -7px;
-
   width: 39px;
 }
 
@@ -3471,7 +3326,6 @@ img {
 .p07-field-lotus--message {
   right: 1px;
   bottom: -8px;
-
   width: 42px;
 }
 
@@ -3479,14 +3333,9 @@ img {
 .p07-field-lotus--video {
   right: 2px;
   bottom: -7px;
-
   width: 36px;
 }
 
-
-/* =========================================================
-   PAGE 07 — ATTENDANCE
-========================================================= */
 
 .p07-attendance-options {
   display: grid;
@@ -3538,11 +3387,8 @@ img {
 
 .p07-attendance-option input {
   position: absolute;
-
   opacity: 0;
-
-  pointer-events:
-    none;
+  pointer-events: none;
 }
 
 
@@ -3636,10 +3482,6 @@ input:checked
 }
 
 
-/* =========================================================
-   PAGE 07 — COUNTER
-========================================================= */
-
 .p07-counter {
   display: grid;
 
@@ -3655,9 +3497,7 @@ input:checked
 
 .p07-counter-icon {
   position: relative;
-
   left: 14px;
-
   width: 22px;
   height: 20px;
 }
@@ -3720,10 +3560,6 @@ input:checked
 }
 
 
-/* =========================================================
-   PAGE 07 — MESSAGE
-========================================================= */
-
 .p07-field--message {
   height: 57px;
 }
@@ -3731,9 +3567,7 @@ input:checked
 
 .p07-field-icon--message {
   top: 13px;
-
-  transform:
-    none;
+  transform: none;
 }
 
 
@@ -3774,10 +3608,6 @@ input:checked
 }
 
 
-/* =========================================================
-   PAGE 07 — VIDEO
-========================================================= */
-
 .p07-video-field {
   display: flex;
 
@@ -3794,10 +3624,8 @@ input:checked
 .p07-video-icon {
   left: 13px;
   top: 50%;
-
   width: 23px;
   height: 20px;
-
   transform:
     translateY(-50%);
 }
@@ -3846,20 +3674,12 @@ input:checked
 
 .p07-video-input {
   position: absolute;
-
   width: 1px;
   height: 1px;
-
   opacity: 0;
-
-  pointer-events:
-    none;
+  pointer-events: none;
 }
 
-
-/* =========================================================
-   PAGE 07 — SUBMIT
-========================================================= */
 
 .p07-submit {
   position: absolute;
@@ -3922,12 +3742,9 @@ input:checked
 .p07-submit-icon {
   width: 18px;
   height: 18px;
-
   fill: none;
-
   stroke:
     #fff9e9;
-
   stroke-width:
     1.8;
 }
@@ -3973,10 +3790,6 @@ input:checked
   opacity: 1;
 }
 
-
-/* =========================================================
-   PAGE 07 — FOOTER
-========================================================= */
 
 .p07-footer-message {
   position: absolute;
@@ -4044,7 +3857,6 @@ input:checked
   z-index: 15;
 
   width: 380px;
-
   left: 50%;
   top: 63px;
 
@@ -4205,7 +4017,6 @@ input:checked
 
 .p08-cloud--left {
   width: 77px;
-
   left: 36px;
   top: 350px;
 }
@@ -4213,7 +4024,6 @@ input:checked
 
 .p08-cloud--right {
   width: 68px;
-
   right: 31px;
   top: 300px;
 }
@@ -4322,7 +4132,6 @@ input:checked
 
 .p08-lotus--left {
   width: 120px;
-
   left: 1px;
   bottom: 52px;
 }
@@ -4330,7 +4139,6 @@ input:checked
 
 .p08-lotus--right {
   width: 122px;
-
   right: 4px;
   bottom: 48px;
 }
@@ -4354,9 +4162,6 @@ input:checked
 
 .invitation-page:not(.is-nearby)
 .p02-confetti-piece,
-
-.invitation-page:not(.is-nearby)
-.p02-procession-item,
 
 .invitation-page:not(.is-nearby)
 .p06-confetti {
@@ -4383,9 +4188,6 @@ input:checked
 
 .is-document-hidden
 .p02-confetti-piece,
-
-.is-document-hidden
-.p02-procession-item,
 
 .is-document-hidden
 .p06-confetti {
