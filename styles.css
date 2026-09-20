@@ -1,6 +1,6 @@
 /* =========================================================
-   BÁCH & THƯ WEDDING
-   MASTER: 390 × 680
+   BÁCH & THƯ
+   MASTER 390 × 680
 ========================================================= */
 
 :root {
@@ -8,7 +8,6 @@
   --design-height: 680px;
 
   --design-scale: 1;
-
   --render-width: 390px;
   --render-height: 680px;
 
@@ -49,27 +48,23 @@ body {
 }
 
 html {
-  background:
-    var(--page-background);
+  background: var(--page-background);
 }
 
 body {
   display: grid;
-
   place-items: center;
 
   overflow: hidden;
 
-  background:
-    var(--page-background);
+  background: var(--page-background);
 
   font-family:
     Georgia,
     "Times New Roman",
     serif;
 
-  -webkit-tap-highlight-color:
-    transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button,
@@ -79,22 +74,13 @@ a {
   font: inherit;
 }
 
-button,
-input,
-textarea {
-  -webkit-tap-highlight-color:
-    transparent;
-}
-
 a {
   color: inherit;
-
   text-decoration: none;
 }
 
 img {
-  -webkit-user-drag:
-    none;
+  -webkit-user-drag: none;
 }
 
 
@@ -105,16 +91,12 @@ img {
 .site-shell {
   position: relative;
 
-  width:
-    var(--render-width);
-
-  height:
-    var(--render-height);
+  width: var(--render-width);
+  height: var(--render-height);
 
   overflow: hidden;
 
-  background:
-    var(--paper);
+  background: var(--paper);
 
   isolation: isolate;
 
@@ -139,19 +121,13 @@ img {
   left: 0;
   top: 0;
 
-  width:
-    var(--design-width);
+  width: var(--design-width);
+  height: var(--design-height);
 
-  height:
-    var(--design-height);
-
-  transform-origin:
-    0 0;
+  transform-origin: 0 0;
 
   transform:
-    scale(
-      var(--design-scale)
-    );
+    scale(var(--design-scale));
 }
 
 
@@ -163,8 +139,7 @@ img {
 
   overflow: hidden;
 
-  background:
-    var(--paper);
+  background: var(--paper);
 
   isolation: isolate;
 }
@@ -183,20 +158,14 @@ img {
 
   overflow: hidden;
 
-  background-color:
-    #ead5ad;
+  background-color: #ead5ad;
 
   background-image:
     url("./assets/page01-bg-optimized.webp");
 
-  background-repeat:
-    no-repeat;
-
-  background-position:
-    center;
-
-  background-size:
-    cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 
   opacity: 1;
 
@@ -209,17 +178,12 @@ img {
   position: absolute;
 
   left: 50%;
-
-  top:
-    calc(14.5% + 18px);
+  top: calc(14.5% + 18px);
 
   width: 82%;
+  max-width: 352px;
 
-  max-width:
-    352px;
-
-  aspect-ratio:
-    2 / 3;
+  aspect-ratio: 2 / 3;
 
   transform:
     translateX(-50%);
@@ -228,19 +192,13 @@ img {
   padding: 0;
 
   border: 0;
-
   outline: none;
 
-  background:
-    transparent;
+  background: transparent;
 
   cursor: pointer;
 
-  touch-action:
-    manipulation;
-
-  overflow:
-    visible;
+  overflow: visible;
 }
 
 
@@ -256,20 +214,12 @@ img {
   width: 100%;
   height: 100%;
 
-  max-width: none;
-
-  object-fit:
-    contain;
+  object-fit: contain;
 
   transform:
-    translate3d(
-      0,
-      24px,
-      0
-    );
+    translate3d(0, 24px, 0);
 
-  transform-origin:
-    50% 55%;
+  transform-origin: 50% 55%;
 
   filter:
     drop-shadow(
@@ -283,17 +233,9 @@ img {
     cubic-bezier(.36, .07, .19, .97)
     infinite;
 
-  will-change:
-    transform;
+  will-change: transform;
 
-  backface-visibility:
-    hidden;
-
-  pointer-events:
-    none;
-
-  user-select:
-    none;
+  pointer-events: none;
 }
 
 
@@ -303,123 +245,68 @@ img {
   50%,
   100% {
     transform:
-      translate3d(
-        0,
-        24px,
-        0
-      )
+      translate3d(0, 24px, 0)
       rotate(0deg)
       scale(1);
   }
 
   56% {
     transform:
-      translate3d(
-        -7px,
-        19px,
-        0
-      )
+      translate3d(-7px, 19px, 0)
       rotate(-3deg)
       scale(1.025);
   }
 
   61% {
     transform:
-      translate3d(
-        8px,
-        22px,
-        0
-      )
+      translate3d(8px, 22px, 0)
       rotate(3.3deg)
       scale(1.03);
   }
 
   66% {
     transform:
-      translate3d(
-        -9px,
-        18px,
-        0
-      )
+      translate3d(-9px, 18px, 0)
       rotate(-3.6deg)
       scale(1.032);
   }
 
   71% {
     transform:
-      translate3d(
-        9px,
-        22px,
-        0
-      )
+      translate3d(9px, 22px, 0)
       rotate(3.4deg)
       scale(1.028);
   }
 
   76% {
     transform:
-      translate3d(
-        -7px,
-        20px,
-        0
-      )
+      translate3d(-7px, 20px, 0)
       rotate(-2.8deg)
       scale(1.022);
   }
 
   81% {
     transform:
-      translate3d(
-        6px,
-        22px,
-        0
-      )
+      translate3d(6px, 22px, 0)
       rotate(2.2deg)
       scale(1.016);
   }
 
   87% {
     transform:
-      translate3d(
-        -3px,
-        23px,
-        0
-      )
+      translate3d(-3px, 23px, 0)
       rotate(-1.2deg)
       scale(1.008);
   }
 
   93% {
     transform:
-      translate3d(
-        0,
-        24px,
-        0
-      )
+      translate3d(0, 24px, 0)
       rotate(0deg)
       scale(1);
   }
 }
 
-
-.opening-card-button:active
-.opening-card-image {
-  animation-play-state:
-    paused;
-
-  transform:
-    translate3d(
-      0,
-      24px,
-      0
-    )
-    scale(.975);
-}
-
-
-/* =========================================================
-   PAGE 01 PULSE
-========================================================= */
 
 .monogram-pulse {
   position: absolute;
@@ -427,25 +314,18 @@ img {
   z-index: 5;
 
   left: 50%;
-
-  top:
-    calc(60.5% + 24px);
+  top: calc(60.5% + 24px);
 
   width: 31%;
 
   aspect-ratio: 1;
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 
   transform:
-    translate(
-      -50%,
-      -50%
-    );
+    translate(-50%, -50%);
 
-  pointer-events:
-    none;
+  pointer-events: none;
 }
 
 
@@ -459,15 +339,9 @@ img {
 
   border:
     1.5px solid
-    rgba(
-      237,
-      196,
-      96,
-      .52
-    );
+    rgba(237, 196, 96, .52);
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 
   opacity: 0;
 
@@ -480,17 +354,14 @@ img {
 
 
 .monogram-pulse::after {
-  animation-delay:
-    1100ms;
+  animation-delay: 1100ms;
 }
 
 
 @keyframes tap-ring {
 
   0% {
-    transform:
-      scale(.5);
-
+    transform: scale(.5);
     opacity: 0;
   }
 
@@ -499,16 +370,14 @@ img {
   }
 
   100% {
-    transform:
-      scale(1.22);
-
+    transform: scale(1.22);
     opacity: 0;
   }
 }
 
 
 /* =========================================================
-   INVITATION FLOW
+   FLOW
 ========================================================= */
 
 .page-02 {
@@ -521,31 +390,22 @@ img {
   width: 390px;
   height: 680px;
 
-  overflow-x:
-    hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 
-  overflow-y:
-    auto;
-
-  background:
-    var(--invitation-paper);
+  background: var(--invitation-paper);
 
   opacity: 0;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 
-  scrollbar-width:
-    none;
+  scrollbar-width: none;
 
-  overscroll-behavior:
-    contain;
+  overscroll-behavior: contain;
 
-  touch-action:
-    pan-y;
+  touch-action: pan-y;
 
-  -webkit-overflow-scrolling:
-    touch;
+  -webkit-overflow-scrolling: touch;
 
   transition:
     opacity 320ms ease;
@@ -557,23 +417,18 @@ img {
 }
 
 
-.site-shell.is-page-02
-.opening-page {
+.site-shell.is-page-02 .opening-page {
   opacity: 0;
-
-  pointer-events:
-    none;
+  pointer-events: none;
 }
 
 
-.site-shell.is-page-02
-.page-02 {
+.site-shell.is-page-02 .page-02 {
   z-index: 3;
 
   opacity: 1;
 
-  pointer-events:
-    auto;
+  pointer-events: auto;
 }
 
 
@@ -583,39 +438,28 @@ img {
   width: 390px;
 
   height: auto;
-
   min-height: 0;
 
   overflow: visible;
-
-  background:
-    #f1dfbd;
 }
 
 
 .invitation-page {
   position: relative;
 
-  display: block;
-
   width: 390px;
   height: 680px;
 
   overflow: hidden;
 
-  margin: 0;
-  padding: 0;
+  background: #f1dfbd;
 
-  background:
-    #f1dfbd;
-
-  isolation:
-    isolate;
+  isolation: isolate;
 }
 
 
 /* =========================================================
-   SHARED BACKGROUNDS
+   SHARED BACKGROUND
 ========================================================= */
 
 .p02-background,
@@ -629,29 +473,17 @@ img {
 
   z-index: 0;
 
-  display: block;
-
   width: 100%;
   height: 100%;
 
-  max-width: none;
+  object-fit: cover;
 
-  object-fit:
-    cover;
-
-  object-position:
-    center;
-
-  pointer-events:
-    none;
-
-  user-select:
-    none;
+  pointer-events: none;
 }
 
 
 /* =========================================================
-   SHARED FRAMES
+   FRAME
 ========================================================= */
 
 .p02-frame,
@@ -665,14 +497,9 @@ img {
 
   max-width: none;
 
-  object-fit:
-    fill;
+  object-fit: fill;
 
-  pointer-events:
-    none;
-
-  user-select:
-    none;
+  pointer-events: none;
 }
 
 
@@ -710,7 +537,7 @@ img {
 
 
 /* =========================================================
-   SHARED BOTTOM ORNAMENT
+   BOTTOM ORNAMENT
 ========================================================= */
 
 .p02-bottom-ornament,
@@ -724,28 +551,19 @@ img {
   left: 50%;
   bottom: -1px;
 
-  display: block;
-
   width: 120px;
-  height: auto;
 
-  max-width: none;
+  height: auto;
 
   transform:
     translateX(-50%);
 
-  opacity: 1;
-
-  pointer-events:
-    none;
-
-  user-select:
-    none;
+  pointer-events: none;
 }
 
 
 /* =========================================================
-   SHARED AMBIENT ANIMATION
+   CLOUD ANIMATION
 ========================================================= */
 
 @keyframes wedding-ambient-float {
@@ -777,18 +595,9 @@ img {
 
   height: auto;
 
-  max-width: none;
-
   opacity: 1;
 
-  object-fit:
-    contain;
-
-  pointer-events:
-    none;
-
-  user-select:
-    none;
+  pointer-events: none;
 
   animation:
     wedding-ambient-float
@@ -799,53 +608,39 @@ img {
 
 
 /* =========================================================
-   PAGE 02 — CLOUD POSITION
+   PAGE 02
 ========================================================= */
 
 .p02-cloud--01 {
   left: 28px;
   top: 116px;
-
   width: 88px;
 }
-
 
 .p02-cloud--02 {
   right: 19px;
   top: 133px;
-
   width: 80px;
 }
-
 
 .p02-cloud--03 {
   left: 18px;
   top: 219px;
-
   width: 65px;
 }
-
 
 .p02-cloud--04 {
   right: 28px;
   top: 265px;
-
   width: 65px;
 }
 
 
-/* =========================================================
-   PAGE 02 — ENTRY
-========================================================= */
+/* PAGE 02 ENTRY */
 
-.page02-layout
-.p02-cloud,
-
-.page02-layout
-.p02-confetti-cluster,
-
-.page02-layout
-.p02-procession {
+.page02-layout .p02-cloud,
+.page02-layout .p02-confetti-cluster,
+.page02-layout .p02-procession {
   opacity: 0;
 
   transition:
@@ -859,61 +654,36 @@ img {
 }
 
 
-.page02-layout
-.p02-cloud--01,
-
-.page02-layout
-.p02-cloud--03 {
-  translate:
-    -85px 0;
+.page02-layout .p02-cloud--01,
+.page02-layout .p02-cloud--03 {
+  translate: -85px 0;
 }
 
 
-.page02-layout
-.p02-cloud--02,
-
-.page02-layout
-.p02-cloud--04 {
-  translate:
-    85px 0;
+.page02-layout .p02-cloud--02,
+.page02-layout .p02-cloud--04 {
+  translate: 85px 0;
 }
 
 
-.page02-layout
-.p02-confetti-cluster {
-  translate:
-    0 46px;
+.page02-layout .p02-confetti-cluster,
+.page02-layout .p02-procession {
+  translate: 0 46px;
 }
 
 
-.page02-layout
-.p02-procession {
-  translate:
-    0 46px;
-}
-
-
-.page02-layout.is-entering
-.p02-cloud,
-
-.page02-layout.is-entering
-.p02-confetti-cluster,
-
-.page02-layout.is-entering
-.p02-procession {
+.page02-layout.is-entering .p02-cloud,
+.page02-layout.is-entering .p02-confetti-cluster,
+.page02-layout.is-entering .p02-procession {
   opacity: 1;
 
-  translate:
-    0 0;
+  translate: 0 0;
 
-  transition-delay:
-    100ms;
+  transition-delay: 100ms;
 }
 
 
-/* =========================================================
-   PAGE 02 — TEXT
-========================================================= */
+/* TEXT */
 
 .p02-invite,
 .p02-to,
@@ -927,19 +697,16 @@ img {
 
   margin: 0;
 
-  text-align:
-    center;
+  text-align: center;
 
   font-family:
     "Times New Roman",
     Times,
     serif;
 
-  font-weight:
-    400;
+  font-weight: 400;
 
-  color:
-    var(--invitation-green);
+  color: var(--invitation-green);
 }
 
 
@@ -948,14 +715,7 @@ img {
 
   width: 320px;
 
-  font-size:
-    15px;
-
-  line-height:
-    1.15;
-
-  letter-spacing:
-    .015em;
+  font-size: 15px;
 
   transform:
     translateX(-50%)
@@ -978,44 +738,28 @@ img {
     translateX(-50%);
 
   background:
-    rgba(
-      153,
-      111,
-      52,
-      .72
-    );
+    rgba(153, 111, 52, .72);
 }
 
 
 .p02-divider::after {
-  content:
-    "•••";
+  content: "•••";
 
   position: absolute;
 
   left: 50%;
   top: 50%;
 
-  padding:
-    0 4px;
+  padding: 0 4px;
 
   transform:
-    translate(
-      -50%,
-      -56%
-    );
+    translate(-50%, -56%);
 
-  background:
-    #f1dfbd;
+  background: #f1dfbd;
 
-  color:
-    var(--invitation-gold);
+  color: var(--invitation-gold);
 
-  font-size:
-    7px;
-
-  line-height:
-    1;
+  font-size: 7px;
 }
 
 
@@ -1024,8 +768,7 @@ img {
 
   width: 320px;
 
-  font-size:
-    16px;
+  font-size: 16px;
 
   transform:
     translateX(-50%)
@@ -1038,8 +781,7 @@ img {
 
   width: 330px;
 
-  font-size:
-    19px;
+  font-size: 19px;
 
   transform:
     translateX(-50%)
@@ -1054,17 +796,13 @@ img {
 
   display: flex;
 
-  flex-direction:
-    column;
+  flex-direction: column;
 
-  align-items:
-    center;
+  align-items: center;
 
-  line-height:
-    .87;
+  line-height: .87;
 
-  color:
-    var(--invitation-red);
+  color: var(--invitation-red);
 
   transform:
     translateX(-50%);
@@ -1072,21 +810,15 @@ img {
 
 
 .p02-name {
-  display: block;
-
   width: 100%;
 
-  color:
-    var(--invitation-red);
+  color: var(--invitation-red);
 
-  font-size:
-    25px;
+  font-size: 25px;
 
-  line-height:
-    .95;
+  line-height: .95;
 
-  white-space:
-    nowrap;
+  white-space: nowrap;
 
   transform:
     scaleX(.82);
@@ -1094,25 +826,15 @@ img {
 
 
 .p02-ampersand {
-  display: block;
+  margin: 4px 0 3px;
 
-  margin:
-    4px 0 3px;
+  color: var(--invitation-green);
 
-  color:
-    var(--invitation-green);
-
-  font-size:
-    25px;
-
-  line-height:
-    .9;
+  font-size: 25px;
 }
 
 
-/* =========================================================
-   PAGE 02 — DATE DIVIDER
-========================================================= */
+/* DATE DIVIDER */
 
 .p02-date-divider {
   position: absolute;
@@ -1129,47 +851,32 @@ img {
     translateX(-50%);
 
   background:
-    rgba(
-      153,
-      111,
-      52,
-      .56
-    );
+    rgba(153, 111, 52, .56);
 }
 
 
 .p02-date-divider::after {
-  content:
-    "◇";
+  content: "◇";
 
   position: absolute;
 
   left: 50%;
   top: 50%;
 
-  padding:
-    0 3px;
+  padding: 0 3px;
 
   transform:
-    translate(
-      -50%,
-      -51%
-    );
+    translate(-50%, -51%);
 
-  background:
-    #f1dfbd;
+  background: #f1dfbd;
 
-  color:
-    var(--invitation-gold);
+  color: var(--invitation-gold);
 
-  font-size:
-    8px;
+  font-size: 8px;
 }
 
 
-/* =========================================================
-   PAGE 02 — CEREMONY
-========================================================= */
+/* CEREMONY */
 
 .p02-ceremony-info {
   position: absolute;
@@ -1184,16 +891,12 @@ img {
   transform:
     translateX(-50%);
 
-  text-align:
-    center;
+  text-align: center;
 
   font-family:
     "Times New Roman",
     Times,
     serif;
-
-  pointer-events:
-    none;
 }
 
 
@@ -1203,29 +906,18 @@ img {
 
 
 .p02-time-line {
-  color:
-    var(--invitation-green);
+  color: var(--invitation-green);
 
-  font-size:
-    13px;
-
-  line-height:
-    1.15;
+  font-size: 13px;
 }
 
 
 .p02-time-line strong {
-  margin-left:
-    0;
+  color: var(--invitation-red);
 
-  color:
-    var(--invitation-red);
+  font-size: 14px;
 
-  font-size:
-    14px;
-
-  font-weight:
-    400;
+  font-weight: 400;
 }
 
 
@@ -1233,14 +925,9 @@ img {
   margin-top:
     5px !important;
 
-  color:
-    var(--invitation-green);
+  color: var(--invitation-green);
 
-  font-size:
-    10.5px;
-
-  line-height:
-    1.15;
+  font-size: 10.5px;
 }
 
 
@@ -1248,29 +935,18 @@ img {
   margin-top:
     11px !important;
 
-  color:
-    var(--invitation-green);
+  color: var(--invitation-green);
 
-  font-size:
-    13px;
-
-  line-height:
-    1.1;
+  font-size: 13px;
 }
 
 
 .p02-at strong {
-  margin-left:
-    2px;
+  color: var(--invitation-red);
 
-  color:
-    var(--invitation-red);
+  font-size: 14px;
 
-  font-size:
-    14px;
-
-  font-weight:
-    400;
+  font-weight: 400;
 }
 
 
@@ -1278,20 +954,13 @@ img {
   margin-top:
     5px !important;
 
-  color:
-    var(--invitation-green);
+  color: var(--invitation-green);
 
-  font-size:
-    10.5px;
-
-  line-height:
-    1.1;
+  font-size: 10.5px;
 }
 
 
-/* =========================================================
-   PAGE 02 — FAMILY
-========================================================= */
+/* FAMILY */
 
 .p02-family-info {
   position: absolute;
@@ -1304,204 +973,110 @@ img {
   display: grid;
 
   grid-template-columns:
-    1fr
-    1fr;
+    1fr 1fr;
 
-  column-gap:
-    28px;
+  column-gap: 28px;
 
   width: 330px;
 
   transform:
     translateX(-50%);
 
-  color:
-    var(--invitation-green);
+  color: var(--invitation-green);
 
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  text-align:
-    center;
-
-  pointer-events:
-    none;
-}
-
-
-.p02-family {
-  min-width: 0;
+  text-align: center;
 }
 
 
 .p02-family-title {
-  margin:
-    0 0 7px;
+  margin: 0 0 7px;
 
-  color:
-    var(--invitation-green);
+  font-size: 11px;
 
-  font-size:
-    11px;
-
-  font-weight:
-    600;
-
-  line-height:
-    1;
+  font-weight: 600;
 }
 
 
 .p02-family p {
   margin: 0;
 
-  color:
-    var(--invitation-green);
+  font-size: 10px;
 
-  font-size:
-    10px;
+  line-height: 1.35;
 
-  line-height:
-    1.35;
-
-  white-space:
-    nowrap;
+  white-space: nowrap;
 }
 
 
-/* =========================================================
-   PAGE 02 — TEXT ENTRANCE
-========================================================= */
+/* TEXT ENTRY */
 
-.page02-layout
-.p02-invite,
-
-.page02-layout
-.p02-divider,
-
-.page02-layout
-.p02-to,
-
-.page02-layout
-.p02-wedding-title,
-
-.page02-layout
-.p02-couple-names,
-
-.page02-layout
-.p02-date-divider,
-
-.page02-layout
-.p02-ceremony-info,
-
-.page02-layout
-.p02-family-info {
+.page02-layout .p02-invite,
+.page02-layout .p02-divider,
+.page02-layout .p02-to,
+.page02-layout .p02-wedding-title,
+.page02-layout .p02-couple-names,
+.page02-layout .p02-date-divider,
+.page02-layout .p02-ceremony-info,
+.page02-layout .p02-family-info {
   opacity: 0;
 
-  translate:
-    0 -10px;
+  translate: 0 -10px;
 
   transition:
-    opacity
-    430ms
-    ease,
-
-    translate
-    620ms
-    cubic-bezier(.2, .78, .28, 1);
+    opacity 430ms ease,
+    translate 620ms cubic-bezier(.2, .78, .28, 1);
 }
 
 
-.page02-layout.is-entering
-.p02-invite,
-
-.page02-layout.is-entering
-.p02-divider,
-
-.page02-layout.is-entering
-.p02-to,
-
-.page02-layout.is-entering
-.p02-wedding-title,
-
-.page02-layout.is-entering
-.p02-couple-names,
-
-.page02-layout.is-entering
-.p02-date-divider,
-
-.page02-layout.is-entering
-.p02-ceremony-info,
-
-.page02-layout.is-entering
-.p02-family-info {
+.page02-layout.is-entering .p02-invite,
+.page02-layout.is-entering .p02-divider,
+.page02-layout.is-entering .p02-to,
+.page02-layout.is-entering .p02-wedding-title,
+.page02-layout.is-entering .p02-couple-names,
+.page02-layout.is-entering .p02-date-divider,
+.page02-layout.is-entering .p02-ceremony-info,
+.page02-layout.is-entering .p02-family-info {
   opacity: 1;
 
-  translate:
-    0 0;
+  translate: 0 0;
 }
 
 
-.page02-layout.is-entering
-.p02-invite {
-  transition-delay:
-    170ms;
+.page02-layout.is-entering .p02-invite {
+  transition-delay: 170ms;
 }
 
-
-.page02-layout.is-entering
-.p02-divider {
-  transition-delay:
-    250ms;
+.page02-layout.is-entering .p02-divider {
+  transition-delay: 250ms;
 }
 
-
-.page02-layout.is-entering
-.p02-to {
-  transition-delay:
-    330ms;
+.page02-layout.is-entering .p02-to {
+  transition-delay: 330ms;
 }
 
-
-.page02-layout.is-entering
-.p02-wedding-title {
-  transition-delay:
-    410ms;
+.page02-layout.is-entering .p02-wedding-title {
+  transition-delay: 410ms;
 }
 
-
-.page02-layout.is-entering
-.p02-couple-names {
-  transition-delay:
-    490ms;
+.page02-layout.is-entering .p02-couple-names {
+  transition-delay: 490ms;
 }
 
-
-.page02-layout.is-entering
-.p02-date-divider {
-  transition-delay:
-    570ms;
+.page02-layout.is-entering .p02-date-divider {
+  transition-delay: 570ms;
 }
 
-
-.page02-layout.is-entering
-.p02-ceremony-info {
-  transition-delay:
-    650ms;
+.page02-layout.is-entering .p02-ceremony-info {
+  transition-delay: 650ms;
 }
 
-
-.page02-layout.is-entering
-.p02-family-info {
-  transition-delay:
-    730ms;
+.page02-layout.is-entering .p02-family-info {
+  transition-delay: 730ms;
 }
 
 
 /* =========================================================
-   PAGE 02 — CONFETTI
+   PAGE 02 CONFETTI
 ========================================================= */
 
 .p02-confetti-cluster {
@@ -1514,17 +1089,11 @@ img {
   top: 81px;
   left: 3px;
 
-  scale:
-    .8;
+  scale: .8;
 
-  transform-origin:
-    center center;
+  transform-origin: center;
 
-  pointer-events:
-    none;
-
-  user-select:
-    none;
+  pointer-events: none;
 }
 
 
@@ -1533,20 +1102,14 @@ img {
 
   display: block;
 
-  overflow: hidden;
-
   background-image:
-    var(
-      --p02-confetti-sprite,
-      none
-    );
+    var(--p02-confetti-sprite, none);
 
   background-repeat:
     no-repeat;
 
   background-size:
-    361.25px
-    780.93px;
+    361.25px 780.93px;
 
   opacity: 1;
 
@@ -1563,209 +1126,169 @@ img {
 }
 
 
-/* 01 */
 .p02-confetti-piece--01 {
   left: 101px;
   top: 394px;
   width: 11.01px;
   height: 11.43px;
-  background-position:
-    -116.46px -37.27px;
+  background-position: -116.46px -37.27px;
 }
 
-/* 02 */
 .p02-confetti-piece--02 {
   left: 338px;
   top: 485px;
   width: 11.01px;
   height: 10.59px;
-  background-position:
-    -68.61px -65.64px;
+  background-position: -68.61px -65.64px;
 }
 
-/* 03 */
 .p02-confetti-piece--03 {
   left: 255px;
   top: 420px;
   width: 12.28px;
   height: 11.43px;
-  background-position:
-    -154.58px -94.86px;
+  background-position: -154.58px -94.86px;
 }
 
-/* 04 */
 .p02-confetti-piece--04 {
   left: 164px;
   top: 414px;
   width: 11.01px;
   height: 10.59px;
-  background-position:
-    -74.54px -112.65px;
+  background-position: -74.54px -112.65px;
 }
 
-/* 05 */
 .p02-confetti-piece--05 {
   left: 125px;
   top: 427px;
   width: 11.01px;
   height: 8.47px;
-  background-position:
-    -302.38px -114.77px;
+  background-position: -302.38px -114.77px;
 }
 
-/* 06 */
 .p02-confetti-piece--06 {
   left: 215px;
   top: 435px;
   width: 11.43px;
   height: 11.43px;
-  background-position:
-    -196.08px -132.98px;
+  background-position: -196.08px -132.98px;
 }
 
-/* 07 */
 .p02-confetti-piece--07 {
   left: 325px;
   top: 455px;
   width: 8.05px;
   height: 8.05px;
-  background-position:
-    -112.23px -146.53px;
+  background-position: -112.23px -146.53px;
 }
 
-/* 08 */
 .p02-confetti-piece--08 {
   left: 279px;
   top: 468px;
   width: 10.59px;
   height: 10.59px;
-  background-position:
-    -32.19px -413.76px;
+  background-position: -32.19px -413.76px;
 }
 
-/* 09 */
 .p02-confetti-piece--09 {
   left: 183px;
   top: 456px;
   width: 11.01px;
   height: 10.59px;
-  background-position:
-    -33.46px -267.65px;
+  background-position: -33.46px -267.65px;
 }
 
-/* 10 */
 .p02-confetti-piece--10 {
   left: 300px;
   top: 423px;
   width: 11.01px;
   height: 10.59px;
-  background-position:
-    -318.05px -327.79px;
+  background-position: -318.05px -327.79px;
 }
 
-/* 11 */
 .p02-confetti-piece--11 {
   left: 140px;
   top: 460px;
   width: 10.59px;
   height: 10.59px;
-  background-position:
-    -32.19px -413.76px;
+  background-position: -32.19px -413.76px;
 }
 
-/* 12 */
 .p02-confetti-piece--12 {
   left: 207px;
   top: 477px;
   width: 10.59px;
   height: 10.16px;
-  background-position:
-    -312.12px -486.18px;
+  background-position: -312.12px -486.18px;
 }
 
-/* 13 */
 .p02-confetti-piece--13 {
   left: 90px;
   top: 450px;
   width: 11.01px;
   height: 10.59px;
-  background-position:
-    -37.27px -578.08px;
+  background-position: -37.27px -578.08px;
 }
 
-/* 14 */
 .p02-confetti-piece--14 {
   left: 70px;
   top: 420px;
   width: 11.86px;
   height: 9.74px;
-  background-position:
-    -57.60px -739.01px;
+  background-position: -57.60px -739.01px;
 }
 
-/* 15 */
 .p02-confetti-piece--15 {
   left: 236px;
   top: 465px;
   width: 11.01px;
   height: 10.59px;
-  background-position:
-    -68.61px -65.64px;
+  background-position: -68.61px -65.64px;
 }
 
-/* 16 */
 .p02-confetti-piece--16 {
   left: 355px;
   top: 438px;
   width: 11.01px;
   height: 10.59px;
-  background-position:
-    -37.27px -578.08px;
+  background-position: -37.27px -578.08px;
 }
 
-/* 17 */
 .p02-confetti-piece--17 {
   left: 116px;
   top: 474px;
   width: 10.59px;
   height: 10.59px;
-  background-position:
-    -32.19px -413.76px;
+  background-position: -32.19px -413.76px;
 }
 
-/* 18 */
 .p02-confetti-piece--18 {
   left: 156px;
   top: 486px;
   width: 11.01px;
   height: 10.59px;
-  background-position:
-    -318.05px -327.79px;
+  background-position: -318.05px -327.79px;
 }
 
-/* 19 */
 .p02-confetti-piece--19 {
   left: 271px;
   top: 446px;
   width: 11.43px;
   height: 11.43px;
-  background-position:
-    -196.08px -132.98px;
+  background-position: -196.08px -132.98px;
 }
 
-/* 20 */
 .p02-confetti-piece--20 {
   left: 334px;
   top: 420px;
   width: 11.01px;
   height: 8.47px;
-  background-position:
-    -302.38px -114.77px;
+  background-position: -302.38px -114.77px;
 }
 
 
 /* =========================================================
-   PAGE 02 — PROCESSION
+   PAGE 02 PROCESSION
 ========================================================= */
 
 .p02-procession {
@@ -1779,28 +1302,20 @@ img {
   width: 390px;
   height: 196px;
 
-  pointer-events:
-    none;
+  pointer-events: none;
 }
 
 
 .p02-procession-item {
   position: absolute;
 
-  display: block;
-
   width: auto;
 
   max-width: none;
 
-  object-fit:
-    contain;
+  object-fit: contain;
 
-  pointer-events:
-    none;
-
-  user-select:
-    none;
+  pointer-events: none;
 }
 
 
@@ -1855,14 +1370,15 @@ img {
 
   display: block;
 
-  max-width: none;
-
   height: auto;
 
-  pointer-events:
-    none;
+  max-width: none;
+
+  pointer-events: none;
 }
 
+
+/* CLOUDS */
 
 .p03-cloud--01 {
   left: 38px;
@@ -1896,6 +1412,8 @@ img {
 }
 
 
+/* TITLE */
+
 .p03-title {
   position: absolute;
 
@@ -1909,28 +1427,22 @@ img {
   transform:
     translateX(-50%);
 
-  color:
-    #405d48;
+  color: #405d48;
 
   font-family:
     "Times New Roman",
     Times,
     serif;
 
-  font-size:
-    26px;
+  font-size: 26px;
 
-  font-weight:
-    400;
+  font-weight: 400;
 
-  line-height:
-    1;
+  line-height: 1;
 
-  letter-spacing:
-    .03em;
+  letter-spacing: .03em;
 
-  white-space:
-    nowrap;
+  white-space: nowrap;
 }
 
 
@@ -1947,52 +1459,75 @@ img {
 }
 
 
+/* =========================================================
+   NEW 3-POINT TIMELINE
+
+   Original asset:
+   734 × 2048
+
+   width 168px gives rendered height ~469px.
+
+   Visible line inside PNG is centered close to x=195
+   on the 390px artboard.
+========================================================= */
+
 .p03-timeline {
   z-index: 14;
 
-  left: 157px;
-  top: 100px;
+  left: 118px;
+  top: 95px;
 
-  width: auto;
-  height: 466px;
+  width: 168px;
+  height: auto;
+
+  object-fit: contain;
 }
 
+
+/* =========================================================
+   ILLUSTRATIONS
+========================================================= */
 
 .p03-illustration {
   z-index: 12;
 
-  object-fit:
-    contain;
+  object-fit: contain;
 }
 
 
-.p03-trap {
-  left: 33px;
-  top: 135px;
-  width: 125px;
-}
-
+/* DÓN DÂU */
 
 .p03-kieu {
   left: 210px;
-  top: 225px;
+  top: 145px;
+
   width: 140px;
 }
 
 
+/* TIỆC CƯỚI */
+
 .p03-mam-co {
   left: 38px;
-  top: 330px;
+  top: 285px;
+
   width: 135px;
 }
 
 
+/* AFTER PARTY */
+
 .p03-cheers {
   left: 190px;
-  top: 458px;
+  top: 423px;
+
   width: 115px;
 }
 
+
+/* =========================================================
+   EVENTS
+========================================================= */
 
 .p03-event {
   position: absolute;
@@ -2001,8 +1536,7 @@ img {
 
   width: 165px;
 
-  color:
-    #304c3c;
+  color: #304c3c;
 
   font-family:
     "Times New Roman",
@@ -2021,20 +1555,15 @@ img {
   margin-bottom:
     8px !important;
 
-  color:
-    #ad4629;
+  color: #ad4629;
 
-  font-size:
-    17px;
+  font-size: 17px;
 
-  font-weight:
-    400;
+  font-weight: 400;
 
-  line-height:
-    1;
+  line-height: 1;
 
-  white-space:
-    nowrap;
+  white-space: nowrap;
 }
 
 
@@ -2042,17 +1571,13 @@ img {
   margin-bottom:
     5px !important;
 
-  color:
-    #ad4629;
+  color: #ad4629;
 
-  font-size:
-    12px;
+  font-size: 12px;
 
-  line-height:
-    1.1;
+  line-height: 1.1;
 
-  white-space:
-    nowrap;
+  white-space: nowrap;
 }
 
 
@@ -2065,43 +1590,49 @@ img {
   margin-bottom:
     10px !important;
 
-  color:
-    #304c3c;
+  color: #304c3c;
 
-  font-size:
-    11px;
+  font-size: 11px;
 
-  line-height:
-    1.1;
+  line-height: 1.1;
 
-  white-space:
-    nowrap;
+  white-space: nowrap;
 }
 
 
-.p03-event--01 {
-  left: 223px;
-  top: 119px;
-}
-
+/*
+  Timeline point 1 ≈ y195
+*/
 
 .p03-event--02 {
   left: 100px;
-  top: 257px;
+  top: 177px;
 }
 
+
+/*
+  Timeline point 2 ≈ y325
+*/
 
 .p03-event--03 {
   left: 215px;
-  top: 350px;
+  top: 307px;
 }
 
+
+/*
+  Timeline point 3 ≈ y462
+*/
 
 .p03-event--04 {
   left: 50px;
-  top: 467px;
+  top: 445px;
 }
 
+
+/* =========================================================
+   LOCATION
+========================================================= */
 
 .p03-location {
   position: relative;
@@ -2110,36 +1641,24 @@ img {
 
   display: flex;
 
-  align-items:
-    flex-start;
+  align-items: flex-start;
 
   gap: 8px;
 
-  margin-top:
-    7px;
+  margin-top: 7px;
 
-  color:
-    #304c3c;
+  color: #304c3c;
 
-  font-size:
-    9.5px;
+  font-size: 9.5px;
 
-  line-height:
-    1.42;
-}
-
-
-.p03-event--01
-.p03-location {
-  top: -22px;
+  line-height: 1.42;
 }
 
 
 .p03-location > div {
   display: flex;
 
-  flex-direction:
-    column;
+  flex-direction: column;
 
   min-width: 0;
 }
@@ -2148,17 +1667,13 @@ img {
 .p03-location strong {
   display: block;
 
-  margin-bottom:
-    2px;
+  margin-bottom: 2px;
 
-  font-size:
-    10px;
+  font-size: 10px;
 
-  font-weight:
-    400;
+  font-weight: 400;
 
-  white-space:
-    nowrap;
+  white-space: nowrap;
 }
 
 
@@ -2169,8 +1684,7 @@ img {
 
   display: block;
 
-  white-space:
-    nowrap;
+  white-space: nowrap;
 }
 
 
@@ -2183,20 +1697,17 @@ img {
 .p03-location-pin {
   position: relative;
 
-  flex:
-    0 0 auto;
+  flex: 0 0 auto;
 
   width: 8px;
   height: 8px;
 
-  margin-top:
-    2px;
+  margin-top: 2px;
 
   border-radius:
     50% 50% 50% 0;
 
-  background:
-    #b64b2d;
+  background: #b64b2d;
 
   transform:
     rotate(-45deg);
@@ -2214,16 +1725,14 @@ img {
   width: 3px;
   height: 3px;
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 
-  background:
-    #f3dfb8;
+  background: #f3dfb8;
 }
 
 
 /* =========================================================
-   PAGE 03 — DRESS CODE
+   DRESS CODE
 ========================================================= */
 
 .p03-dress-code {
@@ -2240,55 +1749,41 @@ img {
   transform:
     translateX(-50%);
 
-  text-align:
-    center;
+  text-align: center;
 }
 
 
 .p03-dress-title {
   display: flex;
 
-  align-items:
-    center;
+  align-items: center;
 
-  justify-content:
-    center;
+  justify-content: center;
 
   gap: 8px;
 
   margin:
     0 0 7px;
 
-  color:
-    #405d48;
+  color: #405d48;
 
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
+  font-size: 12px;
 
-  font-size:
-    12px;
-
-  font-weight:
-    600;
+  font-weight: 600;
 }
 
 
 .p03-dress-title span {
-  color:
-    #c38d31;
+  color: #c38d31;
 
-  font-size:
-    9px;
+  font-size: 9px;
 }
 
 
 .p03-color-list {
   display: flex;
 
-  justify-content:
-    center;
+  justify-content: center;
 
   gap: 13px;
 }
@@ -2297,19 +1792,15 @@ img {
 .p03-color-item {
   display: flex;
 
-  flex-direction:
-    column;
+  flex-direction: column;
 
-  align-items:
-    center;
+  align-items: center;
 
   gap: 3px;
 
-  color:
-    #3e4539;
+  color: #3e4539;
 
-  font-size:
-    9px;
+  font-size: 9px;
 }
 
 
@@ -2319,41 +1810,30 @@ img {
   width: 22px;
   height: 22px;
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 }
 
 
 .p03-color--white {
-  background:
-    #f8f3e8;
+  background: #f8f3e8;
 
-  border:
-    1px solid white;
+  border: 1px solid white;
 }
 
 
 .p03-color--beige {
-  background:
-    #e5c9a6;
+  background: #e5c9a6;
 
   border:
     1px solid
-    rgba(
-      255,
-      255,
-      255,
-      .75
-    );
+    rgba(255, 255, 255, .75);
 }
 
 
 .p03-color--black {
-  background:
-    #273528;
+  background: #273528;
 
-  border:
-    1px solid white;
+  border: 1px solid white;
 }
 
 
@@ -2372,17 +1852,11 @@ img {
   width: 350px;
   height: 600px;
 
-  object-fit:
-    fill;
+  object-fit: fill;
 
-  opacity:
-    .86;
+  opacity: .86;
 
-  pointer-events:
-    none;
-
-  user-select:
-    none;
+  pointer-events: none;
 
   animation:
     wedding-ambient-float
@@ -2398,20 +1872,17 @@ img {
   width: 92px;
 }
 
-
 .p06-cloud--02 {
   left: 18px;
   top: 127px;
   width: 67px;
 }
 
-
 .p06-cloud--03 {
   right: -10px;
   top: 332px;
   width: 74px;
 }
-
 
 .p06-cloud--04 {
   left: -5px;
@@ -2432,11 +1903,6 @@ img {
 
   transform:
     translateX(-50%);
-
-  border: 0;
-
-  background:
-    transparent;
 }
 
 
@@ -2450,25 +1916,10 @@ img {
   width: 100%;
   height: auto;
 
-  max-width: none;
-
   clip-path:
-    inset(
-      0
-      round 14px
-    );
+    inset(0 round 14px);
 
-  filter:
-    drop-shadow(
-      0 6px 6px
-      rgba(91, 59, 24, .14)
-    );
-
-  pointer-events:
-    none;
-
-  user-select:
-    none;
+  pointer-events: none;
 }
 
 
@@ -2487,28 +1938,13 @@ img {
   transform:
     translateX(-50%);
 
-  text-align:
-    center;
+  text-align: center;
 
-  color:
-    #315747;
+  color: #315747;
 
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
+  font-size: 23px;
 
-  font-size:
-    23px;
-
-  font-weight:
-    400;
-
-  line-height:
-    1;
-
-  pointer-events:
-    none;
+  font-weight: 400;
 }
 
 
@@ -2522,11 +1958,9 @@ img {
 
   display: flex;
 
-  align-items:
-    center;
+  align-items: center;
 
-  justify-content:
-    center;
+  justify-content: center;
 
   width: 205px;
   height: 125px;
@@ -2534,37 +1968,12 @@ img {
   transform:
     translateX(-50%);
 
-  text-align:
-    center;
+  color: #a52f15;
 
-  color:
-    #a52f15;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size:
-    94px;
-
-  font-weight:
-    400;
-
-  line-height:
-    1;
-
-  letter-spacing:
-    -.04em;
+  font-size: 94px;
 
   font-variant-numeric:
     tabular-nums;
-
-  pointer-events:
-    none;
-
-  user-select:
-    none;
 }
 
 
@@ -2590,18 +1999,14 @@ img {
 
   33% {
     transform:
-      translateX(
-        calc(-50% - 2px)
-      )
+      translateX(calc(-50% - 2px))
       translateY(-1px)
       scale(1.025);
   }
 
   66% {
     transform:
-      translateX(
-        calc(-50% + 2px)
-      )
+      translateX(calc(-50% + 2px))
       translateY(1px)
       scale(.985);
   }
@@ -2718,26 +2123,15 @@ img {
   transform:
     translateX(-50%);
 
-  text-align:
-    center;
+  text-align: center;
 
-  color:
-    #6b5a3d;
+  color: #6b5a3d;
 
-  font-size:
-    11px;
+  font-size: 11px;
 
-  font-style:
-    italic;
+  font-style: italic;
 
-  line-height:
-    1.25;
-
-  opacity:
-    .82;
-
-  pointer-events:
-    none;
+  opacity: .82;
 }
 
 
@@ -2751,28 +2145,11 @@ img {
   width: 100%;
   height: 100%;
 
-  margin: 0;
-  padding: 0;
-
   border: 0;
 
-  border-radius:
-    14px;
+  background: transparent;
 
-  background:
-    transparent;
-
-  cursor:
-    pointer;
-
-  touch-action:
-    manipulation;
-}
-
-
-.p06-lucky-trigger:disabled {
-  cursor:
-    default;
+  cursor: pointer;
 }
 
 
@@ -2787,11 +2164,9 @@ img {
   width: 1px;
   height: 1px;
 
-  pointer-events:
-    none;
+  overflow: visible;
 
-  overflow:
-    visible;
+  pointer-events: none;
 }
 
 
@@ -2807,23 +2182,12 @@ img {
 
   position: absolute;
 
-  left: 0;
-  top: 0;
+  width: var(--size);
+  height: var(--size);
 
-  width:
-    var(--size);
-
-  height:
-    var(--size);
-
-  border-radius:
-    50%;
+  border-radius: 50%;
 
   background:
-    var(--particle-color);
-
-  box-shadow:
-    0 0 4px
     var(--particle-color);
 
   opacity: 0;
@@ -2844,21 +2208,10 @@ img {
 
     transform:
       translate(
-        calc(
-          -50% +
-          var(--ox)
-        ),
-        calc(
-          -50% +
-          var(--oy)
-        )
+        calc(-50% + var(--ox)),
+        calc(-50% + var(--oy))
       )
       scale(.35);
-  }
-
-  72% {
-    opacity:
-      .95;
   }
 
   100% {
@@ -2866,21 +2219,11 @@ img {
 
     transform:
       translate(
-        calc(
-          -50% +
-          var(--ox) +
-          var(--x)
-        ),
-        calc(
-          -50% +
-          var(--oy) +
-          var(--y)
-        )
+        calc(-50% + var(--ox) + var(--x)),
+        calc(-50% + var(--oy) + var(--y))
       )
       scale(.75)
-      rotate(
-        var(--rotation)
-      );
+      rotate(var(--rotation));
   }
 }
 
@@ -2888,33 +2231,30 @@ img {
 .p06-lucky-item {
   position: absolute;
 
-  display: block;
-
-  max-width: none;
-
   height: auto;
 
-  pointer-events:
-    none;
-
-  user-select:
-    none;
+  pointer-events: none;
 }
 
 
 .p06-ingots {
   z-index: 25;
+
   left: 35px;
   bottom: 47px;
+
   width: 75px;
 }
 
 
 .p06-knot {
   z-index: 28;
+
   left: 97px;
   bottom: 39px;
+
   width: 77px;
+
   transform:
     rotate(-7deg);
 }
@@ -2922,29 +2262,33 @@ img {
 
 .p06-bag {
   z-index: 26;
+
   right: 33px;
   bottom: 46px;
+
   width: 105px;
 }
 
 
 .p06-coins {
   z-index: 29;
+
   right: 109px;
   bottom: 38px;
+
   width: 53px;
+
   transform:
     rotate(5deg);
 }
 
 
 /* =========================================================
-   PAGE 07 — RSVP
+   PAGE 07
 ========================================================= */
 
 .page07-layout {
-  color:
-    var(--p07-green);
+  color: var(--p07-green);
 
   font-family:
     "Times New Roman",
@@ -2963,28 +2307,26 @@ img {
 
   height: auto;
 
-  max-width: none;
-
-  pointer-events:
-    none;
-
-  user-select:
-    none;
+  pointer-events: none;
 }
 
 
 .p07-top-left-decoration {
   z-index: 8;
+
   left: 12px;
   top: 14px;
+
   width: 102px;
 }
 
 
 .p07-butterfly {
   z-index: 8;
+
   right: 11px;
   top: 21px;
+
   width: 88px;
 
   animation:
@@ -2999,17 +2341,13 @@ img {
 
   0%,
   100% {
-    translate:
-      0 0;
-    rotate:
-      -2deg;
+    translate: 0 0;
+    rotate: -2deg;
   }
 
   50% {
-    translate:
-      -5px -9px;
-    rotate:
-      4deg;
+    translate: -5px -9px;
+    rotate: 4deg;
   }
 }
 
@@ -3029,39 +2367,30 @@ img {
   transform:
     translateX(-50%);
 
-  color:
-    var(--p07-red);
+  color: var(--p07-red);
 
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
+  font-size: 36px;
 
-  font-size:
-    36px;
+  font-weight: 400;
 
-  font-weight:
-    400;
+  line-height: .88;
 
-  line-height:
-    .88;
-
-  text-align:
-    center;
+  text-align: center;
 }
 
 
 .p07-divider-ornament {
   z-index: 9;
+
   left: 50%;
-  object-fit:
-    contain;
 }
 
 
 .p07-divider-ornament--top {
   top: 150px;
+
   width: 143px;
+
   transform:
     translateX(-50%);
 }
@@ -3069,7 +2398,9 @@ img {
 
 .p07-divider-ornament--bottom {
   top: 598px;
+
   width: 128px;
+
   transform:
     translateX(-50%);
 }
@@ -3090,20 +2421,13 @@ img {
   transform:
     translateX(-50%);
 
-  text-align:
-    center;
+  text-align: center;
 
-  color:
-    var(--p07-green);
+  font-size: 11px;
 
-  font-size:
-    11px;
+  font-style: italic;
 
-  font-style:
-    italic;
-
-  line-height:
-    1.22;
+  line-height: 1.22;
 }
 
 
@@ -3127,6 +2451,7 @@ img {
   position: absolute;
 
   left: 0;
+
   width: 100%;
 
   margin: 0;
@@ -3140,21 +2465,17 @@ img {
   top: 0;
 }
 
-
 .p07-form-group--attendance {
   top: 62px;
 }
-
 
 .p07-form-group--count {
   top: 127px;
 }
 
-
 .p07-form-group--message {
   top: 190px;
 }
-
 
 .p07-form-group--video {
   top: 270px;
@@ -3164,22 +2485,11 @@ img {
 .p07-form-label {
   display: block;
 
-  margin:
-    0 0 5px;
+  margin: 0 0 5px;
 
-  padding: 0;
+  color: var(--p07-green);
 
-  color:
-    var(--p07-green);
-
-  font-size:
-    12px;
-
-  font-weight:
-    400;
-
-  line-height:
-    1;
+  font-size: 12px;
 }
 
 
@@ -3192,35 +2502,14 @@ img {
 
   border:
     1px solid
-    rgba(
-      154,
-      119,
-      72,
-      .72
-    );
+    rgba(154, 119, 72, .72);
 
-  border-radius:
-    3px;
+  border-radius: 3px;
 
   background:
-    rgba(
-      255,
-      250,
-      235,
-      .38
-    );
+    rgba(255, 250, 235, .38);
 
-  box-shadow:
-    inset 0 0 0 1px
-    rgba(
-      255,
-      255,
-      255,
-      .42
-    );
-
-  overflow:
-    hidden;
+  overflow: hidden;
 }
 
 
@@ -3234,24 +2523,13 @@ img {
   fill: none;
 
   stroke:
-    rgba(
-      143,
-      113,
-      76,
-      .72
-    );
+    rgba(143, 113, 76, .72);
 
-  stroke-width:
-    1.7;
+  stroke-width: 1.7;
 
-  stroke-linecap:
-    round;
+  stroke-linecap: round;
 
-  stroke-linejoin:
-    round;
-
-  pointer-events:
-    none;
+  stroke-linejoin: round;
 }
 
 
@@ -3273,12 +2551,6 @@ img {
 
 
 .p07-text-input {
-  position: relative;
-
-  z-index: 2;
-
-  display: block;
-
   width: 100%;
   height: 100%;
 
@@ -3287,53 +2559,23 @@ img {
     0 43px;
 
   border: 0;
-
   outline: none;
 
-  background:
-    transparent;
+  background: transparent;
 
-  color:
-    #51483e;
+  font-size: 11.5px;
 
-  font-size:
-    11.5px;
-
-  font-style:
-    italic;
-}
-
-
-.p07-text-input::placeholder {
-  color:
-    rgba(
-      117,
-      92,
-      74,
-      .46
-    );
+  font-style: italic;
 }
 
 
 .p07-field-lotus {
   z-index: 4;
+
   right: 3px;
   bottom: -7px;
+
   width: 39px;
-}
-
-
-.p07-field-lotus--message {
-  right: 1px;
-  bottom: -8px;
-  width: 42px;
-}
-
-
-.p07-field-lotus--video {
-  right: 2px;
-  bottom: -7px;
-  width: 36px;
 }
 
 
@@ -3352,64 +2594,43 @@ img {
 
   display: flex;
 
-  align-items:
-    center;
+  align-items: center;
 
   height: 39px;
 
-  padding:
-    0 17px;
+  padding: 0 17px;
 
   border:
     1px solid
-    rgba(
-      154,
-      119,
-      72,
-      .64
-    );
+    rgba(154, 119, 72, .64);
 
-  border-radius:
-    3px;
+  border-radius: 3px;
 
   background:
-    rgba(
-      255,
-      250,
-      235,
-      .34
-    );
-
-  cursor:
-    pointer;
+    rgba(255, 250, 235, .34);
 }
 
 
 .p07-attendance-option input {
   position: absolute;
+
   opacity: 0;
-  pointer-events: none;
 }
 
 
 .p07-radio-mark {
   position: relative;
 
-  flex:
-    0 0 auto;
-
   width: 20px;
   height: 20px;
 
-  margin-right:
-    14px;
+  margin-right: 14px;
 
   border:
     1.4px solid
     var(--p07-green);
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 }
 
 
@@ -3424,30 +2645,14 @@ img {
   width: 12px;
   height: 12px;
 
-  border-radius:
-    50%;
+  border-radius: 50%;
 
   background:
     var(--p07-red);
 
   transform:
-    translate(
-      -50%,
-      -50%
-    )
+    translate(-50%, -50%)
     scale(0);
-
-  transition:
-    transform 150ms ease;
-}
-
-
-.p07-attendance-option
-input:checked
-+
-.p07-radio-mark {
-  border-color:
-    var(--p07-red);
 }
 
 
@@ -3456,29 +2661,13 @@ input:checked
 +
 .p07-radio-mark::after {
   transform:
-    translate(
-      -50%,
-      -50%
-    )
+    translate(-50%, -50%)
     scale(1);
 }
 
 
-.p07-attendance-option
-input:checked
-~
 .p07-attendance-text {
-  color:
-    var(--p07-red);
-}
-
-
-.p07-attendance-text {
-  color:
-    var(--p07-green);
-
-  font-size:
-    16px;
+  font-size: 16px;
 }
 
 
@@ -3488,8 +2677,7 @@ input:checked
   grid-template-columns:
     46px 1fr 1fr 1fr;
 
-  align-items:
-    center;
+  align-items: center;
 
   height: 38px;
 }
@@ -3497,66 +2685,37 @@ input:checked
 
 .p07-counter-icon {
   position: relative;
+
   left: 14px;
+
   width: 22px;
   height: 20px;
 }
 
 
 .p07-counter-button {
-  position: relative;
-
-  z-index: 3;
-
   height: 100%;
-
-  padding: 0;
 
   border: 0;
 
-  background:
-    transparent;
+  background: transparent;
 
-  color:
-    var(--p07-green);
+  color: var(--p07-green);
 
-  font-size:
-    22px;
-
-  cursor:
-    pointer;
+  font-size: 22px;
 }
 
 
 .p07-counter-value {
-  position: relative;
-
-  z-index: 3;
-
   display: flex;
 
-  align-items:
-    center;
+  align-items: center;
 
-  justify-content:
-    center;
+  justify-content: center;
 
-  height: 100%;
+  color: var(--p07-green);
 
-  color:
-    var(--p07-green);
-
-  font-size:
-    18px;
-}
-
-
-.p07-counter-button:disabled {
-  opacity:
-    .32;
-
-  cursor:
-    default;
+  font-size: 18px;
 }
 
 
@@ -3567,17 +2726,12 @@ input:checked
 
 .p07-field-icon--message {
   top: 13px;
+
   transform: none;
 }
 
 
 .p07-message-input {
-  position: relative;
-
-  z-index: 2;
-
-  display: block;
-
   width: 100%;
   height: 100%;
 
@@ -3586,98 +2740,83 @@ input:checked
     8px 43px;
 
   border: 0;
-
   outline: none;
 
   resize: none;
 
-  background:
-    transparent;
+  background: transparent;
 
-  color:
-    #51483e;
+  font-size: 11px;
 
-  font-size:
-    11px;
+  font-style: italic;
+}
 
-  font-style:
-    italic;
 
-  line-height:
-    1.3;
+.p07-field-lotus--message {
+  right: 1px;
+  bottom: -8px;
+
+  width: 42px;
 }
 
 
 .p07-video-field {
   display: flex;
 
-  align-items:
-    center;
+  align-items: center;
 
   height: 38px;
-
-  cursor:
-    pointer;
 }
 
 
 .p07-video-icon {
   left: 13px;
   top: 50%;
+
   width: 23px;
   height: 20px;
+
   transform:
     translateY(-50%);
 }
 
 
 .p07-video-text {
-  position: relative;
-
-  z-index: 2;
-
-  display: block;
-
   width: 100%;
 
   padding:
     0 48px
     0 47px;
 
-  overflow:
-    hidden;
+  overflow: hidden;
 
-  color:
-    rgba(
-      117,
-      92,
-      74,
-      .54
-    );
+  font-size: 10.5px;
 
-  font-size:
-    10.5px;
+  font-style: italic;
 
-  font-style:
-    italic;
+  line-height: 38px;
 
-  line-height:
-    38px;
+  text-overflow: ellipsis;
 
-  text-overflow:
-    ellipsis;
-
-  white-space:
-    nowrap;
+  white-space: nowrap;
 }
 
 
 .p07-video-input {
   position: absolute;
+
   width: 1px;
   height: 1px;
+
   opacity: 0;
-  pointer-events: none;
+}
+
+
+.p07-field-lotus--video {
+  right: 2px;
+  bottom: -7px;
+
+  width: 36px;
 }
 
 
@@ -3687,15 +2826,11 @@ input:checked
   left: 50%;
   top: 322px;
 
-  z-index: 5;
-
   display: flex;
 
-  align-items:
-    center;
+  align-items: center;
 
-  justify-content:
-    center;
+  justify-content: center;
 
   gap: 12px;
 
@@ -3709,8 +2844,7 @@ input:checked
     1px solid
     #8f2f1c;
 
-  border-radius:
-    18px;
+  border-radius: 18px;
 
   background:
     linear-gradient(
@@ -3719,41 +2853,21 @@ input:checked
       #9f2f20
     );
 
-  box-shadow:
-    inset 0 0 0 2px
-    rgba(
-      238,
-      178,
-      87,
-      .55
-    );
+  color: #fff9e9;
 
-  color:
-    #fff9e9;
-
-  font-size:
-    15px;
-
-  cursor:
-    pointer;
+  font-size: 15px;
 }
 
 
 .p07-submit-icon {
   width: 18px;
   height: 18px;
+
   fill: none;
-  stroke:
-    #fff9e9;
-  stroke-width:
-    1.8;
-}
 
+  stroke: #fff9e9;
 
-.p07-submit:active {
-  transform:
-    translateX(-50%)
-    scale(.975);
+  stroke-width: 1.8;
 }
 
 
@@ -3765,22 +2879,14 @@ input:checked
 
   width: 290px;
 
-  margin: 0;
-
   transform:
     translateX(-50%);
 
-  text-align:
-    center;
+  text-align: center;
 
-  color:
-    var(--p07-green);
+  font-size: 9px;
 
-  font-size:
-    9px;
-
-  font-style:
-    italic;
+  font-style: italic;
 
   opacity: 0;
 }
@@ -3801,11 +2907,9 @@ input:checked
 
   display: flex;
 
-  align-items:
-    center;
+  align-items: center;
 
-  justify-content:
-    center;
+  justify-content: center;
 
   width: 190px;
   height: 47px;
@@ -3815,35 +2919,15 @@ input:checked
 
   border:
     1px solid
-    rgba(
-      174,
-      130,
-      74,
-      .72
-    );
+    rgba(174, 130, 74, .72);
 
-  border-radius:
-    23px;
+  border-radius: 23px;
 
-  background:
-    rgba(
-      255,
-      249,
-      232,
-      .38
-    );
+  color: var(--p07-red);
 
-  color:
-    var(--p07-red);
+  font-size: 13px;
 
-  font-size:
-    13px;
-
-  line-height:
-    1.1;
-
-  text-align:
-    center;
+  text-align: center;
 }
 
 
@@ -3857,166 +2941,104 @@ input:checked
   z-index: 15;
 
   width: 380px;
+
   left: 50%;
   top: 63px;
 
   transform:
     translateX(-50%);
 
-  text-align:
-    center;
+  text-align: center;
 }
 
 
 .p08-title {
   margin: 0;
 
-  color:
-    #972b15;
+  color: #972b15;
 
-  font-family:
-    "Times New Roman",
-    serif;
+  font-size: 34px;
 
-  font-size:
-    34px;
+  font-weight: 500;
 
-  font-weight:
-    500;
+  line-height: 1.16;
 
-  line-height:
-    1.16;
-
-  letter-spacing:
-    1px;
+  letter-spacing: 1px;
 }
 
 
 .p08-divider {
   display: flex;
 
-  align-items:
-    center;
+  align-items: center;
 
-  justify-content:
-    center;
+  justify-content: center;
 
   width: 150px;
 
-  margin-left:
-    auto;
-
-  margin-right:
-    auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
 .p08-divider span {
-  display: block;
-
   width: 50px;
   height: 1px;
 
-  background:
-    #b54d31;
+  background: #b54d31;
 }
 
 
 .p08-divider b {
-  display: block;
+  margin: 0 8px;
 
-  margin:
-    0 8px;
-
-  color:
-    #a9341e;
-
-  font-size:
-    13px;
-
-  font-weight:
-    400;
+  color: #a9341e;
 }
 
 
 .p08-divider--01 {
-  margin-top:
-    21px;
+  margin-top: 21px;
 }
 
-
 .p08-divider--02 {
-  margin-top:
-    15px;
+  margin-top: 15px;
 }
 
 
 .p08-names {
-  margin:
-    15px 0 0;
+  margin: 15px 0 0;
 
-  color:
-    #9b331e;
+  color: #9b331e;
 
-  font-family:
-    "Times New Roman",
-    "Segoe Script",
-    "Snell Roundhand",
-    cursive;
+  font-size: 40px;
 
-  font-size:
-    40px;
-
-  font-weight:
-    400;
-
-  line-height:
-    1;
-
-  white-space:
-    nowrap;
+  white-space: nowrap;
 }
 
 
 .p08-names span {
-  margin:
-    0 3px;
+  margin: 0 3px;
 
-  color:
-    #496647;
+  color: #496647;
 
-  font-family:
-    "Times New Roman",
-    serif;
-
-  font-size:
-    35px;
-
-  vertical-align:
-    2px;
+  font-size: 35px;
 }
 
 
 .p08-date {
-  margin:
-    10px 0 0;
+  margin: 10px 0 0;
 
-  color:
-    #9b331e;
+  color: #9b331e;
 
-  font-size:
-    20px;
+  font-size: 20px;
 
-  font-weight:
-    500;
-
-  letter-spacing:
-    3px;
+  letter-spacing: 3px;
 }
 
 
 .p08-cloud--left {
   width: 77px;
+
   left: 36px;
   top: 350px;
 }
@@ -4024,6 +3046,7 @@ input:checked
 
 .p08-cloud--right {
   width: 68px;
+
   right: 31px;
   top: 300px;
 }
@@ -4035,7 +3058,6 @@ input:checked
   z-index: 4;
 
   width: 300px;
-  height: auto;
 
   left: 190px;
   bottom: 32px;
@@ -4043,14 +3065,7 @@ input:checked
   transform:
     translateX(-50%);
 
-  object-fit:
-    contain;
-
-  opacity:
-    .47;
-
-  pointer-events:
-    none;
+  opacity: .47;
 }
 
 
@@ -4060,19 +3075,12 @@ input:checked
   z-index: 7;
 
   width: 233px;
-  height: auto;
 
   left: 240px;
   bottom: 142px;
 
   transform:
     translateX(-50%);
-
-  object-fit:
-    contain;
-
-  pointer-events:
-    none;
 }
 
 
@@ -4082,16 +3090,9 @@ input:checked
   z-index: 6;
 
   width: 85px;
-  height: auto;
 
   right: 20px;
   bottom: 143px;
-
-  object-fit:
-    contain;
-
-  pointer-events:
-    none;
 }
 
 
@@ -4101,16 +3102,9 @@ input:checked
   z-index: 10;
 
   width: 120px;
-  height: auto;
 
   left: 63px;
   bottom: 72px;
-
-  object-fit:
-    contain;
-
-  pointer-events:
-    none;
 }
 
 
@@ -4118,20 +3112,12 @@ input:checked
   position: absolute;
 
   z-index: 9;
-
-  display: block;
-
-  height: auto;
-
-  max-width: none;
-
-  pointer-events:
-    none;
 }
 
 
 .p08-lotus--left {
   width: 120px;
+
   left: 1px;
   bottom: 52px;
 }
@@ -4139,13 +3125,14 @@ input:checked
 
 .p08-lotus--right {
   width: 122px;
+
   right: 4px;
   bottom: 48px;
 }
 
 
 /* =========================================================
-   OFFSCREEN PERFORMANCE
+   PERFORMANCE
 ========================================================= */
 
 .invitation-page:not(.is-nearby)
@@ -4164,32 +3151,6 @@ input:checked
 .p02-confetti-piece,
 
 .invitation-page:not(.is-nearby)
-.p06-confetti {
-  animation-play-state:
-    paused !important;
-}
-
-
-/* =========================================================
-   HIDDEN TAB
-========================================================= */
-
-.is-document-hidden
-.p02-cloud,
-
-.is-document-hidden
-.p03-cloud,
-
-.is-document-hidden
-.p06-cloud,
-
-.is-document-hidden
-.p08-cloud,
-
-.is-document-hidden
-.p02-confetti-piece,
-
-.is-document-hidden
 .p06-confetti {
   animation-play-state:
     paused !important;
