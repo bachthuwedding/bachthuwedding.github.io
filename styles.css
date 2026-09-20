@@ -8,6 +8,7 @@
   --design-height: 680px;
 
   --design-scale: 1;
+
   --render-width: 390px;
   --render-height: 680px;
 
@@ -103,8 +104,7 @@ img {
   opacity: 0;
 
   box-shadow:
-    0 0 40px
-    rgba(80, 46, 24, .12);
+    0 0 40px rgba(80, 46, 24, .12);
 
   transition:
     opacity 80ms linear;
@@ -452,6 +452,9 @@ img {
 
   overflow: hidden;
 
+  margin: 0;
+  padding: 0;
+
   background: #f1dfbd;
 
   isolation: isolate;
@@ -472,6 +475,8 @@ img {
   inset: 0;
 
   z-index: 0;
+
+  display: block;
 
   width: 100%;
   height: 100%;
@@ -552,7 +557,6 @@ img {
   bottom: -1px;
 
   width: 120px;
-
   height: auto;
 
   transform:
@@ -636,7 +640,7 @@ img {
 }
 
 
-/* PAGE 02 ENTRY */
+/* ENTRY */
 
 .page02-layout .p02-cloud,
 .page02-layout .p02-confetti-cluster,
@@ -648,9 +652,7 @@ img {
     var(--page02-entry-duration)
     var(--page02-entry-ease),
 
-    opacity
-    620ms
-    ease;
+    opacity 620ms ease;
 }
 
 
@@ -989,7 +991,8 @@ img {
 
 
 .p02-family-title {
-  margin: 0 0 7px;
+  margin:
+    0 0 7px;
 
   font-size: 11px;
 
@@ -1105,8 +1108,7 @@ img {
   background-image:
     var(--p02-confetti-sprite, none);
 
-  background-repeat:
-    no-repeat;
+  background-repeat: no-repeat;
 
   background-size:
     361.25px 780.93px;
@@ -1378,8 +1380,6 @@ img {
 }
 
 
-/* CLOUDS */
-
 .p03-cloud--01 {
   left: 38px;
   top: 68px;
@@ -1411,8 +1411,6 @@ img {
   width: 59px;
 }
 
-
-/* TITLE */
 
 .p03-title {
   position: absolute;
@@ -1459,18 +1457,6 @@ img {
 }
 
 
-/* =========================================================
-   NEW 3-POINT TIMELINE
-
-   Original asset:
-   734 × 2048
-
-   width 168px gives rendered height ~469px.
-
-   Visible line inside PNG is centered close to x=195
-   on the 390px artboard.
-========================================================= */
-
 .p03-timeline {
   z-index: 14;
 
@@ -1484,18 +1470,12 @@ img {
 }
 
 
-/* =========================================================
-   ILLUSTRATIONS
-========================================================= */
-
 .p03-illustration {
   z-index: 12;
 
   object-fit: contain;
 }
 
-
-/* DÓN DÂU */
 
 .p03-kieu {
   left: 210px;
@@ -1505,8 +1485,6 @@ img {
 }
 
 
-/* TIỆC CƯỚI */
-
 .p03-mam-co {
   left: 38px;
   top: 285px;
@@ -1515,8 +1493,6 @@ img {
 }
 
 
-/* AFTER PARTY */
-
 .p03-cheers {
   left: 190px;
   top: 423px;
@@ -1524,10 +1500,6 @@ img {
   width: 115px;
 }
 
-
-/* =========================================================
-   EVENTS
-========================================================= */
 
 .p03-event {
   position: absolute;
@@ -1600,19 +1572,11 @@ img {
 }
 
 
-/*
-  Timeline point 1 ≈ y195
-*/
-
 .p03-event--02 {
   left: 100px;
   top: 177px;
 }
 
-
-/*
-  Timeline point 2 ≈ y325
-*/
 
 .p03-event--03 {
   left: 215px;
@@ -1620,19 +1584,11 @@ img {
 }
 
 
-/*
-  Timeline point 3 ≈ y462
-*/
-
 .p03-event--04 {
   left: 50px;
   top: 445px;
 }
 
-
-/* =========================================================
-   LOCATION
-========================================================= */
 
 .p03-location {
   position: relative;
@@ -1731,9 +1687,7 @@ img {
 }
 
 
-/* =========================================================
-   DRESS CODE
-========================================================= */
+/* DRESS CODE */
 
 .p03-dress-code {
   position: absolute;
@@ -1872,17 +1826,20 @@ img {
   width: 92px;
 }
 
+
 .p06-cloud--02 {
   left: 18px;
   top: 127px;
   width: 67px;
 }
 
+
 .p06-cloud--03 {
   right: -10px;
   top: 332px;
   width: 74px;
 }
+
 
 .p06-cloud--04 {
   left: -5px;
@@ -2485,7 +2442,8 @@ img {
 .p07-form-label {
   display: block;
 
-  margin: 0 0 5px;
+  margin:
+    0 0 5px;
 
   color: var(--p07-green);
 
@@ -2932,7 +2890,21 @@ input:checked
 
 
 /* =========================================================
-   PAGE 08
+   PAGE 08 — THANK YOU
+========================================================= */
+
+.page08-layout {
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  color: #345447;
+}
+
+
+/* =========================================================
+   PAGE 08 TEXT CONTENT
 ========================================================= */
 
 .p08-content {
@@ -2940,101 +2912,263 @@ input:checked
 
   z-index: 15;
 
-  width: 380px;
-
   left: 50%;
-  top: 63px;
+  top: 25px;
+
+  width: 356px;
 
   transform:
     translateX(-50%);
 
   text-align: center;
+
+  pointer-events: none;
 }
 
 
-.p08-title {
-  margin: 0;
+/* =========================================================
+   PAGE 08 DIVIDERS
+========================================================= */
 
-  color: #972b15;
-
-  font-size: 34px;
-
-  font-weight: 500;
-
-  line-height: 1.16;
-
-  letter-spacing: 1px;
-}
-
-
-.p08-divider {
+.p08-thanks-divider {
   display: flex;
 
   align-items: center;
 
   justify-content: center;
 
-  width: 150px;
+  width: 132px;
 
   margin-left: auto;
   margin-right: auto;
+
+  color: #a83a22;
 }
 
 
-.p08-divider span {
-  width: 50px;
+.p08-thanks-divider span {
+  display: block;
+
+  width: 46px;
   height: 1px;
 
-  background: #b54d31;
+  background:
+    rgba(168, 58, 34, .75);
 }
 
 
-.p08-divider b {
-  margin: 0 8px;
+.p08-thanks-divider b {
+  display: block;
 
-  color: #a9341e;
+  margin: 0 7px;
+
+  color: #a83a22;
+
+  font-family:
+    "Times New Roman",
+    serif;
+
+  font-size: 13px;
+
+  font-weight: 400;
+
+  line-height: 1;
 }
 
 
-.p08-divider--01 {
-  margin-top: 21px;
-}
-
-.p08-divider--02 {
-  margin-top: 15px;
+.p08-thanks-divider--top {
+  margin-top: 0;
 }
 
 
-.p08-names {
-  margin: 15px 0 0;
+.p08-thanks-divider--title-bottom {
+  margin-top: 2px;
+}
 
-  color: #9b331e;
 
-  font-size: 40px;
+.p08-thanks-divider--middle {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+
+/* =========================================================
+   PAGE 08 MAIN TITLE
+========================================================= */
+
+.p08-title {
+  margin:
+    4px 0 0;
+
+  color: #a8301c;
+
+  font-family:
+    "Segoe Script",
+    "Snell Roundhand",
+    "Brush Script MT",
+    "Times New Roman",
+    cursive;
+
+  font-size: 39px;
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  letter-spacing: -.8px;
+
+  transform:
+    scaleX(.94);
+}
+
+
+/* =========================================================
+   ENGLISH HEADLINE
+========================================================= */
+
+.p08-english-title {
+  margin:
+    7px 0 0;
+
+  color: #405948;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 10.5px;
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  letter-spacing: .55px;
 
   white-space: nowrap;
 }
 
 
-.p08-names span {
-  margin: 0 3px;
+/* =========================================================
+   VIETNAMESE THANK YOU TEXT
+========================================================= */
 
-  color: #496647;
+.p08-vietnamese-copy {
+  width: 350px;
 
-  font-size: 35px;
+  margin:
+    10px auto 0;
+
+  color: #405948;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 8.7px;
+
+  font-weight: 400;
+
+  line-height: 1.38;
+
+  text-align: center;
 }
 
 
-.p08-date {
-  margin: 10px 0 0;
-
-  color: #9b331e;
-
-  font-size: 20px;
-
-  letter-spacing: 3px;
+.p08-vietnamese-copy p {
+  margin:
+    0 0 8px;
 }
 
+
+.p08-vietnamese-copy p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   ENGLISH THANK YOU COPY
+========================================================= */
+
+.p08-english-copy {
+  margin:
+    0 auto;
+
+  width: 340px;
+
+  color: #405948;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 8.8px;
+
+  font-weight: 400;
+
+  line-height: 1.4;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   WITH LOVE
+========================================================= */
+
+.p08-with-love {
+  margin:
+    5px 0 0;
+
+  color: #405948;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 10px;
+
+  font-weight: 400;
+
+  line-height: 1;
+}
+
+
+/* =========================================================
+   SIGNATURE
+========================================================= */
+
+.p08-signature {
+  margin:
+    1px 0 0;
+
+  color: #a8301c;
+
+  font-family:
+    "Segoe Script",
+    "Snell Roundhand",
+    "Brush Script MT",
+    "Times New Roman",
+    cursive;
+
+  font-size: 26px;
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  transform:
+    scaleX(.94);
+}
+
+
+/* =========================================================
+   PAGE 08 EXISTING ELEMENTS
+   GIỮ NGUYÊN
+========================================================= */
 
 .p08-cloud--left {
   width: 77px;
@@ -3058,6 +3192,7 @@ input:checked
   z-index: 4;
 
   width: 300px;
+  height: auto;
 
   left: 190px;
   bottom: 32px;
@@ -3065,7 +3200,11 @@ input:checked
   transform:
     translateX(-50%);
 
+  object-fit: contain;
+
   opacity: .47;
+
+  pointer-events: none;
 }
 
 
@@ -3075,12 +3214,17 @@ input:checked
   z-index: 7;
 
   width: 233px;
+  height: auto;
 
   left: 240px;
   bottom: 142px;
 
   transform:
     translateX(-50%);
+
+  object-fit: contain;
+
+  pointer-events: none;
 }
 
 
@@ -3090,9 +3234,14 @@ input:checked
   z-index: 6;
 
   width: 85px;
+  height: auto;
 
   right: 20px;
   bottom: 143px;
+
+  object-fit: contain;
+
+  pointer-events: none;
 }
 
 
@@ -3102,9 +3251,14 @@ input:checked
   z-index: 10;
 
   width: 120px;
+  height: auto;
 
   left: 63px;
   bottom: 72px;
+
+  object-fit: contain;
+
+  pointer-events: none;
 }
 
 
@@ -3112,6 +3266,10 @@ input:checked
   position: absolute;
 
   z-index: 9;
+
+  height: auto;
+
+  pointer-events: none;
 }
 
 
