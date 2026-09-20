@@ -22,20 +22,24 @@
   const root =
     document.documentElement;
 
+
   const siteShell =
     document.getElementById(
       "siteShell"
     );
+
 
   const openingCardButton =
     document.getElementById(
       "openingCardButton"
     );
 
+
   const pageScroller =
     document.getElementById(
       "page02"
     );
+
 
   const page02Layout =
     document.getElementById(
@@ -44,11 +48,25 @@
 
 
   const pages = [
+
     page02Layout,
-    document.getElementById("page03"),
-    document.getElementById("page06"),
-    document.getElementById("page07"),
-    document.getElementById("page08")
+
+    document.getElementById(
+      "page03"
+    ),
+
+    document.getElementById(
+      "page06"
+    ),
+
+    document.getElementById(
+      "page07"
+    ),
+
+    document.getElementById(
+      "page08"
+    )
+
   ].filter(Boolean);
 
 
@@ -61,20 +79,24 @@
       "luckyCard"
     );
 
+
   const luckyNumber =
     document.getElementById(
       "luckyNumber"
     );
+
 
   const luckyHint =
     document.getElementById(
       "luckyHint"
     );
 
+
   const luckyTrigger =
     document.getElementById(
       "luckyTrigger"
     );
+
 
   const luckyFireworks =
     document.getElementById(
@@ -91,55 +113,66 @@
       "rsvpForm"
     );
 
+
   const rsvpGuestName =
     document.getElementById(
       "rsvpGuestName"
     );
+
 
   const rsvpAttendanceYes =
     document.getElementById(
       "rsvpAttendanceYes"
     );
 
+
   const rsvpAttendanceNo =
     document.getElementById(
       "rsvpAttendanceNo"
     );
+
 
   const rsvpGuestCount =
     document.getElementById(
       "rsvpGuestCount"
     );
 
+
   const rsvpMinus =
     document.getElementById(
       "rsvpMinus"
     );
+
 
   const rsvpPlus =
     document.getElementById(
       "rsvpPlus"
     );
 
+
   const rsvpMessage =
     document.getElementById(
       "rsvpMessage"
     );
+
 
   const rsvpVideo =
     document.getElementById(
       "rsvpVideo"
     );
 
+
   const rsvpVideoLabel =
     document.getElementById(
       "rsvpVideoLabel"
     );
 
+
   const rsvpSubmit =
     document.getElementById(
       "rsvpSubmit"
     );
+
 
   const rsvpStatus =
     document.getElementById(
@@ -154,30 +187,45 @@
   const imagePromises =
     new WeakMap();
 
+
   const pagePromises =
     new WeakMap();
+
 
   const urlPromises =
     new Map();
 
 
-  let pageMode = false;
-
-  let resizeRaf = 0;
-
-  let scrollRaf = 0;
-
-  let activePageIndex = -1;
+  let pageMode =
+    false;
 
 
-  let luckyIdleTimer = null;
-
-  let luckyRolling = false;
-
-  let luckyLocked = false;
+  let resizeRaf =
+    0;
 
 
-  let rsvpCount = 1;
+  let scrollRaf =
+    0;
+
+
+  let activePageIndex =
+    -1;
+
+
+  let luckyIdleTimer =
+    null;
+
+
+  let luckyRolling =
+    false;
+
+
+  let luckyLocked =
+    false;
+
+
+  let rsvpCount =
+    1;
 
 
   /* =======================================================
@@ -202,8 +250,12 @@
 
     const scale =
       Math.min(
-        viewportWidth / DESIGN_WIDTH,
-        viewportHeight / DESIGN_HEIGHT
+
+        viewportWidth /
+        DESIGN_WIDTH,
+
+        viewportHeight /
+        DESIGN_HEIGHT
       );
 
 
@@ -252,6 +304,15 @@
 
   window.addEventListener(
     "resize",
+    scheduleScale,
+    {
+      passive: true
+    }
+  );
+
+
+  window.addEventListener(
+    "orientationchange",
     scheduleScale,
     {
       passive: true
@@ -317,7 +378,10 @@
     if (
       urlPromises.has(url)
     ) {
-      return urlPromises.get(url);
+
+      return urlPromises.get(
+        url
+      );
     }
 
 
@@ -334,8 +398,10 @@
 
 
           try {
+
             image.fetchPriority =
               priority;
+
           } catch (_) {}
 
 
@@ -348,8 +414,12 @@
 
               image
                 .decode()
-                .catch(() => {})
-                .finally(resolve);
+                .catch(
+                  () => {}
+                )
+                .finally(
+                  resolve
+                );
 
             } else {
 
@@ -376,10 +446,14 @@
           );
 
 
-          image.src = url;
+          image.src =
+            url;
 
 
-          if (image.complete) {
+          if (
+            image.complete
+          ) {
+
             finish();
           }
         }
@@ -413,7 +487,10 @@
     if (
       imagePromises.has(image)
     ) {
-      return imagePromises.get(image);
+
+      return imagePromises.get(
+        image
+      );
     }
 
 
@@ -431,8 +508,10 @@
         (resolve) => {
 
           try {
+
             image.fetchPriority =
               priority;
+
           } catch (_) {}
 
 
@@ -445,8 +524,12 @@
 
               image
                 .decode()
-                .catch(() => {})
-                .finally(resolve);
+                .catch(
+                  () => {}
+                )
+                .finally(
+                  resolve
+                );
 
             } else {
 
@@ -473,7 +556,8 @@
           );
 
 
-          image.src = source;
+          image.src =
+            source;
 
 
           image.removeAttribute(
@@ -481,7 +565,10 @@
           );
 
 
-          if (image.complete) {
+          if (
+            image.complete
+          ) {
+
             finish();
           }
         }
@@ -515,7 +602,10 @@
     if (
       pagePromises.has(page)
     ) {
-      return pagePromises.get(page);
+
+      return pagePromises.get(
+        page
+      );
     }
 
 
@@ -533,6 +623,7 @@
         const jobs =
           images.map(
             (image) =>
+
               loadImage(
                 image,
                 priority
@@ -546,7 +637,9 @@
           );
 
 
-        if (spriteHost) {
+        if (
+          spriteHost
+        ) {
 
           const spriteUrl =
             spriteHost.dataset
@@ -559,6 +652,7 @@
               spriteUrl,
               priority
             )
+
             .then(
               () => {
 
@@ -607,7 +701,10 @@
 
   function playPage02Entrance() {
 
-    if (!page02Layout) {
+    if (
+      !page02Layout
+    ) {
+
       return;
     }
 
@@ -633,6 +730,7 @@
               .add(
                 "is-entering"
               );
+
           }
         );
       }
@@ -650,7 +748,9 @@
 
     const safeIndex =
       Math.max(
+
         0,
+
         Math.min(
           index,
           pages.length - 1
@@ -665,9 +765,12 @@
       ) => {
 
         page.classList.toggle(
+
           "is-nearby",
+
           Math.abs(
-            pageIndex - safeIndex
+            pageIndex -
+            safeIndex
           ) <= 1
         );
       }
@@ -702,15 +805,22 @@
 
   function getCurrentPageIndex() {
 
-    if (!pageScroller) {
+    if (
+      !pageScroller
+    ) {
+
       return 0;
     }
 
 
     return Math.max(
+
       0,
+
       Math.min(
+
         pages.length - 1,
+
         Math.round(
           pageScroller.scrollTop /
           DESIGN_HEIGHT
@@ -722,7 +832,10 @@
 
   function onPageScroll() {
 
-    if (scrollRaf) {
+    if (
+      scrollRaf
+    ) {
+
       return;
     }
 
@@ -731,7 +844,8 @@
       requestAnimationFrame(
         () => {
 
-          scrollRaf = 0;
+          scrollRaf =
+            0;
 
 
           const index =
@@ -767,17 +881,21 @@
 
 
   /* =======================================================
-     OPEN
+     OPEN INVITATION
   ======================================================= */
 
   async function enterInvitation() {
 
-    if (pageMode) {
+    if (
+      pageMode
+    ) {
+
       return;
     }
 
 
-    pageMode = true;
+    pageMode =
+      true;
 
 
     await loadPage(
@@ -786,9 +904,13 @@
     );
 
 
-    if (pageScroller) {
+    if (
+      pageScroller
+    ) {
 
-      pageScroller.scrollTop = 0;
+      pageScroller.scrollTop =
+        0;
+
 
       pageScroller.setAttribute(
         "aria-hidden",
@@ -804,10 +926,13 @@
       );
 
 
-    activePageIndex = 0;
+    activePageIndex =
+      0;
 
 
-    setNearbyPages(0);
+    setNearbyPages(
+      0
+    );
 
 
     playPage02Entrance();
@@ -816,7 +941,9 @@
     runWhenIdle(
       () => {
 
-        if (pages[1]) {
+        if (
+          pages[1]
+        ) {
 
           loadPage(
             pages[1],
@@ -838,6 +965,7 @@
           pages[0],
           "high"
         );
+
       },
       {
         passive: true
@@ -853,6 +981,7 @@
         event.preventDefault();
 
         enterInvitation();
+
       }
     );
 
@@ -864,6 +993,7 @@
         pages[0],
         "low"
       );
+
     },
     450
   );
@@ -892,7 +1022,7 @@
 
 
   /* =======================================================
-     LUCKY
+     LUCKY NUMBER
   ======================================================= */
 
   function randomLuckyNumber() {
@@ -909,7 +1039,9 @@
     ) {
 
       const data =
-        new Uint32Array(1);
+        new Uint32Array(
+          1
+        );
 
 
       window.crypto
@@ -939,7 +1071,10 @@
     value
   ) {
 
-    if (!luckyNumber) {
+    if (
+      !luckyNumber
+    ) {
+
       return;
     }
 
@@ -956,7 +1091,8 @@
   function stopLuckyIdleShuffle() {
 
     if (
-      luckyIdleTimer !== null
+      luckyIdleTimer !==
+      null
     ) {
 
       clearInterval(
@@ -964,7 +1100,8 @@
       );
 
 
-      luckyIdleTimer = null;
+      luckyIdleTimer =
+        null;
     }
 
 
@@ -983,6 +1120,7 @@
       luckyLocked ||
       luckyRolling
     ) {
+
       return;
     }
 
@@ -1004,6 +1142,7 @@
           showLuckyNumber(
             randomLuckyNumber()
           );
+
         },
         105
       );
@@ -1012,7 +1151,10 @@
 
   function fireLuckyFireworks() {
 
-    if (!luckyFireworks) {
+    if (
+      !luckyFireworks
+    ) {
+
       return;
     }
 
@@ -1022,12 +1164,14 @@
 
 
     const colors = [
+
       "#a63019",
       "#c99633",
       "#e5b747",
       "#315747",
       "#d76b35",
       "#f0d37b"
+
     ];
 
 
@@ -1128,6 +1272,7 @@
 
         luckyFireworks
           .replaceChildren();
+
       },
       1700
     );
@@ -1140,6 +1285,7 @@
       luckyRolling ||
       luckyLocked
     ) {
+
       return;
     }
 
@@ -1147,7 +1293,8 @@
     stopLuckyIdleShuffle();
 
 
-    luckyRolling = true;
+    luckyRolling =
+      true;
 
 
     luckyCard
@@ -1157,7 +1304,9 @@
       );
 
 
-    if (luckyHint) {
+    if (
+      luckyHint
+    ) {
 
       luckyHint.textContent =
         "Đang tìm số may mắn...";
@@ -1176,15 +1325,20 @@
       1850;
 
 
-    let lastUpdate = 0;
+    let lastUpdate =
+      0;
 
 
-    function frame(now) {
+    function frame(
+      now
+    ) {
 
       const progress =
         Math.min(
+
           (now - start) /
           duration,
+
           1
         );
 
@@ -1203,7 +1357,8 @@
         interval
       ) {
 
-        lastUpdate = now;
+        lastUpdate =
+          now;
 
 
         showLuckyNumber(
@@ -1212,18 +1367,25 @@
       }
 
 
-      if (progress < 1) {
+      if (
+        progress < 1
+      ) {
 
         requestAnimationFrame(
           frame
         );
 
+
         return;
       }
 
 
-      luckyRolling = false;
-      luckyLocked = true;
+      luckyRolling =
+        false;
+
+
+      luckyLocked =
+        true;
 
 
       luckyCard
@@ -1248,16 +1410,22 @@
       fireLuckyFireworks();
 
 
-      if (luckyHint) {
+      if (
+        luckyHint
+      ) {
 
         luckyHint.textContent =
           LUCKY_TEST_MODE
-          ? "Reload trang để thử lại"
-          : "Số may mắn của bạn";
+          ?
+          "Reload trang để thử lại"
+          :
+          "Số may mắn của bạn";
       }
 
 
-      if (luckyTrigger) {
+      if (
+        luckyTrigger
+      ) {
 
         luckyTrigger.disabled =
           true;
@@ -1287,13 +1455,18 @@
 
   function updateCount() {
 
-    if (!rsvpGuestCount) {
+    if (
+      !rsvpGuestCount
+    ) {
+
       return;
     }
 
 
     rsvpGuestCount.textContent =
-      String(rsvpCount);
+      String(
+        rsvpCount
+      );
   }
 
 
@@ -1310,6 +1483,7 @@
 
 
         updateCount();
+
       }
     );
 
@@ -1327,6 +1501,7 @@
 
 
         updateCount();
+
       }
     );
 
@@ -1340,7 +1515,9 @@
           rsvpAttendanceNo.checked
         ) {
 
-          rsvpCount = 0;
+          rsvpCount =
+            0;
+
 
           updateCount();
         }
@@ -1358,7 +1535,9 @@
           rsvpCount < 1
         ) {
 
-          rsvpCount = 1;
+          rsvpCount =
+            1;
+
 
           updateCount();
         }
@@ -1401,9 +1580,13 @@
             .trim();
 
 
-        if (!name) {
+        if (
+          !name
+        ) {
 
-          if (rsvpStatus) {
+          if (
+            rsvpStatus
+          ) {
 
             rsvpStatus.textContent =
               "Bạn nhập tên khách mời giúp chúng mình nhé.";
@@ -1421,7 +1604,9 @@
         }
 
 
-        if (rsvpStatus) {
+        if (
+          rsvpStatus
+        ) {
 
           rsvpStatus.textContent =
             "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!";
@@ -1435,7 +1620,9 @@
         }
 
 
-        if (rsvpSubmit) {
+        if (
+          rsvpSubmit
+        ) {
 
           rsvpSubmit.disabled =
             true;
@@ -1448,7 +1635,9 @@
               );
 
 
-          if (text) {
+          if (
+            text
+          ) {
 
             text.textContent =
               "ĐÃ GỬI XÁC NHẬN";
@@ -1469,7 +1658,9 @@
     "visibilitychange",
     () => {
 
-      if (document.hidden) {
+      if (
+        document.hidden
+      ) {
 
         stopLuckyIdleShuffle();
 
