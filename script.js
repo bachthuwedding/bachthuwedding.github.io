@@ -12,9 +12,13 @@
   const LUCKY_MIN = 1;
   const LUCKY_MAX = 99;
 
+
   /*
-    TRUE = test lại sau mỗi reload
-    FALSE = khóa số bằng localStorage
+    true:
+    reload → roll lại được để test
+
+    false:
+    khóa số bằng localStorage
   */
 
   const LUCKY_TEST_MODE = true;
@@ -27,20 +31,24 @@
   const root =
     document.documentElement;
 
+
   const siteShell =
     document.getElementById(
       "siteShell"
     );
+
 
   const openingCardButton =
     document.getElementById(
       "openingCardButton"
     );
 
+
   const pageScroller =
     document.getElementById(
       "page02"
     );
+
 
   const page02Layout =
     document.getElementById(
@@ -72,7 +80,7 @@
 
 
   /* =======================================================
-     LUCKY DOM
+     LUCKY NUMBER
   ======================================================= */
 
   const luckyCard =
@@ -80,20 +88,24 @@
       "luckyCard"
     );
 
+
   const luckyNumber =
     document.getElementById(
       "luckyNumber"
     );
+
 
   const luckyHint =
     document.getElementById(
       "luckyHint"
     );
 
+
   const luckyTrigger =
     document.getElementById(
       "luckyTrigger"
     );
+
 
   const luckyFireworks =
     document.getElementById(
@@ -110,55 +122,66 @@
       "rsvpForm"
     );
 
+
   const rsvpGuestName =
     document.getElementById(
       "rsvpGuestName"
     );
+
 
   const rsvpAttendanceYes =
     document.getElementById(
       "rsvpAttendanceYes"
     );
 
+
   const rsvpAttendanceNo =
     document.getElementById(
       "rsvpAttendanceNo"
     );
+
 
   const rsvpGuestCount =
     document.getElementById(
       "rsvpGuestCount"
     );
 
+
   const rsvpMinus =
     document.getElementById(
       "rsvpMinus"
     );
+
 
   const rsvpPlus =
     document.getElementById(
       "rsvpPlus"
     );
 
+
   const rsvpMessage =
     document.getElementById(
       "rsvpMessage"
     );
+
 
   const rsvpVideo =
     document.getElementById(
       "rsvpVideo"
     );
 
+
   const rsvpVideoLabel =
     document.getElementById(
       "rsvpVideoLabel"
     );
 
+
   const rsvpSubmit =
     document.getElementById(
       "rsvpSubmit"
     );
+
 
   const rsvpStatus =
     document.getElementById(
@@ -173,30 +196,45 @@
   const imagePromises =
     new WeakMap();
 
+
   const pagePromises =
     new WeakMap();
+
 
   const urlPromises =
     new Map();
 
 
-  let pageMode = false;
-
-  let resizeRaf = 0;
-
-  let scrollRaf = 0;
-
-  let activePageIndex = -1;
+  let pageMode =
+    false;
 
 
-  let luckyIdleTimer = null;
-
-  let luckyRolling = false;
-
-  let luckyLocked = false;
+  let resizeRaf =
+    0;
 
 
-  let rsvpCount = 1;
+  let scrollRaf =
+    0;
+
+
+  let activePageIndex =
+    -1;
+
+
+  let luckyIdleTimer =
+    null;
+
+
+  let luckyRolling =
+    false;
+
+
+  let luckyLocked =
+    false;
+
+
+  let rsvpCount =
+    1;
 
 
   /* =======================================================
@@ -281,7 +319,7 @@
     "resize",
     scheduleScale,
     {
-      passive: true,
+      passive: true
     }
   );
 
@@ -290,7 +328,7 @@
     "orientationchange",
     scheduleScale,
     {
-      passive: true,
+      passive: true
     }
   );
 
@@ -300,7 +338,7 @@
       "resize",
       scheduleScale,
       {
-        passive: true,
+        passive: true
       }
     );
 
@@ -323,7 +361,7 @@
         .requestIdleCallback(
           callback,
           {
-            timeout,
+            timeout
           }
         );
     }
@@ -338,7 +376,7 @@
 
 
   /* =======================================================
-     PRELOAD URL
+     PRELOAD
   ======================================================= */
 
   function preloadUrl(
@@ -356,9 +394,8 @@
       urlPromises.has(url)
     ) {
 
-      return urlPromises.get(
-        url
-      );
+      return urlPromises
+        .get(url);
     }
 
 
@@ -387,13 +424,18 @@
 
               if (
                 typeof image.decode
-                === "function"
+                ===
+                "function"
               ) {
 
                 image
                   .decode()
-                  .catch(() => {})
-                  .finally(resolve);
+                  .catch(
+                    () => {}
+                  )
+                  .finally(
+                    resolve
+                  );
 
               } else {
 
@@ -406,7 +448,7 @@
             "load",
             finish,
             {
-              once: true,
+              once: true
             }
           );
 
@@ -415,7 +457,7 @@
             "error",
             resolve,
             {
-              once: true,
+              once: true
             }
           );
 
@@ -445,7 +487,7 @@
 
 
   /* =======================================================
-     IMAGE LOADING
+     LOAD IMAGE
   ======================================================= */
 
   function loadImage(
@@ -463,9 +505,8 @@
       imagePromises.has(image)
     ) {
 
-      return imagePromises.get(
-        image
-      );
+      return imagePromises
+        .get(image);
     }
 
 
@@ -496,13 +537,18 @@
 
               if (
                 typeof image.decode
-                === "function"
+                ===
+                "function"
               ) {
 
                 image
                   .decode()
-                  .catch(() => {})
-                  .finally(resolve);
+                  .catch(
+                    () => {}
+                  )
+                  .finally(
+                    resolve
+                  );
 
               } else {
 
@@ -515,7 +561,7 @@
             "load",
             finish,
             {
-              once: true,
+              once: true
             }
           );
 
@@ -524,7 +570,7 @@
             "error",
             resolve,
             {
-              once: true,
+              once: true
             }
           );
 
@@ -577,14 +623,18 @@
       pagePromises.has(page)
     ) {
 
-      return pagePromises.get(
-        page
-      );
+      return pagePromises
+        .get(page);
     }
 
 
     const promise =
       (async () => {
+
+        page.classList.add(
+          "is-loading-assets"
+        );
+
 
         const images =
           Array.from(
@@ -597,6 +647,7 @@
         const jobs =
           images.map(
             (image) =>
+
               loadImage(
                 image,
                 priority
@@ -610,7 +661,9 @@
           );
 
 
-        if (spriteHost) {
+        if (
+          spriteHost
+        ) {
 
           const spriteUrl =
             spriteHost
@@ -624,6 +677,7 @@
               spriteUrl,
               priority
             )
+
             .then(
               () => {
 
@@ -650,6 +704,11 @@
         );
 
 
+        page.classList.remove(
+          "is-loading-assets"
+        );
+
+
         page.classList.add(
           "is-assets-ready"
         );
@@ -672,7 +731,9 @@
 
   function playPage02Entrance() {
 
-    if (!page02Layout) {
+    if (
+      !page02Layout
+    ) {
 
       return;
     }
@@ -686,8 +747,8 @@
 
 
     /*
-      Force browser to register
-      starting state first.
+      Force browser to commit
+      initial animation state.
     */
 
     void page02Layout.offsetWidth;
@@ -698,6 +759,16 @@
 
         requestAnimationFrame(
           () => {
+
+            /*
+              ONE class starts:
+              - clouds
+              - confetti
+              - procession
+              - sequential text
+
+              at the same render frame.
+            */
 
             page02Layout
               .classList
@@ -719,7 +790,9 @@
     index
   ) {
 
-    if (!pages.length) {
+    if (
+      !pages.length
+    ) {
 
       return;
     }
@@ -760,7 +833,9 @@
 
 
     loadPage(
-      pages[safeIndex],
+      pages[
+        safeIndex
+      ],
       "high"
     );
 
@@ -787,7 +862,9 @@
 
   function getCurrentPageIndex() {
 
-    if (!pageScroller) {
+    if (
+      !pageScroller
+    ) {
 
       return 0;
     }
@@ -817,7 +894,9 @@
 
   function onPageScroll() {
 
-    if (scrollRaf) {
+    if (
+      scrollRaf
+    ) {
 
       return;
     }
@@ -827,7 +906,8 @@
       requestAnimationFrame(
         () => {
 
-          scrollRaf = 0;
+          scrollRaf =
+            0;
 
 
           const index =
@@ -858,7 +938,7 @@
       "scroll",
       onPageScroll,
       {
-        passive: true,
+        passive: true
       }
     );
 
@@ -869,14 +949,22 @@
 
   async function enterInvitation() {
 
-    if (pageMode) {
+    if (
+      pageMode
+    ) {
 
       return;
     }
 
 
-    pageMode = true;
+    pageMode =
+      true;
 
+
+    /*
+      Ensure Page02 images are decoded
+      before showing entrance animation.
+    */
 
     await loadPage(
       pages[0],
@@ -947,7 +1035,7 @@
         );
       },
       {
-        passive: true,
+        passive: true
       }
     );
 
@@ -959,10 +1047,15 @@
 
         event.preventDefault();
 
+
         enterInvitation();
       }
     );
 
+
+  /*
+    Warm Page02 shortly after Page01 appears.
+  */
 
   runWhenIdle(
     () => {
@@ -971,6 +1064,7 @@
         pages[0],
         "low"
       );
+
     },
     450
   );
@@ -990,14 +1084,18 @@
 
     const token =
       (
-        params.get("guest")
+        params.get(
+          "guest"
+        )
         ||
-        params.get("g")
+        params.get(
+          "g"
+        )
         ||
         "default"
       )
-        .trim()
-        .toLowerCase();
+      .trim()
+      .toLowerCase();
 
 
     return (
@@ -1035,9 +1133,10 @@
     try {
 
       const raw =
-        localStorage.getItem(
-          getLuckyStorageKey()
-        );
+        window.localStorage
+          .getItem(
+            getLuckyStorageKey()
+          );
 
 
       if (
@@ -1053,11 +1152,15 @@
 
 
       if (
-        !Number.isInteger(value)
+        !Number.isInteger(
+          value
+        )
         ||
-        value < LUCKY_MIN
+        value <
+        LUCKY_MIN
         ||
-        value > LUCKY_MAX
+        value >
+        LUCKY_MAX
       ) {
 
         return null;
@@ -1081,23 +1184,30 @@
       LUCKY_TEST_MODE
     ) {
 
-      return;
+      return true;
     }
 
 
     try {
 
-      localStorage.setItem(
-        getLuckyStorageKey(),
-        String(value)
-      );
+      window.localStorage
+        .setItem(
+          getLuckyStorageKey(),
+          String(value)
+        );
 
-    } catch (_) {}
+
+      return true;
+
+    } catch (_) {
+
+      return false;
+    }
   }
 
 
   /* =======================================================
-     RANDOM
+     LUCKY RANDOM
   ======================================================= */
 
   function randomLuckyNumber() {
@@ -1113,26 +1223,32 @@
     if (
       window.crypto
       &&
-      window.crypto
+      typeof window.crypto
         .getRandomValues
+        ===
+        "function"
     ) {
 
-      const values =
-        new Uint32Array(1);
+      const array =
+        new Uint32Array(
+          1
+        );
 
 
       window.crypto
         .getRandomValues(
-          values
+          array
         );
 
 
       return (
         LUCKY_MIN
         +
-        values[0]
-        %
-        range
+        (
+          array[0]
+          %
+          range
+        )
       );
     }
 
@@ -1149,27 +1265,41 @@
   }
 
 
+  function formatLuckyNumber(
+    value
+  ) {
+
+    return String(
+      value
+    )
+    .padStart(
+      2,
+      "0"
+    );
+  }
+
+
   function showLuckyNumber(
     value
   ) {
 
-    if (!luckyNumber) {
+    if (
+      !luckyNumber
+    ) {
 
       return;
     }
 
 
     luckyNumber.textContent =
-      String(value)
-        .padStart(
-          2,
-          "0"
-        );
+      formatLuckyNumber(
+        value
+      );
   }
 
 
   /* =======================================================
-     IDLE NUMBER SHUFFLE
+     LUCKY IDLE SHUFFLE
   ======================================================= */
 
   function stopLuckyIdleShuffle() {
@@ -1180,7 +1310,7 @@
       null
     ) {
 
-      clearInterval(
+      window.clearInterval(
         luckyIdleTimer
       );
 
@@ -1202,6 +1332,8 @@
 
     if (
       !luckyCard
+      ||
+      !luckyNumber
       ||
       luckyLocked
       ||
@@ -1228,8 +1360,18 @@
 
 
     luckyIdleTimer =
-      setInterval(
+      window.setInterval(
         () => {
+
+          if (
+            luckyLocked
+            ||
+            luckyRolling
+          ) {
+
+            return;
+          }
+
 
           showLuckyNumber(
             randomLuckyNumber()
@@ -1242,19 +1384,30 @@
 
 
   /* =======================================================
-     FIREWORKS — 3 BURSTS / 102 PARTICLES
+     FIREWORKS
+     3 BURSTS / 102 PARTICLES
   ======================================================= */
 
   function clearLuckyFireworks() {
 
+    if (
+      !luckyFireworks
+    ) {
+
+      return;
+    }
+
+
     luckyFireworks
-      ?.replaceChildren();
+      .replaceChildren();
   }
 
 
   function fireLuckyFireworks() {
 
-    if (!luckyFireworks) {
+    if (
+      !luckyFireworks
+    ) {
 
       return;
     }
@@ -1264,12 +1417,14 @@
 
 
     const colors = [
+
       "#a63019",
       "#c99633",
       "#e5b747",
       "#315747",
       "#d76b35",
       "#f0d37b"
+
     ];
 
 
@@ -1314,9 +1469,9 @@
       ) => {
 
         for (
-          let i = 0;
-          i < burst.count;
-          i += 1
+          let index = 0;
+          index < burst.count;
+          index += 1
         ) {
 
           const particle =
@@ -1336,7 +1491,7 @@
               *
               2
               *
-              i
+              index
             )
             /
             burst.count
@@ -1359,13 +1514,17 @@
 
 
           const x =
-            Math.cos(angle)
+            Math.cos(
+              angle
+            )
             *
             distance;
 
 
           const y =
-            Math.sin(angle)
+            Math.sin(
+              angle
+            )
             *
             distance
             -
@@ -1408,65 +1567,74 @@
             ];
 
 
-          particle.style
+          particle
+            .style
             .setProperty(
               "--ox",
               `${burst.x}px`
             );
 
 
-          particle.style
+          particle
+            .style
             .setProperty(
               "--oy",
               `${burst.y}px`
             );
 
 
-          particle.style
+          particle
+            .style
             .setProperty(
               "--x",
               `${x.toFixed(2)}px`
             );
 
 
-          particle.style
+          particle
+            .style
             .setProperty(
               "--y",
               `${y.toFixed(2)}px`
             );
 
 
-          particle.style
+          particle
+            .style
             .setProperty(
               "--size",
               `${size.toFixed(2)}px`
             );
 
 
-          particle.style
+          particle
+            .style
             .setProperty(
               "--delay",
               `${delay.toFixed(0)}ms`
             );
 
 
-          particle.style
+          particle
+            .style
             .setProperty(
               "--rotation",
               `${rotation.toFixed(0)}deg`
             );
 
 
-          particle.style
+          particle
+            .style
             .setProperty(
               "--particle-color",
               color
             );
 
 
-          fragment.appendChild(
-            particle
-          );
+          fragment
+            .appendChild(
+              particle
+            );
         }
       }
     );
@@ -1478,7 +1646,7 @@
       );
 
 
-    setTimeout(
+    window.setTimeout(
       clearLuckyFireworks,
       1750
     );
@@ -1486,12 +1654,15 @@
 
 
   /* =======================================================
-     LUCKY FINAL
+     FINAL LUCKY NUMBER
   ======================================================= */
 
   function lockLuckyNumber(
     value,
-    animate = true
+    {
+      animate = true,
+      save = true
+    } = {}
   ) {
 
     stopLuckyIdleShuffle();
@@ -1505,9 +1676,14 @@
       true;
 
 
-    saveLuckyNumber(
-      value
-    );
+    if (
+      save
+    ) {
+
+      saveLuckyNumber(
+        value
+      );
+    }
 
 
     showLuckyNumber(
@@ -1535,6 +1711,17 @@
 
       luckyCard
         ?.classList
+        .remove(
+          "is-revealed"
+        );
+
+
+      void luckyCard
+        ?.offsetWidth;
+
+
+      luckyCard
+        ?.classList
         .add(
           "is-revealed"
         );
@@ -1550,8 +1737,10 @@
 
       luckyHint.textContent =
         LUCKY_TEST_MODE
-          ? "Reload trang để thử lại"
-          : "Số may mắn của bạn";
+        ?
+        "Reload trang để thử lại"
+        :
+        "Số may mắn của bạn";
     }
 
 
@@ -1561,17 +1750,27 @@
 
       luckyTrigger.disabled =
         true;
+
+
+      luckyTrigger.setAttribute(
+        "aria-label",
+        `Số may mắn của bạn là ${formatLuckyNumber(value)}`
+      );
     }
   }
 
 
   /* =======================================================
-     ROLL NUMBER
+     ROLL
   ======================================================= */
 
   function rollLuckyNumber() {
 
     if (
+      !luckyCard
+      ||
+      !luckyNumber
+      ||
       luckyRolling
       ||
       luckyLocked
@@ -1589,7 +1788,14 @@
 
 
     luckyCard
-      ?.classList
+      .classList
+      .remove(
+        "is-revealed"
+      );
+
+
+    luckyCard
+      .classList
       .add(
         "is-rolling"
       );
@@ -1612,11 +1818,11 @@
       1850;
 
 
-    const start =
+    const startTime =
       performance.now();
 
 
-    let last =
+    let lastChange =
       0;
 
 
@@ -1624,15 +1830,19 @@
       now
     ) {
 
+      const elapsed =
+        now
+        -
+        startTime;
+
+
       const progress =
         Math.min(
-          (
-            now
-            -
-            start
-          )
+
+          elapsed
           /
           duration,
+
           1
         );
 
@@ -1640,23 +1850,26 @@
       const interval =
         35
         +
-        Math.pow(
-          progress,
-          3
-        )
-        *
-        145;
+        (
+          progress
+          *
+          progress
+          *
+          progress
+          *
+          145
+        );
 
 
       if (
         now
         -
-        last
+        lastChange
         >=
         interval
       ) {
 
-        last =
+        lastChange =
           now;
 
 
@@ -1676,13 +1889,17 @@
           frame
         );
 
+
         return;
       }
 
 
       lockLuckyNumber(
         finalNumber,
-        true
+        {
+          animate: true,
+          save: true
+        }
       );
     }
 
@@ -1702,6 +1919,8 @@
     if (
       !luckyCard
       ||
+      !luckyNumber
+      ||
       !luckyTrigger
     ) {
 
@@ -1709,20 +1928,47 @@
     }
 
 
-    const stored =
+    const storedNumber =
       readStoredLuckyNumber();
 
 
     if (
-      stored !== null
+      storedNumber
+      !==
+      null
     ) {
 
       lockLuckyNumber(
-        stored,
-        false
+        storedNumber,
+        {
+          animate: false,
+          save: false
+        }
       );
 
+
       return;
+    }
+
+
+    luckyLocked =
+      false;
+
+
+    luckyRolling =
+      false;
+
+
+    luckyTrigger.disabled =
+      false;
+
+
+    if (
+      luckyHint
+    ) {
+
+      luckyHint.textContent =
+        "Nhấn để nhận số may mắn";
     }
 
 
@@ -1741,35 +1987,57 @@
 
 
   /* =======================================================
-     RSVP COUNTER
+     RSVP
   ======================================================= */
+
+  function getRsvpStorageKey() {
+
+    return (
+      "bach-thu-wedding:rsvp:"
+      +
+      getGuestToken()
+    );
+  }
+
 
   function updateRsvpCount() {
 
-    if (!rsvpGuestCount) {
+    if (
+      !rsvpGuestCount
+    ) {
 
       return;
     }
 
 
     rsvpGuestCount.textContent =
-      String(rsvpCount);
+      String(
+        rsvpCount
+      );
 
 
-    if (rsvpMinus) {
+    if (
+      rsvpMinus
+    ) {
 
       rsvpMinus.disabled =
-        rsvpCount <= 1
+        rsvpCount
+        <=
+        1
         ||
         rsvpAttendanceNo
           ?.checked;
     }
 
 
-    if (rsvpPlus) {
+    if (
+      rsvpPlus
+    ) {
 
       rsvpPlus.disabled =
-        rsvpCount >= 10
+        rsvpCount
+        >=
+        10
         ||
         rsvpAttendanceNo
           ?.checked;
@@ -1784,24 +2052,35 @@
         ?.checked
     ) {
 
-      rsvpCount = 0;
+      rsvpCount =
+        0;
 
 
       if (
         rsvpGuestCount
       ) {
 
-        rsvpGuestCount
-          .textContent =
+        rsvpGuestCount.textContent =
           "0";
       }
 
 
-      rsvpMinus.disabled =
-        true;
+      if (
+        rsvpMinus
+      ) {
 
-      rsvpPlus.disabled =
-        true;
+        rsvpMinus.disabled =
+          true;
+      }
+
+
+      if (
+        rsvpPlus
+      ) {
+
+        rsvpPlus.disabled =
+          true;
+      }
 
 
       return;
@@ -1809,10 +2088,13 @@
 
 
     if (
-      rsvpCount < 1
+      rsvpCount
+      <
+      1
     ) {
 
-      rsvpCount = 1;
+      rsvpCount =
+        1;
     }
 
 
@@ -1824,6 +2106,15 @@
     ?.addEventListener(
       "click",
       () => {
+
+        if (
+          rsvpAttendanceNo
+            ?.checked
+        ) {
+
+          return;
+        }
+
 
         rsvpCount =
           Math.max(
@@ -1841,6 +2132,15 @@
     ?.addEventListener(
       "click",
       () => {
+
+        if (
+          rsvpAttendanceNo
+            ?.checked
+        ) {
+
+          return;
+        }
+
 
         rsvpCount =
           Math.min(
@@ -1875,20 +2175,155 @@
 
         const file =
           rsvpVideo
-            .files?.[0];
+            .files
+            ?.[0];
 
 
         if (
-          rsvpVideoLabel
+          !rsvpVideoLabel
         ) {
 
-          rsvpVideoLabel.textContent =
-            file
-              ? file.name
-              : "Video lời chúc gửi tới cô dâu chú rể";
+          return;
         }
+
+
+        rsvpVideoLabel.textContent =
+          file
+          ?
+          file.name
+          :
+          "Video lời chúc gửi tới cô dâu chú rể";
       }
     );
+
+
+  /* =======================================================
+     RESTORE RSVP
+  ======================================================= */
+
+  function restoreRsvp() {
+
+    if (
+      !rsvpForm
+    ) {
+
+      return;
+    }
+
+
+    try {
+
+      const raw =
+        window.localStorage
+          .getItem(
+            getRsvpStorageKey()
+          );
+
+
+      if (
+        !raw
+      ) {
+
+        updateRsvpCount();
+
+        return;
+      }
+
+
+      const data =
+        JSON.parse(
+          raw
+        );
+
+
+      if (
+        rsvpGuestName
+        &&
+        typeof data.name
+        ===
+        "string"
+      ) {
+
+        rsvpGuestName.value =
+          data.name;
+      }
+
+
+      if (
+        rsvpMessage
+        &&
+        typeof data.message
+        ===
+        "string"
+      ) {
+
+        rsvpMessage.value =
+          data.message;
+      }
+
+
+      if (
+        data.attendance
+        ===
+        "no"
+      ) {
+
+        if (
+          rsvpAttendanceNo
+        ) {
+
+          rsvpAttendanceNo.checked =
+            true;
+        }
+
+
+        if (
+          rsvpAttendanceYes
+        ) {
+
+          rsvpAttendanceYes.checked =
+            false;
+        }
+
+
+        rsvpCount =
+          0;
+
+      } else {
+
+        if (
+          rsvpAttendanceYes
+        ) {
+
+          rsvpAttendanceYes.checked =
+            true;
+        }
+
+
+        rsvpCount =
+          Number.isInteger(
+            data.count
+          )
+          ?
+          Math.min(
+            10,
+            Math.max(
+              1,
+              data.count
+            )
+          )
+          :
+          1;
+      }
+
+
+      updateAttendanceState();
+
+    } catch (_) {
+
+      updateRsvpCount();
+    }
+  }
 
 
   /* =======================================================
@@ -1911,17 +2346,24 @@
           "";
 
 
-        if (!name) {
+        if (
+          !name
+        ) {
 
-          rsvpStatus.textContent =
-            "Bạn nhập tên khách mời giúp chúng mình nhé.";
+          if (
+            rsvpStatus
+          ) {
+
+            rsvpStatus.textContent =
+              "Bạn nhập tên khách mời giúp chúng mình nhé.";
 
 
-          rsvpStatus
-            .classList
-            .add(
-              "is-visible"
-            );
+            rsvpStatus
+              .classList
+              .add(
+                "is-visible"
+              );
+          }
 
 
           rsvpGuestName
@@ -1935,8 +2377,10 @@
         const attendance =
           rsvpAttendanceNo
             ?.checked
-          ? "no"
-          : "yes";
+          ?
+          "no"
+          :
+          "yes";
 
 
         const data = {
@@ -1961,68 +2405,94 @@
             ||
             "",
 
-          guest:
+          videoName:
+            rsvpVideo
+              ?.files
+              ?.[0]
+              ?.name
+            ||
+            "",
+
+          guestToken:
             getGuestToken(),
 
-          time:
+          submittedAt:
             new Date()
               .toISOString()
 
         };
 
 
+        /*
+          LOCAL TEST SAVE.
+
+          Sau này có backend/Google Sheet
+          thì thay đoạn này.
+        */
+
         try {
 
-          localStorage.setItem(
-            "bach-thu-wedding:rsvp:"
-            +
-            getGuestToken(),
-
-            JSON.stringify(
-              data
-            )
-          );
+          window.localStorage
+            .setItem(
+              getRsvpStorageKey(),
+              JSON.stringify(
+                data
+              )
+            );
 
         } catch (_) {}
 
 
-        rsvpStatus.textContent =
-          "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!";
+        if (
+          rsvpStatus
+        ) {
+
+          rsvpStatus.textContent =
+            attendance
+            ===
+            "yes"
+            ?
+            "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!"
+            :
+            "Đã ghi nhận phản hồi của bạn. Cảm ơn bạn rất nhiều!";
 
 
-        rsvpStatus
-          .classList
-          .add(
-            "is-visible"
-          );
+          rsvpStatus
+            .classList
+            .add(
+              "is-visible"
+            );
+        }
 
 
         if (
           rsvpSubmit
         ) {
 
-          rsvpSubmit.disabled =
-            true;
-
-
-          const text =
+          const submitText =
             rsvpSubmit
               .querySelector(
                 "span"
               );
 
 
-          if (text) {
+          if (
+            submitText
+          ) {
 
-            text.textContent =
+            submitText.textContent =
               "ĐÃ GỬI XÁC NHẬN";
           }
+
+
+          rsvpSubmit.disabled =
+            true;
         }
       }
     );
 
 
-  updateRsvpCount();
+  restoreRsvp();
 
 
   /* =======================================================
@@ -2033,19 +2503,37 @@
     "visibilitychange",
     () => {
 
+      document.body
+        .classList
+        .toggle(
+          "is-document-hidden",
+          document.hidden
+        );
+
+
       if (
         document.hidden
       ) {
 
-        stopLuckyIdleShuffle();
+        if (
+          !luckyLocked
+          &&
+          !luckyRolling
+        ) {
 
-      } else if (
-        !luckyLocked
-        &&
-        !luckyRolling
-      ) {
+          stopLuckyIdleShuffle();
+        }
 
-        startLuckyIdleShuffle();
+      } else {
+
+        if (
+          !luckyLocked
+          &&
+          !luckyRolling
+        ) {
+
+          startLuckyIdleShuffle();
+        }
       }
     }
   );
