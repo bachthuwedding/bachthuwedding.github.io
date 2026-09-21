@@ -110,6 +110,7 @@ img {
     opacity 80ms linear;
 }
 
+
 .site-shell.is-scale-ready {
   opacity: 1;
 }
@@ -308,6 +309,10 @@ img {
 }
 
 
+/* =========================================================
+   PAGE 01 PULSE
+========================================================= */
+
 .monogram-pulse {
   position: absolute;
 
@@ -377,7 +382,7 @@ img {
 
 
 /* =========================================================
-   FLOW
+   INVITATION FLOW
 ========================================================= */
 
 .page-02 {
@@ -417,13 +422,16 @@ img {
 }
 
 
-.site-shell.is-page-02 .opening-page {
+.site-shell.is-page-02
+.opening-page {
   opacity: 0;
+
   pointer-events: none;
 }
 
 
-.site-shell.is-page-02 .page-02 {
+.site-shell.is-page-02
+.page-02 {
   z-index: 3;
 
   opacity: 1;
@@ -441,11 +449,15 @@ img {
   min-height: 0;
 
   overflow: visible;
+
+  background: #f1dfbd;
 }
 
 
 .invitation-page {
   position: relative;
+
+  display: block;
 
   width: 390px;
   height: 680px;
@@ -462,7 +474,7 @@ img {
 
 
 /* =========================================================
-   SHARED BACKGROUND
+   SHARED BACKGROUNDS
 ========================================================= */
 
 .p02-background,
@@ -481,14 +493,18 @@ img {
   width: 100%;
   height: 100%;
 
+  max-width: none;
+
   object-fit: cover;
 
   pointer-events: none;
+
+  user-select: none;
 }
 
 
 /* =========================================================
-   FRAME
+   SHARED FRAMES
 ========================================================= */
 
 .p02-frame,
@@ -505,6 +521,8 @@ img {
   object-fit: fill;
 
   pointer-events: none;
+
+  user-select: none;
 }
 
 
@@ -533,6 +551,8 @@ img {
 .p08-frame {
   z-index: 40;
 
+  inset: auto;
+
   left: 5px;
   top: 5px;
 
@@ -542,32 +562,48 @@ img {
 
 
 /* =========================================================
-   BOTTOM ORNAMENT
+   SHARED BOTTOM ORNAMENT
+   PAGE 02 / 03 / 06 / 07 / 08
+   SAME POSITION FOR EVERY PAGE
 ========================================================= */
 
 .p02-bottom-ornament,
 .p03-bottom-ornament,
 .p06-bottom-ornament,
+.p07-bottom-ornament,
 .p08-bottom-ornament {
   position: absolute;
 
   z-index: 36;
 
   left: 50%;
+  right: auto;
+
+  top: auto;
   bottom: -1px;
+
+  display: block;
 
   width: 120px;
   height: auto;
 
+  max-width: none;
+
   transform:
     translateX(-50%);
 
+  opacity: 1;
+
+  object-fit: contain;
+
   pointer-events: none;
+
+  user-select: none;
 }
 
 
 /* =========================================================
-   CLOUD ANIMATION
+   SHARED AMBIENT ANIMATION
 ========================================================= */
 
 @keyframes wedding-ambient-float {
@@ -599,9 +635,15 @@ img {
 
   height: auto;
 
+  max-width: none;
+
   opacity: 1;
 
+  object-fit: contain;
+
   pointer-events: none;
+
+  user-select: none;
 
   animation:
     wedding-ambient-float
@@ -612,35 +654,44 @@ img {
 
 
 /* =========================================================
-   PAGE 02
+   PAGE 02 — CLOUDS
 ========================================================= */
 
 .p02-cloud--01 {
   left: 28px;
   top: 116px;
+
   width: 88px;
 }
+
 
 .p02-cloud--02 {
   right: 19px;
   top: 133px;
+
   width: 80px;
 }
+
 
 .p02-cloud--03 {
   left: 18px;
   top: 219px;
+
   width: 65px;
 }
+
 
 .p02-cloud--04 {
   right: 28px;
   top: 265px;
+
   width: 65px;
 }
 
 
-/* ENTRY */
+/* =========================================================
+   PAGE 02 — ENTRANCE
+========================================================= */
 
 .page02-layout .p02-cloud,
 .page02-layout .p02-confetti-cluster,
@@ -652,7 +703,9 @@ img {
     var(--page02-entry-duration)
     var(--page02-entry-ease),
 
-    opacity 620ms ease;
+    opacity
+    620ms
+    ease;
 }
 
 
@@ -668,7 +721,11 @@ img {
 }
 
 
-.page02-layout .p02-confetti-cluster,
+.page02-layout .p02-confetti-cluster {
+  translate: 0 46px;
+}
+
+
 .page02-layout .p02-procession {
   translate: 0 46px;
 }
@@ -685,7 +742,9 @@ img {
 }
 
 
-/* TEXT */
+/* =========================================================
+   PAGE 02 — TEXT
+========================================================= */
 
 .p02-invite,
 .p02-to,
@@ -718,6 +777,10 @@ img {
   width: 320px;
 
   font-size: 15px;
+
+  line-height: 1.15;
+
+  letter-spacing: .015em;
 
   transform:
     translateX(-50%)
@@ -762,6 +825,8 @@ img {
   color: var(--invitation-gold);
 
   font-size: 7px;
+
+  line-height: 1;
 }
 
 
@@ -812,6 +877,8 @@ img {
 
 
 .p02-name {
+  display: block;
+
   width: 100%;
 
   color: var(--invitation-red);
@@ -828,15 +895,22 @@ img {
 
 
 .p02-ampersand {
-  margin: 4px 0 3px;
+  display: block;
+
+  margin:
+    4px 0 3px;
 
   color: var(--invitation-green);
 
   font-size: 25px;
+
+  line-height: .9;
 }
 
 
-/* DATE DIVIDER */
+/* =========================================================
+   PAGE 02 — DATE DIVIDER
+========================================================= */
 
 .p02-date-divider {
   position: absolute;
@@ -878,7 +952,9 @@ img {
 }
 
 
-/* CEREMONY */
+/* =========================================================
+   PAGE 02 — CEREMONY
+========================================================= */
 
 .p02-ceremony-info {
   position: absolute;
@@ -899,6 +975,8 @@ img {
     "Times New Roman",
     Times,
     serif;
+
+  pointer-events: none;
 }
 
 
@@ -911,6 +989,8 @@ img {
   color: var(--invitation-green);
 
   font-size: 13px;
+
+  line-height: 1.15;
 }
 
 
@@ -930,6 +1010,8 @@ img {
   color: var(--invitation-green);
 
   font-size: 10.5px;
+
+  line-height: 1.15;
 }
 
 
@@ -940,10 +1022,14 @@ img {
   color: var(--invitation-green);
 
   font-size: 13px;
+
+  line-height: 1.1;
 }
 
 
 .p02-at strong {
+  margin-left: 2px;
+
   color: var(--invitation-red);
 
   font-size: 14px;
@@ -959,10 +1045,14 @@ img {
   color: var(--invitation-green);
 
   font-size: 10.5px;
+
+  line-height: 1.1;
 }
 
 
-/* FAMILY */
+/* =========================================================
+   PAGE 02 — FAMILY
+========================================================= */
 
 .p02-family-info {
   position: absolute;
@@ -986,7 +1076,19 @@ img {
 
   color: var(--invitation-green);
 
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
   text-align: center;
+
+  pointer-events: none;
+}
+
+
+.p02-family {
+  min-width: 0;
 }
 
 
@@ -994,14 +1096,20 @@ img {
   margin:
     0 0 7px;
 
+  color: var(--invitation-green);
+
   font-size: 11px;
 
   font-weight: 600;
+
+  line-height: 1;
 }
 
 
 .p02-family p {
   margin: 0;
+
+  color: var(--invitation-green);
 
   font-size: 10px;
 
@@ -1011,7 +1119,9 @@ img {
 }
 
 
-/* TEXT ENTRY */
+/* =========================================================
+   PAGE 02 — TEXT ENTRANCE
+========================================================= */
 
 .page02-layout .p02-invite,
 .page02-layout .p02-divider,
@@ -1079,7 +1189,8 @@ img {
 
 
 /* =========================================================
-   PAGE 02 CONFETTI
+   PAGE 02 — CONFETTI
+   LATEST DEVTOOLS POSITIONS
 ========================================================= */
 
 .p02-confetti-cluster {
@@ -1089,14 +1200,16 @@ img {
 
   inset: 0;
 
-  top: 81px;
-  left: 3px;
+  top: 65px;
+  left: -5px;
 
   scale: .8;
 
-  transform-origin: center;
+  transform-origin: center center;
 
   pointer-events: none;
+
+  user-select: none;
 }
 
 
@@ -1105,10 +1218,16 @@ img {
 
   display: block;
 
-  background-image:
-    var(--p02-confetti-sprite, none);
+  overflow: hidden;
 
-  background-repeat: no-repeat;
+  background-image:
+    var(
+      --p02-confetti-sprite,
+      none
+    );
+
+  background-repeat:
+    no-repeat;
 
   background-size:
     361.25px 780.93px;
@@ -1128,169 +1247,288 @@ img {
 }
 
 
+/* 01 */
+
 .p02-confetti-piece--01 {
-  left: 101px;
-  top: 394px;
+  left: 9px;
+  top: 451px;
+
   width: 11.01px;
   height: 11.43px;
-  background-position: -116.46px -37.27px;
+
+  background-position:
+    -116.46px -37.27px;
 }
+
+
+/* 02 */
 
 .p02-confetti-piece--02 {
   left: 338px;
   top: 485px;
+
   width: 11.01px;
   height: 10.59px;
-  background-position: -68.61px -65.64px;
+
+  background-position:
+    -68.61px -65.64px;
 }
 
+
+/* 03 */
+
 .p02-confetti-piece--03 {
-  left: 255px;
-  top: 420px;
+  left: 244px;
+  top: 433px;
+
   width: 12.28px;
   height: 11.43px;
-  background-position: -154.58px -94.86px;
+
+  background-position:
+    -154.58px -94.86px;
 }
+
+
+/* 04 */
 
 .p02-confetti-piece--04 {
   left: 164px;
-  top: 414px;
+  top: 430px;
+
   width: 11.01px;
   height: 10.59px;
-  background-position: -74.54px -112.65px;
+
+  background-position:
+    -74.54px -112.65px;
 }
+
+
+/* 05 */
 
 .p02-confetti-piece--05 {
   left: 125px;
-  top: 427px;
+  top: 438px;
+
   width: 11.01px;
   height: 8.47px;
-  background-position: -302.38px -114.77px;
+
+  background-position:
+    -302.38px -114.77px;
 }
+
+
+/* 06 */
 
 .p02-confetti-piece--06 {
   left: 215px;
   top: 435px;
+
   width: 11.43px;
   height: 11.43px;
-  background-position: -196.08px -132.98px;
+
+  background-position:
+    -196.08px -132.98px;
 }
+
+
+/* 07 */
 
 .p02-confetti-piece--07 {
   left: 325px;
   top: 455px;
+
   width: 8.05px;
   height: 8.05px;
-  background-position: -112.23px -146.53px;
+
+  background-position:
+    -112.23px -146.53px;
 }
 
+
+/* 08 */
+
 .p02-confetti-piece--08 {
-  left: 279px;
-  top: 468px;
+  left: 43px;
+  top: 454px;
+
   width: 10.59px;
   height: 10.59px;
-  background-position: -32.19px -413.76px;
+
+  background-position:
+    -32.19px -413.76px;
 }
+
+
+/* 09 */
 
 .p02-confetti-piece--09 {
   left: 183px;
   top: 456px;
+
   width: 11.01px;
   height: 10.59px;
-  background-position: -33.46px -267.65px;
+
+  background-position:
+    -33.46px -267.65px;
 }
+
+
+/* 10 */
 
 .p02-confetti-piece--10 {
   left: 300px;
-  top: 423px;
+  top: 438px;
+
   width: 11.01px;
   height: 10.59px;
-  background-position: -318.05px -327.79px;
+
+  background-position:
+    -318.05px -327.79px;
 }
+
+
+/* 11 */
 
 .p02-confetti-piece--11 {
   left: 140px;
   top: 460px;
+
   width: 10.59px;
   height: 10.59px;
-  background-position: -32.19px -413.76px;
+
+  background-position:
+    -32.19px -413.76px;
 }
+
+
+/* 12 */
 
 .p02-confetti-piece--12 {
   left: 207px;
   top: 477px;
+
   width: 10.59px;
   height: 10.16px;
-  background-position: -312.12px -486.18px;
+
+  background-position:
+    -312.12px -486.18px;
 }
+
+
+/* 13 */
 
 .p02-confetti-piece--13 {
-  left: 90px;
-  top: 450px;
+  left: 73px;
+  top: 475px;
+
   width: 11.01px;
   height: 10.59px;
-  background-position: -37.27px -578.08px;
+
+  background-position:
+    -37.27px -578.08px;
 }
 
+
+/* 14 */
+
 .p02-confetti-piece--14 {
-  left: 70px;
-  top: 420px;
+  left: 85px;
+  top: 444px;
+
   width: 11.86px;
   height: 9.74px;
-  background-position: -57.60px -739.01px;
+
+  background-position:
+    -57.60px -739.01px;
 }
+
+
+/* 15 */
 
 .p02-confetti-piece--15 {
   left: 236px;
   top: 465px;
+
   width: 11.01px;
   height: 10.59px;
-  background-position: -68.61px -65.64px;
+
+  background-position:
+    -68.61px -65.64px;
 }
 
+
+/* 16 */
+
 .p02-confetti-piece--16 {
-  left: 355px;
-  top: 438px;
+  left: 377px;
+  top: 478px;
+
   width: 11.01px;
   height: 10.59px;
-  background-position: -37.27px -578.08px;
+
+  background-position:
+    -37.27px -578.08px;
 }
+
+
+/* 17 */
 
 .p02-confetti-piece--17 {
   left: 116px;
   top: 474px;
+
   width: 10.59px;
   height: 10.59px;
-  background-position: -32.19px -413.76px;
+
+  background-position:
+    -32.19px -413.76px;
 }
+
+
+/* 18 */
 
 .p02-confetti-piece--18 {
   left: 156px;
   top: 486px;
+
   width: 11.01px;
   height: 10.59px;
-  background-position: -318.05px -327.79px;
+
+  background-position:
+    -318.05px -327.79px;
 }
+
+
+/* 19 */
 
 .p02-confetti-piece--19 {
   left: 271px;
   top: 446px;
+
   width: 11.43px;
   height: 11.43px;
-  background-position: -196.08px -132.98px;
+
+  background-position:
+    -196.08px -132.98px;
 }
 
+
+/* 20 */
+
 .p02-confetti-piece--20 {
-  left: 334px;
-  top: 420px;
+  left: 354px;
+  top: 448px;
+
   width: 11.01px;
   height: 8.47px;
-  background-position: -302.38px -114.77px;
+
+  background-position:
+    -302.38px -114.77px;
 }
 
 
 /* =========================================================
-   PAGE 02 PROCESSION
+   PAGE 02 — PROCESSION
 ========================================================= */
 
 .p02-procession {
@@ -1311,6 +1549,8 @@ img {
 .p02-procession-item {
   position: absolute;
 
+  display: block;
+
   width: auto;
 
   max-width: none;
@@ -1318,6 +1558,8 @@ img {
   object-fit: contain;
 
   pointer-events: none;
+
+  user-select: none;
 }
 
 
@@ -1470,6 +1712,10 @@ img {
 }
 
 
+/* =========================================================
+   PAGE 03 — ILLUSTRATIONS
+========================================================= */
+
 .p03-illustration {
   z-index: 12;
 
@@ -1500,6 +1746,10 @@ img {
   width: 115px;
 }
 
+
+/* =========================================================
+   PAGE 03 — EVENTS
+========================================================= */
 
 .p03-event {
   position: absolute;
@@ -1589,6 +1839,10 @@ img {
   top: 445px;
 }
 
+
+/* =========================================================
+   PAGE 03 — LOCATION
+========================================================= */
 
 .p03-location {
   position: relative;
@@ -1687,7 +1941,9 @@ img {
 }
 
 
-/* DRESS CODE */
+/* =========================================================
+   PAGE 03 — DRESS CODE
+========================================================= */
 
 .p03-dress-code {
   position: absolute;
@@ -1720,6 +1976,11 @@ img {
     0 0 7px;
 
   color: #405d48;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
 
   font-size: 12px;
 
@@ -1812,6 +2073,8 @@ img {
 
   pointer-events: none;
 
+  user-select: none;
+
   animation:
     wedding-ambient-float
     var(--ambient-duration)
@@ -1823,6 +2086,7 @@ img {
 .p06-cloud--01 {
   right: 35px;
   top: 37px;
+
   width: 92px;
 }
 
@@ -1830,6 +2094,7 @@ img {
 .p06-cloud--02 {
   left: 18px;
   top: 127px;
+
   width: 67px;
 }
 
@@ -1837,6 +2102,7 @@ img {
 .p06-cloud--03 {
   right: -10px;
   top: 332px;
+
   width: 74px;
 }
 
@@ -1844,6 +2110,7 @@ img {
 .p06-cloud--04 {
   left: -5px;
   top: 409px;
+
   width: 70px;
 }
 
@@ -1873,6 +2140,8 @@ img {
   width: 100%;
   height: auto;
 
+  max-width: none;
+
   clip-path:
     inset(0 round 14px);
 
@@ -1898,6 +2167,11 @@ img {
   text-align: center;
 
   color: #315747;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
 
   font-size: 23px;
 
@@ -1927,7 +2201,16 @@ img {
 
   color: #a52f15;
 
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
   font-size: 94px;
+
+  font-weight: 400;
+
+  line-height: 1;
 
   font-variant-numeric:
     tabular-nums;
@@ -2088,6 +2371,8 @@ img {
 
   font-style: italic;
 
+  line-height: 1.25;
+
   opacity: .82;
 }
 
@@ -2101,6 +2386,9 @@ img {
 
   width: 100%;
   height: 100%;
+
+  margin: 0;
+  padding: 0;
 
   border: 0;
 
@@ -2121,9 +2409,9 @@ img {
   width: 1px;
   height: 1px;
 
-  overflow: visible;
-
   pointer-events: none;
+
+  overflow: visible;
 }
 
 
@@ -2138,6 +2426,9 @@ img {
   --particle-color: #b93b1e;
 
   position: absolute;
+
+  left: 0;
+  top: 0;
 
   width: var(--size);
   height: var(--size);
@@ -2187,6 +2478,10 @@ img {
 
 .p06-lucky-item {
   position: absolute;
+
+  display: block;
+
+  max-width: none;
 
   height: auto;
 
@@ -2241,7 +2536,8 @@ img {
 
 
 /* =========================================================
-   PAGE 07
+   PAGE 07 — RSVP
+   LATEST DEVTOOLS VALUES
 ========================================================= */
 
 .page07-layout {
@@ -2264,7 +2560,11 @@ img {
 
   height: auto;
 
+  max-width: none;
+
   pointer-events: none;
+
+  user-select: none;
 }
 
 
@@ -2309,6 +2609,8 @@ img {
 }
 
 
+/* TITLE — UPDATED */
+
 .p07-rsvp-title {
   position: absolute;
 
@@ -2326,25 +2628,34 @@ img {
 
   color: var(--p07-red);
 
-  font-size: 36px;
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 30px;
 
   font-weight: 400;
 
-  line-height: .88;
+  line-height: 1.3;
 
   text-align: center;
 }
 
 
+/* TOP DIVIDER — UPDATED */
+
 .p07-divider-ornament {
   z-index: 9;
 
   left: 50%;
+
+  object-fit: contain;
 }
 
 
 .p07-divider-ornament--top {
-  top: 150px;
+  top: 130px;
 
   width: 143px;
 
@@ -2353,15 +2664,7 @@ img {
 }
 
 
-.p07-divider-ornament--bottom {
-  top: 598px;
-
-  width: 128px;
-
-  transform:
-    translateX(-50%);
-}
-
+/* SUBTITLE — UPDATED */
 
 .p07-rsvp-subtitle {
   position: absolute;
@@ -2369,7 +2672,7 @@ img {
   z-index: 10;
 
   left: 50%;
-  top: 179px;
+  top: 175px;
 
   width: 290px;
 
@@ -2380,6 +2683,8 @@ img {
 
   text-align: center;
 
+  color: var(--p07-green);
+
   font-size: 11px;
 
   font-style: italic;
@@ -2387,6 +2692,8 @@ img {
   line-height: 1.22;
 }
 
+
+/* FORM */
 
 .p07-rsvp-form {
   position: absolute;
@@ -2422,17 +2729,21 @@ img {
   top: 0;
 }
 
+
 .p07-form-group--attendance {
   top: 62px;
 }
+
 
 .p07-form-group--count {
   top: 127px;
 }
 
+
 .p07-form-group--message {
   top: 190px;
 }
+
 
 .p07-form-group--video {
   top: 270px;
@@ -2445,9 +2756,15 @@ img {
   margin:
     0 0 5px;
 
+  padding: 0;
+
   color: var(--p07-green);
 
   font-size: 12px;
+
+  font-weight: 400;
+
+  line-height: 1;
 }
 
 
@@ -2466,6 +2783,10 @@ img {
 
   background:
     rgba(255, 250, 235, .38);
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(255, 255, 255, .42);
 
   overflow: hidden;
 }
@@ -2488,6 +2809,8 @@ img {
   stroke-linecap: round;
 
   stroke-linejoin: round;
+
+  pointer-events: none;
 }
 
 
@@ -2509,6 +2832,12 @@ img {
 
 
 .p07-text-input {
+  position: relative;
+
+  z-index: 2;
+
+  display: block;
+
   width: 100%;
   height: 100%;
 
@@ -2517,13 +2846,22 @@ img {
     0 43px;
 
   border: 0;
+
   outline: none;
 
   background: transparent;
 
+  color: #51483e;
+
   font-size: 11.5px;
 
   font-style: italic;
+}
+
+
+.p07-text-input::placeholder {
+  color:
+    rgba(117, 92, 74, .46);
 }
 
 
@@ -2536,6 +2874,24 @@ img {
   width: 39px;
 }
 
+
+.p07-field-lotus--message {
+  right: 1px;
+  bottom: -8px;
+
+  width: 42px;
+}
+
+
+.p07-field-lotus--video {
+  right: 2px;
+  bottom: -7px;
+
+  width: 36px;
+}
+
+
+/* ATTENDANCE */
 
 .p07-attendance-options {
   display: grid;
@@ -2556,7 +2912,8 @@ img {
 
   height: 39px;
 
-  padding: 0 17px;
+  padding:
+    0 17px;
 
   border:
     1px solid
@@ -2566,6 +2923,8 @@ img {
 
   background:
     rgba(255, 250, 235, .34);
+
+  cursor: pointer;
 }
 
 
@@ -2573,11 +2932,15 @@ img {
   position: absolute;
 
   opacity: 0;
+
+  pointer-events: none;
 }
 
 
 .p07-radio-mark {
   position: relative;
+
+  flex: 0 0 auto;
 
   width: 20px;
   height: 20px;
@@ -2611,6 +2974,18 @@ img {
   transform:
     translate(-50%, -50%)
     scale(0);
+
+  transition:
+    transform 150ms ease;
+}
+
+
+.p07-attendance-option
+input:checked
++
+.p07-radio-mark {
+  border-color:
+    var(--p07-red);
 }
 
 
@@ -2624,10 +2999,24 @@ input:checked
 }
 
 
+.p07-attendance-option
+input:checked
+~
 .p07-attendance-text {
+  color:
+    var(--p07-red);
+}
+
+
+.p07-attendance-text {
+  color:
+    var(--p07-green);
+
   font-size: 16px;
 }
 
+
+/* COUNTER */
 
 .p07-counter {
   display: grid;
@@ -2652,7 +3041,13 @@ input:checked
 
 
 .p07-counter-button {
+  position: relative;
+
+  z-index: 3;
+
   height: 100%;
+
+  padding: 0;
 
   border: 0;
 
@@ -2661,21 +3056,31 @@ input:checked
   color: var(--p07-green);
 
   font-size: 22px;
+
+  cursor: pointer;
 }
 
 
 .p07-counter-value {
+  position: relative;
+
+  z-index: 3;
+
   display: flex;
 
   align-items: center;
 
   justify-content: center;
 
+  height: 100%;
+
   color: var(--p07-green);
 
   font-size: 18px;
 }
 
+
+/* MESSAGE */
 
 .p07-field--message {
   height: 57px;
@@ -2690,6 +3095,12 @@ input:checked
 
 
 .p07-message-input {
+  position: relative;
+
+  z-index: 2;
+
+  display: block;
+
   width: 100%;
   height: 100%;
 
@@ -2698,25 +3109,24 @@ input:checked
     8px 43px;
 
   border: 0;
+
   outline: none;
 
   resize: none;
 
   background: transparent;
 
+  color: #51483e;
+
   font-size: 11px;
 
   font-style: italic;
+
+  line-height: 1.3;
 }
 
 
-.p07-field-lotus--message {
-  right: 1px;
-  bottom: -8px;
-
-  width: 42px;
-}
-
+/* VIDEO */
 
 .p07-video-field {
   display: flex;
@@ -2724,6 +3134,8 @@ input:checked
   align-items: center;
 
   height: 38px;
+
+  cursor: pointer;
 }
 
 
@@ -2740,6 +3152,12 @@ input:checked
 
 
 .p07-video-text {
+  position: relative;
+
+  z-index: 2;
+
+  display: block;
+
   width: 100%;
 
   padding:
@@ -2747,6 +3165,9 @@ input:checked
     0 47px;
 
   overflow: hidden;
+
+  color:
+    rgba(117, 92, 74, .54);
 
   font-size: 10.5px;
 
@@ -2767,19 +3188,17 @@ input:checked
   height: 1px;
 
   opacity: 0;
+
+  pointer-events: none;
 }
 
 
-.p07-field-lotus--video {
-  right: 2px;
-  bottom: -7px;
-
-  width: 36px;
-}
-
+/* SUBMIT */
 
 .p07-submit {
   position: absolute;
+
+  z-index: 5;
 
   left: 50%;
   top: 322px;
@@ -2811,9 +3230,15 @@ input:checked
       #9f2f20
     );
 
+  box-shadow:
+    inset 0 0 0 2px
+    rgba(238, 178, 87, .55);
+
   color: #fff9e9;
 
   font-size: 15px;
+
+  cursor: pointer;
 }
 
 
@@ -2837,10 +3262,14 @@ input:checked
 
   width: 290px;
 
+  margin: 0;
+
   transform:
     translateX(-50%);
 
   text-align: center;
+
+  color: var(--p07-green);
 
   font-size: 9px;
 
@@ -2855,13 +3284,15 @@ input:checked
 }
 
 
+/* FOOTER — UPDATED */
+
 .p07-footer-message {
   position: absolute;
 
   z-index: 12;
 
   left: 50%;
-  top: 621px;
+  top: 586px;
 
   display: flex;
 
@@ -2875,15 +3306,15 @@ input:checked
   transform:
     translateX(-50%);
 
-  border:
-    1px solid
-    rgba(174, 130, 74, .72);
+  border: 0;
 
-  border-radius: 23px;
+  background: transparent;
 
   color: var(--p07-red);
 
   font-size: 13px;
+
+  line-height: 1.1;
 
   text-align: center;
 }
@@ -2903,9 +3334,7 @@ input:checked
 }
 
 
-/* =========================================================
-   PAGE 08 TEXT CONTENT
-========================================================= */
+/* TEXT */
 
 .p08-content {
   position: absolute;
@@ -2926,9 +3355,7 @@ input:checked
 }
 
 
-/* =========================================================
-   PAGE 08 DIVIDERS
-========================================================= */
+/* DIVIDERS */
 
 .p08-thanks-divider {
   display: flex;
@@ -2960,13 +3387,10 @@ input:checked
 .p08-thanks-divider b {
   display: block;
 
-  margin: 0 7px;
+  margin:
+    0 7px;
 
   color: #a83a22;
-
-  font-family:
-    "Times New Roman",
-    serif;
 
   font-size: 13px;
 
@@ -2992,9 +3416,7 @@ input:checked
 }
 
 
-/* =========================================================
-   PAGE 08 MAIN TITLE
-========================================================= */
+/* TITLE */
 
 .p08-title {
   margin:
@@ -3022,9 +3444,7 @@ input:checked
 }
 
 
-/* =========================================================
-   ENGLISH HEADLINE
-========================================================= */
+/* ENGLISH HEADING */
 
 .p08-english-title {
   margin:
@@ -3049,9 +3469,7 @@ input:checked
 }
 
 
-/* =========================================================
-   VIETNAMESE THANK YOU TEXT
-========================================================= */
+/* VIETNAMESE */
 
 .p08-vietnamese-copy {
   width: 350px;
@@ -3087,9 +3505,7 @@ input:checked
 }
 
 
-/* =========================================================
-   ENGLISH THANK YOU COPY
-========================================================= */
+/* ENGLISH COPY */
 
 .p08-english-copy {
   margin:
@@ -3114,10 +3530,6 @@ input:checked
 }
 
 
-/* =========================================================
-   WITH LOVE
-========================================================= */
-
 .p08-with-love {
   margin:
     5px 0 0;
@@ -3136,10 +3548,6 @@ input:checked
   line-height: 1;
 }
 
-
-/* =========================================================
-   SIGNATURE
-========================================================= */
 
 .p08-signature {
   margin:
@@ -3166,8 +3574,8 @@ input:checked
 
 
 /* =========================================================
-   PAGE 08 EXISTING ELEMENTS
-   GIỮ NGUYÊN
+   PAGE 08 — EXISTING ELEMENTS
+   POSITIONS UNCHANGED
 ========================================================= */
 
 .p08-cloud--left {
@@ -3267,7 +3675,11 @@ input:checked
 
   z-index: 9;
 
+  display: block;
+
   height: auto;
+
+  max-width: none;
 
   pointer-events: none;
 }
@@ -3290,7 +3702,7 @@ input:checked
 
 
 /* =========================================================
-   PERFORMANCE
+   OFFSCREEN PERFORMANCE
 ========================================================= */
 
 .invitation-page:not(.is-nearby)
@@ -3309,6 +3721,32 @@ input:checked
 .p02-confetti-piece,
 
 .invitation-page:not(.is-nearby)
+.p06-confetti {
+  animation-play-state:
+    paused !important;
+}
+
+
+/* =========================================================
+   HIDDEN TAB
+========================================================= */
+
+.is-document-hidden
+.p02-cloud,
+
+.is-document-hidden
+.p03-cloud,
+
+.is-document-hidden
+.p06-cloud,
+
+.is-document-hidden
+.p08-cloud,
+
+.is-document-hidden
+.p02-confetti-piece,
+
+.is-document-hidden
 .p06-confetti {
   animation-play-state:
     paused !important;
