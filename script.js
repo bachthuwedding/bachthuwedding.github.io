@@ -22,24 +22,20 @@
   const root =
     document.documentElement;
 
-
   const siteShell =
     document.getElementById(
       "siteShell"
     );
-
 
   const openingCardButton =
     document.getElementById(
       "openingCardButton"
     );
 
-
   const pageScroller =
     document.getElementById(
       "page02"
     );
-
 
   const page02Layout =
     document.getElementById(
@@ -48,25 +44,11 @@
 
 
   const pages = [
-
     page02Layout,
-
-    document.getElementById(
-      "page03"
-    ),
-
-    document.getElementById(
-      "page06"
-    ),
-
-    document.getElementById(
-      "page07"
-    ),
-
-    document.getElementById(
-      "page08"
-    )
-
+    document.getElementById("page03"),
+    document.getElementById("page06"),
+    document.getElementById("page07"),
+    document.getElementById("page08")
   ].filter(Boolean);
 
 
@@ -79,24 +61,20 @@
       "luckyCard"
     );
 
-
   const luckyNumber =
     document.getElementById(
       "luckyNumber"
     );
-
 
   const luckyHint =
     document.getElementById(
       "luckyHint"
     );
 
-
   const luckyTrigger =
     document.getElementById(
       "luckyTrigger"
     );
-
 
   const luckyFireworks =
     document.getElementById(
@@ -113,66 +91,50 @@
       "rsvpForm"
     );
 
-
   const rsvpGuestName =
     document.getElementById(
       "rsvpGuestName"
     );
-
 
   const rsvpAttendanceYes =
     document.getElementById(
       "rsvpAttendanceYes"
     );
 
-
   const rsvpAttendanceNo =
     document.getElementById(
       "rsvpAttendanceNo"
     );
-
 
   const rsvpGuestCount =
     document.getElementById(
       "rsvpGuestCount"
     );
 
-
   const rsvpMinus =
     document.getElementById(
       "rsvpMinus"
     );
-
 
   const rsvpPlus =
     document.getElementById(
       "rsvpPlus"
     );
 
-
-  const rsvpMessage =
-    document.getElementById(
-      "rsvpMessage"
-    );
-
-
   const rsvpVideo =
     document.getElementById(
       "rsvpVideo"
     );
-
 
   const rsvpVideoLabel =
     document.getElementById(
       "rsvpVideoLabel"
     );
 
-
   const rsvpSubmit =
     document.getElementById(
       "rsvpSubmit"
     );
-
 
   const rsvpStatus =
     document.getElementById(
@@ -187,10 +149,8 @@
   const imagePromises =
     new WeakMap();
 
-
   const pagePromises =
     new WeakMap();
-
 
   const urlPromises =
     new Map();
@@ -199,14 +159,11 @@
   let pageMode =
     false;
 
-
   let resizeRaf =
     0;
 
-
   let scrollRaf =
     0;
-
 
   let activePageIndex =
     -1;
@@ -215,10 +172,8 @@
   let luckyIdleTimer =
     null;
 
-
   let luckyRolling =
     false;
-
 
   let luckyLocked =
     false;
@@ -250,12 +205,8 @@
 
     const scale =
       Math.min(
-
-        viewportWidth /
-        DESIGN_WIDTH,
-
-        viewportHeight /
-        DESIGN_HEIGHT
+        viewportWidth / DESIGN_WIDTH,
+        viewportHeight / DESIGN_HEIGHT
       );
 
 
@@ -344,13 +295,12 @@
       in window
     ) {
 
-      return window
-        .requestIdleCallback(
-          callback,
-          {
-            timeout
-          }
-        );
+      return window.requestIdleCallback(
+        callback,
+        {
+          timeout
+        }
+      );
     }
 
 
@@ -623,7 +573,6 @@
         const jobs =
           images.map(
             (image) =>
-
               loadImage(
                 image,
                 priority
@@ -652,7 +601,6 @@
               spriteUrl,
               priority
             )
-
             .then(
               () => {
 
@@ -730,7 +678,6 @@
               .add(
                 "is-entering"
               );
-
           }
         );
       }
@@ -746,11 +693,17 @@
     index
   ) {
 
+    if (
+      !pages.length
+    ) {
+
+      return;
+    }
+
+
     const safeIndex =
       Math.max(
-
         0,
-
         Math.min(
           index,
           pages.length - 1
@@ -765,9 +718,7 @@
       ) => {
 
         page.classList.toggle(
-
           "is-nearby",
-
           Math.abs(
             pageIndex -
             safeIndex
@@ -814,13 +765,9 @@
 
 
     return Math.max(
-
       0,
-
       Math.min(
-
         pages.length - 1,
-
         Math.round(
           pageScroller.scrollTop /
           DESIGN_HEIGHT
@@ -881,7 +828,7 @@
 
 
   /* =======================================================
-     OPEN INVITATION
+     ENTER INVITATION
   ======================================================= */
 
   async function enterInvitation() {
@@ -965,7 +912,6 @@
           pages[0],
           "high"
         );
-
       },
       {
         passive: true
@@ -981,7 +927,6 @@
         event.preventDefault();
 
         enterInvitation();
-
       }
     );
 
@@ -993,36 +938,13 @@
         pages[0],
         "low"
       );
-
     },
     450
   );
 
 
   /* =======================================================
-     GUEST TOKEN
-  ======================================================= */
-
-  function getGuestToken() {
-
-    const params =
-      new URLSearchParams(
-        window.location.search
-      );
-
-
-    return (
-      params.get("guest") ||
-      params.get("g") ||
-      "default"
-    )
-    .trim()
-    .toLowerCase();
-  }
-
-
-  /* =======================================================
-     LUCKY NUMBER
+     RANDOM LUCKY NUMBER
   ======================================================= */
 
   function randomLuckyNumber() {
@@ -1034,25 +956,26 @@
 
 
     if (
-      window.crypto
-      ?.getRandomValues
+      window.crypto &&
+      typeof window.crypto.getRandomValues ===
+      "function"
     ) {
 
       const data =
-        new Uint32Array(
-          1
-        );
+        new Uint32Array(1);
 
 
-      window.crypto
-        .getRandomValues(
-          data
-        );
+      window.crypto.getRandomValues(
+        data
+      );
 
 
       return (
         LUCKY_MIN +
-        data[0] % range
+        (
+          data[0] %
+          range
+        )
       );
     }
 
@@ -1080,11 +1003,10 @@
 
 
     luckyNumber.textContent =
-      String(value)
-        .padStart(
-          2,
-          "0"
-        );
+      String(value).padStart(
+        2,
+        "0"
+      );
   }
 
 
@@ -1135,19 +1057,36 @@
       );
 
 
+    showLuckyNumber(
+      randomLuckyNumber()
+    );
+
+
     luckyIdleTimer =
       setInterval(
         () => {
 
+          if (
+            luckyLocked ||
+            luckyRolling
+          ) {
+
+            return;
+          }
+
+
           showLuckyNumber(
             randomLuckyNumber()
           );
-
         },
         105
       );
   }
 
+
+  /* =======================================================
+     FIREWORKS
+  ======================================================= */
 
   function fireLuckyFireworks() {
 
@@ -1164,14 +1103,12 @@
 
 
     const colors = [
-
       "#a63019",
       "#c99633",
       "#e5b747",
       "#315747",
       "#d76b35",
       "#f0d37b"
-
     ];
 
 
@@ -1181,9 +1118,9 @@
 
 
     for (
-      let i = 0;
-      i < 102;
-      i += 1
+      let index = 0;
+      index < 102;
+      index += 1
     ) {
 
       const particle =
@@ -1208,51 +1145,45 @@
         100;
 
 
-      particle.style
-        .setProperty(
-          "--x",
-          `${Math.cos(angle) * distance}px`
-        );
+      particle.style.setProperty(
+        "--x",
+        `${Math.cos(angle) * distance}px`
+      );
 
 
-      particle.style
-        .setProperty(
-          "--y",
-          `${Math.sin(angle) * distance}px`
-        );
+      particle.style.setProperty(
+        "--y",
+        `${Math.sin(angle) * distance}px`
+      );
 
 
-      particle.style
-        .setProperty(
-          "--size",
-          `${2 + Math.random() * 4}px`
-        );
+      particle.style.setProperty(
+        "--size",
+        `${2 + Math.random() * 4}px`
+      );
 
 
-      particle.style
-        .setProperty(
-          "--delay",
-          `${Math.random() * 150}ms`
-        );
+      particle.style.setProperty(
+        "--delay",
+        `${Math.random() * 150}ms`
+      );
 
 
-      particle.style
-        .setProperty(
-          "--rotation",
-          `${Math.random() * 720}deg`
-        );
+      particle.style.setProperty(
+        "--rotation",
+        `${Math.random() * 720}deg`
+      );
 
 
-      particle.style
-        .setProperty(
-          "--particle-color",
-          colors[
-            Math.floor(
-              Math.random() *
-              colors.length
-            )
-          ]
-        );
+      particle.style.setProperty(
+        "--particle-color",
+        colors[
+          Math.floor(
+            Math.random() *
+            colors.length
+          )
+        ]
+      );
 
 
       fragment.appendChild(
@@ -1272,12 +1203,15 @@
 
         luckyFireworks
           .replaceChildren();
-
       },
       1700
     );
   }
 
+
+  /* =======================================================
+     LUCKY ROLL
+  ======================================================= */
 
   function rollLuckyNumber() {
 
@@ -1295,6 +1229,13 @@
 
     luckyRolling =
       true;
+
+
+    luckyCard
+      ?.classList
+      .remove(
+        "is-revealed"
+      );
 
 
     luckyCard
@@ -1335,10 +1276,11 @@
 
       const progress =
         Math.min(
-
-          (now - start) /
+          (
+            now -
+            start
+          ) /
           duration,
-
           1
         );
 
@@ -1353,7 +1295,8 @@
 
 
       if (
-        now - lastUpdate >=
+        now -
+        lastUpdate >=
         interval
       ) {
 
@@ -1368,7 +1311,8 @@
 
 
       if (
-        progress < 1
+        progress <
+        1
       ) {
 
         requestAnimationFrame(
@@ -1416,10 +1360,10 @@
 
         luckyHint.textContent =
           LUCKY_TEST_MODE
-          ?
-          "Reload trang để thử lại"
-          :
-          "Số may mắn của bạn";
+            ?
+            "Reload trang để thử lại"
+            :
+            "Số may mắn của bạn";
       }
 
 
@@ -1450,7 +1394,7 @@
 
 
   /* =======================================================
-     RSVP
+     RSVP COUNTER
   ======================================================= */
 
   function updateCount() {
@@ -1467,6 +1411,26 @@
       String(
         rsvpCount
       );
+
+
+    if (
+      rsvpMinus
+    ) {
+
+      rsvpMinus.disabled =
+        rsvpCount <= 1 ||
+        rsvpAttendanceNo?.checked;
+    }
+
+
+    if (
+      rsvpPlus
+    ) {
+
+      rsvpPlus.disabled =
+        rsvpCount >= 10 ||
+        rsvpAttendanceNo?.checked;
+    }
   }
 
 
@@ -1474,6 +1438,15 @@
     ?.addEventListener(
       "click",
       () => {
+
+        if (
+          rsvpAttendanceNo
+            ?.checked
+        ) {
+
+          return;
+        }
+
 
         rsvpCount =
           Math.max(
@@ -1483,7 +1456,6 @@
 
 
         updateCount();
-
       }
     );
 
@@ -1493,6 +1465,15 @@
       "click",
       () => {
 
+        if (
+          rsvpAttendanceNo
+            ?.checked
+        ) {
+
+          return;
+        }
+
+
         rsvpCount =
           Math.min(
             10,
@@ -1501,7 +1482,6 @@
 
 
         updateCount();
-
       }
     );
 
@@ -1512,14 +1492,43 @@
       () => {
 
         if (
-          rsvpAttendanceNo.checked
+          !rsvpAttendanceNo
+            .checked
         ) {
 
-          rsvpCount =
-            0;
+          return;
+        }
 
 
-          updateCount();
+        rsvpCount =
+          0;
+
+
+        if (
+          rsvpGuestCount
+        ) {
+
+          rsvpGuestCount
+            .textContent =
+            "0";
+        }
+
+
+        if (
+          rsvpMinus
+        ) {
+
+          rsvpMinus.disabled =
+            true;
+        }
+
+
+        if (
+          rsvpPlus
+        ) {
+
+          rsvpPlus.disabled =
+            true;
         }
       }
     );
@@ -1531,19 +1540,32 @@
       () => {
 
         if (
-          rsvpAttendanceYes.checked &&
-          rsvpCount < 1
+          !rsvpAttendanceYes
+            .checked
+        ) {
+
+          return;
+        }
+
+
+        if (
+          rsvpCount <
+          1
         ) {
 
           rsvpCount =
             1;
-
-
-          updateCount();
         }
+
+
+        updateCount();
       }
     );
 
+
+  /* =======================================================
+     RSVP VIDEO
+  ======================================================= */
 
   rsvpVideo
     ?.addEventListener(
@@ -1551,20 +1573,33 @@
       () => {
 
         const file =
-          rsvpVideo.files?.[0];
+          rsvpVideo
+            .files
+            ?.[0];
 
 
         if (
-          file &&
-          rsvpVideoLabel
+          !rsvpVideoLabel
         ) {
 
-          rsvpVideoLabel.textContent =
-            file.name;
+          return;
         }
+
+
+        rsvpVideoLabel
+          .textContent =
+          file
+            ?
+            file.name
+            :
+            "Video lời chúc gửi tới cô dâu chú rể";
       }
     );
 
+
+  /* =======================================================
+     RSVP SUBMIT
+  ======================================================= */
 
   rsvpForm
     ?.addEventListener(
@@ -1577,7 +1612,8 @@
         const name =
           rsvpGuestName
             ?.value
-            .trim();
+            .trim() ||
+          "";
 
 
         if (
@@ -1600,6 +1636,10 @@
           }
 
 
+          rsvpGuestName
+            ?.focus();
+
+
           return;
         }
 
@@ -1609,7 +1649,12 @@
         ) {
 
           rsvpStatus.textContent =
-            "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!";
+            rsvpAttendanceNo
+              ?.checked
+              ?
+              "Đã ghi nhận phản hồi của bạn. Cảm ơn bạn rất nhiều!"
+              :
+              "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!";
 
 
           rsvpStatus
@@ -1623,10 +1668,6 @@
         if (
           rsvpSubmit
         ) {
-
-          rsvpSubmit.disabled =
-            true;
-
 
           const text =
             rsvpSubmit
@@ -1642,6 +1683,10 @@
             text.textContent =
               "ĐÃ GỬI XÁC NHẬN";
           }
+
+
+          rsvpSubmit.disabled =
+            true;
         }
       }
     );
@@ -1657,6 +1702,14 @@
   document.addEventListener(
     "visibilitychange",
     () => {
+
+      document.body
+        .classList
+        .toggle(
+          "is-document-hidden",
+          document.hidden
+        );
+
 
       if (
         document.hidden
