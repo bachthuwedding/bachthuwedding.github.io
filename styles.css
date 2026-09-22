@@ -1,14 +1,8 @@
-/* =========================================================
-   BÁCH & THƯ
-   MASTER 390 × 680
-========================================================= */
-
 :root {
   --design-width: 390px;
   --design-height: 680px;
 
   --design-scale: 1;
-
   --render-width: 390px;
   --render-height: 680px;
 
@@ -75,11 +69,6 @@ a {
   font: inherit;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 img {
   -webkit-user-drag: none;
 }
@@ -104,12 +93,12 @@ img {
   opacity: 0;
 
   box-shadow:
-    0 0 40px rgba(80, 46, 24, .12);
+    0 0 40px
+    rgba(80, 46, 24, .12);
 
   transition:
     opacity 80ms linear;
 }
-
 
 .site-shell.is-scale-ready {
   opacity: 1;
@@ -122,8 +111,8 @@ img {
   left: 0;
   top: 0;
 
-  width: var(--design-width);
-  height: var(--design-height);
+  width: 390px;
+  height: 680px;
 
   transform-origin: 0 0;
 
@@ -198,8 +187,6 @@ img {
   background: transparent;
 
   cursor: pointer;
-
-  overflow: visible;
 }
 
 
@@ -207,10 +194,6 @@ img {
   position: absolute;
 
   inset: 0;
-
-  z-index: 2;
-
-  display: block;
 
   width: 100%;
   height: 100%;
@@ -247,8 +230,7 @@ img {
   100% {
     transform:
       translate3d(0, 24px, 0)
-      rotate(0deg)
-      scale(1);
+      rotate(0deg);
   }
 
   56% {
@@ -279,39 +261,19 @@ img {
       scale(1.028);
   }
 
-  76% {
-    transform:
-      translate3d(-7px, 20px, 0)
-      rotate(-2.8deg)
-      scale(1.022);
-  }
-
   81% {
     transform:
       translate3d(6px, 22px, 0)
-      rotate(2.2deg)
-      scale(1.016);
-  }
-
-  87% {
-    transform:
-      translate3d(-3px, 23px, 0)
-      rotate(-1.2deg)
-      scale(1.008);
+      rotate(2.2deg);
   }
 
   93% {
     transform:
       translate3d(0, 24px, 0)
-      rotate(0deg)
-      scale(1);
+      rotate(0);
   }
 }
 
-
-/* =========================================================
-   PAGE 01 PULSE
-========================================================= */
 
 .monogram-pulse {
   position: absolute;
@@ -382,7 +344,7 @@ img {
 
 
 /* =========================================================
-   INVITATION FLOW
+   FLOW
 ========================================================= */
 
 .page-02 {
@@ -422,16 +384,14 @@ img {
 }
 
 
-.site-shell.is-page-02
-.opening-page {
+.site-shell.is-page-02 .opening-page {
   opacity: 0;
 
   pointer-events: none;
 }
 
 
-.site-shell.is-page-02
-.page-02 {
+.site-shell.is-page-02 .page-02 {
   z-index: 3;
 
   opacity: 1;
@@ -447,25 +407,16 @@ img {
 
   height: auto;
   min-height: 0;
-
-  overflow: visible;
-
-  background: #f1dfbd;
 }
 
 
 .invitation-page {
   position: relative;
 
-  display: block;
-
   width: 390px;
   height: 680px;
 
   overflow: hidden;
-
-  margin: 0;
-  padding: 0;
 
   background: #f1dfbd;
 
@@ -474,7 +425,7 @@ img {
 
 
 /* =========================================================
-   SHARED BACKGROUNDS
+   BACKGROUNDS
 ========================================================= */
 
 .p02-background,
@@ -488,23 +439,17 @@ img {
 
   z-index: 0;
 
-  display: block;
-
   width: 100%;
   height: 100%;
-
-  max-width: none;
 
   object-fit: cover;
 
   pointer-events: none;
-
-  user-select: none;
 }
 
 
 /* =========================================================
-   SHARED FRAMES
+   FRAME
 ========================================================= */
 
 .p02-frame,
@@ -521,8 +466,6 @@ img {
   object-fit: fill;
 
   pointer-events: none;
-
-  user-select: none;
 }
 
 
@@ -551,8 +494,6 @@ img {
 .p08-frame {
   z-index: 40;
 
-  inset: auto;
-
   left: 5px;
   top: 5px;
 
@@ -562,9 +503,7 @@ img {
 
 
 /* =========================================================
-   SHARED BOTTOM ORNAMENT
-   PAGE 02 / 03 / 06 / 07 / 08
-   SAME POSITION FOR EVERY PAGE
+   BOTTOM ORNAMENT
 ========================================================= */
 
 .p02-bottom-ornament,
@@ -594,16 +533,12 @@ img {
 
   opacity: 1;
 
-  object-fit: contain;
-
   pointer-events: none;
-
-  user-select: none;
 }
 
 
 /* =========================================================
-   SHARED AMBIENT ANIMATION
+   CLOUD FLOAT
 ========================================================= */
 
 @keyframes wedding-ambient-float {
@@ -616,9 +551,7 @@ img {
 
   50% {
     transform:
-      translateY(
-        var(--ambient-distance)
-      );
+      translateY(-6px);
   }
 }
 
@@ -631,67 +564,50 @@ img {
 
   z-index: 60;
 
-  display: block;
-
   height: auto;
-
-  max-width: none;
 
   opacity: 1;
 
-  object-fit: contain;
-
   pointer-events: none;
-
-  user-select: none;
 
   animation:
     wedding-ambient-float
-    var(--ambient-duration)
+    1850ms
     ease-in-out
     infinite;
 }
 
 
 /* =========================================================
-   PAGE 02 — CLOUDS
+   PAGE 02
 ========================================================= */
 
 .p02-cloud--01 {
   left: 28px;
   top: 116px;
-
   width: 88px;
 }
-
 
 .p02-cloud--02 {
   right: 19px;
   top: 133px;
-
   width: 80px;
 }
-
 
 .p02-cloud--03 {
   left: 18px;
   top: 219px;
-
   width: 65px;
 }
-
 
 .p02-cloud--04 {
   right: 28px;
   top: 265px;
-
   width: 65px;
 }
 
 
-/* =========================================================
-   PAGE 02 — ENTRANCE
-========================================================= */
+/* ENTRY */
 
 .page02-layout .p02-cloud,
 .page02-layout .p02-confetti-cluster,
@@ -721,11 +637,7 @@ img {
 }
 
 
-.page02-layout .p02-confetti-cluster {
-  translate: 0 46px;
-}
-
-
+.page02-layout .p02-confetti-cluster,
 .page02-layout .p02-procession {
   translate: 0 46px;
 }
@@ -742,9 +654,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 02 — TEXT
-========================================================= */
+/* TEXT */
 
 .p02-invite,
 .p02-to,
@@ -777,10 +687,6 @@ img {
   width: 320px;
 
   font-size: 15px;
-
-  line-height: 1.15;
-
-  letter-spacing: .015em;
 
   transform:
     translateX(-50%)
@@ -825,8 +731,6 @@ img {
   color: var(--invitation-gold);
 
   font-size: 7px;
-
-  line-height: 1;
 }
 
 
@@ -877,8 +781,6 @@ img {
 
 
 .p02-name {
-  display: block;
-
   width: 100%;
 
   color: var(--invitation-red);
@@ -895,22 +797,14 @@ img {
 
 
 .p02-ampersand {
-  display: block;
-
   margin:
     4px 0 3px;
 
   color: var(--invitation-green);
 
   font-size: 25px;
-
-  line-height: .9;
 }
 
-
-/* =========================================================
-   PAGE 02 — DATE DIVIDER
-========================================================= */
 
 .p02-date-divider {
   position: absolute;
@@ -952,10 +846,6 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 02 — CEREMONY
-========================================================= */
-
 .p02-ceremony-info {
   position: absolute;
 
@@ -975,8 +865,6 @@ img {
     "Times New Roman",
     Times,
     serif;
-
-  pointer-events: none;
 }
 
 
@@ -989,8 +877,6 @@ img {
   color: var(--invitation-green);
 
   font-size: 13px;
-
-  line-height: 1.15;
 }
 
 
@@ -1010,8 +896,6 @@ img {
   color: var(--invitation-green);
 
   font-size: 10.5px;
-
-  line-height: 1.15;
 }
 
 
@@ -1022,14 +906,10 @@ img {
   color: var(--invitation-green);
 
   font-size: 13px;
-
-  line-height: 1.1;
 }
 
 
 .p02-at strong {
-  margin-left: 2px;
-
   color: var(--invitation-red);
 
   font-size: 14px;
@@ -1045,14 +925,8 @@ img {
   color: var(--invitation-green);
 
   font-size: 10.5px;
-
-  line-height: 1.1;
 }
 
-
-/* =========================================================
-   PAGE 02 — FAMILY
-========================================================= */
 
 .p02-family-info {
   position: absolute;
@@ -1076,19 +950,7 @@ img {
 
   color: var(--invitation-green);
 
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
   text-align: center;
-
-  pointer-events: none;
-}
-
-
-.p02-family {
-  min-width: 0;
 }
 
 
@@ -1096,20 +958,14 @@ img {
   margin:
     0 0 7px;
 
-  color: var(--invitation-green);
-
   font-size: 11px;
 
   font-weight: 600;
-
-  line-height: 1;
 }
 
 
 .p02-family p {
   margin: 0;
-
-  color: var(--invitation-green);
 
   font-size: 10px;
 
@@ -1119,9 +975,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 02 — TEXT ENTRANCE
-========================================================= */
+/* TEXT ENTRY */
 
 .page02-layout .p02-invite,
 .page02-layout .p02-divider,
@@ -1189,8 +1043,7 @@ img {
 
 
 /* =========================================================
-   PAGE 02 — CONFETTI
-   LATEST DEVTOOLS POSITIONS
+   PAGE 02 CONFETTI
 ========================================================= */
 
 .p02-confetti-cluster {
@@ -1205,11 +1058,9 @@ img {
 
   scale: .8;
 
-  transform-origin: center center;
+  transform-origin: center;
 
   pointer-events: none;
-
-  user-select: none;
 }
 
 
@@ -1218,16 +1069,10 @@ img {
 
   display: block;
 
-  overflow: hidden;
-
   background-image:
-    var(
-      --p02-confetti-sprite,
-      none
-    );
+    var(--p02-confetti-sprite, none);
 
-  background-repeat:
-    no-repeat;
+  background-repeat: no-repeat;
 
   background-size:
     361.25px 780.93px;
@@ -1247,288 +1092,169 @@ img {
 }
 
 
-/* 01 */
-
 .p02-confetti-piece--01 {
   left: 9px;
   top: 451px;
-
   width: 11.01px;
   height: 11.43px;
-
-  background-position:
-    -116.46px -37.27px;
+  background-position: -116.46px -37.27px;
 }
-
-
-/* 02 */
 
 .p02-confetti-piece--02 {
   left: 338px;
   top: 485px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -68.61px -65.64px;
+  background-position: -68.61px -65.64px;
 }
-
-
-/* 03 */
 
 .p02-confetti-piece--03 {
   left: 244px;
   top: 433px;
-
   width: 12.28px;
   height: 11.43px;
-
-  background-position:
-    -154.58px -94.86px;
+  background-position: -154.58px -94.86px;
 }
-
-
-/* 04 */
 
 .p02-confetti-piece--04 {
   left: 164px;
   top: 430px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -74.54px -112.65px;
+  background-position: -74.54px -112.65px;
 }
-
-
-/* 05 */
 
 .p02-confetti-piece--05 {
   left: 125px;
   top: 438px;
-
   width: 11.01px;
   height: 8.47px;
-
-  background-position:
-    -302.38px -114.77px;
+  background-position: -302.38px -114.77px;
 }
-
-
-/* 06 */
 
 .p02-confetti-piece--06 {
   left: 215px;
   top: 435px;
-
   width: 11.43px;
   height: 11.43px;
-
-  background-position:
-    -196.08px -132.98px;
+  background-position: -196.08px -132.98px;
 }
-
-
-/* 07 */
 
 .p02-confetti-piece--07 {
   left: 325px;
   top: 455px;
-
   width: 8.05px;
   height: 8.05px;
-
-  background-position:
-    -112.23px -146.53px;
+  background-position: -112.23px -146.53px;
 }
-
-
-/* 08 */
 
 .p02-confetti-piece--08 {
   left: 43px;
   top: 454px;
-
   width: 10.59px;
   height: 10.59px;
-
-  background-position:
-    -32.19px -413.76px;
+  background-position: -32.19px -413.76px;
 }
-
-
-/* 09 */
 
 .p02-confetti-piece--09 {
   left: 183px;
   top: 456px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -33.46px -267.65px;
+  background-position: -33.46px -267.65px;
 }
-
-
-/* 10 */
 
 .p02-confetti-piece--10 {
   left: 300px;
   top: 438px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -318.05px -327.79px;
+  background-position: -318.05px -327.79px;
 }
-
-
-/* 11 */
 
 .p02-confetti-piece--11 {
   left: 140px;
   top: 460px;
-
   width: 10.59px;
   height: 10.59px;
-
-  background-position:
-    -32.19px -413.76px;
+  background-position: -32.19px -413.76px;
 }
-
-
-/* 12 */
 
 .p02-confetti-piece--12 {
   left: 207px;
   top: 477px;
-
   width: 10.59px;
   height: 10.16px;
-
-  background-position:
-    -312.12px -486.18px;
+  background-position: -312.12px -486.18px;
 }
-
-
-/* 13 */
 
 .p02-confetti-piece--13 {
   left: 73px;
   top: 475px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -37.27px -578.08px;
+  background-position: -37.27px -578.08px;
 }
-
-
-/* 14 */
 
 .p02-confetti-piece--14 {
   left: 85px;
   top: 444px;
-
   width: 11.86px;
   height: 9.74px;
-
-  background-position:
-    -57.60px -739.01px;
+  background-position: -57.60px -739.01px;
 }
-
-
-/* 15 */
 
 .p02-confetti-piece--15 {
   left: 236px;
   top: 465px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -68.61px -65.64px;
+  background-position: -68.61px -65.64px;
 }
-
-
-/* 16 */
 
 .p02-confetti-piece--16 {
   left: 377px;
   top: 478px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -37.27px -578.08px;
+  background-position: -37.27px -578.08px;
 }
-
-
-/* 17 */
 
 .p02-confetti-piece--17 {
   left: 116px;
   top: 474px;
-
   width: 10.59px;
   height: 10.59px;
-
-  background-position:
-    -32.19px -413.76px;
+  background-position: -32.19px -413.76px;
 }
-
-
-/* 18 */
 
 .p02-confetti-piece--18 {
   left: 156px;
   top: 486px;
-
   width: 11.01px;
   height: 10.59px;
-
-  background-position:
-    -318.05px -327.79px;
+  background-position: -318.05px -327.79px;
 }
-
-
-/* 19 */
 
 .p02-confetti-piece--19 {
   left: 271px;
   top: 446px;
-
   width: 11.43px;
   height: 11.43px;
-
-  background-position:
-    -196.08px -132.98px;
+  background-position: -196.08px -132.98px;
 }
-
-
-/* 20 */
 
 .p02-confetti-piece--20 {
   left: 354px;
   top: 448px;
-
   width: 11.01px;
   height: 8.47px;
-
-  background-position:
-    -302.38px -114.77px;
+  background-position: -302.38px -114.77px;
 }
 
 
 /* =========================================================
-   PAGE 02 — PROCESSION
+   PAGE 02 PROCESSION
 ========================================================= */
 
 .p02-procession {
@@ -1549,8 +1275,6 @@ img {
 .p02-procession-item {
   position: absolute;
 
-  display: block;
-
   width: auto;
 
   max-width: none;
@@ -1558,8 +1282,6 @@ img {
   object-fit: contain;
 
   pointer-events: none;
-
-  user-select: none;
 }
 
 
@@ -1622,6 +1344,8 @@ img {
 }
 
 
+/* CLOUDS */
+
 .p03-cloud--01 {
   left: 38px;
   top: 68px;
@@ -1653,6 +1377,8 @@ img {
   width: 59px;
 }
 
+
+/* TITLE */
 
 .p03-title {
   position: absolute;
@@ -1699,6 +1425,8 @@ img {
 }
 
 
+/* TIMELINE */
+
 .p03-timeline {
   z-index: 14;
 
@@ -1712,9 +1440,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 03 — ILLUSTRATIONS
-========================================================= */
+/* ILLUSTRATIONS */
 
 .p03-illustration {
   z-index: 12;
@@ -1748,7 +1474,7 @@ img {
 
 
 /* =========================================================
-   PAGE 03 — EVENTS
+   PAGE 03 EVENTS
 ========================================================= */
 
 .p03-event {
@@ -1822,17 +1548,56 @@ img {
 }
 
 
+/* ĐÓN DÂU */
+
 .p03-event--02 {
   left: 100px;
   top: 177px;
+
+  width: 170px;
 }
 
+
+/*
+  ĐÓN DÂU có nhiều thông tin hơn nên
+  location hơi kéo sang trái để không đè timeline.
+*/
+
+.p03-event--02 .p03-event-time {
+  left: 60px;
+}
+
+
+.p03-event--02 .p03-location {
+  left: -25px;
+  top: -18px;
+
+  width: 185px;
+
+  font-size: 8.7px;
+}
+
+
+.p03-event--02 .p03-location strong {
+  font-size: 9.5px;
+}
+
+
+.p03-event--02
+.p03-location > div > span {
+  left: -13px;
+}
+
+
+/* TIỆC CƯỚI */
 
 .p03-event--03 {
   left: 215px;
   top: 307px;
 }
 
+
+/* AFTER PARTY */
 
 .p03-event--04 {
   left: 50px;
@@ -1841,7 +1606,7 @@ img {
 
 
 /* =========================================================
-   PAGE 03 — LOCATION
+   PAGE 03 LOCATION
 ========================================================= */
 
 .p03-location {
@@ -1942,7 +1707,9 @@ img {
 
 
 /* =========================================================
-   PAGE 03 — DRESS CODE
+   PAGE 03 DRESS CODE
+   REFERENCE:
+   BROWN / DUSTY PINK / BEIGE / SAGE
 ========================================================= */
 
 .p03-dress-code {
@@ -1951,10 +1718,10 @@ img {
   z-index: 21;
 
   left: 50%;
-  bottom: 36px;
+  bottom: 34px;
 
-  width: 250px;
-  height: 65px;
+  width: 285px;
+  height: 68px;
 
   transform:
     translateX(-50%);
@@ -1977,11 +1744,6 @@ img {
 
   color: #405d48;
 
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
   font-size: 12px;
 
   font-weight: 600;
@@ -1998,9 +1760,11 @@ img {
 .p03-color-list {
   display: flex;
 
+  align-items: flex-start;
+
   justify-content: center;
 
-  gap: 13px;
+  gap: 14px;
 }
 
 
@@ -2013,42 +1777,68 @@ img {
 
   gap: 3px;
 
+  min-width: 37px;
+
   color: #3e4539;
 
-  font-size: 9px;
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 8.5px;
+
+  line-height: 1;
 }
 
 
 .p03-color {
   display: block;
 
-  width: 22px;
-  height: 22px;
-
-  border-radius: 50%;
-}
-
-
-.p03-color--white {
-  background: #f8f3e8;
-
-  border: 1px solid white;
-}
-
-
-.p03-color--beige {
-  background: #e5c9a6;
+  width: 23px;
+  height: 23px;
 
   border:
     1px solid
-    rgba(255, 255, 255, .75);
+    rgba(255, 255, 255, .92);
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 0 1px
+    rgba(93, 76, 57, .08);
 }
 
 
-.p03-color--black {
-  background: #273528;
+/* PANTONE-STYLE BROWN */
 
-  border: 1px solid white;
+.p03-color--brown {
+  background:
+    #85624e;
+}
+
+
+/* DUSTY PINK */
+
+.p03-color--pink {
+  background:
+    #ce9c95;
+}
+
+
+/* WARM BEIGE */
+
+.p03-color--beige {
+  background:
+    #dbccb5;
+}
+
+
+/* SAGE GREEN */
+
+.p03-color--sage {
+  background:
+    #c1d1af;
 }
 
 
@@ -2073,8 +1863,6 @@ img {
 
   pointer-events: none;
 
-  user-select: none;
-
   animation:
     wedding-ambient-float
     var(--ambient-duration)
@@ -2086,7 +1874,6 @@ img {
 .p06-cloud--01 {
   right: 35px;
   top: 37px;
-
   width: 92px;
 }
 
@@ -2094,7 +1881,6 @@ img {
 .p06-cloud--02 {
   left: 18px;
   top: 127px;
-
   width: 67px;
 }
 
@@ -2102,7 +1888,6 @@ img {
 .p06-cloud--03 {
   right: -10px;
   top: 332px;
-
   width: 74px;
 }
 
@@ -2110,7 +1895,6 @@ img {
 .p06-cloud--04 {
   left: -5px;
   top: 409px;
-
   width: 70px;
 }
 
@@ -2140,8 +1924,6 @@ img {
   width: 100%;
   height: auto;
 
-  max-width: none;
-
   clip-path:
     inset(0 round 14px);
 
@@ -2167,11 +1949,6 @@ img {
   text-align: center;
 
   color: #315747;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
 
   font-size: 23px;
 
@@ -2201,16 +1978,7 @@ img {
 
   color: #a52f15;
 
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
   font-size: 94px;
-
-  font-weight: 400;
-
-  line-height: 1;
 
   font-variant-numeric:
     tabular-nums;
@@ -2371,8 +2139,6 @@ img {
 
   font-style: italic;
 
-  line-height: 1.25;
-
   opacity: .82;
 }
 
@@ -2386,9 +2152,6 @@ img {
 
   width: 100%;
   height: 100%;
-
-  margin: 0;
-  padding: 0;
 
   border: 0;
 
@@ -2409,15 +2172,13 @@ img {
   width: 1px;
   height: 1px;
 
-  pointer-events: none;
-
   overflow: visible;
+
+  pointer-events: none;
 }
 
 
 .p06-firework-particle {
-  --ox: 0px;
-  --oy: 0px;
   --x: 0px;
   --y: 0px;
   --size: 4px;
@@ -2426,9 +2187,6 @@ img {
   --particle-color: #b93b1e;
 
   position: absolute;
-
-  left: 0;
-  top: 0;
 
   width: var(--size);
   height: var(--size);
@@ -2455,10 +2213,7 @@ img {
     opacity: 1;
 
     transform:
-      translate(
-        calc(-50% + var(--ox)),
-        calc(-50% + var(--oy))
-      )
+      translate(-50%, -50%)
       scale(.35);
   }
 
@@ -2467,8 +2222,8 @@ img {
 
     transform:
       translate(
-        calc(-50% + var(--ox) + var(--x)),
-        calc(-50% + var(--oy) + var(--y))
+        calc(-50% + var(--x)),
+        calc(-50% + var(--y))
       )
       scale(.75)
       rotate(var(--rotation));
@@ -2478,10 +2233,6 @@ img {
 
 .p06-lucky-item {
   position: absolute;
-
-  display: block;
-
-  max-width: none;
 
   height: auto;
 
@@ -2536,8 +2287,7 @@ img {
 
 
 /* =========================================================
-   PAGE 07 — RSVP
-   LATEST DEVTOOLS VALUES
+   PAGE 07
 ========================================================= */
 
 .page07-layout {
@@ -2556,15 +2306,9 @@ img {
 .p07-field-lotus {
   position: absolute;
 
-  display: block;
-
   height: auto;
 
-  max-width: none;
-
   pointer-events: none;
-
-  user-select: none;
 }
 
 
@@ -2599,17 +2343,17 @@ img {
   0%,
   100% {
     translate: 0 0;
+
     rotate: -2deg;
   }
 
   50% {
     translate: -5px -9px;
+
     rotate: 4deg;
   }
 }
 
-
-/* TITLE — UPDATED */
 
 .p07-rsvp-title {
   position: absolute;
@@ -2628,11 +2372,6 @@ img {
 
   color: var(--p07-red);
 
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
   font-size: 30px;
 
   font-weight: 400;
@@ -2643,18 +2382,10 @@ img {
 }
 
 
-/* TOP DIVIDER — UPDATED */
-
-.p07-divider-ornament {
+.p07-divider-ornament--top {
   z-index: 9;
 
   left: 50%;
-
-  object-fit: contain;
-}
-
-
-.p07-divider-ornament--top {
   top: 130px;
 
   width: 143px;
@@ -2663,8 +2394,6 @@ img {
     translateX(-50%);
 }
 
-
-/* SUBTITLE — UPDATED */
 
 .p07-rsvp-subtitle {
   position: absolute;
@@ -2683,8 +2412,6 @@ img {
 
   text-align: center;
 
-  color: var(--p07-green);
-
   font-size: 11px;
 
   font-style: italic;
@@ -2692,8 +2419,6 @@ img {
   line-height: 1.22;
 }
 
-
-/* FORM */
 
 .p07-rsvp-form {
   position: absolute;
@@ -2729,21 +2454,17 @@ img {
   top: 0;
 }
 
-
 .p07-form-group--attendance {
   top: 62px;
 }
-
 
 .p07-form-group--count {
   top: 127px;
 }
 
-
 .p07-form-group--message {
   top: 190px;
 }
-
 
 .p07-form-group--video {
   top: 270px;
@@ -2756,15 +2477,9 @@ img {
   margin:
     0 0 5px;
 
-  padding: 0;
-
   color: var(--p07-green);
 
   font-size: 12px;
-
-  font-weight: 400;
-
-  line-height: 1;
 }
 
 
@@ -2783,10 +2498,6 @@ img {
 
   background:
     rgba(255, 250, 235, .38);
-
-  box-shadow:
-    inset 0 0 0 1px
-    rgba(255, 255, 255, .42);
 
   overflow: hidden;
 }
@@ -2809,8 +2520,6 @@ img {
   stroke-linecap: round;
 
   stroke-linejoin: round;
-
-  pointer-events: none;
 }
 
 
@@ -2832,12 +2541,6 @@ img {
 
 
 .p07-text-input {
-  position: relative;
-
-  z-index: 2;
-
-  display: block;
-
   width: 100%;
   height: 100%;
 
@@ -2846,22 +2549,13 @@ img {
     0 43px;
 
   border: 0;
-
   outline: none;
 
   background: transparent;
 
-  color: #51483e;
-
   font-size: 11.5px;
 
   font-style: italic;
-}
-
-
-.p07-text-input::placeholder {
-  color:
-    rgba(117, 92, 74, .46);
 }
 
 
@@ -2874,24 +2568,6 @@ img {
   width: 39px;
 }
 
-
-.p07-field-lotus--message {
-  right: 1px;
-  bottom: -8px;
-
-  width: 42px;
-}
-
-
-.p07-field-lotus--video {
-  right: 2px;
-  bottom: -7px;
-
-  width: 36px;
-}
-
-
-/* ATTENDANCE */
 
 .p07-attendance-options {
   display: grid;
@@ -2923,8 +2599,6 @@ img {
 
   background:
     rgba(255, 250, 235, .34);
-
-  cursor: pointer;
 }
 
 
@@ -2932,15 +2606,11 @@ img {
   position: absolute;
 
   opacity: 0;
-
-  pointer-events: none;
 }
 
 
 .p07-radio-mark {
   position: relative;
-
-  flex: 0 0 auto;
 
   width: 20px;
   height: 20px;
@@ -2974,18 +2644,6 @@ img {
   transform:
     translate(-50%, -50%)
     scale(0);
-
-  transition:
-    transform 150ms ease;
-}
-
-
-.p07-attendance-option
-input:checked
-+
-.p07-radio-mark {
-  border-color:
-    var(--p07-red);
 }
 
 
@@ -2999,24 +2657,10 @@ input:checked
 }
 
 
-.p07-attendance-option
-input:checked
-~
 .p07-attendance-text {
-  color:
-    var(--p07-red);
-}
-
-
-.p07-attendance-text {
-  color:
-    var(--p07-green);
-
   font-size: 16px;
 }
 
-
-/* COUNTER */
 
 .p07-counter {
   display: grid;
@@ -3041,13 +2685,7 @@ input:checked
 
 
 .p07-counter-button {
-  position: relative;
-
-  z-index: 3;
-
   height: 100%;
-
-  padding: 0;
 
   border: 0;
 
@@ -3056,31 +2694,21 @@ input:checked
   color: var(--p07-green);
 
   font-size: 22px;
-
-  cursor: pointer;
 }
 
 
 .p07-counter-value {
-  position: relative;
-
-  z-index: 3;
-
   display: flex;
 
   align-items: center;
 
   justify-content: center;
 
-  height: 100%;
-
   color: var(--p07-green);
 
   font-size: 18px;
 }
 
-
-/* MESSAGE */
 
 .p07-field--message {
   height: 57px;
@@ -3095,12 +2723,6 @@ input:checked
 
 
 .p07-message-input {
-  position: relative;
-
-  z-index: 2;
-
-  display: block;
-
   width: 100%;
   height: 100%;
 
@@ -3109,24 +2731,25 @@ input:checked
     8px 43px;
 
   border: 0;
-
   outline: none;
 
   resize: none;
 
   background: transparent;
 
-  color: #51483e;
-
   font-size: 11px;
 
   font-style: italic;
-
-  line-height: 1.3;
 }
 
 
-/* VIDEO */
+.p07-field-lotus--message {
+  right: 1px;
+  bottom: -8px;
+
+  width: 42px;
+}
+
 
 .p07-video-field {
   display: flex;
@@ -3134,8 +2757,6 @@ input:checked
   align-items: center;
 
   height: 38px;
-
-  cursor: pointer;
 }
 
 
@@ -3152,12 +2773,6 @@ input:checked
 
 
 .p07-video-text {
-  position: relative;
-
-  z-index: 2;
-
-  display: block;
-
   width: 100%;
 
   padding:
@@ -3165,9 +2780,6 @@ input:checked
     0 47px;
 
   overflow: hidden;
-
-  color:
-    rgba(117, 92, 74, .54);
 
   font-size: 10.5px;
 
@@ -3188,17 +2800,19 @@ input:checked
   height: 1px;
 
   opacity: 0;
-
-  pointer-events: none;
 }
 
 
-/* SUBMIT */
+.p07-field-lotus--video {
+  right: 2px;
+  bottom: -7px;
+
+  width: 36px;
+}
+
 
 .p07-submit {
   position: absolute;
-
-  z-index: 5;
 
   left: 50%;
   top: 322px;
@@ -3230,15 +2844,9 @@ input:checked
       #9f2f20
     );
 
-  box-shadow:
-    inset 0 0 0 2px
-    rgba(238, 178, 87, .55);
-
   color: #fff9e9;
 
   font-size: 15px;
-
-  cursor: pointer;
 }
 
 
@@ -3269,8 +2877,6 @@ input:checked
 
   text-align: center;
 
-  color: var(--p07-green);
-
   font-size: 9px;
 
   font-style: italic;
@@ -3283,8 +2889,6 @@ input:checked
   opacity: 1;
 }
 
-
-/* FOOTER — UPDATED */
 
 .p07-footer-message {
   position: absolute;
@@ -3306,22 +2910,18 @@ input:checked
   transform:
     translateX(-50%);
 
-  border: 0;
-
-  background: transparent;
+  border: none;
 
   color: var(--p07-red);
 
   font-size: 13px;
-
-  line-height: 1.1;
 
   text-align: center;
 }
 
 
 /* =========================================================
-   PAGE 08 — THANK YOU
+   PAGE 08
 ========================================================= */
 
 .page08-layout {
@@ -3333,8 +2933,6 @@ input:checked
   color: #345447;
 }
 
-
-/* TEXT */
 
 .p08-content {
   position: absolute;
@@ -3354,8 +2952,6 @@ input:checked
   pointer-events: none;
 }
 
-
-/* DIVIDERS */
 
 .p08-thanks-divider {
   display: flex;
@@ -3385,8 +2981,6 @@ input:checked
 
 
 .p08-thanks-divider b {
-  display: block;
-
   margin:
     0 7px;
 
@@ -3395,13 +2989,6 @@ input:checked
   font-size: 13px;
 
   font-weight: 400;
-
-  line-height: 1;
-}
-
-
-.p08-thanks-divider--top {
-  margin-top: 0;
 }
 
 
@@ -3416,8 +3003,6 @@ input:checked
 }
 
 
-/* TITLE */
-
 .p08-title {
   margin:
     4px 0 0;
@@ -3428,7 +3013,6 @@ input:checked
     "Segoe Script",
     "Snell Roundhand",
     "Brush Script MT",
-    "Times New Roman",
     cursive;
 
   font-size: 39px;
@@ -3438,13 +3022,8 @@ input:checked
   line-height: 1;
 
   letter-spacing: -.8px;
-
-  transform:
-    scaleX(.94);
 }
 
-
-/* ENGLISH HEADING */
 
 .p08-english-title {
   margin:
@@ -3452,24 +3031,13 @@ input:checked
 
   color: #405948;
 
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
   font-size: 10.5px;
-
-  font-weight: 400;
-
-  line-height: 1;
 
   letter-spacing: .55px;
 
   white-space: nowrap;
 }
 
-
-/* VIETNAMESE */
 
 .p08-vietnamese-copy {
   width: 350px;
@@ -3479,18 +3047,9 @@ input:checked
 
   color: #405948;
 
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
   font-size: 8.7px;
 
-  font-weight: 400;
-
   line-height: 1.38;
-
-  text-align: center;
 }
 
 
@@ -3505,28 +3064,16 @@ input:checked
 }
 
 
-/* ENGLISH COPY */
-
 .p08-english-copy {
-  margin:
-    0 auto;
+  margin: 0 auto;
 
   width: 340px;
 
   color: #405948;
 
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
   font-size: 8.8px;
 
-  font-weight: 400;
-
   line-height: 1.4;
-
-  text-align: center;
 }
 
 
@@ -3536,16 +3083,7 @@ input:checked
 
   color: #405948;
 
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
   font-size: 10px;
-
-  font-weight: 400;
-
-  line-height: 1;
 }
 
 
@@ -3559,24 +3097,11 @@ input:checked
     "Segoe Script",
     "Snell Roundhand",
     "Brush Script MT",
-    "Times New Roman",
     cursive;
 
   font-size: 26px;
-
-  font-weight: 400;
-
-  line-height: 1;
-
-  transform:
-    scaleX(.94);
 }
 
-
-/* =========================================================
-   PAGE 08 — EXISTING ELEMENTS
-   POSITIONS UNCHANGED
-========================================================= */
 
 .p08-cloud--left {
   width: 77px;
@@ -3600,7 +3125,6 @@ input:checked
   z-index: 4;
 
   width: 300px;
-  height: auto;
 
   left: 190px;
   bottom: 32px;
@@ -3608,11 +3132,7 @@ input:checked
   transform:
     translateX(-50%);
 
-  object-fit: contain;
-
   opacity: .47;
-
-  pointer-events: none;
 }
 
 
@@ -3622,17 +3142,12 @@ input:checked
   z-index: 7;
 
   width: 233px;
-  height: auto;
 
   left: 240px;
   bottom: 142px;
 
   transform:
     translateX(-50%);
-
-  object-fit: contain;
-
-  pointer-events: none;
 }
 
 
@@ -3642,14 +3157,9 @@ input:checked
   z-index: 6;
 
   width: 85px;
-  height: auto;
 
   right: 20px;
   bottom: 143px;
-
-  object-fit: contain;
-
-  pointer-events: none;
 }
 
 
@@ -3659,14 +3169,9 @@ input:checked
   z-index: 10;
 
   width: 120px;
-  height: auto;
 
   left: 63px;
   bottom: 72px;
-
-  object-fit: contain;
-
-  pointer-events: none;
 }
 
 
@@ -3675,13 +3180,7 @@ input:checked
 
   z-index: 9;
 
-  display: block;
-
   height: auto;
-
-  max-width: none;
-
-  pointer-events: none;
 }
 
 
@@ -3702,7 +3201,7 @@ input:checked
 
 
 /* =========================================================
-   OFFSCREEN PERFORMANCE
+   PERFORMANCE
 ========================================================= */
 
 .invitation-page:not(.is-nearby)
@@ -3721,32 +3220,6 @@ input:checked
 .p02-confetti-piece,
 
 .invitation-page:not(.is-nearby)
-.p06-confetti {
-  animation-play-state:
-    paused !important;
-}
-
-
-/* =========================================================
-   HIDDEN TAB
-========================================================= */
-
-.is-document-hidden
-.p02-cloud,
-
-.is-document-hidden
-.p03-cloud,
-
-.is-document-hidden
-.p06-cloud,
-
-.is-document-hidden
-.p08-cloud,
-
-.is-document-hidden
-.p02-confetti-piece,
-
-.is-document-hidden
 .p06-confetti {
   animation-play-state:
     paused !important;
