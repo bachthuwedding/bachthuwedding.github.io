@@ -2,10 +2,6 @@
   "use strict";
 
 
-  /* =======================================================
-     CONFIG
-  ======================================================= */
-
   const DESIGN_WIDTH = 390;
   const DESIGN_HEIGHT = 680;
 
@@ -15,27 +11,27 @@
   const LUCKY_TEST_MODE = true;
 
 
-  /* =======================================================
-     DOM
-  ======================================================= */
-
   const root =
     document.documentElement;
+
 
   const siteShell =
     document.getElementById(
       "siteShell"
     );
 
+
   const openingCardButton =
     document.getElementById(
       "openingCardButton"
     );
 
+
   const pageScroller =
     document.getElementById(
       "page02"
     );
+
 
   const page02Layout =
     document.getElementById(
@@ -44,37 +40,51 @@
 
 
   const pages = [
+
     page02Layout,
-    document.getElementById("page03"),
-    document.getElementById("page06"),
-    document.getElementById("page07"),
-    document.getElementById("page08")
+
+    document.getElementById(
+      "page03"
+    ),
+
+    document.getElementById(
+      "page06"
+    ),
+
+    document.getElementById(
+      "page07"
+    ),
+
+    document.getElementById(
+      "page08"
+    )
+
   ].filter(Boolean);
 
-
-  /* =======================================================
-     LUCKY
-  ======================================================= */
 
   const luckyCard =
     document.getElementById(
       "luckyCard"
     );
 
+
   const luckyNumber =
     document.getElementById(
       "luckyNumber"
     );
+
 
   const luckyHint =
     document.getElementById(
       "luckyHint"
     );
 
+
   const luckyTrigger =
     document.getElementById(
       "luckyTrigger"
     );
+
 
   const luckyFireworks =
     document.getElementById(
@@ -82,59 +92,65 @@
     );
 
 
-  /* =======================================================
-     RSVP
-  ======================================================= */
-
   const rsvpForm =
     document.getElementById(
       "rsvpForm"
     );
+
 
   const rsvpGuestName =
     document.getElementById(
       "rsvpGuestName"
     );
 
+
   const rsvpAttendanceYes =
     document.getElementById(
       "rsvpAttendanceYes"
     );
+
 
   const rsvpAttendanceNo =
     document.getElementById(
       "rsvpAttendanceNo"
     );
 
+
   const rsvpGuestCount =
     document.getElementById(
       "rsvpGuestCount"
     );
+
 
   const rsvpMinus =
     document.getElementById(
       "rsvpMinus"
     );
 
+
   const rsvpPlus =
     document.getElementById(
       "rsvpPlus"
     );
+
 
   const rsvpVideo =
     document.getElementById(
       "rsvpVideo"
     );
 
+
   const rsvpVideoLabel =
     document.getElementById(
       "rsvpVideoLabel"
     );
 
+
   const rsvpSubmit =
     document.getElementById(
       "rsvpSubmit"
     );
+
 
   const rsvpStatus =
     document.getElementById(
@@ -142,15 +158,13 @@
     );
 
 
-  /* =======================================================
-     STATE
-  ======================================================= */
-
   const imagePromises =
     new WeakMap();
 
+
   const pagePromises =
     new WeakMap();
+
 
   const urlPromises =
     new Map();
@@ -159,11 +173,14 @@
   let pageMode =
     false;
 
+
   let resizeRaf =
     0;
 
+
   let scrollRaf =
     0;
+
 
   let activePageIndex =
     -1;
@@ -172,8 +189,10 @@
   let luckyIdleTimer =
     null;
 
+
   let luckyRolling =
     false;
+
 
   let luckyLocked =
     false;
@@ -262,15 +281,6 @@
   );
 
 
-  window.addEventListener(
-    "orientationchange",
-    scheduleScale,
-    {
-      passive: true
-    }
-  );
-
-
   window.visualViewport
     ?.addEventListener(
       "resize",
@@ -312,7 +322,7 @@
 
 
   /* =======================================================
-     PRELOAD URL
+     LOAD URL
   ======================================================= */
 
   function preloadUrl(
@@ -573,6 +583,7 @@
         const jobs =
           images.map(
             (image) =>
+
               loadImage(
                 image,
                 priority
@@ -601,6 +612,7 @@
               spriteUrl,
               priority
             )
+
             .then(
               () => {
 
@@ -644,7 +656,7 @@
 
 
   /* =======================================================
-     PAGE 02 ENTRANCE
+     PAGE 02 ENTRY
   ======================================================= */
 
   function playPage02Entrance() {
@@ -692,14 +704,6 @@
   function setNearbyPages(
     index
   ) {
-
-    if (
-      !pages.length
-    ) {
-
-      return;
-    }
-
 
     const safeIndex =
       Math.max(
@@ -828,7 +832,7 @@
 
 
   /* =======================================================
-     ENTER INVITATION
+     OPEN
   ======================================================= */
 
   async function enterInvitation() {
@@ -944,7 +948,7 @@
 
 
   /* =======================================================
-     RANDOM LUCKY NUMBER
+     LUCKY NUMBER
   ======================================================= */
 
   function randomLuckyNumber() {
@@ -956,26 +960,24 @@
 
 
     if (
-      window.crypto &&
-      typeof window.crypto.getRandomValues ===
-      "function"
+      window.crypto
+      ?.getRandomValues
     ) {
 
       const data =
         new Uint32Array(1);
 
 
-      window.crypto.getRandomValues(
-        data
-      );
+      window.crypto
+        .getRandomValues(
+          data
+        );
 
 
       return (
         LUCKY_MIN +
-        (
-          data[0] %
-          range
-        )
+        data[0] %
+        range
       );
     }
 
@@ -1003,10 +1005,11 @@
 
 
     luckyNumber.textContent =
-      String(value).padStart(
-        2,
-        "0"
-      );
+      String(value)
+        .padStart(
+          2,
+          "0"
+        );
   }
 
 
@@ -1057,23 +1060,9 @@
       );
 
 
-    showLuckyNumber(
-      randomLuckyNumber()
-    );
-
-
     luckyIdleTimer =
       setInterval(
         () => {
-
-          if (
-            luckyLocked ||
-            luckyRolling
-          ) {
-
-            return;
-          }
-
 
           showLuckyNumber(
             randomLuckyNumber()
@@ -1083,10 +1072,6 @@
       );
   }
 
-
-  /* =======================================================
-     FIREWORKS
-  ======================================================= */
 
   function fireLuckyFireworks() {
 
@@ -1118,9 +1103,9 @@
 
 
     for (
-      let index = 0;
-      index < 102;
-      index += 1
+      let i = 0;
+      i < 102;
+      i += 1
     ) {
 
       const particle =
@@ -1145,45 +1130,51 @@
         100;
 
 
-      particle.style.setProperty(
-        "--x",
-        `${Math.cos(angle) * distance}px`
-      );
+      particle.style
+        .setProperty(
+          "--x",
+          `${Math.cos(angle) * distance}px`
+        );
 
 
-      particle.style.setProperty(
-        "--y",
-        `${Math.sin(angle) * distance}px`
-      );
+      particle.style
+        .setProperty(
+          "--y",
+          `${Math.sin(angle) * distance}px`
+        );
 
 
-      particle.style.setProperty(
-        "--size",
-        `${2 + Math.random() * 4}px`
-      );
+      particle.style
+        .setProperty(
+          "--size",
+          `${2 + Math.random() * 4}px`
+        );
 
 
-      particle.style.setProperty(
-        "--delay",
-        `${Math.random() * 150}ms`
-      );
+      particle.style
+        .setProperty(
+          "--delay",
+          `${Math.random() * 150}ms`
+        );
 
 
-      particle.style.setProperty(
-        "--rotation",
-        `${Math.random() * 720}deg`
-      );
+      particle.style
+        .setProperty(
+          "--rotation",
+          `${Math.random() * 720}deg`
+        );
 
 
-      particle.style.setProperty(
-        "--particle-color",
-        colors[
-          Math.floor(
-            Math.random() *
-            colors.length
-          )
-        ]
-      );
+      particle.style
+        .setProperty(
+          "--particle-color",
+          colors[
+            Math.floor(
+              Math.random() *
+              colors.length
+            )
+          ]
+        );
 
 
       fragment.appendChild(
@@ -1209,10 +1200,6 @@
   }
 
 
-  /* =======================================================
-     LUCKY ROLL
-  ======================================================= */
-
   function rollLuckyNumber() {
 
     if (
@@ -1229,13 +1216,6 @@
 
     luckyRolling =
       true;
-
-
-    luckyCard
-      ?.classList
-      .remove(
-        "is-revealed"
-      );
 
 
     luckyCard
@@ -1394,7 +1374,7 @@
 
 
   /* =======================================================
-     RSVP COUNTER
+     RSVP
   ======================================================= */
 
   function updateCount() {
@@ -1411,26 +1391,6 @@
       String(
         rsvpCount
       );
-
-
-    if (
-      rsvpMinus
-    ) {
-
-      rsvpMinus.disabled =
-        rsvpCount <= 1 ||
-        rsvpAttendanceNo?.checked;
-    }
-
-
-    if (
-      rsvpPlus
-    ) {
-
-      rsvpPlus.disabled =
-        rsvpCount >= 10 ||
-        rsvpAttendanceNo?.checked;
-    }
   }
 
 
@@ -1492,43 +1452,14 @@
       () => {
 
         if (
-          !rsvpAttendanceNo
-            .checked
+          rsvpAttendanceNo.checked
         ) {
 
-          return;
-        }
+          rsvpCount =
+            0;
 
 
-        rsvpCount =
-          0;
-
-
-        if (
-          rsvpGuestCount
-        ) {
-
-          rsvpGuestCount
-            .textContent =
-            "0";
-        }
-
-
-        if (
-          rsvpMinus
-        ) {
-
-          rsvpMinus.disabled =
-            true;
-        }
-
-
-        if (
-          rsvpPlus
-        ) {
-
-          rsvpPlus.disabled =
-            true;
+          updateCount();
         }
       }
     );
@@ -1540,32 +1471,19 @@
       () => {
 
         if (
-          !rsvpAttendanceYes
-            .checked
-        ) {
-
-          return;
-        }
-
-
-        if (
-          rsvpCount <
-          1
+          rsvpAttendanceYes.checked &&
+          rsvpCount < 1
         ) {
 
           rsvpCount =
             1;
+
+
+          updateCount();
         }
-
-
-        updateCount();
       }
     );
 
-
-  /* =======================================================
-     RSVP VIDEO
-  ======================================================= */
 
   rsvpVideo
     ?.addEventListener(
@@ -1579,27 +1497,16 @@
 
 
         if (
-          !rsvpVideoLabel
+          file &&
+          rsvpVideoLabel
         ) {
 
-          return;
+          rsvpVideoLabel.textContent =
+            file.name;
         }
-
-
-        rsvpVideoLabel
-          .textContent =
-          file
-            ?
-            file.name
-            :
-            "Video lời chúc gửi tới cô dâu chú rể";
       }
     );
 
-
-  /* =======================================================
-     RSVP SUBMIT
-  ======================================================= */
 
   rsvpForm
     ?.addEventListener(
@@ -1612,8 +1519,7 @@
         const name =
           rsvpGuestName
             ?.value
-            .trim() ||
-          "";
+            .trim();
 
 
         if (
@@ -1636,10 +1542,6 @@
           }
 
 
-          rsvpGuestName
-            ?.focus();
-
-
           return;
         }
 
@@ -1649,12 +1551,7 @@
         ) {
 
           rsvpStatus.textContent =
-            rsvpAttendanceNo
-              ?.checked
-              ?
-              "Đã ghi nhận phản hồi của bạn. Cảm ơn bạn rất nhiều!"
-              :
-              "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!";
+            "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!";
 
 
           rsvpStatus
@@ -1668,6 +1565,10 @@
         if (
           rsvpSubmit
         ) {
+
+          rsvpSubmit.disabled =
+            true;
+
 
           const text =
             rsvpSubmit
@@ -1683,10 +1584,6 @@
             text.textContent =
               "ĐÃ GỬI XÁC NHẬN";
           }
-
-
-          rsvpSubmit.disabled =
-            true;
         }
       }
     );
@@ -1702,14 +1599,6 @@
   document.addEventListener(
     "visibilitychange",
     () => {
-
-      document.body
-        .classList
-        .toggle(
-          "is-document-hidden",
-          document.hidden
-        );
-
 
       if (
         document.hidden
