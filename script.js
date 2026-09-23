@@ -11,6 +11,77 @@
   const LUCKY_TEST_MODE = true;
 
 
+  /* =======================================================
+     NORMALIZE VIETNAMESE TEXT
+  ======================================================= */
+
+  function normalizeDocumentText() {
+
+    if (
+      !document.body ||
+      typeof "".normalize !==
+        "function"
+    ) {
+
+      return;
+    }
+
+
+    const walker =
+      document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT
+      );
+
+
+    const textNodes =
+      [];
+
+
+    while (
+      walker.nextNode()
+    ) {
+
+      textNodes.push(
+        walker.currentNode
+      );
+    }
+
+
+    textNodes.forEach(
+      (node) => {
+
+        const current =
+          node.nodeValue;
+
+
+        if (!current) {
+          return;
+        }
+
+
+        const normalized =
+          current.normalize(
+            "NFC"
+          );
+
+
+        if (
+          normalized !==
+          current
+        ) {
+
+          node.nodeValue =
+            normalized;
+        }
+      }
+    );
+  }
+
+
+  normalizeDocumentText();
+
+
   const root =
     document.documentElement;
 
@@ -113,6 +184,12 @@
   const rsvpAttendanceNo =
     document.getElementById(
       "rsvpAttendanceNo"
+    );
+
+
+  const rsvpAttendanceNoText =
+    document.getElementById(
+      "rsvpAttendanceNoText"
     );
 
 
@@ -316,7 +393,7 @@
 
     return window.setTimeout(
       callback,
-      160
+      120
     );
   }
 
@@ -902,7 +979,7 @@
           );
         }
       },
-      600
+      450
     );
   }
 
@@ -943,7 +1020,7 @@
         "low"
       );
     },
-    450
+    350
   );
 
 
@@ -1068,7 +1145,7 @@
             randomLuckyNumber()
           );
         },
-        105
+        80
       );
   }
 
@@ -1154,7 +1231,7 @@
       particle.style
         .setProperty(
           "--delay",
-          `${Math.random() * 150}ms`
+          `${Math.random() * 110}ms`
         );
 
 
@@ -1195,7 +1272,7 @@
         luckyFireworks
           .replaceChildren();
       },
-      1700
+      1250
     );
   }
 
@@ -1230,7 +1307,10 @@
     ) {
 
       luckyHint.textContent =
-        "Đang tìm số may mắn...";
+        "Đang tìm số may mắn..."
+          .normalize(
+            "NFC"
+          );
     }
 
 
@@ -1243,7 +1323,7 @@
 
 
     const duration =
-      1850;
+      1350;
 
 
     let lastUpdate =
@@ -1266,12 +1346,12 @@
 
 
       const interval =
-        35 +
+        28 +
         Math.pow(
           progress,
           3
         ) *
-        145;
+        110;
 
 
       if (
@@ -1339,11 +1419,15 @@
       ) {
 
         luckyHint.textContent =
-          LUCKY_TEST_MODE
-            ?
-            "Tải lại trang để thử lại"
-            :
-            "Số may mắn của bạn";
+          (
+            LUCKY_TEST_MODE
+              ?
+              "Tải lại trang để thử lại"
+              :
+              "Số may mắn của bạn"
+          ).normalize(
+            "NFC"
+          );
       }
 
 
@@ -1391,6 +1475,32 @@
       String(
         rsvpCount
       );
+  }
+
+
+  function updateAttendanceLabel() {
+
+    if (
+      !rsvpAttendanceNoText
+    ) {
+
+      return;
+    }
+
+
+    if (
+      rsvpAttendanceNo
+        ?.checked
+    ) {
+
+      rsvpAttendanceNoText.textContent =
+        "Kó";
+
+    } else {
+
+      rsvpAttendanceNoText.textContent =
+        "Không";
+    }
   }
 
 
@@ -1451,6 +1561,9 @@
       "change",
       () => {
 
+        updateAttendanceLabel();
+
+
         if (
           rsvpAttendanceNo.checked
         ) {
@@ -1469,6 +1582,9 @@
     ?.addEventListener(
       "change",
       () => {
+
+        updateAttendanceLabel();
+
 
         if (
           rsvpAttendanceYes.checked &&
@@ -1502,7 +1618,9 @@
         ) {
 
           rsvpVideoLabel.textContent =
-            file.name;
+            file.name.normalize(
+              "NFC"
+            );
         }
       }
     );
@@ -1531,7 +1649,10 @@
           ) {
 
             rsvpStatus.textContent =
-              "Bạn nhập tên khách mời giúp chúng mình nhé.";
+              "Bạn nhập tên khách mời giúp chúng mình nhé."
+                .normalize(
+                  "NFC"
+                );
 
 
             rsvpStatus
@@ -1551,7 +1672,10 @@
         ) {
 
           rsvpStatus.textContent =
-            "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!";
+            "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!"
+              .normalize(
+                "NFC"
+              );
 
 
           rsvpStatus
@@ -1590,6 +1714,7 @@
 
 
   updateCount();
+  updateAttendanceLabel();
 
 
   /* =======================================================
