@@ -12,36 +12,27 @@
 
 
   /* =======================================================
-     VIETNAMESE CLEANUP
+     VIETNAMESE NFC NORMALIZATION
   ======================================================= */
 
-  function cleanUnicodeText(value) {
+  function normalizeVietnameseText(value) {
 
     if (
       typeof value !==
       "string"
     ) {
+
       return value;
     }
 
 
-    return value
-
-      .replace(
-        /[\u200B-\u200D\u2060\uFEFF]/g,
-        ""
-      )
-
-      .replace(
-        /([A-Za-zÀ-ỹ])[\u0020\u00A0\u2000-\u200A\u202F\u205F\u3000]+([\u0300-\u036F])/g,
-        "$1$2"
-      )
-
-      .normalize("NFC");
+    return value.normalize(
+      "NFC"
+    );
   }
 
 
-  function normalizeDocumentText() {
+  function normalizeDocumentVietnamese() {
 
     if (!document.body) {
       return;
@@ -61,6 +52,7 @@
     while (
       walker.nextNode()
     ) {
+
       nodes.push(
         walker.currentNode
       );
@@ -70,18 +62,18 @@
     nodes.forEach(
       (node) => {
 
-        const value =
-          node.nodeValue;
+        if (
+          typeof node.nodeValue !==
+          "string"
+        ) {
 
-
-        if (!value) {
           return;
         }
 
 
         node.nodeValue =
-          cleanUnicodeText(
-            value
+          normalizeVietnameseText(
+            node.nodeValue
           );
       }
     );
@@ -107,13 +99,14 @@
                   attribute
                 )
               ) {
+
                 return;
               }
 
 
               element.setAttribute(
                 attribute,
-                cleanUnicodeText(
+                normalizeVietnameseText(
                   element.getAttribute(
                     attribute
                   )
@@ -126,7 +119,7 @@
   }
 
 
-  normalizeDocumentText();
+  normalizeDocumentVietnamese();
 
 
   /* =======================================================
@@ -186,11 +179,13 @@
 
 
   const pages = [
+
     page02Layout,
     page03,
     page06,
     page07,
     page08
+
   ].filter(Boolean);
 
 
@@ -322,16 +317,16 @@
     false;
 
 
-  let activePageIndex =
-    -1;
-
-
   let resizeRaf =
     0;
 
 
   let scrollRaf =
     0;
+
+
+  let activePageIndex =
+    -1;
 
 
   let luckyIdleTimer =
@@ -470,15 +465,15 @@
     }
 
 
-    return setTimeout(
+    return window.setTimeout(
       callback,
-      120
+      160
     );
   }
 
 
   /* =======================================================
-     PRELOAD
+     PRELOAD URL
   ======================================================= */
 
   function preloadUrl(
@@ -487,6 +482,7 @@
   ) {
 
     if (!url) {
+
       return Promise.resolve();
     }
 
@@ -526,14 +522,24 @@
           const finish =
             () => {
 
-              image
-                .decode?.()
-                .catch(
-                  () => {}
-                )
-                .finally(
-                  resolve
-                );
+              if (
+                typeof image.decode ===
+                "function"
+              ) {
+
+                image
+                  .decode()
+                  .catch(
+                    () => {}
+                  )
+                  .finally(
+                    resolve
+                  );
+
+              } else {
+
+                resolve();
+              }
             };
 
 
@@ -579,12 +585,17 @@
   }
 
 
+  /* =======================================================
+     LOAD IMAGE
+  ======================================================= */
+
   function loadImage(
     image,
     priority = "low"
   ) {
 
     if (!image) {
+
       return Promise.resolve();
     }
 
@@ -606,6 +617,7 @@
 
 
     if (!source) {
+
       return Promise.resolve();
     }
 
@@ -625,14 +637,24 @@
           const finish =
             () => {
 
-              image
-                .decode?.()
-                .catch(
-                  () => {}
-                )
-                .finally(
-                  resolve
-                );
+              if (
+                typeof image.decode ===
+                "function"
+              ) {
+
+                image
+                  .decode()
+                  .catch(
+                    () => {}
+                  )
+                  .finally(
+                    resolve
+                  );
+
+              } else {
+
+                resolve();
+              }
             };
 
 
@@ -683,12 +705,17 @@
   }
 
 
+  /* =======================================================
+     LOAD PAGE
+  ======================================================= */
+
   function loadPage(
     page,
     priority = "low"
   ) {
 
     if (!page) {
+
       return Promise.resolve();
     }
 
@@ -737,7 +764,8 @@
         ) {
 
           const spriteUrl =
-            spriteHost.dataset
+            spriteHost
+              .dataset
               .spriteSrc;
 
 
@@ -791,12 +819,15 @@
 
 
   /* =======================================================
-     PAGE 02 ENTRY
+     PAGE 02 ENTRANCE
   ======================================================= */
 
   function playPage02Entrance() {
 
-    if (!page02Layout) {
+    if (
+      !page02Layout
+    ) {
+
       return;
     }
 
@@ -830,7 +861,7 @@
 
 
   /* =======================================================
-     FIREWORK
+     FIREWORK PARTICLES
   ======================================================= */
 
   const fireworkColors = [
@@ -854,6 +885,7 @@
   ) {
 
     if (!target) {
+
       return;
     }
 
@@ -897,51 +929,45 @@
         );
 
 
-      particle.style
-        .setProperty(
-          "--x",
-          `${Math.cos(angle) * distance}px`
-        );
+      particle.style.setProperty(
+        "--x",
+        `${Math.cos(angle) * distance}px`
+      );
 
 
-      particle.style
-        .setProperty(
-          "--y",
-          `${Math.sin(angle) * distance}px`
-        );
+      particle.style.setProperty(
+        "--y",
+        `${Math.sin(angle) * distance}px`
+      );
 
 
-      particle.style
-        .setProperty(
-          "--size",
-          `${2 + Math.random() * 4}px`
-        );
+      particle.style.setProperty(
+        "--size",
+        `${2 + Math.random() * 4}px`
+      );
 
 
-      particle.style
-        .setProperty(
-          "--delay",
-          `${Math.random() * 160}ms`
-        );
+      particle.style.setProperty(
+        "--delay",
+        `${Math.random() * 150}ms`
+      );
 
 
-      particle.style
-        .setProperty(
-          "--rotation",
-          `${Math.random() * 720}deg`
-        );
+      particle.style.setProperty(
+        "--rotation",
+        `${Math.random() * 720}deg`
+      );
 
 
-      particle.style
-        .setProperty(
-          "--particle-color",
-          fireworkColors[
-            Math.floor(
-              Math.random() *
-              fireworkColors.length
-            )
-          ]
-        );
+      particle.style.setProperty(
+        "--particle-color",
+        fireworkColors[
+          Math.floor(
+            Math.random() *
+            fireworkColors.length
+          )
+        ]
+      );
 
 
       fragment.appendChild(
@@ -959,7 +985,6 @@
       () => {
 
         target.replaceChildren();
-
       },
       cleanup
     );
@@ -973,6 +998,7 @@
   function playPage06Entrance() {
 
     if (!page06) {
+
       return;
     }
 
@@ -989,6 +1015,10 @@
       );
 
 
+    /*
+      Pháo hoa nổ trước.
+    */
+
     spawnFireworks(
       page06EntryFireworks,
       {
@@ -999,6 +1029,10 @@
       }
     );
 
+
+    /*
+      Sau đó confetti mới hiện.
+    */
 
     page06EntryTimer =
       setTimeout(
@@ -1019,7 +1053,7 @@
               );
           }
         },
-        650
+        600
       );
   }
 
@@ -1096,7 +1130,7 @@
 
 
   /* =======================================================
-     NEARBY
+     NEARBY PAGES
   ======================================================= */
 
   function setNearbyPages(
@@ -1137,11 +1171,15 @@
 
 
     if (
-      pages[safeIndex + 1]
+      pages[
+        safeIndex + 1
+      ]
     ) {
 
       loadPage(
-        pages[safeIndex + 1],
+        pages[
+          safeIndex + 1
+        ],
         "low"
       );
     }
@@ -1154,7 +1192,10 @@
 
   function getCurrentPageIndex() {
 
-    if (!pageScroller) {
+    if (
+      !pageScroller
+    ) {
+
       return 0;
     }
 
@@ -1174,7 +1215,10 @@
 
   function onPageScroll() {
 
-    if (scrollRaf) {
+    if (
+      scrollRaf
+    ) {
+
       return;
     }
 
@@ -1192,26 +1236,23 @@
 
 
           if (
-            index ===
+            index !==
             activePageIndex
           ) {
 
-            return;
+            activePageIndex =
+              index;
+
+
+            setNearbyPages(
+              index
+            );
+
+
+            activatePage(
+              index
+            );
           }
-
-
-          activePageIndex =
-            index;
-
-
-          setNearbyPages(
-            index
-          );
-
-
-          activatePage(
-            index
-          );
         }
       );
   }
@@ -1228,12 +1269,15 @@
 
 
   /* =======================================================
-     OPEN
+     OPEN INVITATION
   ======================================================= */
 
   async function enterInvitation() {
 
-    if (pageMode) {
+    if (
+      pageMode
+    ) {
+
       return;
     }
 
@@ -1248,14 +1292,19 @@
     );
 
 
-    pageScroller.scrollTop =
-      0;
+    if (
+      pageScroller
+    ) {
+
+      pageScroller.scrollTop =
+        0;
 
 
-    pageScroller.setAttribute(
-      "aria-hidden",
-      "false"
-    );
+      pageScroller.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+    }
 
 
     siteShell
@@ -1292,7 +1341,7 @@
           );
         }
       },
-      500
+      600
     );
   }
 
@@ -1333,7 +1382,7 @@
         "low"
       );
     },
-    400
+    450
   );
 
 
@@ -1351,7 +1400,7 @@
 
     if (
       window.crypto
-        ?.getRandomValues
+      ?.getRandomValues
     ) {
 
       const data =
@@ -1385,6 +1434,14 @@
   function showLuckyNumber(
     value
   ) {
+
+    if (
+      !luckyNumber
+    ) {
+
+      return;
+    }
+
 
     luckyNumber.textContent =
       String(value)
@@ -1449,9 +1506,8 @@
           showLuckyNumber(
             randomLuckyNumber()
           );
-
         },
-        150
+        145
       );
   }
 
@@ -1461,10 +1517,10 @@
     spawnFireworks(
       luckyFireworks,
       {
-        count: 100,
+        count: 102,
         minDistance: 55,
         maxDistance: 155,
-        cleanup: 1500
+        cleanup: 1700
       }
     );
   }
@@ -1490,15 +1546,27 @@
 
     luckyCard
       ?.classList
+      .remove(
+        "is-revealed"
+      );
+
+
+    luckyCard
+      ?.classList
       .add(
         "is-rolling"
       );
 
 
-    luckyHint.textContent =
-      cleanUnicodeText(
-        "Đang tìm số may mắn..."
-      );
+    if (
+      luckyHint
+    ) {
+
+      luckyHint.textContent =
+        normalizeVietnameseText(
+          "Đang tìm số may mắn..."
+        );
+    }
 
 
     const finalNumber =
@@ -1510,14 +1578,16 @@
 
 
     const duration =
-      1750;
+      1850;
 
 
     let lastUpdate =
       0;
 
 
-    function frame(now) {
+    function frame(
+      now
+    ) {
 
       const progress =
         Math.min(
@@ -1531,12 +1601,12 @@
 
 
       const interval =
-        55 +
+        45 +
         Math.pow(
           progress,
           3
         ) *
-        135;
+        145;
 
 
       if (
@@ -1564,6 +1634,7 @@
           frame
         );
 
+
         return;
       }
 
@@ -1583,6 +1654,13 @@
         );
 
 
+      luckyCard
+        ?.classList
+        .add(
+          "is-revealed"
+        );
+
+
       showLuckyNumber(
         finalNumber
       );
@@ -1591,18 +1669,28 @@
       fireLuckyFireworks();
 
 
-      luckyHint.textContent =
-        cleanUnicodeText(
-          LUCKY_TEST_MODE
-            ?
-            "Tải lại trang để thử lại"
-            :
-            "Số may mắn của bạn"
-        );
+      if (
+        luckyHint
+      ) {
+
+        luckyHint.textContent =
+          normalizeVietnameseText(
+            LUCKY_TEST_MODE
+              ?
+              "Tải lại trang để thử lại"
+              :
+              "Số may mắn của bạn"
+          );
+      }
 
 
-      luckyTrigger.disabled =
-        true;
+      if (
+        luckyTrigger
+      ) {
+
+        luckyTrigger.disabled =
+          true;
+      }
     }
 
 
@@ -1628,6 +1716,14 @@
 
   function updateCount() {
 
+    if (
+      !rsvpGuestCount
+    ) {
+
+      return;
+    }
+
+
     rsvpGuestCount.textContent =
       String(
         rsvpCount
@@ -1635,7 +1731,23 @@
   }
 
 
-  function updateAttendanceLabel() {
+  /*
+    PHẦN THAY ĐỔI DUY NHẤT SO VỚI UI RSVP CŨ:
+
+    - chưa chọn "Không" => Không
+    - chọn "Không"      => Kó
+    - quay lại "Có"     => Không
+  */
+
+  function updateAttendanceNoLabel() {
+
+    if (
+      !rsvpAttendanceNoText
+    ) {
+
+      return;
+    }
+
 
     rsvpAttendanceNoText.textContent =
       rsvpAttendanceNo
@@ -1704,7 +1816,7 @@
       "change",
       () => {
 
-        updateAttendanceLabel();
+        updateAttendanceNoLabel();
 
 
         if (
@@ -1726,13 +1838,12 @@
       "change",
       () => {
 
-        updateAttendanceLabel();
+        updateAttendanceNoLabel();
 
 
         if (
           rsvpAttendanceYes.checked &&
-          rsvpCount <
-          1
+          rsvpCount < 1
         ) {
 
           rsvpCount =
@@ -1762,7 +1873,7 @@
         ) {
 
           rsvpVideoLabel.textContent =
-            cleanUnicodeText(
+            normalizeVietnameseText(
               file.name
             );
         }
@@ -1784,11 +1895,39 @@
             .trim();
 
 
-        if (!name) {
+        if (
+          !name
+        ) {
+
+          if (
+            rsvpStatus
+          ) {
+
+            rsvpStatus.textContent =
+              normalizeVietnameseText(
+                "Bạn nhập tên khách mời giúp chúng mình nhé."
+              );
+
+
+            rsvpStatus
+              .classList
+              .add(
+                "is-visible"
+              );
+          }
+
+
+          return;
+        }
+
+
+        if (
+          rsvpStatus
+        ) {
 
           rsvpStatus.textContent =
-            cleanUnicodeText(
-              "Bạn nhập tên khách mời giúp chúng mình nhé."
+            normalizeVietnameseText(
+              "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!"
             );
 
 
@@ -1797,41 +1936,31 @@
             .add(
               "is-visible"
             );
-
-
-          return;
         }
 
 
-        rsvpStatus.textContent =
-          cleanUnicodeText(
-            "Đã ghi nhận xác nhận của bạn."
-          );
-
-
-        rsvpStatus
-          .classList
-          .add(
-            "is-visible"
-          );
-
-
-        rsvpSubmit.disabled =
-          true;
-
-
-        const submitText =
-          rsvpSubmit.querySelector(
-            "span:nth-child(2)"
-          );
-
-
         if (
-          submitText
+          rsvpSubmit
         ) {
 
-          submitText.textContent =
-            "ĐÃ GỬI XÁC NHẬN";
+          rsvpSubmit.disabled =
+            true;
+
+
+          const text =
+            rsvpSubmit
+              .querySelector(
+                "span"
+              );
+
+
+          if (
+            text
+          ) {
+
+            text.textContent =
+              "ĐÃ GỬI XÁC NHẬN";
+          }
         }
       }
     );
@@ -1839,32 +1968,31 @@
 
   updateCount();
 
-  updateAttendanceLabel();
+  updateAttendanceNoLabel();
 
 
   /* =======================================================
      VISIBILITY
   ======================================================= */
 
-  document
-    .addEventListener(
-      "visibilitychange",
-      () => {
+  document.addEventListener(
+    "visibilitychange",
+    () => {
 
-        if (
-          document.hidden
-        ) {
+      if (
+        document.hidden
+      ) {
 
-          stopLuckyIdleShuffle();
+        stopLuckyIdleShuffle();
 
-        } else if (
-          !luckyLocked &&
-          !luckyRolling
-        ) {
+      } else if (
+        !luckyLocked &&
+        !luckyRolling
+      ) {
 
-          startLuckyIdleShuffle();
-        }
+        startLuckyIdleShuffle();
       }
-    );
+    }
+  );
 
 })();
