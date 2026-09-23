@@ -12,18 +12,15 @@
 
 
   /* =======================================================
-     VIETNAMESE UNICODE CLEANUP
+     VIETNAMESE CLEANUP
   ======================================================= */
 
-  function cleanUnicodeText(
-    value
-  ) {
+  function cleanUnicodeText(value) {
 
     if (
       typeof value !==
       "string"
     ) {
-
       return value;
     }
 
@@ -48,10 +45,7 @@
 
   function normalizeDocumentText() {
 
-    if (
-      !document.body
-    ) {
-
+    if (!document.body) {
       return;
     }
 
@@ -69,7 +63,6 @@
     while (
       walker.nextNode()
     ) {
-
       nodes.push(
         walker.currentNode
       );
@@ -98,7 +91,6 @@
           cleaned !==
           current
         ) {
-
           node.nodeValue =
             cleaned;
         }
@@ -125,7 +117,6 @@
                   attribute
                 )
               ) {
-
                 return;
               }
 
@@ -535,10 +526,8 @@
 
 
           try {
-
             image.fetchPriority =
               priority;
-
           } catch (_) {}
 
 
@@ -591,7 +580,6 @@
           if (
             image.complete
           ) {
-
             finish();
           }
         }
@@ -648,10 +636,8 @@
         (resolve) => {
 
           try {
-
             image.fetchPriority =
               priority;
-
           } catch (_) {}
 
 
@@ -709,7 +695,6 @@
           if (
             image.complete
           ) {
-
             finish();
           }
         }
@@ -766,7 +751,6 @@
         const jobs =
           images.map(
             (image) =>
-
               loadImage(
                 image,
                 priority
@@ -845,10 +829,7 @@
 
   function playPage02Entrance() {
 
-    if (
-      !page02Layout
-    ) {
-
+    if (!page02Layout) {
       return;
     }
 
@@ -882,7 +863,7 @@
 
 
   /* =======================================================
-     FIREWORK GENERATOR
+     FIREWORKS
   ======================================================= */
 
   const fireworkColors = [
@@ -901,7 +882,7 @@
       count = 90,
       minDistance = 45,
       maxDistance = 135,
-      cleanup = 1100
+      cleanup = 1000
     } = {}
   ) {
 
@@ -949,57 +930,45 @@
         );
 
 
-      particle
-        .style
-        .setProperty(
-          "--x",
-          `${Math.cos(angle) * distance}px`
-        );
+      particle.style.setProperty(
+        "--x",
+        `${Math.cos(angle) * distance}px`
+      );
 
 
-      particle
-        .style
-        .setProperty(
-          "--y",
-          `${Math.sin(angle) * distance}px`
-        );
+      particle.style.setProperty(
+        "--y",
+        `${Math.sin(angle) * distance}px`
+      );
 
 
-      particle
-        .style
-        .setProperty(
-          "--size",
-          `${2 + Math.random() * 4}px`
-        );
+      particle.style.setProperty(
+        "--size",
+        `${2 + Math.random() * 4}px`
+      );
 
 
-      particle
-        .style
-        .setProperty(
-          "--delay",
-          `${Math.random() * 100}ms`
-        );
+      particle.style.setProperty(
+        "--delay",
+        `${Math.random() * 80}ms`
+      );
 
 
-      particle
-        .style
-        .setProperty(
-          "--rotation",
-          `${Math.random() * 720}deg`
-        );
+      particle.style.setProperty(
+        "--rotation",
+        `${Math.random() * 720}deg`
+      );
 
 
-      particle
-        .style
-        .setProperty(
-          "--particle-color",
-          fireworkColors[
-            Math.floor(
-              Math.random() *
-              fireworkColors.length
-            )
-          ]
-        );
+      particle.style.setProperty(
+        "--particle-color",
+        fireworkColors[
+          Math.floor(
+            Math.random() *
+            fireworkColors.length
+          )
+        ]
+      );
 
 
       fragment.appendChild(
@@ -1015,7 +984,6 @@
 
     setTimeout(
       () => {
-
         target.replaceChildren();
       },
       cleanup
@@ -1029,10 +997,7 @@
 
   function playPage06Entrance() {
 
-    if (
-      !page06
-    ) {
-
+    if (!page06) {
       return;
     }
 
@@ -1042,23 +1007,25 @@
     );
 
 
-    page06
-      .classList
-      .remove(
-        "is-confetti-visible"
-      );
+    page06.classList.remove(
+      "is-confetti-visible"
+    );
 
+
+    /* one explosion first */
 
     spawnFireworks(
       page06EntryFireworks,
       {
-        count: 110,
-        minDistance: 55,
-        maxDistance: 165,
-        cleanup: 1050
+        count: 115,
+        minDistance: 60,
+        maxDistance: 170,
+        cleanup: 900
       }
     );
 
+
+    /* then confetti */
 
     page06EntryTimer =
       setTimeout(
@@ -1144,10 +1111,7 @@
     ) {
 
       requestAnimationFrame(
-        () => {
-
-          playPage06Entrance();
-        }
+        playPage06Entrance
       );
     }
   }
@@ -1216,10 +1180,7 @@
 
   function getCurrentPageIndex() {
 
-    if (
-      !pageScroller
-    ) {
-
+    if (!pageScroller) {
       return 0;
     }
 
@@ -1239,10 +1200,7 @@
 
   function onPageScroll() {
 
-    if (
-      scrollRaf
-    ) {
-
+    if (scrollRaf) {
       return;
     }
 
@@ -1293,15 +1251,12 @@
 
 
   /* =======================================================
-     OPEN INVITATION
+     OPEN
   ======================================================= */
 
   async function enterInvitation() {
 
-    if (
-      pageMode
-    ) {
-
+    if (pageMode) {
       return;
     }
 
@@ -1406,7 +1361,7 @@
         "low"
       );
     },
-    320
+    300
   );
 
 
@@ -1459,10 +1414,7 @@
     value
   ) {
 
-    if (
-      !luckyNumber
-    ) {
-
+    if (!luckyNumber) {
       return;
     }
 
@@ -1531,7 +1483,7 @@
             randomLuckyNumber()
           );
         },
-        75
+        72
       );
   }
 
@@ -1541,10 +1493,10 @@
     spawnFireworks(
       luckyFireworks,
       {
-        count: 102,
+        count: 100,
         minDistance: 55,
         maxDistance: 155,
-        cleanup: 1150
+        cleanup: 1000
       }
     );
   }
@@ -1595,7 +1547,7 @@
 
 
     const duration =
-      1250;
+      1200;
 
 
     let lastUpdate =
@@ -1618,12 +1570,12 @@
 
 
       const interval =
-        25 +
+        24 +
         Math.pow(
           progress,
           3
         ) *
-        100;
+        95;
 
 
       if (
@@ -1651,7 +1603,6 @@
           frame
         );
 
-
         return;
       }
 
@@ -1668,13 +1619,6 @@
         ?.classList
         .remove(
           "is-rolling"
-        );
-
-
-      luckyCard
-        ?.classList
-        .add(
-          "is-revealed"
         );
 
 
@@ -1777,7 +1721,6 @@
           rsvpAttendanceNo
             ?.checked
         ) {
-
           return;
         }
 
@@ -1803,7 +1746,6 @@
           rsvpAttendanceNo
             ?.checked
         ) {
-
           return;
         }
 
@@ -1904,9 +1846,7 @@
             .trim();
 
 
-        if (
-          !name
-        ) {
+        if (!name) {
 
           if (
             rsvpStatus
@@ -1936,7 +1876,7 @@
 
           rsvpStatus.textContent =
             cleanUnicodeText(
-              "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!"
+              "Đã ghi nhận xác nhận của bạn."
             );
 
 
@@ -1963,9 +1903,7 @@
               );
 
 
-          if (
-            text
-          ) {
+          if (text) {
 
             text.textContent =
               "ĐÃ GỬI XÁC NHẬN";
