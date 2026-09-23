@@ -1015,10 +1015,6 @@
       );
 
 
-    /*
-      Pháo hoa nổ trước.
-    */
-
     spawnFireworks(
       page06EntryFireworks,
       {
@@ -1029,10 +1025,6 @@
       }
     );
 
-
-    /*
-      Sau đó confetti mới hiện.
-    */
 
     page06EntryTimer =
       setTimeout(
@@ -1731,14 +1723,6 @@
   }
 
 
-  /*
-    PHẦN THAY ĐỔI DUY NHẤT SO VỚI UI RSVP CŨ:
-
-    - chưa chọn "Không" => Không
-    - chọn "Không"      => Kó
-    - quay lại "Có"     => Không
-  */
-
   function updateAttendanceNoLabel() {
 
     if (
@@ -1843,7 +1827,8 @@
 
         if (
           rsvpAttendanceYes.checked &&
-          rsvpCount < 1
+          rsvpCount <
+          1
         ) {
 
           rsvpCount =
@@ -1927,7 +1912,7 @@
 
           rsvpStatus.textContent =
             normalizeVietnameseText(
-              "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!"
+              "Đã ghi nhận xác nhận của bạn."
             );
 
 
