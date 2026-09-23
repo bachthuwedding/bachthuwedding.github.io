@@ -1558,11 +1558,6 @@ img {
 }
 
 
-/*
-  ĐÓN DÂU có nhiều thông tin hơn nên
-  location hơi kéo sang trái để không đè timeline.
-*/
-
 .p03-event--02 .p03-event-time {
   left: 60px;
 }
@@ -1708,8 +1703,6 @@ img {
 
 /* =========================================================
    PAGE 03 DRESS CODE
-   REFERENCE:
-   BROWN / DUSTY PINK / BEIGE / SAGE
 ========================================================= */
 
 .p03-dress-code {
@@ -1810,15 +1803,11 @@ img {
 }
 
 
-/* PANTONE-STYLE BROWN */
-
 .p03-color--brown {
   background:
     #85624e;
 }
 
-
-/* DUSTY PINK */
 
 .p03-color--pink {
   background:
@@ -1826,15 +1815,11 @@ img {
 }
 
 
-/* WARM BEIGE */
-
 .p03-color--beige {
   background:
     #dbccb5;
 }
 
-
-/* SAGE GREEN */
 
 .p03-color--sage {
   background:
@@ -3136,7 +3121,7 @@ input:checked
 }
 
 
-.p08-temple-gate {
+.p08-masion {
   position: absolute;
 
   z-index: 7;
