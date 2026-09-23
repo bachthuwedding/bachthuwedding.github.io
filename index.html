@@ -45,11 +45,11 @@
 
   <link
     rel="stylesheet"
-    href="./styles.css?v=20260923-3"
+    href="./styles.css?v=20260923-4"
   />
 
   <script
-    src="./script.js?v=20260923-3"
+    src="./script.js?v=20260923-4"
     defer
   ></script>
 </head>
@@ -639,7 +639,9 @@
                       aria-hidden="true"
                     ></span>
 
-                    <span>Nâu</span>
+                    <span>
+                      Nâu
+                    </span>
 
                   </div>
 
@@ -651,7 +653,9 @@
                       aria-hidden="true"
                     ></span>
 
-                    <span>Hồng</span>
+                    <span>
+                      Hồng
+                    </span>
 
                   </div>
 
@@ -663,7 +667,9 @@
                       aria-hidden="true"
                     ></span>
 
-                    <span>Be</span>
+                    <span>
+                      Be
+                    </span>
 
                   </div>
 
@@ -675,7 +681,9 @@
                       aria-hidden="true"
                     ></span>
 
-                    <span>Xanh</span>
+                    <span>
+                      Xanh
+                    </span>
 
                   </div>
 
@@ -756,6 +764,8 @@
               />
 
 
+              <!-- LUCKY CARD -->
+
               <div
                 class="p06-card-wrap"
                 id="luckyCard"
@@ -810,37 +820,49 @@
               </div>
 
 
-              <img
-                class="p06-lucky-item p06-ingots deferred-page06-asset"
-                data-src="./assets/page06-lucky-ingots.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+              <!--
+                ALL BOTTOM LUCKY ELEMENTS
+                MOVE TOGETHER WITH THIS WRAPPER
+              -->
 
-              <img
-                class="p06-lucky-item p06-knot deferred-page06-asset"
-                data-src="./assets/page06-lucky-knot.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+              <div
+                class="p06-bottom-items"
+                aria-hidden="true"
+              >
 
-              <img
-                class="p06-lucky-item p06-bag deferred-page06-asset"
-                data-src="./assets/page06-lucky-bag.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+                <img
+                  class="p06-lucky-item p06-ingots deferred-page06-asset"
+                  data-src="./assets/page06-lucky-ingots.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
 
-              <img
-                class="p06-lucky-item p06-coins deferred-page06-asset"
-                data-src="./assets/page06-lucky-coins.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+                <img
+                  class="p06-lucky-item p06-knot deferred-page06-asset"
+                  data-src="./assets/page06-lucky-knot.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
+
+                <img
+                  class="p06-lucky-item p06-bag deferred-page06-asset"
+                  data-src="./assets/page06-lucky-bag.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
+
+                <img
+                  class="p06-lucky-item p06-coins deferred-page06-asset"
+                  data-src="./assets/page06-lucky-coins.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
+
+              </div>
 
 
               <img
@@ -925,6 +947,8 @@
               >
 
 
+                <!-- NAME -->
+
                 <div class="p07-form-group p07-form-group--name">
 
                   <label
@@ -950,6 +974,8 @@
 
                 </div>
 
+
+                <!-- ATTENDANCE -->
 
                 <fieldset class="p07-form-group p07-form-group--attendance">
 
@@ -990,7 +1016,10 @@
 
                       <span class="p07-radio-mark"></span>
 
-                      <span class="p07-attendance-text">
+                      <span
+                        class="p07-attendance-text"
+                        id="rsvpAttendanceNoText"
+                      >
                         Không
                       </span>
 
@@ -1000,6 +1029,8 @@
 
                 </fieldset>
 
+
+                <!-- COUNT -->
 
                 <div class="p07-form-group p07-form-group--count">
 
@@ -1043,6 +1074,8 @@
                 </div>
 
 
+                <!-- MESSAGE -->
+
                 <div class="p07-form-group p07-form-group--message">
 
                   <label
@@ -1067,6 +1100,8 @@
 
                 </div>
 
+
+                <!-- VIDEO -->
 
                 <div class="p07-form-group p07-form-group--video">
 
@@ -1095,6 +1130,8 @@
 
                 </div>
 
+
+                <!-- SUBMIT -->
 
                 <button
                   class="p07-submit"
