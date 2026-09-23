@@ -12,15 +12,54 @@
 
 
   /* =======================================================
-     NORMALIZE VIETNAMESE TEXT
+     VIETNAMESE UNICODE CLEANUP
+
+     1. Removes hidden / accidental spacing immediately
+        before combining accent marks.
+
+     2. Removes zero-width characters that can break
+        Vietnamese glyph composition.
+
+     3. Converts everything to NFC.
+
+     This runs on normal text AND relevant attributes.
   ======================================================= */
+
+  function cleanUnicodeText(
+    value
+  ) {
+
+    if (
+      typeof value !==
+      "string"
+    ) {
+
+      return value;
+    }
+
+
+    return value
+
+      .replace(
+        /[\u200B-\u200D\u2060\uFEFF]/g,
+        ""
+      )
+
+      .replace(
+        /([A-Za-zÀ-ỹ])[\u0020\u00A0\u2000-\u200A\u202F\u205F\u3000]+([\u0300-\u036F])/g,
+        "$1$2"
+      )
+
+      .normalize(
+        "NFC"
+      );
+  }
+
 
   function normalizeDocumentText() {
 
     if (
-      !document.body ||
-      typeof "".normalize !==
-        "function"
+      !document.body
     ) {
 
       return;
@@ -34,21 +73,20 @@
       );
 
 
-    const textNodes =
-      [];
+    const nodes = [];
 
 
     while (
       walker.nextNode()
     ) {
 
-      textNodes.push(
+      nodes.push(
         walker.currentNode
       );
     }
 
 
-    textNodes.forEach(
+    nodes.forEach(
       (node) => {
 
         const current =
@@ -60,27 +98,69 @@
         }
 
 
-        const normalized =
-          current.normalize(
-            "NFC"
+        const cleaned =
+          cleanUnicodeText(
+            current
           );
 
 
         if (
-          normalized !==
+          cleaned !==
           current
         ) {
 
           node.nodeValue =
-            normalized;
+            cleaned;
         }
       }
     );
+
+
+    document
+      .querySelectorAll(
+        "[placeholder], [aria-label], [title]"
+      )
+      .forEach(
+        (element) => {
+
+          [
+            "placeholder",
+            "aria-label",
+            "title"
+          ].forEach(
+            (attribute) => {
+
+              if (
+                !element.hasAttribute(
+                  attribute
+                )
+              ) {
+
+                return;
+              }
+
+
+              element.setAttribute(
+                attribute,
+                cleanUnicodeText(
+                  element.getAttribute(
+                    attribute
+                  )
+                )
+              );
+            }
+          );
+        }
+      );
   }
 
 
   normalizeDocumentText();
 
+
+  /* =======================================================
+     DOM
+  ======================================================= */
 
   const root =
     document.documentElement;
@@ -110,27 +190,43 @@
     );
 
 
-  const pages = [
-
-    page02Layout,
-
+  const page03 =
     document.getElementById(
       "page03"
-    ),
+    );
 
+
+  const page06 =
     document.getElementById(
       "page06"
-    ),
+    );
 
+
+  const page07 =
     document.getElementById(
       "page07"
-    ),
+    );
 
+
+  const page08 =
     document.getElementById(
       "page08"
-    )
+    );
 
+
+  const pages = [
+    page02Layout,
+    page03,
+    page06,
+    page07,
+    page08
   ].filter(Boolean);
+
+
+  const page06EntryFireworks =
+    document.getElementById(
+      "page06EntryFireworks"
+    );
 
 
   const luckyCard =
@@ -235,6 +331,10 @@
     );
 
 
+  /* =======================================================
+     STATE
+  ======================================================= */
+
   const imagePromises =
     new WeakMap();
 
@@ -279,6 +379,10 @@
     1;
 
 
+  let page06EntryTimer =
+    null;
+
+
   /* =======================================================
      SCALE
   ======================================================= */
@@ -301,8 +405,11 @@
 
     const scale =
       Math.min(
-        viewportWidth / DESIGN_WIDTH,
-        viewportHeight / DESIGN_HEIGHT
+        viewportWidth /
+        DESIGN_WIDTH,
+
+        viewportHeight /
+        DESIGN_HEIGHT
       );
 
 
@@ -382,12 +489,13 @@
       in window
     ) {
 
-      return window.requestIdleCallback(
-        callback,
-        {
-          timeout
-        }
-      );
+      return window
+        .requestIdleCallback(
+          callback,
+          {
+            timeout
+          }
+        );
     }
 
 
@@ -399,7 +507,7 @@
 
 
   /* =======================================================
-     LOAD URL
+     PRELOAD URL
   ======================================================= */
 
   function preloadUrl(
@@ -413,7 +521,9 @@
 
 
     if (
-      urlPromises.has(url)
+      urlPromises.has(
+        url
+      )
     ) {
 
       return urlPromises.get(
@@ -442,27 +552,28 @@
           } catch (_) {}
 
 
-          const finish = () => {
+          const finish =
+            () => {
 
-            if (
-              typeof image.decode ===
-              "function"
-            ) {
+              if (
+                typeof image.decode ===
+                "function"
+              ) {
 
-              image
-                .decode()
-                .catch(
-                  () => {}
-                )
-                .finally(
-                  resolve
-                );
+                image
+                  .decode()
+                  .catch(
+                    () => {}
+                  )
+                  .finally(
+                    resolve
+                  );
 
-            } else {
+              } else {
 
-              resolve();
-            }
-          };
+                resolve();
+              }
+            };
 
 
           image.addEventListener(
@@ -522,7 +633,9 @@
 
 
     if (
-      imagePromises.has(image)
+      imagePromises.has(
+        image
+      )
     ) {
 
       return imagePromises.get(
@@ -552,27 +665,28 @@
           } catch (_) {}
 
 
-          const finish = () => {
+          const finish =
+            () => {
 
-            if (
-              typeof image.decode ===
-              "function"
-            ) {
+              if (
+                typeof image.decode ===
+                "function"
+              ) {
 
-              image
-                .decode()
-                .catch(
-                  () => {}
-                )
-                .finally(
-                  resolve
-                );
+                image
+                  .decode()
+                  .catch(
+                    () => {}
+                  )
+                  .finally(
+                    resolve
+                  );
 
-            } else {
+              } else {
 
-              resolve();
-            }
-          };
+                resolve();
+              }
+            };
 
 
           image.addEventListener(
@@ -637,7 +751,9 @@
 
 
     if (
-      pagePromises.has(page)
+      pagePromises.has(
+        page
+      )
     ) {
 
       return pagePromises.get(
@@ -679,7 +795,8 @@
         ) {
 
           const spriteUrl =
-            spriteHost.dataset
+            spriteHost
+              .dataset
               .spriteSrc;
 
 
@@ -771,6 +888,281 @@
         );
       }
     );
+  }
+
+
+  /* =======================================================
+     FIREWORK GENERATOR
+  ======================================================= */
+
+  const fireworkColors = [
+    "#a63019",
+    "#c99633",
+    "#e5b747",
+    "#315747",
+    "#d76b35",
+    "#f0d37b"
+  ];
+
+
+  function spawnFireworks(
+    target,
+    {
+      count = 90,
+      minDistance = 45,
+      maxDistance = 135,
+      cleanup = 1100
+    } = {}
+  ) {
+
+    if (!target) {
+      return;
+    }
+
+
+    target.replaceChildren();
+
+
+    const fragment =
+      document
+        .createDocumentFragment();
+
+
+    for (
+      let i = 0;
+      i < count;
+      i += 1
+    ) {
+
+      const particle =
+        document.createElement(
+          "span"
+        );
+
+
+      particle.className =
+        "p06-firework-particle";
+
+
+      const angle =
+        Math.random() *
+        Math.PI *
+        2;
+
+
+      const distance =
+        minDistance +
+        Math.random() *
+        (
+          maxDistance -
+          minDistance
+        );
+
+
+      particle
+        .style
+        .setProperty(
+          "--x",
+          `${Math.cos(angle) * distance}px`
+        );
+
+
+      particle
+        .style
+        .setProperty(
+          "--y",
+          `${Math.sin(angle) * distance}px`
+        );
+
+
+      particle
+        .style
+        .setProperty(
+          "--size",
+          `${2 + Math.random() * 4}px`
+        );
+
+
+      particle
+        .style
+        .setProperty(
+          "--delay",
+          `${Math.random() * 100}ms`
+        );
+
+
+      particle
+        .style
+        .setProperty(
+          "--rotation",
+          `${Math.random() * 720}deg`
+        );
+
+
+      particle
+        .style
+        .setProperty(
+          "--particle-color",
+          fireworkColors[
+            Math.floor(
+              Math.random() *
+              fireworkColors.length
+            )
+          ]
+        );
+
+
+      fragment.appendChild(
+        particle
+      );
+    }
+
+
+    target.appendChild(
+      fragment
+    );
+
+
+    setTimeout(
+      () => {
+
+        target.replaceChildren();
+      },
+      cleanup
+    );
+  }
+
+
+  /* =======================================================
+     PAGE 06 ENTRY
+
+     FIREWORK FIRST
+     THEN CONFETTI
+  ======================================================= */
+
+  function playPage06Entrance() {
+
+    if (
+      !page06
+    ) {
+
+      return;
+    }
+
+
+    clearTimeout(
+      page06EntryTimer
+    );
+
+
+    page06
+      .classList
+      .remove(
+        "is-confetti-visible"
+      );
+
+
+    spawnFireworks(
+      page06EntryFireworks,
+      {
+        count: 110,
+        minDistance: 55,
+        maxDistance: 165,
+        cleanup: 1050
+      }
+    );
+
+
+    page06EntryTimer =
+      setTimeout(
+        () => {
+
+          if (
+            page06.classList
+              .contains(
+                "is-active"
+              )
+          ) {
+
+            page06.classList.add(
+              "is-confetti-visible"
+            );
+          }
+        },
+        300
+      );
+  }
+
+
+  /* =======================================================
+     ACTIVE PAGE / PAGE TRANSITIONS
+  ======================================================= */
+
+  function activatePage(
+    index
+  ) {
+
+    const safeIndex =
+      Math.max(
+        0,
+        Math.min(
+          index,
+          pages.length - 1
+        )
+      );
+
+
+    pages.forEach(
+      (
+        page,
+        pageIndex
+      ) => {
+
+        const active =
+          pageIndex ===
+          safeIndex;
+
+
+        page.classList.toggle(
+          "is-active",
+          active
+        );
+
+
+        if (
+          page === page06 &&
+          !active
+        ) {
+
+          page.classList.remove(
+            "is-confetti-visible"
+          );
+        }
+      }
+    );
+
+
+    if (
+      pages[safeIndex] ===
+      page02Layout
+    ) {
+
+      playPage02Entrance();
+    }
+
+
+    if (
+      pages[safeIndex] ===
+      page06
+    ) {
+
+      requestAnimationFrame(
+        () => {
+
+          playPage06Entrance();
+        }
+      );
+    }
   }
 
 
@@ -892,6 +1284,11 @@
             setNearbyPages(
               index
             );
+
+
+            activatePage(
+              index
+            );
           }
         }
       );
@@ -963,7 +1360,9 @@
     );
 
 
-    playPage02Entrance();
+    activatePage(
+      0
+    );
 
 
     runWhenIdle(
@@ -979,7 +1378,7 @@
           );
         }
       },
-      450
+      400
     );
   }
 
@@ -1020,7 +1419,7 @@
         "low"
       );
     },
-    350
+    320
   );
 
 
@@ -1145,134 +1544,21 @@
             randomLuckyNumber()
           );
         },
-        80
+        75
       );
   }
 
 
   function fireLuckyFireworks() {
 
-    if (
-      !luckyFireworks
-    ) {
-
-      return;
-    }
-
-
-    luckyFireworks
-      .replaceChildren();
-
-
-    const colors = [
-      "#a63019",
-      "#c99633",
-      "#e5b747",
-      "#315747",
-      "#d76b35",
-      "#f0d37b"
-    ];
-
-
-    const fragment =
-      document
-        .createDocumentFragment();
-
-
-    for (
-      let i = 0;
-      i < 102;
-      i += 1
-    ) {
-
-      const particle =
-        document.createElement(
-          "span"
-        );
-
-
-      particle.className =
-        "p06-firework-particle";
-
-
-      const angle =
-        Math.random() *
-        Math.PI *
-        2;
-
-
-      const distance =
-        55 +
-        Math.random() *
-        100;
-
-
-      particle.style
-        .setProperty(
-          "--x",
-          `${Math.cos(angle) * distance}px`
-        );
-
-
-      particle.style
-        .setProperty(
-          "--y",
-          `${Math.sin(angle) * distance}px`
-        );
-
-
-      particle.style
-        .setProperty(
-          "--size",
-          `${2 + Math.random() * 4}px`
-        );
-
-
-      particle.style
-        .setProperty(
-          "--delay",
-          `${Math.random() * 110}ms`
-        );
-
-
-      particle.style
-        .setProperty(
-          "--rotation",
-          `${Math.random() * 720}deg`
-        );
-
-
-      particle.style
-        .setProperty(
-          "--particle-color",
-          colors[
-            Math.floor(
-              Math.random() *
-              colors.length
-            )
-          ]
-        );
-
-
-      fragment.appendChild(
-        particle
-      );
-    }
-
-
-    luckyFireworks
-      .appendChild(
-        fragment
-      );
-
-
-    setTimeout(
-      () => {
-
-        luckyFireworks
-          .replaceChildren();
-      },
-      1250
+    spawnFireworks(
+      luckyFireworks,
+      {
+        count: 102,
+        minDistance: 55,
+        maxDistance: 155,
+        cleanup: 1150
+      }
     );
   }
 
@@ -1307,10 +1593,9 @@
     ) {
 
       luckyHint.textContent =
-        "Đang tìm số may mắn..."
-          .normalize(
-            "NFC"
-          );
+        cleanUnicodeText(
+          "Đang tìm số may mắn..."
+        );
     }
 
 
@@ -1323,7 +1608,7 @@
 
 
     const duration =
-      1350;
+      1250;
 
 
     let lastUpdate =
@@ -1346,12 +1631,12 @@
 
 
       const interval =
-        28 +
+        25 +
         Math.pow(
           progress,
           3
         ) *
-        110;
+        100;
 
 
       if (
@@ -1419,14 +1704,12 @@
       ) {
 
         luckyHint.textContent =
-          (
+          cleanUnicodeText(
             LUCKY_TEST_MODE
               ?
               "Tải lại trang để thử lại"
               :
               "Số may mắn của bạn"
-          ).normalize(
-            "NFC"
           );
       }
 
@@ -1488,19 +1771,13 @@
     }
 
 
-    if (
+    rsvpAttendanceNoText.textContent =
       rsvpAttendanceNo
         ?.checked
-    ) {
-
-      rsvpAttendanceNoText.textContent =
-        "Kó";
-
-    } else {
-
-      rsvpAttendanceNoText.textContent =
+        ?
+        "Kó"
+        :
         "Không";
-    }
   }
 
 
@@ -1618,8 +1895,8 @@
         ) {
 
           rsvpVideoLabel.textContent =
-            file.name.normalize(
-              "NFC"
+            cleanUnicodeText(
+              file.name
             );
         }
       }
@@ -1649,10 +1926,9 @@
           ) {
 
             rsvpStatus.textContent =
-              "Bạn nhập tên khách mời giúp chúng mình nhé."
-                .normalize(
-                  "NFC"
-                );
+              cleanUnicodeText(
+                "Bạn nhập tên khách mời giúp chúng mình nhé."
+              );
 
 
             rsvpStatus
@@ -1672,10 +1948,9 @@
         ) {
 
           rsvpStatus.textContent =
-            "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!"
-              .normalize(
-                "NFC"
-              );
+            cleanUnicodeText(
+              "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!"
+            );
 
 
           rsvpStatus
