@@ -17,10 +17,9 @@
   --p07-red: #a52f21;
   --p07-green: #2f6d6a;
 
-  --ambient-duration: 1850ms;
-  --ambient-distance: -6px;
+  --ambient-duration: 1250ms;
 
-  --page02-entry-duration: 1050ms;
+  --page02-entry-duration: 760ms;
   --page02-entry-ease: cubic-bezier(.18, .82, .25, 1);
 }
 
@@ -97,7 +96,7 @@ img {
     rgba(80, 46, 24, .12);
 
   transition:
-    opacity 80ms linear;
+    opacity 60ms linear;
 }
 
 .site-shell.is-scale-ready {
@@ -160,7 +159,7 @@ img {
   opacity: 1;
 
   transition:
-    opacity 320ms ease;
+    opacity 230ms ease;
 }
 
 
@@ -213,7 +212,7 @@ img {
 
   animation:
     opening-card-shake
-    1900ms
+    1350ms
     cubic-bezier(.36, .07, .19, .97)
     infinite;
 
@@ -314,14 +313,14 @@ img {
 
   animation:
     tap-ring
-    2200ms
+    1550ms
     ease-out
     infinite;
 }
 
 
 .monogram-pulse::after {
-  animation-delay: 1100ms;
+  animation-delay: 775ms;
 }
 
 
@@ -375,7 +374,7 @@ img {
   -webkit-overflow-scrolling: touch;
 
   transition:
-    opacity 320ms ease;
+    opacity 230ms ease;
 }
 
 
@@ -516,17 +515,12 @@ img {
   z-index: 36;
 
   left: 50%;
-  right: auto;
-
-  top: auto;
   bottom: -1px;
 
   display: block;
 
   width: 120px;
   height: auto;
-
-  max-width: none;
 
   transform:
     translateX(-50%);
@@ -538,7 +532,7 @@ img {
 
 
 /* =========================================================
-   CLOUD FLOAT
+   AMBIENT FLOAT
 ========================================================= */
 
 @keyframes wedding-ambient-float {
@@ -572,7 +566,7 @@ img {
 
   animation:
     wedding-ambient-float
-    1850ms
+    var(--ambient-duration)
     ease-in-out
     infinite;
 }
@@ -607,8 +601,6 @@ img {
 }
 
 
-/* ENTRY */
-
 .page02-layout .p02-cloud,
 .page02-layout .p02-confetti-cluster,
 .page02-layout .p02-procession {
@@ -620,7 +612,7 @@ img {
     var(--page02-entry-ease),
 
     opacity
-    620ms
+    430ms
     ease;
 }
 
@@ -650,7 +642,7 @@ img {
 
   translate: 0 0;
 
-  transition-delay: 100ms;
+  transition-delay: 70ms;
 }
 
 
@@ -990,8 +982,8 @@ img {
   translate: 0 -10px;
 
   transition:
-    opacity 430ms ease,
-    translate 620ms cubic-bezier(.2, .78, .28, 1);
+    opacity 300ms ease,
+    translate 440ms cubic-bezier(.2, .78, .28, 1);
 }
 
 
@@ -1010,35 +1002,35 @@ img {
 
 
 .page02-layout.is-entering .p02-invite {
-  transition-delay: 170ms;
+  transition-delay: 110ms;
 }
 
 .page02-layout.is-entering .p02-divider {
-  transition-delay: 250ms;
+  transition-delay: 165ms;
 }
 
 .page02-layout.is-entering .p02-to {
-  transition-delay: 330ms;
+  transition-delay: 220ms;
 }
 
 .page02-layout.is-entering .p02-wedding-title {
-  transition-delay: 410ms;
+  transition-delay: 275ms;
 }
 
 .page02-layout.is-entering .p02-couple-names {
-  transition-delay: 490ms;
+  transition-delay: 330ms;
 }
 
 .page02-layout.is-entering .p02-date-divider {
-  transition-delay: 570ms;
+  transition-delay: 385ms;
 }
 
 .page02-layout.is-entering .p02-ceremony-info {
-  transition-delay: 650ms;
+  transition-delay: 440ms;
 }
 
 .page02-layout.is-entering .p02-family-info {
-  transition-delay: 730ms;
+  transition-delay: 495ms;
 }
 
 
@@ -1344,8 +1336,6 @@ img {
 }
 
 
-/* CLOUDS */
-
 .p03-cloud--01 {
   left: 38px;
   top: 68px;
@@ -1377,8 +1367,6 @@ img {
   width: 59px;
 }
 
-
-/* TITLE */
 
 .p03-title {
   position: absolute;
@@ -1425,8 +1413,6 @@ img {
 }
 
 
-/* TIMELINE */
-
 .p03-timeline {
   z-index: 14;
 
@@ -1434,13 +1420,10 @@ img {
   top: 95px;
 
   width: 168px;
-  height: auto;
 
   object-fit: contain;
 }
 
-
-/* ILLUSTRATIONS */
 
 .p03-illustration {
   z-index: 12;
@@ -1548,8 +1531,6 @@ img {
 }
 
 
-/* ĐÓN DÂU */
-
 .p03-event--02 {
   left: 100px;
   top: 177px;
@@ -1584,25 +1565,17 @@ img {
 }
 
 
-/* TIỆC CƯỚI */
-
 .p03-event--03 {
   left: 215px;
   top: 307px;
 }
 
 
-/* AFTER PARTY */
-
 .p03-event--04 {
   left: 50px;
   top: 445px;
 }
 
-
-/* =========================================================
-   PAGE 03 LOCATION
-========================================================= */
 
 .p03-location {
   position: relative;
@@ -1804,32 +1777,36 @@ img {
 
 
 .p03-color--brown {
-  background:
-    #85624e;
+  background: #85624e;
 }
 
 
 .p03-color--pink {
-  background:
-    #ce9c95;
+  background: #ce9c95;
 }
 
 
 .p03-color--beige {
-  background:
-    #dbccb5;
+  background: #dbccb5;
 }
 
 
 .p03-color--sage {
-  background:
-    #c1d1af;
+  background: #c1d1af;
 }
 
 
 /* =========================================================
    PAGE 06
 ========================================================= */
+
+.page06-layout {
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+}
+
 
 .p06-confetti {
   position: absolute;
@@ -1884,7 +1861,9 @@ img {
 }
 
 
-/* CARD CENTERED BOTH HORIZONTALLY AND VERTICALLY */
+/* =========================================================
+   PAGE 06 CARD
+========================================================= */
 
 .p06-card-wrap {
   position: absolute;
@@ -1926,7 +1905,7 @@ img {
   left: 50%;
   top: 86px;
 
-  width: 230px;
+  width: 226px;
 
   margin: 0;
 
@@ -1948,7 +1927,11 @@ img {
 
   line-height: 1.2;
 
+  letter-spacing: 0;
+
   white-space: nowrap;
+
+  font-kerning: normal;
 }
 
 
@@ -1985,7 +1968,7 @@ img {
 .p06-number-slot {
   animation:
     lucky-idle-jitter
-    280ms
+    200ms
     ease-in-out
     infinite;
 }
@@ -2021,7 +2004,7 @@ img {
 .p06-number-slot {
   animation:
     lucky-rolling-chaos
-    110ms
+    82ms
     linear
     infinite;
 }
@@ -2069,7 +2052,7 @@ img {
 .p06-number-slot {
   animation:
     lucky-number-reveal
-    850ms
+    620ms
     cubic-bezier(.16, .85, .25, 1);
 }
 
@@ -2140,6 +2123,8 @@ img {
 
   font-style: italic;
 
+  letter-spacing: 0;
+
   opacity: .82;
 }
 
@@ -2201,7 +2186,7 @@ img {
 
   animation:
     lucky-firework-burst
-    1150ms
+    850ms
     cubic-bezier(.12, .72, .2, 1)
     var(--delay)
     forwards;
@@ -2233,8 +2218,26 @@ img {
 
 
 /* =========================================================
-   PAGE 06 BOTTOM ELEMENT SWAY
+   PAGE 06 ALL BOTTOM ITEMS WRAPPER
 ========================================================= */
+
+.p06-bottom-items {
+  position: absolute;
+
+  z-index: 24;
+
+  left: 0;
+  top: 0;
+
+  width: 390px;
+  height: 680px;
+
+  transform:
+    translateY(-25px);
+
+  pointer-events: none;
+}
+
 
 .p06-lucky-item {
   position: absolute;
@@ -2248,7 +2251,7 @@ img {
 
   animation:
     p06-bottom-sway
-    2600ms
+    1650ms
     ease-in-out
     infinite;
 
@@ -2272,12 +2275,11 @@ img {
 }
 
 
-/* LEFT SIDE:
-   moves toward RIGHT first */
+/* LEFT */
 
 .p06-ingots {
-  --sway-start: 2deg;
-  --sway-end: -2deg;
+  --sway-start: 2.3deg;
+  --sway-end: -2.3deg;
 
   z-index: 25;
 
@@ -2285,14 +2287,11 @@ img {
   bottom: 47px;
 
   width: 75px;
-
-  animation-delay:
-    0ms;
 }
 
 
 .p06-knot {
-  --sway-start: -5deg;
+  --sway-start: -4.5deg;
   --sway-end: -9deg;
 
   z-index: 28;
@@ -2303,16 +2302,15 @@ img {
   width: 77px;
 
   animation-delay:
-    120ms;
+    90ms;
 }
 
 
-/* RIGHT SIDE:
-   moves toward LEFT first */
+/* RIGHT */
 
 .p06-bag {
-  --sway-start: -2deg;
-  --sway-end: 2deg;
+  --sway-start: -2.3deg;
+  --sway-end: 2.3deg;
 
   z-index: 26;
 
@@ -2320,9 +2318,6 @@ img {
   bottom: 46px;
 
   width: 105px;
-
-  animation-delay:
-    0ms;
 }
 
 
@@ -2338,7 +2333,7 @@ img {
   width: 53px;
 
   animation-delay:
-    120ms;
+    90ms;
 }
 
 
@@ -2367,8 +2362,6 @@ img {
 }
 
 
-/* PEACH BRANCH SWAY */
-
 .p07-top-left-decoration {
   z-index: 8;
 
@@ -2382,7 +2375,7 @@ img {
 
   animation:
     p07-branch-sway
-    2600ms
+    1650ms
     ease-in-out
     infinite;
 
@@ -2418,7 +2411,7 @@ img {
 
   animation:
     p07-butterfly-float
-    1500ms
+    950ms
     ease-in-out
     infinite;
 }
@@ -2916,7 +2909,6 @@ input:checked
   font-family:
     Georgia,
     "Times New Roman",
-    Times,
     serif;
 }
 
@@ -2994,18 +2986,14 @@ input:checked
 }
 
 
-/* VIETNAMESE-SAFE FONT */
-
 .p08-title {
-  margin:
-    0;
+  margin: 0;
 
   color: #a8301c;
 
   font-family:
     Georgia,
     "Times New Roman",
-    Times,
     serif;
 
   font-size: 35px;
@@ -3016,7 +3004,7 @@ input:checked
 
   line-height: 1;
 
-  letter-spacing: -.5px;
+  letter-spacing: 0;
 }
 
 
@@ -3029,7 +3017,6 @@ input:checked
   font-family:
     Georgia,
     "Times New Roman",
-    Times,
     serif;
 
   font-size: 10.5px;
@@ -3051,12 +3038,13 @@ input:checked
   font-family:
     Georgia,
     "Times New Roman",
-    Times,
     serif;
 
   font-size: 8.7px;
 
   line-height: 1.38;
+
+  letter-spacing: 0;
 }
 
 
@@ -3082,7 +3070,6 @@ input:checked
   font-family:
     Georgia,
     "Times New Roman",
-    Times,
     serif;
 
   font-size: 8.8px;
@@ -3100,7 +3087,6 @@ input:checked
   font-family:
     Georgia,
     "Times New Roman",
-    Times,
     serif;
 
   font-size: 10px;
@@ -3118,7 +3104,6 @@ input:checked
   font-family:
     Georgia,
     "Times New Roman",
-    Times,
     serif;
 
   font-size: 24px;
@@ -3126,6 +3111,8 @@ input:checked
   font-style: italic;
 
   font-weight: 400;
+
+  letter-spacing: 0;
 }
 
 
@@ -3142,23 +3129,6 @@ input:checked
 
   right: 31px;
   top: 300px;
-}
-
-
-.p08-water-ground {
-  position: absolute;
-
-  z-index: 4;
-
-  width: 300px;
-
-  left: 190px;
-  bottom: 32px;
-
-  transform:
-    translateX(-50%);
-
-  opacity: .47;
 }
 
 
@@ -3179,125 +3149,22 @@ input:checked
 }
 
 
-/* =========================================================
-   PAGE 08 SMALL DIRT MARKS
-========================================================= */
-
-.p08-ground-speckles {
+.p08-water-ground {
   position: absolute;
 
   z-index: 8;
 
-  left: 0;
-  bottom: 0;
+  width: 118px;
 
-  width: 100%;
-  height: 185px;
-
-  pointer-events: none;
-}
-
-
-.p08-ground-speck {
-  position: absolute;
-
-  display: block;
-
-  border-radius:
-    55% 45% 58% 42%;
-
-  background:
-    rgba(118, 82, 52, .26);
-
-  transform-origin:
-    center;
-
-  filter:
-    blur(.15px);
-}
-
-
-.p08-ground-speck--01 {
-  left: 128px;
+  left: 240px;
   bottom: 124px;
 
-  width: 8px;
-  height: 3px;
-
   transform:
-    rotate(-14deg);
-}
+    translateX(-50%);
 
+  opacity: .52;
 
-.p08-ground-speck--02 {
-  left: 154px;
-  bottom: 108px;
-
-  width: 5px;
-  height: 2px;
-
-  transform:
-    rotate(12deg);
-}
-
-
-.p08-ground-speck--03 {
-  left: 184px;
-  bottom: 118px;
-
-  width: 9px;
-  height: 3px;
-
-  transform:
-    rotate(-8deg);
-}
-
-
-.p08-ground-speck--04 {
-  left: 216px;
-  bottom: 103px;
-
-  width: 6px;
-  height: 2px;
-
-  transform:
-    rotate(17deg);
-}
-
-
-.p08-ground-speck--05 {
-  left: 246px;
-  bottom: 119px;
-
-  width: 9px;
-  height: 3px;
-
-  transform:
-    rotate(8deg);
-}
-
-
-.p08-ground-speck--06 {
-  left: 276px;
-  bottom: 101px;
-
-  width: 5px;
-  height: 2px;
-
-  transform:
-    rotate(-15deg);
-}
-
-
-.p08-ground-speck--07 {
-  left: 300px;
-  bottom: 117px;
-
-  width: 7px;
-  height: 2.5px;
-
-  transform:
-    rotate(11deg);
+  pointer-events: none;
 }
 
 
@@ -3364,7 +3231,10 @@ input:checked
 .p06-lucky-item,
 
 .invitation-page:not(.is-nearby)
-.p07-top-left-decoration {
+.p07-top-left-decoration,
+
+.invitation-page:not(.is-nearby)
+.p07-butterfly {
   animation-play-state:
     paused !important;
 }
