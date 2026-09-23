@@ -37,9 +37,7 @@
         "$1$2"
       )
 
-      .normalize(
-        "NFC"
-      );
+      .normalize("NFC");
   }
 
 
@@ -72,28 +70,19 @@
     nodes.forEach(
       (node) => {
 
-        const current =
+        const value =
           node.nodeValue;
 
 
-        if (!current) {
+        if (!value) {
           return;
         }
 
 
-        const cleaned =
+        node.nodeValue =
           cleanUnicodeText(
-            current
+            value
           );
-
-
-        if (
-          cleaned !==
-          current
-        ) {
-          node.nodeValue =
-            cleaned;
-        }
       }
     );
 
@@ -109,7 +98,8 @@
             "placeholder",
             "aria-label",
             "title"
-          ].forEach(
+          ]
+          .forEach(
             (attribute) => {
 
               if (
@@ -332,16 +322,16 @@
     false;
 
 
+  let activePageIndex =
+    -1;
+
+
   let resizeRaf =
     0;
 
 
   let scrollRaf =
     0;
-
-
-  let activePageIndex =
-    -1;
 
 
   let luckyIdleTimer =
@@ -480,7 +470,7 @@
     }
 
 
-    return window.setTimeout(
+    return setTimeout(
       callback,
       120
     );
@@ -488,7 +478,7 @@
 
 
   /* =======================================================
-     PRELOAD URL
+     PRELOAD
   ======================================================= */
 
   function preloadUrl(
@@ -526,32 +516,24 @@
 
 
           try {
+
             image.fetchPriority =
               priority;
+
           } catch (_) {}
 
 
           const finish =
             () => {
 
-              if (
-                typeof image.decode ===
-                "function"
-              ) {
-
-                image
-                  .decode()
-                  .catch(
-                    () => {}
-                  )
-                  .finally(
-                    resolve
-                  );
-
-              } else {
-
-                resolve();
-              }
+              image
+                .decode?.()
+                .catch(
+                  () => {}
+                )
+                .finally(
+                  resolve
+                );
             };
 
 
@@ -580,6 +562,7 @@
           if (
             image.complete
           ) {
+
             finish();
           }
         }
@@ -595,10 +578,6 @@
     return promise;
   }
 
-
-  /* =======================================================
-     LOAD IMAGE
-  ======================================================= */
 
   function loadImage(
     image,
@@ -636,32 +615,24 @@
         (resolve) => {
 
           try {
+
             image.fetchPriority =
               priority;
+
           } catch (_) {}
 
 
           const finish =
             () => {
 
-              if (
-                typeof image.decode ===
-                "function"
-              ) {
-
-                image
-                  .decode()
-                  .catch(
-                    () => {}
-                  )
-                  .finally(
-                    resolve
-                  );
-
-              } else {
-
-                resolve();
-              }
+              image
+                .decode?.()
+                .catch(
+                  () => {}
+                )
+                .finally(
+                  resolve
+                );
             };
 
 
@@ -695,6 +666,7 @@
           if (
             image.complete
           ) {
+
             finish();
           }
         }
@@ -710,10 +682,6 @@
     return promise;
   }
 
-
-  /* =======================================================
-     LOAD PAGE
-  ======================================================= */
 
   function loadPage(
     page,
@@ -769,8 +737,7 @@
         ) {
 
           const spriteUrl =
-            spriteHost
-              .dataset
+            spriteHost.dataset
               .spriteSrc;
 
 
@@ -863,7 +830,7 @@
 
 
   /* =======================================================
-     FIREWORKS
+     FIREWORK
   ======================================================= */
 
   const fireworkColors = [
@@ -882,7 +849,7 @@
       count = 90,
       minDistance = 45,
       maxDistance = 135,
-      cleanup = 1000
+      cleanup = 1500
     } = {}
   ) {
 
@@ -930,45 +897,51 @@
         );
 
 
-      particle.style.setProperty(
-        "--x",
-        `${Math.cos(angle) * distance}px`
-      );
+      particle.style
+        .setProperty(
+          "--x",
+          `${Math.cos(angle) * distance}px`
+        );
 
 
-      particle.style.setProperty(
-        "--y",
-        `${Math.sin(angle) * distance}px`
-      );
+      particle.style
+        .setProperty(
+          "--y",
+          `${Math.sin(angle) * distance}px`
+        );
 
 
-      particle.style.setProperty(
-        "--size",
-        `${2 + Math.random() * 4}px`
-      );
+      particle.style
+        .setProperty(
+          "--size",
+          `${2 + Math.random() * 4}px`
+        );
 
 
-      particle.style.setProperty(
-        "--delay",
-        `${Math.random() * 80}ms`
-      );
+      particle.style
+        .setProperty(
+          "--delay",
+          `${Math.random() * 160}ms`
+        );
 
 
-      particle.style.setProperty(
-        "--rotation",
-        `${Math.random() * 720}deg`
-      );
+      particle.style
+        .setProperty(
+          "--rotation",
+          `${Math.random() * 720}deg`
+        );
 
 
-      particle.style.setProperty(
-        "--particle-color",
-        fireworkColors[
-          Math.floor(
-            Math.random() *
-            fireworkColors.length
-          )
-        ]
-      );
+      particle.style
+        .setProperty(
+          "--particle-color",
+          fireworkColors[
+            Math.floor(
+              Math.random() *
+              fireworkColors.length
+            )
+          ]
+        );
 
 
       fragment.appendChild(
@@ -984,7 +957,9 @@
 
     setTimeout(
       () => {
+
         target.replaceChildren();
+
       },
       cleanup
     );
@@ -1007,12 +982,12 @@
     );
 
 
-    page06.classList.remove(
-      "is-confetti-visible"
-    );
+    page06
+      .classList
+      .remove(
+        "is-confetti-visible"
+      );
 
-
-    /* one explosion first */
 
     spawnFireworks(
       page06EntryFireworks,
@@ -1020,30 +995,31 @@
         count: 115,
         minDistance: 60,
         maxDistance: 170,
-        cleanup: 900
+        cleanup: 1500
       }
     );
 
-
-    /* then confetti */
 
     page06EntryTimer =
       setTimeout(
         () => {
 
           if (
-            page06.classList
+            page06
+              .classList
               .contains(
                 "is-active"
               )
           ) {
 
-            page06.classList.add(
-              "is-confetti-visible"
-            );
+            page06
+              .classList
+              .add(
+                "is-confetti-visible"
+              );
           }
         },
-        300
+        650
       );
   }
 
@@ -1088,9 +1064,11 @@
           !active
         ) {
 
-          page.classList.remove(
-            "is-confetti-visible"
-          );
+          page
+            .classList
+            .remove(
+              "is-confetti-visible"
+            );
         }
       }
     );
@@ -1118,7 +1096,7 @@
 
 
   /* =======================================================
-     NEARBY PAGES
+     NEARBY
   ======================================================= */
 
   function setNearbyPages(
@@ -1159,15 +1137,11 @@
 
 
     if (
-      pages[
-        safeIndex + 1
-      ]
+      pages[safeIndex + 1]
     ) {
 
       loadPage(
-        pages[
-          safeIndex + 1
-        ],
+        pages[safeIndex + 1],
         "low"
       );
     }
@@ -1218,23 +1192,26 @@
 
 
           if (
-            index !==
+            index ===
             activePageIndex
           ) {
 
-            activePageIndex =
-              index;
-
-
-            setNearbyPages(
-              index
-            );
-
-
-            activatePage(
-              index
-            );
+            return;
           }
+
+
+          activePageIndex =
+            index;
+
+
+          setNearbyPages(
+            index
+          );
+
+
+          activatePage(
+            index
+          );
         }
       );
   }
@@ -1271,19 +1248,14 @@
     );
 
 
-    if (
-      pageScroller
-    ) {
-
-      pageScroller.scrollTop =
-        0;
+    pageScroller.scrollTop =
+      0;
 
 
-      pageScroller.setAttribute(
-        "aria-hidden",
-        "false"
-      );
-    }
+    pageScroller.setAttribute(
+      "aria-hidden",
+      "false"
+    );
 
 
     siteShell
@@ -1320,7 +1292,7 @@
           );
         }
       },
-      400
+      500
     );
   }
 
@@ -1361,7 +1333,7 @@
         "low"
       );
     },
-    300
+    400
   );
 
 
@@ -1379,7 +1351,7 @@
 
     if (
       window.crypto
-      ?.getRandomValues
+        ?.getRandomValues
     ) {
 
       const data =
@@ -1413,11 +1385,6 @@
   function showLuckyNumber(
     value
   ) {
-
-    if (!luckyNumber) {
-      return;
-    }
-
 
     luckyNumber.textContent =
       String(value)
@@ -1482,8 +1449,9 @@
           showLuckyNumber(
             randomLuckyNumber()
           );
+
         },
-        72
+        150
       );
   }
 
@@ -1496,7 +1464,7 @@
         count: 100,
         minDistance: 55,
         maxDistance: 155,
-        cleanup: 1000
+        cleanup: 1500
       }
     );
   }
@@ -1527,15 +1495,10 @@
       );
 
 
-    if (
-      luckyHint
-    ) {
-
-      luckyHint.textContent =
-        cleanUnicodeText(
-          "Đang tìm số may mắn..."
-        );
-    }
+    luckyHint.textContent =
+      cleanUnicodeText(
+        "Đang tìm số may mắn..."
+      );
 
 
     const finalNumber =
@@ -1547,16 +1510,14 @@
 
 
     const duration =
-      1200;
+      1750;
 
 
     let lastUpdate =
       0;
 
 
-    function frame(
-      now
-    ) {
+    function frame(now) {
 
       const progress =
         Math.min(
@@ -1570,12 +1531,12 @@
 
 
       const interval =
-        24 +
+        55 +
         Math.pow(
           progress,
           3
         ) *
-        95;
+        135;
 
 
       if (
@@ -1630,28 +1591,18 @@
       fireLuckyFireworks();
 
 
-      if (
-        luckyHint
-      ) {
-
-        luckyHint.textContent =
-          cleanUnicodeText(
-            LUCKY_TEST_MODE
-              ?
-              "Tải lại trang để thử lại"
-              :
-              "Số may mắn của bạn"
-          );
-      }
+      luckyHint.textContent =
+        cleanUnicodeText(
+          LUCKY_TEST_MODE
+            ?
+            "Tải lại trang để thử lại"
+            :
+            "Số may mắn của bạn"
+        );
 
 
-      if (
-        luckyTrigger
-      ) {
-
-        luckyTrigger.disabled =
-          true;
-      }
+      luckyTrigger.disabled =
+        true;
     }
 
 
@@ -1677,14 +1628,6 @@
 
   function updateCount() {
 
-    if (
-      !rsvpGuestCount
-    ) {
-
-      return;
-    }
-
-
     rsvpGuestCount.textContent =
       String(
         rsvpCount
@@ -1693,14 +1636,6 @@
 
 
   function updateAttendanceLabel() {
-
-    if (
-      !rsvpAttendanceNoText
-    ) {
-
-      return;
-    }
-
 
     rsvpAttendanceNoText.textContent =
       rsvpAttendanceNo
@@ -1721,6 +1656,7 @@
           rsvpAttendanceNo
             ?.checked
         ) {
+
           return;
         }
 
@@ -1746,6 +1682,7 @@
           rsvpAttendanceNo
             ?.checked
         ) {
+
           return;
         }
 
@@ -1794,7 +1731,8 @@
 
         if (
           rsvpAttendanceYes.checked &&
-          rsvpCount < 1
+          rsvpCount <
+          1
         ) {
 
           rsvpCount =
@@ -1848,35 +1786,9 @@
 
         if (!name) {
 
-          if (
-            rsvpStatus
-          ) {
-
-            rsvpStatus.textContent =
-              cleanUnicodeText(
-                "Bạn nhập tên khách mời giúp chúng mình nhé."
-              );
-
-
-            rsvpStatus
-              .classList
-              .add(
-                "is-visible"
-              );
-          }
-
-
-          return;
-        }
-
-
-        if (
-          rsvpStatus
-        ) {
-
           rsvpStatus.textContent =
             cleanUnicodeText(
-              "Đã ghi nhận xác nhận của bạn."
+              "Bạn nhập tên khách mời giúp chúng mình nhé."
             );
 
 
@@ -1885,35 +1797,48 @@
             .add(
               "is-visible"
             );
+
+
+          return;
         }
 
 
+        rsvpStatus.textContent =
+          cleanUnicodeText(
+            "Đã ghi nhận xác nhận của bạn."
+          );
+
+
+        rsvpStatus
+          .classList
+          .add(
+            "is-visible"
+          );
+
+
+        rsvpSubmit.disabled =
+          true;
+
+
+        const submitText =
+          rsvpSubmit.querySelector(
+            "span:nth-child(2)"
+          );
+
+
         if (
-          rsvpSubmit
+          submitText
         ) {
 
-          rsvpSubmit.disabled =
-            true;
-
-
-          const text =
-            rsvpSubmit
-              .querySelector(
-                "span"
-              );
-
-
-          if (text) {
-
-            text.textContent =
-              "ĐÃ GỬI XÁC NHẬN";
-          }
+          submitText.textContent =
+            "ĐÃ GỬI XÁC NHẬN";
         }
       }
     );
 
 
   updateCount();
+
   updateAttendanceLabel();
 
 
@@ -1921,24 +1846,25 @@
      VISIBILITY
   ======================================================= */
 
-  document.addEventListener(
-    "visibilitychange",
-    () => {
+  document
+    .addEventListener(
+      "visibilitychange",
+      () => {
 
-      if (
-        document.hidden
-      ) {
+        if (
+          document.hidden
+        ) {
 
-        stopLuckyIdleShuffle();
+          stopLuckyIdleShuffle();
 
-      } else if (
-        !luckyLocked &&
-        !luckyRolling
-      ) {
+        } else if (
+          !luckyLocked &&
+          !luckyRolling
+        ) {
 
-        startLuckyIdleShuffle();
+          startLuckyIdleShuffle();
+        }
       }
-    }
-  );
+    );
 
 })();
