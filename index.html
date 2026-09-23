@@ -1,1304 +1,1619 @@
-<!doctype html>
-<html lang="vi">
-
-<head>
-  <meta charset="utf-8" />
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover"
-  />
-
-  <meta
-    name="theme-color"
-    content="#ead5ad"
-  />
-
-  <meta
-    name="description"
-    content="Thiệp cưới Bách & Thư"
-  />
-
-  <title>Bách & Thư</title>
-
-  <link
-    rel="icon"
-    type="image/png"
-    href="./assets/favicon.png"
-  />
-
-  <link
-    rel="preload"
-    href="./assets/page01-bg-optimized.webp"
-    as="image"
-    type="image/webp"
-    fetchpriority="high"
-  />
-
-  <link
-    rel="preload"
-    href="./assets/envelope-closed-optimized.png"
-    as="image"
-    type="image/png"
-    fetchpriority="high"
-  />
-
-  <link
-    rel="stylesheet"
-    href="./styles.css?v=20260923-8"
-  />
-
-  <script
-    src="./script.js?v=20260923-8"
-    defer
-  ></script>
-</head>
-
-
-<body>
-
-  <main
-    class="site-shell"
-    id="siteShell"
-  >
-
-    <div
-      class="site-scale"
-      id="siteScale"
-    >
-
-      <div class="design-stage">
-
-
-        <!-- =================================================
-             PAGE 01
-        ================================================== -->
-
-        <section
-          class="opening-page"
-          id="opening"
-          aria-label="Thiệp cưới Bách và Thư"
-        >
-
-          <button
-            class="opening-card-button"
-            id="openingCardButton"
-            type="button"
-            aria-label="Xem thiệp cưới"
-          >
-
-            <img
-              class="opening-card-image"
-              src="./assets/envelope-closed-optimized.png"
-              alt=""
-              draggable="false"
-              loading="eager"
-              decoding="async"
-              fetchpriority="high"
-            />
-
-            <span
-              class="monogram-pulse"
-              aria-hidden="true"
-            ></span>
+(() => {
+  "use strict";
 
-          </button>
 
-        </section>
+  const DESIGN_WIDTH = 390;
+  const DESIGN_HEIGHT = 680;
 
+  const LUCKY_MIN = 1;
+  const LUCKY_MAX = 99;
 
-        <!-- =================================================
-             INVITATION
-        ================================================== -->
+  const LUCKY_TEST_MODE = true;
 
-        <section
-          class="page-02"
-          id="page02"
-          aria-hidden="true"
-        >
 
-          <div
-            class="invitation-flow"
-            id="invitationFlow"
-          >
+  const root =
+    document.documentElement;
 
 
-            <!-- =================================================
-                 PAGE 02
-            ================================================== -->
+  const siteShell =
+    document.getElementById(
+      "siteShell"
+    );
 
-            <section
-              class="invitation-page page02-layout"
-              id="page02Layout"
-              aria-label="Lễ thành hôn Bách và Thư"
-            >
 
-              <img
-                class="p02-background deferred-page02-asset"
-                data-src="./assets/page02-bg.png"
-                alt=""
-              />
+  const openingCardButton =
+    document.getElementById(
+      "openingCardButton"
+    );
 
-              <img
-                class="p02-frame deferred-page02-asset"
-                data-src="./assets/page02-frame.png"
-                alt=""
-              />
 
+  const pageScroller =
+    document.getElementById(
+      "page02"
+    );
 
-              <img
-                class="p02-cloud p02-cloud--01 deferred-page02-asset"
-                data-src="./assets/page02-cloud-01.png"
-                alt=""
-              />
 
-              <img
-                class="p02-cloud p02-cloud--02 deferred-page02-asset"
-                data-src="./assets/page02-cloud-02.png"
-                alt=""
-              />
+  const page02Layout =
+    document.getElementById(
+      "page02Layout"
+    );
 
-              <img
-                class="p02-cloud p02-cloud--03 deferred-page02-asset"
-                data-src="./assets/page02-cloud-03.png"
-                alt=""
-              />
 
-              <img
-                class="p02-cloud p02-cloud--04 deferred-page02-asset"
-                data-src="./assets/page02-cloud-04.png"
-                alt=""
-              />
+  const pages = [
 
+    page02Layout,
 
-              <p class="p02-invite">
-                TRÂN TRỌNG KÍNH MỜI
-              </p>
+    document.getElementById(
+      "page03"
+    ),
 
+    document.getElementById(
+      "page06"
+    ),
 
-              <div
-                class="p02-divider"
-                aria-hidden="true"
-              ></div>
+    document.getElementById(
+      "page07"
+    ),
 
+    document.getElementById(
+      "page08"
+    )
 
-              <p class="p02-to">
-                TỚI
-              </p>
+  ].filter(Boolean);
 
 
-              <p class="p02-wedding-title">
-                LỄ THÀNH HÔN
-              </p>
+  const luckyCard =
+    document.getElementById(
+      "luckyCard"
+    );
 
 
-              <h1 class="p02-couple-names">
+  const luckyNumber =
+    document.getElementById(
+      "luckyNumber"
+    );
 
-                <span class="p02-name">
-                  ĐỒNG THANH BÁCH
-                </span>
 
-                <span class="p02-ampersand">
-                  &amp;
-                </span>
+  const luckyHint =
+    document.getElementById(
+      "luckyHint"
+    );
 
-                <span class="p02-name">
-                  NGUYỄN ANH THƯ
-                </span>
 
-              </h1>
+  const luckyTrigger =
+    document.getElementById(
+      "luckyTrigger"
+    );
 
 
-              <div
-                class="p02-date-divider"
-                aria-hidden="true"
-              ></div>
+  const luckyFireworks =
+    document.getElementById(
+      "luckyFireworks"
+    );
 
 
-              <div class="p02-ceremony-info">
+  const rsvpForm =
+    document.getElementById(
+      "rsvpForm"
+    );
 
-                <p class="p02-time-line">
 
-                  <span>
-                    Vào lúc
-                  </span>
+  const rsvpGuestName =
+    document.getElementById(
+      "rsvpGuestName"
+    );
 
-                  <strong>
-                    10:30 thứ Ba ngày 24/11/2026
-                  </strong>
 
-                </p>
+  const rsvpAttendanceYes =
+    document.getElementById(
+      "rsvpAttendanceYes"
+    );
 
 
-                <p class="p02-lunar-date">
-                  (Tức ngày 16 tháng 10 năm Bính Ngọ)
-                </p>
+  const rsvpAttendanceNo =
+    document.getElementById(
+      "rsvpAttendanceNo"
+    );
 
 
-                <p class="p02-at">
+  const rsvpGuestCount =
+    document.getElementById(
+      "rsvpGuestCount"
+    );
 
-                  <span>
-                    Tại
-                  </span>
 
-                  <strong>
-                    khách sạn Sheraton Hanoi
-                  </strong>
+  const rsvpMinus =
+    document.getElementById(
+      "rsvpMinus"
+    );
 
-                </p>
 
+  const rsvpPlus =
+    document.getElementById(
+      "rsvpPlus"
+    );
 
-                <p class="p02-venue-address">
-                  (K5 Nghi Tàm, 11 Xuân Diệu Tây Hồ, Hà Nội)
-                </p>
 
-              </div>
+  const rsvpVideo =
+    document.getElementById(
+      "rsvpVideo"
+    );
 
 
-              <div class="p02-family-info">
+  const rsvpVideoLabel =
+    document.getElementById(
+      "rsvpVideoLabel"
+    );
 
-                <section class="p02-family">
 
-                  <h3 class="p02-family-title">
-                    NHÀ TRAI
-                  </h3>
+  const rsvpSubmit =
+    document.getElementById(
+      "rsvpSubmit"
+    );
 
-                  <p>
-                    Ông Đồng Thanh Tùng
-                  </p>
 
-                  <p>
-                    Bà Nguyễn Thị Thu Hương
-                  </p>
+  const rsvpStatus =
+    document.getElementById(
+      "rsvpStatus"
+    );
 
-                </section>
 
+  const imagePromises =
+    new WeakMap();
 
-                <section class="p02-family">
 
-                  <h3 class="p02-family-title">
-                    NHÀ GÁI
-                  </h3>
+  const pagePromises =
+    new WeakMap();
 
-                  <p>
-                    Ông Nguyễn Anh Thơ
-                  </p>
 
-                  <p>
-                    Bà Nguyễn Thị Thu Hương
-                  </p>
+  const urlPromises =
+    new Map();
 
-                </section>
 
-              </div>
+  let pageMode =
+    false;
 
 
-              <div
-                class="p02-confetti-cluster"
-                data-sprite-src="./assets/page06-confetti.png"
-                aria-hidden="true"
-              >
+  let resizeRaf =
+    0;
 
-                <span class="p02-confetti-piece p02-confetti-piece--01"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--02"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--03"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--04"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--05"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--06"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--07"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--08"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--09"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--10"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--11"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--12"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--13"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--14"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--15"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--16"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--17"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--18"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--19"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--20"></span>
 
-              </div>
+  let scrollRaf =
+    0;
 
 
-              <div
-                class="p02-procession"
-                aria-hidden="true"
-              >
+  let activePageIndex =
+    -1;
 
-                <img
-                  class="p02-procession-item p02-flag-bearer deferred-page02-asset"
-                  data-src="./assets/page02-flag-bearer.png"
-                  alt=""
-                />
 
-                <img
-                  class="p02-procession-item p02-couple deferred-page02-asset"
-                  data-src="./assets/page02-couple.png"
-                  alt=""
-                />
+  let luckyIdleTimer =
+    null;
 
-                <img
-                  class="p02-procession-item p02-lion-dance deferred-page02-asset"
-                  data-src="./assets/page02-lion-dance.png"
-                  alt=""
-                />
 
-                <img
-                  class="p02-procession-item p02-drummer deferred-page02-asset"
-                  data-src="./assets/page02-drummer.png"
-                  alt=""
-                />
+  let luckyRolling =
+    false;
 
-              </div>
 
+  let luckyLocked =
+    false;
 
-              <img
-                class="p02-bottom-ornament deferred-page02-asset"
-                data-src="./assets/page02-bottom-ornament.png"
-                alt=""
-              />
 
-            </section>
+  let rsvpCount =
+    1;
 
 
-            <!-- =================================================
-                 PAGE 03
-            ================================================== -->
+  /* =======================================================
+     SCALE
+  ======================================================= */
 
-            <section
-              class="invitation-page page03-layout"
-              id="page03"
-              aria-label="Lịch trình đám cưới"
-            >
+  function updateScale() {
 
-              <img
-                class="p03-background deferred-page03-asset"
-                data-src="./assets/page02-bg.png"
-                alt=""
-              />
+    const viewport =
+      window.visualViewport;
 
-              <img
-                class="p03-frame deferred-page03-asset"
-                data-src="./assets/page02-frame.png"
-                alt=""
-              />
 
+    const viewportWidth =
+      viewport?.width ||
+      window.innerWidth;
 
-              <img
-                class="p03-cloud p03-cloud--01 deferred-page03-asset"
-                data-src="./assets/page02-cloud-01.png"
-                alt=""
-              />
 
-              <img
-                class="p03-cloud p03-cloud--02 deferred-page03-asset"
-                data-src="./assets/page02-cloud-03.png"
-                alt=""
-              />
+    const viewportHeight =
+      viewport?.height ||
+      window.innerHeight;
 
-              <img
-                class="p03-cloud p03-cloud--03 deferred-page03-asset"
-                data-src="./assets/page02-cloud-02.png"
-                alt=""
-              />
 
-              <img
-                class="p03-cloud p03-cloud--04 deferred-page03-asset"
-                data-src="./assets/page02-cloud-04.png"
-                alt=""
-              />
+    const scale =
+      Math.min(
+        viewportWidth / DESIGN_WIDTH,
+        viewportHeight / DESIGN_HEIGHT
+      );
 
 
-              <h2 class="p03-title">
-                LỊCH TRÌNH
-              </h2>
+    root.style.setProperty(
+      "--design-scale",
+      String(scale)
+    );
 
 
-              <img
-                class="p03-title-divider deferred-page03-asset"
-                data-src="./assets/page03-title-divider.png"
-                alt=""
-              />
+    root.style.setProperty(
+      "--render-width",
+      `${DESIGN_WIDTH * scale}px`
+    );
 
 
-              <img
-                class="p03-timeline deferred-page03-asset"
-                data-src="./assets/page03-timeline-new.png"
-                alt=""
-              />
+    root.style.setProperty(
+      "--render-height",
+      `${DESIGN_HEIGHT * scale}px`
+    );
 
 
-              <article class="p03-event p03-event--02">
+    siteShell
+      ?.classList
+      .add(
+        "is-scale-ready"
+      );
+  }
 
-                <h3 class="p03-event-title">
-                  ĐÓN DÂU
-                </h3>
 
-                <p class="p03-event-date">
-                  24.11.2026
-                </p>
+  function scheduleScale() {
 
-                <p class="p03-event-time">
-                  9:00
-                </p>
+    cancelAnimationFrame(
+      resizeRaf
+    );
 
-                <div class="p03-location">
 
-                  <span
-                    class="p03-location-pin"
-                    aria-hidden="true"
-                  ></span>
+    resizeRaf =
+      requestAnimationFrame(
+        updateScale
+      );
+  }
 
-                  <div>
 
-                    <strong>
-                      Tư gia nhà gái
-                    </strong>
+  updateScale();
 
-                    <span>
-                      AD-14, Ocean Park 3
-                    </span>
 
-                    <span>
-                      Nghĩa Trụ, Văn Giang, Hưng Yên
-                    </span>
+  window.addEventListener(
+    "resize",
+    scheduleScale,
+    {
+      passive: true
+    }
+  );
 
-                  </div>
 
-                </div>
+  window.visualViewport
+    ?.addEventListener(
+      "resize",
+      scheduleScale,
+      {
+        passive: true
+      }
+    );
 
-              </article>
 
+  /* =======================================================
+     IDLE
+  ======================================================= */
 
-              <img
-                class="p03-illustration p03-kieu deferred-page03-asset"
-                data-src="./assets/page03-kieu.png"
-                alt=""
-              />
+  function runWhenIdle(
+    callback,
+    timeout = 1000
+  ) {
 
+    if (
+      "requestIdleCallback"
+      in window
+    ) {
 
-              <img
-                class="p03-illustration p03-mam-co deferred-page03-asset"
-                data-src="./assets/page03-mam-co.png"
-                alt=""
-              />
+      return window.requestIdleCallback(
+        callback,
+        {
+          timeout
+        }
+      );
+    }
 
 
-              <article class="p03-event p03-event--03">
+    return window.setTimeout(
+      callback,
+      160
+    );
+  }
 
-                <h3 class="p03-event-title">
-                  TIỆC CƯỚI
-                </h3>
 
-                <p class="p03-event-date">
-                  24.11.2026
-                </p>
+  /* =======================================================
+     LOAD URL
+  ======================================================= */
 
-                <p class="p03-event-time">
-                  11:00 - 14:00
-                </p>
+  function preloadUrl(
+    url,
+    priority = "low"
+  ) {
 
-                <div class="p03-location">
+    if (!url) {
+      return Promise.resolve();
+    }
 
-                  <span
-                    class="p03-location-pin"
-                    aria-hidden="true"
-                  ></span>
 
-                  <div>
+    if (
+      urlPromises.has(url)
+    ) {
 
-                    <strong>
-                      Sheraton Hanoi Hotel
-                    </strong>
+      return urlPromises.get(
+        url
+      );
+    }
 
-                    <span>
-                      K5 Nghi Tàm, 11 Xuân Diệu
-                    </span>
 
-                    <span>
-                      Tây Hồ, Hà Nội
-                    </span>
+    const promise =
+      new Promise(
+        (resolve) => {
 
-                  </div>
+          const image =
+            new Image();
 
-                </div>
 
-              </article>
+          image.decoding =
+            "async";
 
 
-              <article class="p03-event p03-event--04">
+          try {
 
-                <h3 class="p03-event-title">
-                  AFTER PARTY
-                </h3>
+            image.fetchPriority =
+              priority;
 
-                <p class="p03-event-date">
-                  24.11.2026
-                </p>
+          } catch (_) {}
 
-                <p class="p03-event-time">
-                  18:30 - 22:00
-                </p>
 
-                <div class="p03-location">
+          const finish = () => {
 
-                  <span
-                    class="p03-location-pin"
-                    aria-hidden="true"
-                  ></span>
+            if (
+              typeof image.decode ===
+              "function"
+            ) {
 
-                  <div>
+              image
+                .decode()
+                .catch(
+                  () => {}
+                )
+                .finally(
+                  resolve
+                );
 
-                    <strong>
-                      Sheraton Hanoi Hotel
-                    </strong>
+            } else {
 
-                    <span>
-                      (dự kiến)
-                    </span>
+              resolve();
+            }
+          };
 
-                  </div>
 
-                </div>
+          image.addEventListener(
+            "load",
+            finish,
+            {
+              once: true
+            }
+          );
 
-              </article>
 
+          image.addEventListener(
+            "error",
+            resolve,
+            {
+              once: true
+            }
+          );
 
-              <img
-                class="p03-illustration p03-cheers deferred-page03-asset"
-                data-src="./assets/page03-cheers.png"
-                alt=""
-              />
 
+          image.src =
+            url;
 
-              <section
-                class="p03-dress-code"
-                aria-label="Dress code"
-              >
 
-                <h3 class="p03-dress-title">
+          if (
+            image.complete
+          ) {
 
-                  <span>✦</span>
+            finish();
+          }
+        }
+      );
 
-                  DRESS CODE
 
-                  <span>✦</span>
+    urlPromises.set(
+      url,
+      promise
+    );
 
-                </h3>
 
+    return promise;
+  }
 
-                <div class="p03-color-list">
 
-                  <div class="p03-color-item">
-                    <span class="p03-color p03-color--brown"></span>
-                    <span>Nâu</span>
-                  </div>
+  /* =======================================================
+     LOAD IMAGE
+  ======================================================= */
 
-                  <div class="p03-color-item">
-                    <span class="p03-color p03-color--pink"></span>
-                    <span>Hồng</span>
-                  </div>
+  function loadImage(
+    image,
+    priority = "low"
+  ) {
 
-                  <div class="p03-color-item">
-                    <span class="p03-color p03-color--beige"></span>
-                    <span>Be</span>
-                  </div>
+    if (!image) {
+      return Promise.resolve();
+    }
 
-                  <div class="p03-color-item">
-                    <span class="p03-color p03-color--sage"></span>
-                    <span>Xanh</span>
-                  </div>
 
-                </div>
+    if (
+      imagePromises.has(image)
+    ) {
 
-              </section>
+      return imagePromises.get(
+        image
+      );
+    }
 
 
-              <img
-                class="p03-bottom-ornament deferred-page03-asset"
-                data-src="./assets/page02-bottom-ornament.png"
-                alt=""
-              />
+    const source =
+      image.dataset.src;
 
-            </section>
 
+    if (!source) {
+      return Promise.resolve();
+    }
 
-            <!-- =================================================
-                 PAGE 06
-            ================================================== -->
 
-            <section
-              class="invitation-page page06-layout"
-              id="page06"
-              aria-label="Nhận số may mắn của bạn"
-            >
+    const promise =
+      new Promise(
+        (resolve) => {
 
-              <img
-                class="p06-background deferred-page06-asset"
-                data-src="./assets/page02-bg.png"
-                alt=""
-              />
+          try {
 
+            image.fetchPriority =
+              priority;
 
-              <img
-                class="p06-confetti deferred-page06-asset"
-                data-src="./assets/page06-confetti.png"
-                alt=""
-              />
+          } catch (_) {}
 
 
-              <div
-                class="p06-entry-fireworks"
-                id="page06EntryFireworks"
-                aria-hidden="true"
-              ></div>
+          const finish = () => {
 
+            if (
+              typeof image.decode ===
+              "function"
+            ) {
 
-              <img
-                class="p06-cloud p06-cloud--01 deferred-page06-asset"
-                data-src="./assets/page02-cloud-02.png"
-                alt=""
-              />
+              image
+                .decode()
+                .catch(
+                  () => {}
+                )
+                .finally(
+                  resolve
+                );
 
-              <img
-                class="p06-cloud p06-cloud--02 deferred-page06-asset"
-                data-src="./assets/page02-cloud-03.png"
-                alt=""
-              />
+            } else {
 
-              <img
-                class="p06-cloud p06-cloud--03 deferred-page06-asset"
-                data-src="./assets/page02-cloud-04.png"
-                alt=""
-              />
+              resolve();
+            }
+          };
 
-              <img
-                class="p06-cloud p06-cloud--04 deferred-page06-asset"
-                data-src="./assets/page02-cloud-01.png"
-                alt=""
-              />
 
+          image.addEventListener(
+            "load",
+            finish,
+            {
+              once: true
+            }
+          );
 
-              <div
-                class="p06-card-wrap"
-                id="luckyCard"
-              >
 
-                <img
-                  class="p06-lucky-card deferred-page06-asset"
-                  data-src="./assets/page06-lucky-card.png"
-                  alt=""
-                />
+          image.addEventListener(
+            "error",
+            resolve,
+            {
+              once: true
+            }
+          );
 
 
-                <h2 class="p06-title">
-                  Nhận số may mắn của bạn
-                </h2>
+          image.src =
+            source;
 
 
-                <div
-                  class="p06-number-slot"
-                  id="luckyNumber"
-                  aria-live="polite"
-                >
-                  88
-                </div>
+          image.removeAttribute(
+            "data-src"
+          );
 
 
-                <p
-                  class="p06-number-hint"
-                  id="luckyHint"
-                >
-                  Nhấn để nhận số may mắn
-                </p>
+          if (
+            image.complete
+          ) {
 
+            finish();
+          }
+        }
+      );
 
-                <div
-                  class="p06-fireworks"
-                  id="luckyFireworks"
-                  aria-hidden="true"
-                ></div>
 
+    imagePromises.set(
+      image,
+      promise
+    );
 
-                <button
-                  class="p06-lucky-trigger"
-                  id="luckyTrigger"
-                  type="button"
-                  aria-label="Nhấn để nhận số may mắn"
-                ></button>
 
-              </div>
+    return promise;
+  }
 
 
-              <div
-                class="p06-bottom-items"
-                aria-hidden="true"
-              >
+  /* =======================================================
+     LOAD PAGE
+  ======================================================= */
 
-                <img
-                  class="p06-lucky-item p06-ingots deferred-page06-asset"
-                  data-src="./assets/page06-lucky-ingots.png"
-                  alt=""
-                />
+  function loadPage(
+    page,
+    priority = "low"
+  ) {
 
-                <img
-                  class="p06-lucky-item p06-knot deferred-page06-asset"
-                  data-src="./assets/page06-lucky-knot.png"
-                  alt=""
-                />
+    if (!page) {
+      return Promise.resolve();
+    }
 
-                <img
-                  class="p06-lucky-item p06-bag deferred-page06-asset"
-                  data-src="./assets/page06-lucky-bag.png"
-                  alt=""
-                />
 
-                <img
-                  class="p06-lucky-item p06-coins deferred-page06-asset"
-                  data-src="./assets/page06-lucky-coins.png"
-                  alt=""
-                />
+    if (
+      pagePromises.has(page)
+    ) {
 
-              </div>
+      return pagePromises.get(
+        page
+      );
+    }
 
 
-              <img
-                class="p06-frame deferred-page06-asset"
-                data-src="./assets/page02-frame.png"
-                alt=""
-              />
+    const promise =
+      (async () => {
 
+        const images =
+          Array.from(
+            page.querySelectorAll(
+              "img[data-src]"
+            )
+          );
 
-              <img
-                class="p06-bottom-ornament deferred-page06-asset"
-                data-src="./assets/page02-bottom-ornament.png"
-                alt=""
-              />
 
-            </section>
+        const jobs =
+          images.map(
+            (image) =>
 
+              loadImage(
+                image,
+                priority
+              )
+          );
 
-            <!-- =================================================
-                 PAGE 07
-            ================================================== -->
 
-            <section
-              class="invitation-page page07-layout"
-              id="page07"
-              aria-label="Xác nhận tham dự"
-            >
+        const spriteHost =
+          page.querySelector(
+            "[data-sprite-src]"
+          );
 
-              <img
-                class="p07-background deferred-page07-asset"
-                data-src="./assets/page02-bg.png"
-                alt=""
-              />
 
+        if (
+          spriteHost
+        ) {
 
-              <img
-                class="p07-top-left-decoration deferred-page07-asset"
-                data-src="./assets/page07-top-left-branch-lantern.png"
-                alt=""
-              />
+          const spriteUrl =
+            spriteHost.dataset
+              .spriteSrc;
 
 
-              <h2 class="p07-rsvp-title">
-                XÁC NHẬN<br />
-                THAM DỰ
-              </h2>
+          jobs.push(
 
+            preloadUrl(
+              spriteUrl,
+              priority
+            )
 
-              <img
-                class="p07-divider-ornament p07-divider-ornament--top deferred-page07-asset"
-                data-src="./assets/page07-divider-ornament.png"
-                alt=""
-              />
+            .then(
+              () => {
 
+                spriteHost
+                  .style
+                  .setProperty(
+                    "--p02-confetti-sprite",
+                    `url("${spriteUrl}")`
+                  );
 
-              <p class="p07-rsvp-subtitle">
-                Sự hiện diện của bạn là niềm vui lớn<br />
-                dành cho chúng mình!
-              </p>
 
+                spriteHost
+                  .removeAttribute(
+                    "data-sprite-src"
+                  );
+              }
+            )
+          );
+        }
 
-              <form
-                class="p07-rsvp-form"
-                id="rsvpForm"
-              >
 
+        await Promise.allSettled(
+          jobs
+        );
 
-                <!-- NAME -->
 
-                <div class="p07-form-group p07-form-group--name">
+        page.classList.add(
+          "is-assets-ready"
+        );
+      })();
 
-                  <label
-                    class="p07-form-label"
-                    for="rsvpGuestName"
-                  >
-                    Tên khách mời
-                  </label>
 
+    pagePromises.set(
+      page,
+      promise
+    );
 
-                  <div class="p07-field p07-field--name">
 
-                    <img
-                      class="p07-field-frame deferred-page07-asset"
-                      data-src="./assets/page07-card-frame.png"
-                      alt=""
-                      aria-hidden="true"
-                    />
+    return promise;
+  }
 
-                    <input
-                      id="rsvpGuestName"
-                      class="p07-text-input"
-                      type="text"
-                      name="guestName"
-                      autocomplete="name"
-                      placeholder="Nhập tên của bạn..."
-                    />
 
-                    <img
-                      class="p07-field-lotus deferred-page07-asset"
-                      data-src="./assets/page07-lotus.png"
-                      alt=""
-                      aria-hidden="true"
-                    />
+  /* =======================================================
+     PAGE 02 ENTRY
+  ======================================================= */
 
-                  </div>
+  function playPage02Entrance() {
 
-                </div>
+    if (
+      !page02Layout
+    ) {
 
+      return;
+    }
 
-                <!-- ATTENDANCE -->
 
-                <fieldset class="p07-form-group p07-form-group--attendance">
+    page02Layout
+      .classList
+      .remove(
+        "is-entering"
+      );
 
-                  <legend class="p07-form-label">
-                    Bạn sẽ tới chung vui cùng chúng mình chứ?
-                  </legend>
 
+    void page02Layout.offsetWidth;
 
-                  <div class="p07-attendance-options">
 
+    requestAnimationFrame(
+      () => {
 
-                    <label class="p07-attendance-option">
+        requestAnimationFrame(
+          () => {
 
-                      <img
-                        class="p07-field-frame deferred-page07-asset"
-                        data-src="./assets/page07-card-frame.png"
-                        alt=""
-                        aria-hidden="true"
-                      />
+            page02Layout
+              .classList
+              .add(
+                "is-entering"
+              );
+          }
+        );
+      }
+    );
+  }
 
-                      <input
-                        id="rsvpAttendanceYes"
-                        type="radio"
-                        name="attendance"
-                        value="yes"
-                        checked
-                      />
 
-                      <span class="p07-radio-mark"></span>
+  /* =======================================================
+     NEARBY PAGES
+  ======================================================= */
 
-                      <span class="p07-attendance-text">
-                        Có
-                      </span>
+  function setNearbyPages(
+    index
+  ) {
 
-                    </label>
+    const safeIndex =
+      Math.max(
+        0,
+        Math.min(
+          index,
+          pages.length - 1
+        )
+      );
 
 
-                    <label class="p07-attendance-option">
+    pages.forEach(
+      (
+        page,
+        pageIndex
+      ) => {
 
-                      <img
-                        class="p07-field-frame deferred-page07-asset"
-                        data-src="./assets/page07-card-frame.png"
-                        alt=""
-                        aria-hidden="true"
-                      />
+        page.classList.toggle(
+          "is-nearby",
+          Math.abs(
+            pageIndex -
+            safeIndex
+          ) <= 1
+        );
+      }
+    );
 
-                      <input
-                        id="rsvpAttendanceNo"
-                        type="radio"
-                        name="attendance"
-                        value="no"
-                      />
 
-                      <span class="p07-radio-mark"></span>
+    loadPage(
+      pages[safeIndex],
+      "high"
+    );
 
-                      <span
-                        class="p07-attendance-text"
-                        id="rsvpAttendanceNoText"
-                      >
-                        Không
-                      </span>
 
-                    </label>
+    if (
+      pages[
+        safeIndex + 1
+      ]
+    ) {
 
-                  </div>
+      loadPage(
+        pages[
+          safeIndex + 1
+        ],
+        "low"
+      );
+    }
+  }
 
-                </fieldset>
 
+  /* =======================================================
+     SCROLL
+  ======================================================= */
 
-                <!-- COUNT -->
+  function getCurrentPageIndex() {
 
-                <div class="p07-form-group p07-form-group--count">
+    if (
+      !pageScroller
+    ) {
 
-                  <span class="p07-form-label">
-                    Số lượng người tham dự
-                  </span>
+      return 0;
+    }
 
 
-                  <div class="p07-counter">
+    return Math.max(
+      0,
+      Math.min(
+        pages.length - 1,
+        Math.round(
+          pageScroller.scrollTop /
+          DESIGN_HEIGHT
+        )
+      )
+    );
+  }
 
-                    <img
-                      class="p07-field-frame deferred-page07-asset"
-                      data-src="./assets/page07-card-frame.png"
-                      alt=""
-                      aria-hidden="true"
-                    />
 
-                    <button
-                      class="p07-counter-button"
-                      id="rsvpMinus"
-                      type="button"
-                      aria-label="Giảm số người tham dự"
-                    >
-                      −
-                    </button>
+  function onPageScroll() {
 
-                    <output
-                      class="p07-counter-value"
-                      id="rsvpGuestCount"
-                    >
-                      1
-                    </output>
+    if (
+      scrollRaf
+    ) {
 
-                    <button
-                      class="p07-counter-button"
-                      id="rsvpPlus"
-                      type="button"
-                      aria-label="Tăng số người tham dự"
-                    >
-                      +
-                    </button>
+      return;
+    }
 
-                  </div>
 
-                </div>
+    scrollRaf =
+      requestAnimationFrame(
+        () => {
 
+          scrollRaf =
+            0;
 
-                <!-- MESSAGE -->
 
-                <div class="p07-form-group p07-form-group--message">
+          const index =
+            getCurrentPageIndex();
 
-                  <label
-                    class="p07-form-label"
-                    for="rsvpMessage"
-                  >
-                    Lời nhắn tới cô dâu chú rể
-                  </label>
 
+          if (
+            index !==
+            activePageIndex
+          ) {
 
-                  <div class="p07-field p07-field--message">
+            activePageIndex =
+              index;
 
-                    <img
-                      class="p07-field-frame deferred-page07-asset"
-                      data-src="./assets/page07-card-frame.png"
-                      alt=""
-                      aria-hidden="true"
-                    />
 
-                    <textarea
-                      id="rsvpMessage"
-                      class="p07-message-input"
-                      name="message"
-                      rows="3"
-                      placeholder="Gửi lời chúc tốt đẹp đến chúng mình..."
-                    ></textarea>
+            setNearbyPages(
+              index
+            );
+          }
+        }
+      );
+  }
 
-                    <img
-                      class="p07-field-lotus deferred-page07-asset"
-                      data-src="./assets/page07-lotus.png"
-                      alt=""
-                      aria-hidden="true"
-                    />
 
-                  </div>
+  pageScroller
+    ?.addEventListener(
+      "scroll",
+      onPageScroll,
+      {
+        passive: true
+      }
+    );
 
-                </div>
 
+  /* =======================================================
+     OPEN
+  ======================================================= */
 
-                <!-- VIDEO -->
+  async function enterInvitation() {
 
-                <div class="p07-form-group p07-form-group--video">
+    if (
+      pageMode
+    ) {
 
-                  <label
-                    class="p07-video-field"
-                    for="rsvpVideo"
-                  >
+      return;
+    }
 
-                    <img
-                      class="p07-field-frame deferred-page07-asset"
-                      data-src="./assets/page07-card-frame.png"
-                      alt=""
-                      aria-hidden="true"
-                    />
 
-                    <span
-                      class="p07-video-text"
-                      id="rsvpVideoLabel"
-                    >
-                      Video lời chúc gửi tới cô dâu chú rể
-                    </span>
+    pageMode =
+      true;
 
-                    <img
-                      class="p07-field-lotus deferred-page07-asset"
-                      data-src="./assets/page07-lotus.png"
-                      alt=""
-                      aria-hidden="true"
-                    />
 
-                    <input
-                      id="rsvpVideo"
-                      class="p07-video-input"
-                      type="file"
-                      name="video"
-                      accept="video/*"
-                    />
+    await loadPage(
+      pages[0],
+      "high"
+    );
 
-                  </label>
 
-                </div>
+    if (
+      pageScroller
+    ) {
 
+      pageScroller.scrollTop =
+        0;
 
-                <!-- SUBMIT -->
 
-                <button
-                  class="p07-submit"
-                  id="rsvpSubmit"
-                  type="submit"
-                >
+      pageScroller.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+    }
 
-                  <span class="p07-submit-ornament">
-                    ⌘
-                  </span>
 
-                  <span>
-                    GỬI XÁC NHẬN
-                  </span>
+    siteShell
+      ?.classList
+      .add(
+        "is-page-02"
+      );
 
-                  <svg
-                    class="p07-submit-icon"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path d="M22 2L9.7 14.3"></path>
-                    <path d="M22 2l-7.8 20-4.5-7.7L2 9.8 22 2z"></path>
-                  </svg>
 
-                  <span class="p07-submit-ornament">
-                    ⌘
-                  </span>
+    activePageIndex =
+      0;
 
-                </button>
 
+    setNearbyPages(
+      0
+    );
 
-                <p
-                  class="p07-submit-status"
-                  id="rsvpStatus"
-                  aria-live="polite"
-                ></p>
 
-              </form>
+    playPage02Entrance();
 
 
-              <img
-                class="p07-butterfly deferred-page07-asset"
-                data-src="./assets/page07-butterfly.png"
-                alt=""
-              />
+    runWhenIdle(
+      () => {
 
+        if (
+          pages[1]
+        ) {
 
-              <img
-                class="p07-bottom-ornament deferred-page07-asset"
-                data-src="./assets/page02-bottom-ornament.png"
-                alt=""
-              />
+          loadPage(
+            pages[1],
+            "low"
+          );
+        }
+      },
+      600
+    );
+  }
 
 
-              <img
-                class="p07-frame deferred-page07-asset"
-                data-src="./assets/page02-frame.png"
-                alt=""
-              />
+  openingCardButton
+    ?.addEventListener(
+      "pointerdown",
+      () => {
 
-            </section>
+        loadPage(
+          pages[0],
+          "high"
+        );
+      },
+      {
+        passive: true
+      }
+    );
 
 
-            <!-- =================================================
-                 PAGE 08
-            ================================================== -->
+  openingCardButton
+    ?.addEventListener(
+      "click",
+      (event) => {
 
-            <section
-              class="invitation-page page08-layout"
-              id="page08"
-              aria-label="Lời cảm ơn"
-            >
+        event.preventDefault();
 
-              <img
-                class="p08-background deferred-page08-asset"
-                data-src="./assets/page02-bg.png"
-                alt=""
-              />
+        enterInvitation();
+      }
+    );
 
 
-              <div class="p08-content">
+  runWhenIdle(
+    () => {
 
-                <h2 class="p08-title">
-                  Lời cảm ơn
-                </h2>
+      loadPage(
+        pages[0],
+        "low"
+      );
+    },
+    450
+  );
 
 
-                <p class="p08-english-title">
-                  THANK YOU FOR BEING PART OF OUR STORY
-                </p>
+  /* =======================================================
+     LUCKY NUMBER
+  ======================================================= */
 
+  function randomLuckyNumber() {
 
-                <div class="p08-vietnamese-copy">
+    const range =
+      LUCKY_MAX -
+      LUCKY_MIN +
+      1;
 
-                  <p>
-                    Từ một cuộc gặp gỡ rất tình cờ, chúng mình đã đi qua những khác biệt,
-                    những vui buồn và cả những lúc tưởng như chẳng thể thiếu nhau.
-                    Nhưng sau tất cả, chúng mình vẫn chọn ở lại, học cách lắng nghe,
-                    thấu hiểu và yêu thương nhau theo một cách trưởng thành hơn.
-                  </p>
 
-                  <p>
-                    Ngày hôm nay, khi cùng nhau bước vào một chặng đường mới,
-                    chúng mình càng biết ơn gia đình và bạn bè đã luôn yêu thương,
-                    đồng hành và dành cho chúng mình thật nhiều điều tốt đẹp.
-                  </p>
+    if (
+      window.crypto
+      ?.getRandomValues
+    ) {
 
-                  <p>
-                    Sự hiện diện của mọi người trong ngày đặc biệt này là món quà quý giá nhất.
-                    Cảm ơn vì đã đến, đã chứng kiến và đã trở thành một phần
-                    trong câu chuyện của chúng mình.
-                  </p>
+      const data =
+        new Uint32Array(1);
 
-                </div>
 
+      window.crypto
+        .getRandomValues(
+          data
+        );
 
-                <div
-                  class="p08-thanks-divider"
-                  aria-hidden="true"
-                >
-                  <span></span>
-                  <b>✤</b>
-                  <span></span>
-                </div>
 
+      return (
+        LUCKY_MIN +
+        data[0] %
+        range
+      );
+    }
 
-                <p class="p08-english-copy">
-                  From two very different people, somehow, we found our way<br />
-                  to each other. And today, we choose each other again, and again.
-                </p>
 
+    return (
+      LUCKY_MIN +
+      Math.floor(
+        Math.random() *
+        range
+      )
+    );
+  }
 
-                <p class="p08-with-love">
-                  With love,
-                </p>
 
+  function showLuckyNumber(
+    value
+  ) {
 
-                <p class="p08-signature">
-                  Thư &amp; Bách
-                </p>
+    if (
+      !luckyNumber
+    ) {
 
-              </div>
+      return;
+    }
 
 
-              <img
-                class="p08-cloud p08-cloud--left deferred-page08-asset"
-                data-src="./assets/page02-cloud-03.png"
-                alt=""
-              />
+    luckyNumber.textContent =
+      String(value)
+        .padStart(
+          2,
+          "0"
+        );
+  }
 
-              <img
-                class="p08-cloud p08-cloud--right deferred-page08-asset"
-                data-src="./assets/page02-cloud-01.png"
-                alt=""
-              />
 
+  function stopLuckyIdleShuffle() {
 
-              <img
-                class="p08-water-ground p08-water-ground--base deferred-page08-asset"
-                data-src="./assets/page08-water-ground.png"
-                alt=""
-              />
+    if (
+      luckyIdleTimer !==
+      null
+    ) {
 
+      clearInterval(
+        luckyIdleTimer
+      );
 
-              <img
-                class="p08-masion deferred-page08-asset"
-                data-src="./assets/page08-masion.png"
-                alt=""
-              />
 
+      luckyIdleTimer =
+        null;
+    }
 
-              <img
-                class="p08-water-ground p08-water-ground--front deferred-page08-asset"
-                data-src="./assets/page08-water-ground.png"
-                alt=""
-              />
 
+    luckyCard
+      ?.classList
+      .remove(
+        "is-idle-shuffling"
+      );
+  }
 
-              <img
-                class="p08-couple deferred-page08-asset"
-                data-src="./assets/page08-couple-back.png"
-                alt=""
-              />
 
+  function startLuckyIdleShuffle() {
 
-              <img
-                class="p08-lotus p08-lotus--left deferred-page08-asset"
-                data-src="./assets/page08-lotus-left.png"
-                alt=""
-              />
+    if (
+      !luckyCard ||
+      luckyLocked ||
+      luckyRolling
+    ) {
 
-              <img
-                class="p08-lotus p08-lotus--right deferred-page08-asset"
-                data-src="./assets/page08-lotus-right.png"
-                alt=""
-              />
+      return;
+    }
 
 
-              <img
-                class="p08-frame deferred-page08-asset"
-                data-src="./assets/page02-frame.png"
-                alt=""
-              />
+    stopLuckyIdleShuffle();
 
 
-              <img
-                class="p08-bottom-ornament deferred-page08-asset"
-                data-src="./assets/page02-bottom-ornament.png"
-                alt=""
-              />
+    luckyCard
+      .classList
+      .add(
+        "is-idle-shuffling"
+      );
 
-            </section>
 
+    luckyIdleTimer =
+      setInterval(
+        () => {
 
-          </div>
+          showLuckyNumber(
+            randomLuckyNumber()
+          );
+        },
+        105
+      );
+  }
 
-        </section>
 
-      </div>
+  function fireLuckyFireworks() {
 
-    </div>
+    if (
+      !luckyFireworks
+    ) {
 
-  </main>
+      return;
+    }
 
-</body>
 
-</html>
+    luckyFireworks
+      .replaceChildren();
+
+
+    const colors = [
+      "#a63019",
+      "#c99633",
+      "#e5b747",
+      "#315747",
+      "#d76b35",
+      "#f0d37b"
+    ];
+
+
+    const fragment =
+      document
+        .createDocumentFragment();
+
+
+    for (
+      let i = 0;
+      i < 102;
+      i += 1
+    ) {
+
+      const particle =
+        document.createElement(
+          "span"
+        );
+
+
+      particle.className =
+        "p06-firework-particle";
+
+
+      const angle =
+        Math.random() *
+        Math.PI *
+        2;
+
+
+      const distance =
+        55 +
+        Math.random() *
+        100;
+
+
+      particle.style
+        .setProperty(
+          "--x",
+          `${Math.cos(angle) * distance}px`
+        );
+
+
+      particle.style
+        .setProperty(
+          "--y",
+          `${Math.sin(angle) * distance}px`
+        );
+
+
+      particle.style
+        .setProperty(
+          "--size",
+          `${2 + Math.random() * 4}px`
+        );
+
+
+      particle.style
+        .setProperty(
+          "--delay",
+          `${Math.random() * 150}ms`
+        );
+
+
+      particle.style
+        .setProperty(
+          "--rotation",
+          `${Math.random() * 720}deg`
+        );
+
+
+      particle.style
+        .setProperty(
+          "--particle-color",
+          colors[
+            Math.floor(
+              Math.random() *
+              colors.length
+            )
+          ]
+        );
+
+
+      fragment.appendChild(
+        particle
+      );
+    }
+
+
+    luckyFireworks
+      .appendChild(
+        fragment
+      );
+
+
+    setTimeout(
+      () => {
+
+        luckyFireworks
+          .replaceChildren();
+      },
+      1700
+    );
+  }
+
+
+  function rollLuckyNumber() {
+
+    if (
+      luckyRolling ||
+      luckyLocked
+    ) {
+
+      return;
+    }
+
+
+    stopLuckyIdleShuffle();
+
+
+    luckyRolling =
+      true;
+
+
+    luckyCard
+      ?.classList
+      .add(
+        "is-rolling"
+      );
+
+
+    if (
+      luckyHint
+    ) {
+
+      luckyHint.textContent =
+        "Đang tìm số may mắn...";
+    }
+
+
+    const finalNumber =
+      randomLuckyNumber();
+
+
+    const start =
+      performance.now();
+
+
+    const duration =
+      1850;
+
+
+    let lastUpdate =
+      0;
+
+
+    function frame(
+      now
+    ) {
+
+      const progress =
+        Math.min(
+          (
+            now -
+            start
+          ) /
+          duration,
+          1
+        );
+
+
+      const interval =
+        35 +
+        Math.pow(
+          progress,
+          3
+        ) *
+        145;
+
+
+      if (
+        now -
+        lastUpdate >=
+        interval
+      ) {
+
+        lastUpdate =
+          now;
+
+
+        showLuckyNumber(
+          randomLuckyNumber()
+        );
+      }
+
+
+      if (
+        progress <
+        1
+      ) {
+
+        requestAnimationFrame(
+          frame
+        );
+
+
+        return;
+      }
+
+
+      luckyRolling =
+        false;
+
+
+      luckyLocked =
+        true;
+
+
+      luckyCard
+        ?.classList
+        .remove(
+          "is-rolling"
+        );
+
+
+      luckyCard
+        ?.classList
+        .add(
+          "is-revealed"
+        );
+
+
+      showLuckyNumber(
+        finalNumber
+      );
+
+
+      fireLuckyFireworks();
+
+
+      if (
+        luckyHint
+      ) {
+
+        luckyHint.textContent =
+          LUCKY_TEST_MODE
+            ?
+            "Reload trang để thử lại"
+            :
+            "Số may mắn của bạn";
+      }
+
+
+      if (
+        luckyTrigger
+      ) {
+
+        luckyTrigger.disabled =
+          true;
+      }
+    }
+
+
+    requestAnimationFrame(
+      frame
+    );
+  }
+
+
+  startLuckyIdleShuffle();
+
+
+  luckyTrigger
+    ?.addEventListener(
+      "click",
+      rollLuckyNumber
+    );
+
+
+  /* =======================================================
+     RSVP
+  ======================================================= */
+
+  function updateCount() {
+
+    if (
+      !rsvpGuestCount
+    ) {
+
+      return;
+    }
+
+
+    rsvpGuestCount.textContent =
+      String(
+        rsvpCount
+      );
+  }
+
+
+  rsvpMinus
+    ?.addEventListener(
+      "click",
+      () => {
+
+        if (
+          rsvpAttendanceNo
+            ?.checked
+        ) {
+
+          return;
+        }
+
+
+        rsvpCount =
+          Math.max(
+            1,
+            rsvpCount - 1
+          );
+
+
+        updateCount();
+      }
+    );
+
+
+  rsvpPlus
+    ?.addEventListener(
+      "click",
+      () => {
+
+        if (
+          rsvpAttendanceNo
+            ?.checked
+        ) {
+
+          return;
+        }
+
+
+        rsvpCount =
+          Math.min(
+            10,
+            rsvpCount + 1
+          );
+
+
+        updateCount();
+      }
+    );
+
+
+  rsvpAttendanceNo
+    ?.addEventListener(
+      "change",
+      () => {
+
+        if (
+          rsvpAttendanceNo.checked
+        ) {
+
+          rsvpCount =
+            0;
+
+
+          updateCount();
+        }
+      }
+    );
+
+
+  rsvpAttendanceYes
+    ?.addEventListener(
+      "change",
+      () => {
+
+        if (
+          rsvpAttendanceYes.checked &&
+          rsvpCount < 1
+        ) {
+
+          rsvpCount =
+            1;
+
+
+          updateCount();
+        }
+      }
+    );
+
+
+  rsvpVideo
+    ?.addEventListener(
+      "change",
+      () => {
+
+        const file =
+          rsvpVideo
+            .files
+            ?.[0];
+
+
+        if (
+          file &&
+          rsvpVideoLabel
+        ) {
+
+          rsvpVideoLabel.textContent =
+            file.name;
+        }
+      }
+    );
+
+
+  rsvpForm
+    ?.addEventListener(
+      "submit",
+      (event) => {
+
+        event.preventDefault();
+
+
+        const name =
+          rsvpGuestName
+            ?.value
+            .trim();
+
+
+        if (
+          !name
+        ) {
+
+          if (
+            rsvpStatus
+          ) {
+
+            rsvpStatus.textContent =
+              "Bạn nhập tên khách mời giúp chúng mình nhé.";
+
+
+            rsvpStatus
+              .classList
+              .add(
+                "is-visible"
+              );
+          }
+
+
+          return;
+        }
+
+
+        if (
+          rsvpStatus
+        ) {
+
+          rsvpStatus.textContent =
+            "Đã ghi nhận xác nhận của bạn. Hẹn gặp bạn tại ngày vui!";
+
+
+          rsvpStatus
+            .classList
+            .add(
+              "is-visible"
+            );
+        }
+
+
+        if (
+          rsvpSubmit
+        ) {
+
+          rsvpSubmit.disabled =
+            true;
+
+
+          const text =
+            rsvpSubmit
+              .querySelector(
+                "span"
+              );
+
+
+          if (
+            text
+          ) {
+
+            text.textContent =
+              "ĐÃ GỬI XÁC NHẬN";
+          }
+        }
+      }
+    );
+
+
+  updateCount();
+
+
+  /* =======================================================
+     VISIBILITY
+  ======================================================= */
+
+  document.addEventListener(
+    "visibilitychange",
+    () => {
+
+      if (
+        document.hidden
+      ) {
+
+        stopLuckyIdleShuffle();
+
+      } else if (
+        !luckyLocked &&
+        !luckyRolling
+      ) {
+
+        startLuckyIdleShuffle();
+      }
+    }
+  );
+
+})();
