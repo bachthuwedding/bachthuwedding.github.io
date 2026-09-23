@@ -1341,7 +1341,7 @@
         luckyHint.textContent =
           LUCKY_TEST_MODE
             ?
-            "Reload trang để thử lại"
+            "Tải lại trang để thử lại"
             :
             "Số may mắn của bạn";
       }
