@@ -13,16 +13,6 @@
 
   /* =======================================================
      VIETNAMESE UNICODE CLEANUP
-
-     1. Removes hidden / accidental spacing immediately
-        before combining accent marks.
-
-     2. Removes zero-width characters that can break
-        Vietnamese glyph composition.
-
-     3. Converts everything to NFC.
-
-     This runs on normal text AND relevant attributes.
   ======================================================= */
 
   function cleanUnicodeText(
@@ -1035,9 +1025,6 @@
 
   /* =======================================================
      PAGE 06 ENTRY
-
-     FIREWORK FIRST
-     THEN CONFETTI
   ======================================================= */
 
   function playPage06Entrance() {
@@ -1095,7 +1082,7 @@
 
 
   /* =======================================================
-     ACTIVE PAGE / PAGE TRANSITIONS
+     ACTIVE PAGE
   ======================================================= */
 
   function activatePage(
@@ -1306,7 +1293,7 @@
 
 
   /* =======================================================
-     OPEN
+     OPEN INVITATION
   ======================================================= */
 
   async function enterInvitation() {
