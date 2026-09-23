@@ -1884,18 +1884,20 @@ img {
 }
 
 
+/* CARD CENTERED BOTH HORIZONTALLY AND VERTICALLY */
+
 .p06-card-wrap {
   position: absolute;
 
   z-index: 16;
 
   left: 50%;
-  top: 158px;
+  top: 50%;
 
   width: 246px;
 
   transform:
-    translateX(-50%);
+    translate(-50%, -50%);
 }
 
 
@@ -1924,7 +1926,7 @@ img {
   left: 50%;
   top: 86px;
 
-  width: 220px;
+  width: 230px;
 
   margin: 0;
 
@@ -1935,9 +1937,18 @@ img {
 
   color: #315747;
 
-  font-size: 23px;
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 17px;
 
   font-weight: 400;
+
+  line-height: 1.2;
+
+  white-space: nowrap;
 }
 
 
@@ -2120,6 +2131,11 @@ img {
 
   color: #6b5a3d;
 
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
   font-size: 11px;
 
   font-style: italic;
@@ -2216,26 +2232,69 @@ img {
 }
 
 
+/* =========================================================
+   PAGE 06 BOTTOM ELEMENT SWAY
+========================================================= */
+
 .p06-lucky-item {
   position: absolute;
 
   height: auto;
 
   pointer-events: none;
+
+  transform-origin:
+    50% 90%;
+
+  animation:
+    p06-bottom-sway
+    2600ms
+    ease-in-out
+    infinite;
+
+  will-change:
+    transform;
 }
 
 
+@keyframes p06-bottom-sway {
+
+  0%,
+  100% {
+    transform:
+      rotate(var(--sway-start));
+  }
+
+  50% {
+    transform:
+      rotate(var(--sway-end));
+  }
+}
+
+
+/* LEFT SIDE:
+   moves toward RIGHT first */
+
 .p06-ingots {
+  --sway-start: 2deg;
+  --sway-end: -2deg;
+
   z-index: 25;
 
   left: 35px;
   bottom: 47px;
 
   width: 75px;
+
+  animation-delay:
+    0ms;
 }
 
 
 .p06-knot {
+  --sway-start: -5deg;
+  --sway-end: -9deg;
+
   z-index: 28;
 
   left: 97px;
@@ -2243,22 +2302,34 @@ img {
 
   width: 77px;
 
-  transform:
-    rotate(-7deg);
+  animation-delay:
+    120ms;
 }
 
 
+/* RIGHT SIDE:
+   moves toward LEFT first */
+
 .p06-bag {
+  --sway-start: -2deg;
+  --sway-end: 2deg;
+
   z-index: 26;
 
   right: 33px;
   bottom: 46px;
 
   width: 105px;
+
+  animation-delay:
+    0ms;
 }
 
 
 .p06-coins {
+  --sway-start: 3deg;
+  --sway-end: 7deg;
+
   z-index: 29;
 
   right: 109px;
@@ -2266,8 +2337,8 @@ img {
 
   width: 53px;
 
-  transform:
-    rotate(5deg);
+  animation-delay:
+    120ms;
 }
 
 
@@ -2287,8 +2358,7 @@ img {
 
 .p07-top-left-decoration,
 .p07-butterfly,
-.p07-divider-ornament,
-.p07-field-lotus {
+.p07-divider-ornament {
   position: absolute;
 
   height: auto;
@@ -2297,6 +2367,8 @@ img {
 }
 
 
+/* PEACH BRANCH SWAY */
+
 .p07-top-left-decoration {
   z-index: 8;
 
@@ -2304,6 +2376,35 @@ img {
   top: 14px;
 
   width: 102px;
+
+  transform-origin:
+    18% 10%;
+
+  animation:
+    p07-branch-sway
+    2600ms
+    ease-in-out
+    infinite;
+
+  will-change:
+    transform;
+}
+
+
+@keyframes p07-branch-sway {
+
+  0%,
+  100% {
+    transform:
+      rotate(-1.3deg)
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      rotate(1.4deg)
+      translateY(2px);
+  }
 }
 
 
@@ -2488,40 +2589,8 @@ img {
 }
 
 
-.p07-field-icon,
-.p07-counter-icon,
-.p07-video-icon {
-  position: absolute;
-
-  z-index: 3;
-
-  fill: none;
-
-  stroke:
-    rgba(143, 113, 76, .72);
-
-  stroke-width: 1.7;
-
-  stroke-linecap: round;
-
-  stroke-linejoin: round;
-}
-
-
 .p07-field--name {
   height: 35px;
-}
-
-
-.p07-field-icon {
-  left: 13px;
-  top: 50%;
-
-  width: 19px;
-  height: 19px;
-
-  transform:
-    translateY(-50%);
 }
 
 
@@ -2530,27 +2599,18 @@ img {
   height: 100%;
 
   padding:
-    0 48px
-    0 43px;
+    0 12px;
 
   border: 0;
   outline: none;
 
   background: transparent;
 
+  color: var(--p07-green);
+
   font-size: 11.5px;
 
   font-style: italic;
-}
-
-
-.p07-field-lotus {
-  z-index: 4;
-
-  right: 3px;
-  bottom: -7px;
-
-  width: 39px;
 }
 
 
@@ -2651,21 +2711,11 @@ input:checked
   display: grid;
 
   grid-template-columns:
-    46px 1fr 1fr 1fr;
+    1fr 1fr 1fr;
 
   align-items: center;
 
   height: 38px;
-}
-
-
-.p07-counter-icon {
-  position: relative;
-
-  left: 14px;
-
-  width: 22px;
-  height: 20px;
 }
 
 
@@ -2679,6 +2729,8 @@ input:checked
   color: var(--p07-green);
 
   font-size: 22px;
+
+  cursor: pointer;
 }
 
 
@@ -2700,20 +2752,13 @@ input:checked
 }
 
 
-.p07-field-icon--message {
-  top: 13px;
-
-  transform: none;
-}
-
-
 .p07-message-input {
   width: 100%;
   height: 100%;
 
   padding:
-    10px 48px
-    8px 43px;
+    10px 12px
+    8px;
 
   border: 0;
   outline: none;
@@ -2722,17 +2767,11 @@ input:checked
 
   background: transparent;
 
+  color: var(--p07-green);
+
   font-size: 11px;
 
   font-style: italic;
-}
-
-
-.p07-field-lotus--message {
-  right: 1px;
-  bottom: -8px;
-
-  width: 42px;
 }
 
 
@@ -2742,18 +2781,8 @@ input:checked
   align-items: center;
 
   height: 38px;
-}
 
-
-.p07-video-icon {
-  left: 13px;
-  top: 50%;
-
-  width: 23px;
-  height: 20px;
-
-  transform:
-    translateY(-50%);
+  cursor: pointer;
 }
 
 
@@ -2761,10 +2790,11 @@ input:checked
   width: 100%;
 
   padding:
-    0 48px
-    0 47px;
+    0 12px;
 
   overflow: hidden;
+
+  color: var(--p07-green);
 
   font-size: 10.5px;
 
@@ -2785,14 +2815,6 @@ input:checked
   height: 1px;
 
   opacity: 0;
-}
-
-
-.p07-field-lotus--video {
-  right: 2px;
-  bottom: -7px;
-
-  width: 36px;
 }
 
 
@@ -2832,6 +2854,15 @@ input:checked
   color: #fff9e9;
 
   font-size: 15px;
+
+  cursor: pointer;
+}
+
+
+.p07-submit:disabled {
+  cursor: default;
+
+  opacity: .84;
 }
 
 
@@ -2875,47 +2906,18 @@ input:checked
 }
 
 
-.p07-footer-message {
-  position: absolute;
-
-  z-index: 12;
-
-  left: 50%;
-  top: 586px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  width: 190px;
-  height: 47px;
-
-  transform:
-    translateX(-50%);
-
-  border: none;
-
-  color: var(--p07-red);
-
-  font-size: 13px;
-
-  text-align: center;
-}
-
-
 /* =========================================================
    PAGE 08
 ========================================================= */
 
 .page08-layout {
+  color: #345447;
+
   font-family:
+    Georgia,
     "Times New Roman",
     Times,
     serif;
-
-  color: #345447;
 }
 
 
@@ -2925,7 +2927,7 @@ input:checked
   z-index: 15;
 
   left: 50%;
-  top: 25px;
+  top: 34px;
 
   width: 356px;
 
@@ -2978,35 +2980,43 @@ input:checked
 
 
 .p08-thanks-divider--title-bottom {
-  margin-top: 2px;
+  margin-top:
+    5px;
 }
 
 
 .p08-thanks-divider--middle {
-  margin-top: 6px;
-  margin-bottom: 6px;
+  margin-top:
+    6px;
+
+  margin-bottom:
+    6px;
 }
 
 
+/* VIETNAMESE-SAFE FONT */
+
 .p08-title {
   margin:
-    4px 0 0;
+    0;
 
   color: #a8301c;
 
   font-family:
-    "Segoe Script",
-    "Snell Roundhand",
-    "Brush Script MT",
-    cursive;
+    Georgia,
+    "Times New Roman",
+    Times,
+    serif;
 
-  font-size: 39px;
+  font-size: 35px;
+
+  font-style: italic;
 
   font-weight: 400;
 
   line-height: 1;
 
-  letter-spacing: -.8px;
+  letter-spacing: -.5px;
 }
 
 
@@ -3015,6 +3025,12 @@ input:checked
     7px 0 0;
 
   color: #405948;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    Times,
+    serif;
 
   font-size: 10.5px;
 
@@ -3031,6 +3047,12 @@ input:checked
     10px auto 0;
 
   color: #405948;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    Times,
+    serif;
 
   font-size: 8.7px;
 
@@ -3050,11 +3072,18 @@ input:checked
 
 
 .p08-english-copy {
-  margin: 0 auto;
+  margin:
+    0 auto;
 
   width: 340px;
 
   color: #405948;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    Times,
+    serif;
 
   font-size: 8.8px;
 
@@ -3068,7 +3097,15 @@ input:checked
 
   color: #405948;
 
+  font-family:
+    Georgia,
+    "Times New Roman",
+    Times,
+    serif;
+
   font-size: 10px;
+
+  font-style: italic;
 }
 
 
@@ -3079,12 +3116,16 @@ input:checked
   color: #a8301c;
 
   font-family:
-    "Segoe Script",
-    "Snell Roundhand",
-    "Brush Script MT",
-    cursive;
+    Georgia,
+    "Times New Roman",
+    Times,
+    serif;
 
-  font-size: 26px;
+  font-size: 24px;
+
+  font-style: italic;
+
+  font-weight: 400;
 }
 
 
@@ -3133,18 +3174,130 @@ input:checked
 
   transform:
     translateX(-50%);
+
+  pointer-events: none;
 }
 
 
-.p08-bamboo {
+/* =========================================================
+   PAGE 08 SMALL DIRT MARKS
+========================================================= */
+
+.p08-ground-speckles {
   position: absolute;
 
-  z-index: 6;
+  z-index: 8;
 
-  width: 85px;
+  left: 0;
+  bottom: 0;
 
-  right: 20px;
-  bottom: 143px;
+  width: 100%;
+  height: 185px;
+
+  pointer-events: none;
+}
+
+
+.p08-ground-speck {
+  position: absolute;
+
+  display: block;
+
+  border-radius:
+    55% 45% 58% 42%;
+
+  background:
+    rgba(118, 82, 52, .26);
+
+  transform-origin:
+    center;
+
+  filter:
+    blur(.15px);
+}
+
+
+.p08-ground-speck--01 {
+  left: 128px;
+  bottom: 124px;
+
+  width: 8px;
+  height: 3px;
+
+  transform:
+    rotate(-14deg);
+}
+
+
+.p08-ground-speck--02 {
+  left: 154px;
+  bottom: 108px;
+
+  width: 5px;
+  height: 2px;
+
+  transform:
+    rotate(12deg);
+}
+
+
+.p08-ground-speck--03 {
+  left: 184px;
+  bottom: 118px;
+
+  width: 9px;
+  height: 3px;
+
+  transform:
+    rotate(-8deg);
+}
+
+
+.p08-ground-speck--04 {
+  left: 216px;
+  bottom: 103px;
+
+  width: 6px;
+  height: 2px;
+
+  transform:
+    rotate(17deg);
+}
+
+
+.p08-ground-speck--05 {
+  left: 246px;
+  bottom: 119px;
+
+  width: 9px;
+  height: 3px;
+
+  transform:
+    rotate(8deg);
+}
+
+
+.p08-ground-speck--06 {
+  left: 276px;
+  bottom: 101px;
+
+  width: 5px;
+  height: 2px;
+
+  transform:
+    rotate(-15deg);
+}
+
+
+.p08-ground-speck--07 {
+  left: 300px;
+  bottom: 117px;
+
+  width: 7px;
+  height: 2.5px;
+
+  transform:
+    rotate(11deg);
 }
 
 
@@ -3205,7 +3358,13 @@ input:checked
 .p02-confetti-piece,
 
 .invitation-page:not(.is-nearby)
-.p06-confetti {
+.p06-confetti,
+
+.invitation-page:not(.is-nearby)
+.p06-lucky-item,
+
+.invitation-page:not(.is-nearby)
+.p07-top-left-decoration {
   animation-play-state:
     paused !important;
 }
