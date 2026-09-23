@@ -22,6 +22,12 @@
     "Times New Roman",
     serif;
 
+  --font-title:
+    "Noto Serif Display",
+    "Noto Serif",
+    "Times New Roman",
+    serif;
+
   --ambient-duration: 1050ms;
 
   --entry-duration: 620ms;
@@ -61,8 +67,7 @@ body {
 
   background: var(--page-background);
 
-  font-family:
-    var(--font-vi);
+  font-family: var(--font-vi);
 
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -549,7 +554,7 @@ img {
 
 
 /* =========================================================
-   AMBIENT CLOUD
+   CLOUD / AMBIENT
 ========================================================= */
 
 @keyframes wedding-ambient-float {
@@ -808,7 +813,14 @@ img {
 
   width: 330px;
 
+  font-family:
+    var(--font-title);
+
   font-size: 19px;
+
+  font-weight: 600;
+
+  letter-spacing: .035em;
 
   transform:
     translateX(-50%)
@@ -827,6 +839,9 @@ img {
 
   align-items: center;
 
+  font-family:
+    var(--font-title);
+
   line-height: .87;
 
   color:
@@ -844,6 +859,8 @@ img {
     var(--invitation-red);
 
   font-size: 25px;
+
+  font-weight: 600;
 
   line-height: .95;
 
@@ -1366,7 +1383,7 @@ img {
 
 
 /* =========================================================
-   PAGE 02 PROCESSION + SHAKE
+   PAGE 02 PROCESSION
 ========================================================= */
 
 .p02-procession {
@@ -1502,8 +1519,6 @@ img {
 }
 
 
-/* CLOUDS */
-
 .p03-cloud--01 {
   --float-distance: -7px;
   --cloud-speed: 930ms;
@@ -1599,7 +1614,7 @@ img {
 }
 
 
-/* TITLE */
+/* PAGE 03 TITLE */
 
 .p03-title {
   position: absolute;
@@ -1618,15 +1633,15 @@ img {
     #405d48;
 
   font-family:
-    var(--font-vi);
+    var(--font-title);
 
-  font-size: 26px;
+  font-size: 27px;
 
-  font-weight: 400;
+  font-weight: 600;
 
   line-height: 1;
 
-  letter-spacing: .03em;
+  letter-spacing: .055em;
 
   white-space: nowrap;
 
@@ -1682,7 +1697,7 @@ img {
 }
 
 
-/* TIMELINE TOP TO BOTTOM */
+/* TIMELINE */
 
 .p03-timeline {
   z-index: 14;
@@ -1721,7 +1736,7 @@ img {
 }
 
 
-/* TIMELINE ILLUSTRATIONS */
+/* ILLUSTRATIONS */
 
 .p03-illustration {
   z-index: 12;
@@ -1791,11 +1806,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 03 LEFT / RIGHT ENTRY
-========================================================= */
-
-/* LEFT OF TIMELINE */
+/* LEFT / RIGHT ENTRY */
 
 .page03-layout
 .p03-event--02,
@@ -1820,8 +1831,6 @@ img {
 }
 
 
-/* RIGHT OF TIMELINE */
-
 .page03-layout
 .p03-kieu,
 
@@ -1844,8 +1853,6 @@ img {
     350ms ease;
 }
 
-
-/* STAGGER */
 
 .page03-layout
 .p03-event--02,
@@ -1889,9 +1896,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 03 EVENTS
-========================================================= */
+/* EVENTS */
 
 .p03-event {
   position: absolute;
@@ -1921,9 +1926,12 @@ img {
   color:
     #ad4629;
 
+  font-family:
+    var(--font-title);
+
   font-size: 17px;
 
-  font-weight: 400;
+  font-weight: 600;
 
   line-height: 1;
 
@@ -2122,10 +2130,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 03 DRESS CODE
-   CONTINUES TIMELINE TOP -> BOTTOM
-========================================================= */
+/* DRESS CODE */
 
 .p03-dress-code {
   position: absolute;
@@ -2184,6 +2189,9 @@ img {
 
   color:
     #405d48;
+
+  font-family:
+    var(--font-title);
 
   font-size: 12px;
 
@@ -2331,8 +2339,6 @@ img {
 }
 
 
-/* CLOUD ENTRY SAME LOGIC AS PAGE 02 */
-
 .page06-layout
 .p06-cloud--02,
 
@@ -2382,7 +2388,7 @@ img {
 }
 
 
-/* CONFETTI APPEARS AFTER ENTRY FIREWORK */
+/* CONFETTI */
 
 .p06-confetti {
   position: absolute;
@@ -2528,15 +2534,16 @@ img {
     #315747;
 
   font-family:
-    var(--font-vi);
+    var(--font-title);
 
-  font-size: 17px;
+  font-size: 18px;
 
-  font-weight: 500;
+  font-weight: 600;
 
   line-height: 1.2;
 
-  letter-spacing: 0;
+  letter-spacing:
+    -.01em;
 
   white-space: nowrap;
 }
@@ -2566,7 +2573,7 @@ img {
     #a52f15;
 
   font-family:
-    var(--font-vi);
+    var(--font-title);
 
   font-size: 94px;
 
@@ -2757,7 +2764,7 @@ img {
 }
 
 
-/* LUCKY FIREWORK */
+/* FIREWORK */
 
 .p06-fireworks {
   position: absolute;
@@ -2834,9 +2841,7 @@ img {
 }
 
 
-/* =========================================================
-   PAGE 06 BOTTOM ITEMS
-========================================================= */
+/* BOTTOM ITEMS */
 
 .p06-bottom-items {
   position: absolute;
@@ -2905,8 +2910,6 @@ img {
 }
 
 
-/* LEFT */
-
 .p06-ingots {
   --p06-sway-angle: 4.5deg;
   --p06-sway-speed: 900ms;
@@ -2941,8 +2944,6 @@ img {
     80ms;
 }
 
-
-/* RIGHT */
 
 .p06-bag {
   --p06-sway-angle: 2.8deg;
@@ -3070,7 +3071,7 @@ img {
 }
 
 
-/* BUTTERFLY BOTTOM RIGHT */
+/* BUTTERFLY */
 
 .p07-butterfly {
   z-index: 18;
@@ -3131,7 +3132,7 @@ img {
 }
 
 
-/* TITLE / FORM ENTRY */
+/* PAGE 07 ENTRY */
 
 .p07-rsvp-title,
 .p07-divider-ornament--top,
@@ -3185,6 +3186,8 @@ img {
 }
 
 
+/* TITLE */
+
 .p07-rsvp-title {
   position: absolute;
 
@@ -3203,11 +3206,16 @@ img {
   color:
     var(--p07-red);
 
-  font-size: 30px;
+  font-family:
+    var(--font-title);
 
-  font-weight: 400;
+  font-size: 31px;
 
-  line-height: 1.3;
+  font-weight: 600;
+
+  line-height: 1.17;
+
+  letter-spacing: .015em;
 
   text-align: center;
 }
@@ -3251,6 +3259,8 @@ img {
 }
 
 
+/* FORM */
+
 .p07-rsvp-form {
   position: absolute;
 
@@ -3285,17 +3295,21 @@ img {
   top: 0;
 }
 
+
 .p07-form-group--attendance {
   top: 62px;
 }
+
 
 .p07-form-group--count {
   top: 127px;
 }
 
+
 .p07-form-group--message {
   top: 190px;
 }
+
 
 .p07-form-group--video {
   top: 270px;
@@ -3315,25 +3329,100 @@ img {
 }
 
 
+/* =========================================================
+   PAGE 07 DECORATIVE FIELD STYLE
+========================================================= */
+
 .p07-field,
 .p07-counter,
-.p07-video-field {
+.p07-video-field,
+.p07-attendance-option {
   position: relative;
 
   width: 100%;
 
   border:
     1px solid
-    rgba(154, 119, 72, .72);
+    rgba(147, 102, 55, .76);
 
-  border-radius: 3px;
+  border-radius: 7px;
 
   background:
-    rgba(255, 250, 235, .38);
+    linear-gradient(
+      180deg,
+      rgba(255, 249, 230, .64),
+      rgba(247, 230, 194, .38)
+    );
+
+  box-shadow:
+    inset 0 0 0 2px
+    rgba(255, 249, 231, .42),
+
+    inset 0 0 0 3px
+    rgba(166, 122, 68, .10),
+
+    0 2px 5px
+    rgba(93, 59, 30, .035);
 
   overflow: hidden;
 }
 
+
+/* INNER BORDER */
+
+.p07-field::before,
+.p07-counter::before,
+.p07-video-field::before,
+.p07-attendance-option::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 3px;
+
+  z-index: 0;
+
+  border:
+    1px solid
+    rgba(176, 137, 84, .20);
+
+  border-radius: 4px;
+
+  pointer-events: none;
+}
+
+
+/* ORNAMENT AT END */
+
+.p07-field::after,
+.p07-counter::after,
+.p07-video-field::after,
+.p07-attendance-option::after {
+  content: "◆";
+
+  position: absolute;
+
+  z-index: 1;
+
+  right: 9px;
+  top: 50%;
+
+  transform:
+    translateY(-50%)
+    scaleX(.72);
+
+  color:
+    rgba(160, 107, 50, .46);
+
+  font-size: 7px;
+
+  line-height: 1;
+
+  pointer-events: none;
+}
+
+
+/* NAME */
 
 .p07-field--name {
   height: 35px;
@@ -3341,11 +3430,15 @@ img {
 
 
 .p07-text-input {
+  position: relative;
+
+  z-index: 2;
+
   width: 100%;
   height: 100%;
 
   padding:
-    0 12px;
+    0 29px 0 13px;
 
   border: 0;
   outline: none;
@@ -3364,6 +3457,8 @@ img {
 }
 
 
+/* ATTENDANCE */
+
 .p07-attendance-options {
   display: grid;
 
@@ -3375,8 +3470,6 @@ img {
 
 
 .p07-attendance-option {
-  position: relative;
-
   display: flex;
 
   align-items: center;
@@ -3384,16 +3477,15 @@ img {
   height: 39px;
 
   padding:
-    0 17px;
+    0 29px 0 17px;
+}
 
-  border:
-    1px solid
-    rgba(154, 119, 72, .64);
 
-  border-radius: 3px;
+.p07-attendance-option
+> * {
+  position: relative;
 
-  background:
-    rgba(255, 250, 235, .34);
+  z-index: 2;
 }
 
 
@@ -3439,6 +3531,9 @@ img {
   transform:
     translate(-50%, -50%)
     scale(0);
+
+  transition:
+    transform 150ms ease;
 }
 
 
@@ -3457,6 +3552,8 @@ input:checked
 }
 
 
+/* COUNTER */
+
 .p07-counter {
   display: grid;
 
@@ -3466,6 +3563,14 @@ input:checked
   align-items: center;
 
   height: 38px;
+}
+
+
+.p07-counter-button,
+.p07-counter-value {
+  position: relative;
+
+  z-index: 2;
 }
 
 
@@ -3482,6 +3587,19 @@ input:checked
   font-size: 22px;
 
   cursor: pointer;
+
+  transition:
+    transform 130ms ease,
+    color 130ms ease;
+}
+
+
+.p07-counter-button:active {
+  transform:
+    scale(.84);
+
+  color:
+    var(--p07-red);
 }
 
 
@@ -3499,17 +3617,23 @@ input:checked
 }
 
 
+/* MESSAGE */
+
 .p07-field--message {
   height: 57px;
 }
 
 
 .p07-message-input {
+  position: relative;
+
+  z-index: 2;
+
   width: 100%;
   height: 100%;
 
   padding:
-    10px 12px 8px;
+    10px 29px 8px 13px;
 
   border: 0;
   outline: none;
@@ -3530,6 +3654,8 @@ input:checked
 }
 
 
+/* VIDEO */
+
 .p07-video-field {
   display: flex;
 
@@ -3542,10 +3668,14 @@ input:checked
 
 
 .p07-video-text {
+  position: relative;
+
+  z-index: 2;
+
   width: 100%;
 
   padding:
-    0 12px;
+    0 30px 0 13px;
 
   overflow: hidden;
 
@@ -3573,6 +3703,27 @@ input:checked
   opacity: 0;
 }
 
+
+/* FOCUS */
+
+.p07-field:focus-within,
+.p07-video-field:focus-within {
+  border-color:
+    rgba(147, 76, 48, .85);
+
+  box-shadow:
+    inset 0 0 0 2px
+    rgba(255, 249, 231, .5),
+
+    inset 0 0 0 3px
+    rgba(166, 122, 68, .12),
+
+    0 0 0 2px
+    rgba(163, 79, 50, .055);
+}
+
+
+/* SUBMIT */
 
 .p07-submit {
   position: absolute;
@@ -3610,9 +3761,28 @@ input:checked
   color:
     #fff9e9;
 
+  font-family:
+    var(--font-title);
+
   font-size: 15px;
 
+  font-weight: 600;
+
   cursor: pointer;
+
+  transition:
+    transform 140ms ease,
+    filter 140ms ease;
+}
+
+
+.p07-submit:active {
+  transform:
+    translateX(-50%)
+    scale(.97);
+
+  filter:
+    brightness(.97);
 }
 
 
@@ -3775,7 +3945,7 @@ input:checked
 }
 
 
-/* VIETNAMESE-SAFE FONT */
+/* TYPOGRAPHY */
 
 .p08-title {
   margin: 0;
@@ -3784,9 +3954,9 @@ input:checked
     #a8301c;
 
   font-family:
-    var(--font-vi);
+    var(--font-title);
 
-  font-size: 35px;
+  font-size: 37px;
 
   font-style: italic;
 
@@ -3794,7 +3964,7 @@ input:checked
 
   line-height: 1.05;
 
-  letter-spacing: 0;
+  letter-spacing: -.025em;
 }
 
 
@@ -3806,9 +3976,11 @@ input:checked
     #405948;
 
   font-family:
-    var(--font-vi);
+    var(--font-title);
 
   font-size: 10.5px;
+
+  font-weight: 600;
 
   letter-spacing: .45px;
 
@@ -3898,15 +4070,16 @@ input:checked
     #a8301c;
 
   font-family:
-    var(--font-vi);
+    var(--font-title);
 
-  font-size: 24px;
+  font-size: 25px;
 
   font-style: italic;
 
   font-weight: 600;
 
-  letter-spacing: 0;
+  letter-spacing:
+    -.02em;
 }
 
 
@@ -4049,7 +4222,7 @@ input:checked
 }
 
 
-/* DUPLICATED SMALL WATER IN FRONT OF DOOR */
+/* DUPLICATE WATER AT FRONT DOOR */
 
 .p08-water-ground--front {
   position: absolute;
