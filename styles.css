@@ -1,4287 +1,1413 @@
-:root {
-  --design-width: 390px;
-  --design-height: 680px;
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  />
+
+  <meta
+    name="theme-color"
+    content="#ead5ad"
+  />
+
+  <meta
+    name="description"
+    content="Thiệp cưới Bách & Thư"
+  />
+
+  <title>Bách & Thư</title>
+
+  <link
+    rel="icon"
+    type="image/png"
+    href="./assets/favicon.png"
+  />
+
+  <link
+    rel="preload"
+    href="./assets/page01-bg-optimized.webp"
+    as="image"
+    type="image/webp"
+    fetchpriority="high"
+  />
+
+  <link
+    rel="preload"
+    href="./assets/envelope-closed-optimized.png"
+    as="image"
+    type="image/png"
+    fetchpriority="high"
+  />
+
+  <link
+    rel="stylesheet"
+    href="./styles.css?v=20260924-2"
+  />
+
+  <script
+    src="./script.js?v=20260924-2"
+    defer
+  ></script>
+</head>
+
+
+<body>
+
+  <main
+    class="site-shell"
+    id="siteShell"
+  >
+
+    <div
+      class="site-scale"
+      id="siteScale"
+    >
+
+      <div class="design-stage">
+
+
+        <!-- =================================================
+             PAGE 01
+        ================================================== -->
+
+        <section
+          class="opening-page"
+          id="opening"
+          aria-label="Thiệp cưới Bách và Thư"
+        >
+
+          <button
+            class="opening-card-button"
+            id="openingCardButton"
+            type="button"
+            aria-label="Xem thiệp cưới"
+          >
+
+            <img
+              class="opening-card-image"
+              src="./assets/envelope-closed-optimized.png"
+              alt=""
+              draggable="false"
+              loading="eager"
+              decoding="async"
+              fetchpriority="high"
+              width="800"
+              height="1200"
+            />
+
+            <span
+              class="monogram-pulse"
+              aria-hidden="true"
+            ></span>
+
+          </button>
+
+        </section>
+
+
+        <!-- =================================================
+             INVITATION FLOW
+        ================================================== -->
+
+        <section
+          class="page-02"
+          id="page02"
+          aria-hidden="true"
+        >
 
-  --design-scale: 1;
-  --render-width: 390px;
-  --render-height: 680px;
+          <div
+            class="invitation-flow"
+            id="invitationFlow"
+          >
 
-  --paper: #ead5ad;
-  --page-background: #d8c59f;
-  --invitation-paper: #efe0bc;
 
-  --invitation-green: #28513f;
-  --invitation-red: #a63019;
-  --invitation-gold: #a78042;
+            <!-- =================================================
+                 PAGE 02
+            ================================================== -->
 
-  --p07-red: #a52f21;
-  --p07-green: #2f6d6a;
+            <section
+              class="invitation-page page02-layout"
+              id="page02Layout"
+              aria-label="Lễ thành hôn Bách và Thư"
+            >
 
-  --ambient-duration: 2800ms;
+              <img
+                class="p02-background deferred-page02-asset"
+                data-src="./assets/page02-bg.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  --entry-duration: 1150ms;
+              <img
+                class="p02-frame deferred-page02-asset"
+                data-src="./assets/page02-frame.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  --entry-ease:
-    cubic-bezier(.18, .82, .25, 1);
-}
 
+              <!-- CLOUDS -->
 
-/* =========================================================
-   RESET
-========================================================= */
+              <img
+                class="p02-cloud p02-cloud--01 deferred-page02-asset"
+                data-src="./assets/page02-cloud-01.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-* {
-  box-sizing: border-box;
-}
+              <img
+                class="p02-cloud p02-cloud--02 deferred-page02-asset"
+                data-src="./assets/page02-cloud-02.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
+              <img
+                class="p02-cloud p02-cloud--03 deferred-page02-asset"
+                data-src="./assets/page02-cloud-03.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-html,
-body {
-  width: 100%;
-  height: 100%;
+              <img
+                class="p02-cloud p02-cloud--04 deferred-page02-asset"
+                data-src="./assets/page02-cloud-04.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  margin: 0;
-  padding: 0;
-}
 
+              <!-- TEXT -->
 
-html {
-  background: var(--page-background);
-}
+              <p class="p02-invite">
+                TRÂN TRỌNG KÍNH MỜI
+              </p>
 
 
-body {
-  display: grid;
-  place-items: center;
+              <!--
+                CỘT F GOOGLE SHEET
+                Sẽ được JS điền vào đây.
+              -->
 
-  overflow: hidden;
+              <p
+                class="p02-personalized-guest"
+                id="personalizedGuestName"
+                hidden
+              ></p>
 
-  background: var(--page-background);
 
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
+              <div
+                class="p02-divider"
+                aria-hidden="true"
+              ></div>
 
-  -webkit-font-smoothing: antialiased;
 
-  text-rendering: optimizeLegibility;
+              <p class="p02-to">
+                TỚI
+              </p>
 
-  -webkit-tap-highlight-color: transparent;
-}
 
+              <p class="p02-wedding-title">
+                LỄ THÀNH HÔN
+              </p>
 
-button,
-input,
-textarea,
-a {
-  font: inherit;
-}
 
+              <h1 class="p02-couple-names">
 
-img {
-  -webkit-user-drag: none;
-}
+                <span class="p02-name">
+                  ĐỒNG THANH BÁCH
+                </span>
 
+                <span class="p02-ampersand">
+                  &amp;
+                </span>
 
-/* =========================================================
-   ARTBOARD
-========================================================= */
+                <span class="p02-name">
+                  NGUYỄN ANH THƯ
+                </span>
 
-.site-shell {
-  position: relative;
+              </h1>
 
-  width: var(--render-width);
-  height: var(--render-height);
 
-  overflow: hidden;
+              <div
+                class="p02-date-divider"
+                aria-hidden="true"
+              ></div>
 
-  background: var(--paper);
 
-  isolation: isolate;
+              <!-- CEREMONY -->
 
-  opacity: 0;
+              <div class="p02-ceremony-info">
 
-  box-shadow:
-    0 0 40px
-    rgba(80, 46, 24, .12);
+                <p class="p02-time-line">
 
-  transition:
-    opacity 100ms linear;
-}
+                  <span>
+                    Vào lúc
+                  </span>
 
+                  <strong>
+                    10:30 thứ Ba ngày 24/11/2026
+                  </strong>
 
-.site-shell.is-scale-ready {
-  opacity: 1;
-}
+                </p>
 
 
-.site-scale {
-  position: absolute;
+                <p class="p02-lunar-date">
+                  (Tức ngày 16 tháng 10 năm Bính Ngọ)
+                </p>
 
-  left: 0;
-  top: 0;
 
-  width: 390px;
-  height: 680px;
+                <p class="p02-at">
 
-  transform-origin: 0 0;
+                  <span>
+                    Tại
+                  </span>
 
-  transform:
-    scale(var(--design-scale));
-}
+                  <strong>
+                    khách sạn Sheraton Hanoi
+                  </strong>
 
+                </p>
 
-.design-stage {
-  position: relative;
 
-  width: 390px;
-  height: 680px;
+                <p class="p02-venue-address">
+                  (K5 Nghi Tàm, 11 Xuân Diệu Tây Hồ, Hà Nội)
+                </p>
 
-  overflow: hidden;
+              </div>
 
-  background: var(--paper);
 
-  isolation: isolate;
-}
+              <!-- FAMILY -->
 
+              <div class="p02-family-info">
 
-/* =========================================================
-   PAGE 01
-========================================================= */
+                <section class="p02-family">
 
-.opening-page {
-  position: absolute;
+                  <h3 class="p02-family-title">
+                    NHÀ TRAI
+                  </h3>
 
-  inset: 0;
+                  <p>
+                    Ông Đồng Thanh Tùng
+                  </p>
 
-  z-index: 2;
+                  <p>
+                    Bà Nguyễn Thị Thu Hương
+                  </p>
 
-  overflow: hidden;
+                </section>
 
-  background-color: #ead5ad;
 
-  background-image:
-    url("./assets/page01-bg-optimized.webp");
+                <section class="p02-family">
 
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+                  <h3 class="p02-family-title">
+                    NHÀ GÁI
+                  </h3>
 
-  opacity: 1;
+                  <p>
+                    Ông Nguyễn Anh Thơ
+                  </p>
 
-  transition:
-    opacity 520ms ease;
-}
+                  <p>
+                    Bà Nguyễn Thị Thu Hương
+                  </p>
 
+                </section>
 
-.opening-card-button {
-  position: absolute;
+              </div>
 
-  left: 50%;
-  top: calc(14.5% + 18px);
 
-  width: 82%;
-  max-width: 352px;
+              <!-- CONFETTI -->
 
-  aspect-ratio: 2 / 3;
+              <div
+                class="p02-confetti-cluster"
+                data-sprite-src="./assets/page06-confetti.png"
+                aria-hidden="true"
+              >
 
-  transform:
-    translateX(-50%);
+                <span class="p02-confetti-piece p02-confetti-piece--01"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--02"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--03"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--04"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--05"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--06"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--07"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--08"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--09"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--10"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--11"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--12"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--13"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--14"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--15"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--16"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--17"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--18"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--19"></span>
+                <span class="p02-confetti-piece p02-confetti-piece--20"></span>
 
-  margin: 0;
-  padding: 0;
+              </div>
 
-  border: 0;
-  outline: none;
 
-  background: transparent;
+              <!-- PROCESSION -->
 
-  cursor: pointer;
-}
+              <div
+                class="p02-procession"
+                aria-hidden="true"
+              >
 
+                <img
+                  class="p02-procession-item p02-flag-bearer deferred-page02-asset"
+                  data-src="./assets/page02-flag-bearer.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
 
-.opening-card-image {
-  position: absolute;
+                <img
+                  class="p02-procession-item p02-couple deferred-page02-asset"
+                  data-src="./assets/page02-couple.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
 
-  inset: 0;
+                <img
+                  class="p02-procession-item p02-lion-dance deferred-page02-asset"
+                  data-src="./assets/page02-lion-dance.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
 
-  width: 100%;
-  height: 100%;
+                <img
+                  class="p02-procession-item p02-drummer deferred-page02-asset"
+                  data-src="./assets/page02-drummer.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
 
-  object-fit: contain;
+              </div>
 
-  transform:
-    translate3d(0, 24px, 0);
 
-  transform-origin:
-    50% 55%;
+              <img
+                class="p02-bottom-ornament deferred-page02-asset"
+                data-src="./assets/page02-bottom-ornament.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  filter:
-    drop-shadow(
-      0 12px 9px
-      rgba(62, 24, 14, .16)
-    );
+            </section>
 
-  animation:
-    opening-card-shake
-    2500ms
-    cubic-bezier(.36, .07, .19, .97)
-    infinite;
 
-  pointer-events: none;
-}
+            <!-- =================================================
+                 PAGE 03
+            ================================================== -->
 
+            <section
+              class="invitation-page page03-layout"
+              id="page03"
+              aria-label="Lịch trình đám cưới"
+            >
 
-@keyframes opening-card-shake {
+              <img
+                class="p03-background deferred-page03-asset"
+                data-src="./assets/page02-bg.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  0%,
-  50%,
-  100% {
-    transform:
-      translate3d(0, 24px, 0)
-      rotate(0);
-  }
+              <img
+                class="p03-frame deferred-page03-asset"
+                data-src="./assets/page02-frame.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  57% {
-    transform:
-      translate3d(-5px, 21px, 0)
-      rotate(-2deg);
-  }
 
-  64% {
-    transform:
-      translate3d(6px, 22px, 0)
-      rotate(2.2deg);
-  }
+              <img
+                class="p03-cloud p03-cloud--01 deferred-page03-asset"
+                data-src="./assets/page02-cloud-01.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  71% {
-    transform:
-      translate3d(-5px, 21px, 0)
-      rotate(-2.1deg);
-  }
+              <img
+                class="p03-cloud p03-cloud--02 deferred-page03-asset"
+                data-src="./assets/page02-cloud-03.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  78% {
-    transform:
-      translate3d(5px, 23px, 0)
-      rotate(1.8deg);
-  }
+              <img
+                class="p03-cloud p03-cloud--03 deferred-page03-asset"
+                data-src="./assets/page02-cloud-02.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  92% {
-    transform:
-      translate3d(0, 24px, 0)
-      rotate(0);
-  }
-}
+              <img
+                class="p03-cloud p03-cloud--04 deferred-page03-asset"
+                data-src="./assets/page02-cloud-04.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
 
-.monogram-pulse {
-  position: absolute;
+              <h2 class="p03-title">
+                LỊCH TRÌNH
+              </h2>
 
-  z-index: 5;
 
-  left: 50%;
-  top: calc(60.5% + 24px);
+              <img
+                class="p03-title-divider deferred-page03-asset"
+                data-src="./assets/page03-title-divider.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  width: 31%;
 
-  aspect-ratio: 1;
+              <img
+                class="p03-timeline deferred-page03-asset"
+                data-src="./assets/page03-timeline-new.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  border-radius: 50%;
 
-  transform:
-    translate(-50%, -50%);
+              <!-- ĐÓN DÂU -->
 
-  pointer-events: none;
-}
+              <article class="p03-event p03-event--02">
 
+                <h3 class="p03-event-title">
+                  ĐÓN DÂU
+                </h3>
 
-.monogram-pulse::before,
-.monogram-pulse::after {
-  content: "";
+                <p class="p03-event-date">
+                  24.11.2026
+                </p>
 
-  position: absolute;
+                <p class="p03-event-time">
+                  9:00
+                </p>
 
-  inset: 0;
 
-  border:
-    1.5px solid
-    rgba(237, 196, 96, .52);
+                <div class="p03-location">
 
-  border-radius: 50%;
+                  <span
+                    class="p03-location-pin"
+                    aria-hidden="true"
+                  ></span>
 
-  opacity: 0;
 
-  animation:
-    tap-ring
-    2700ms
-    ease-out
-    infinite;
-}
+                  <div>
 
+                    <strong>
+                      Tư gia nhà gái
+                    </strong>
 
-.monogram-pulse::after {
-  animation-delay: 1350ms;
-}
+                    <span>
+                      AD-14, Ocean Park 3
+                    </span>
 
+                    <span>
+                      Nghĩa Trụ, Văn Giang, Hưng Yên
+                    </span>
 
-@keyframes tap-ring {
+                  </div>
 
-  0% {
-    transform: scale(.5);
-    opacity: 0;
-  }
+                </div>
 
-  18% {
-    opacity: .58;
-  }
+              </article>
 
-  100% {
-    transform: scale(1.22);
-    opacity: 0;
-  }
-}
 
+              <img
+                class="p03-illustration p03-kieu deferred-page03-asset"
+                data-src="./assets/page03-kieu.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-/* =========================================================
-   FLOW
-========================================================= */
 
-.page-02 {
-  position: absolute;
+              <!-- TIỆC CƯỚI -->
 
-  inset: 0;
+              <img
+                class="p03-illustration p03-mam-co deferred-page03-asset"
+                data-src="./assets/page03-mam-co.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  z-index: 1;
 
-  width: 390px;
-  height: 680px;
+              <article class="p03-event p03-event--03">
 
-  overflow-x: hidden;
-  overflow-y: auto;
+                <h3 class="p03-event-title">
+                  TIỆC CƯỚI
+                </h3>
 
-  background: var(--invitation-paper);
+                <p class="p03-event-date">
+                  24.11.2026
+                </p>
 
-  opacity: 0;
+                <p class="p03-event-time">
+                  11:00 - 14:00
+                </p>
 
-  pointer-events: none;
 
-  scrollbar-width: none;
+                <div class="p03-location">
 
-  overscroll-behavior: contain;
+                  <span
+                    class="p03-location-pin"
+                    aria-hidden="true"
+                  ></span>
 
-  touch-action: pan-y;
 
-  -webkit-overflow-scrolling: touch;
+                  <div>
 
-  transition:
-    opacity 520ms ease;
-}
+                    <strong>
+                      Sheraton Hanoi Hotel
+                    </strong>
 
+                    <span>
+                      K5 Nghi Tàm, 11 Xuân Diệu
+                    </span>
 
-.page-02::-webkit-scrollbar {
-  display: none;
-}
+                    <span>
+                      Tây Hồ, Hà Nội
+                    </span>
 
+                  </div>
 
-.site-shell.is-page-02
-.opening-page {
-  opacity: 0;
+                </div>
 
-  pointer-events: none;
-}
+              </article>
 
 
-.site-shell.is-page-02
-.page-02 {
-  z-index: 3;
+              <!-- AFTER PARTY -->
 
-  opacity: 1;
+              <article class="p03-event p03-event--04">
 
-  pointer-events: auto;
-}
+                <h3 class="p03-event-title">
+                  AFTER PARTY
+                </h3>
 
+                <p class="p03-event-date">
+                  24.11.2026
+                </p>
 
-.invitation-flow {
-  position: relative;
+                <p class="p03-event-time">
+                  18:30 - 22:00
+                </p>
 
-  width: 390px;
 
-  height: auto;
-}
+                <div class="p03-location">
 
+                  <span
+                    class="p03-location-pin"
+                    aria-hidden="true"
+                  ></span>
 
-.invitation-page {
-  position: relative;
 
-  width: 390px;
-  height: 680px;
+                  <div>
 
-  overflow: hidden;
+                    <strong>
+                      Sheraton Hanoi Hotel
+                    </strong>
 
-  background: #f1dfbd;
+                    <span>
+                      (dự kiến)
+                    </span>
 
-  isolation: isolate;
-}
+                  </div>
 
+                </div>
 
-/* =========================================================
-   BACKGROUND
-========================================================= */
+              </article>
 
-.p02-background,
-.p03-background,
-.p06-background,
-.p07-background,
-.p08-background {
-  position: absolute;
 
-  inset: 0;
+              <img
+                class="p03-illustration p03-cheers deferred-page03-asset"
+                data-src="./assets/page03-cheers.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  z-index: 0;
 
-  width: 100%;
-  height: 100%;
+              <!-- DRESS CODE -->
 
-  object-fit: cover;
+              <section
+                class="p03-dress-code"
+                aria-label="Dress code"
+              >
 
-  pointer-events: none;
-}
+                <h3 class="p03-dress-title">
 
+                  <span>✦</span>
 
-/* =========================================================
-   FRAME
-========================================================= */
+                  DRESS CODE
 
-.p02-frame,
-.p03-frame,
-.p06-frame,
-.p07-frame,
-.p08-frame {
-  position: absolute;
+                  <span>✦</span>
 
-  display: block;
+                </h3>
 
-  max-width: none;
 
-  object-fit: fill;
+                <div class="p03-color-list">
 
-  pointer-events: none;
-}
+                  <div class="p03-color-item">
+                    <span class="p03-color p03-color--brown"></span>
+                    <span>Nâu</span>
+                  </div>
 
+                  <div class="p03-color-item">
+                    <span class="p03-color p03-color--pink"></span>
+                    <span>Hồng</span>
+                  </div>
 
-.p02-frame,
-.p03-frame {
-  z-index: 5;
+                  <div class="p03-color-item">
+                    <span class="p03-color p03-color--beige"></span>
+                    <span>Be</span>
+                  </div>
 
-  inset: 0;
+                  <div class="p03-color-item">
+                    <span class="p03-color p03-color--sage"></span>
+                    <span>Xanh</span>
+                  </div>
 
-  width: 100%;
-  height: 100%;
-}
+                </div>
 
+              </section>
 
-.p06-frame {
-  z-index: 40;
 
-  inset: 0;
+              <img
+                class="p03-bottom-ornament deferred-page03-asset"
+                data-src="./assets/page02-bottom-ornament.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  width: 100%;
-  height: 100%;
-}
+            </section>
 
 
-.p07-frame,
-.p08-frame {
-  z-index: 40;
+            <!-- =================================================
+                 PAGE 06
+            ================================================== -->
 
-  left: 5px;
-  top: 5px;
+            <section
+              class="invitation-page page06-layout"
+              id="page06"
+              aria-label="Nhận số may mắn của bạn"
+            >
 
-  width: 380px;
-  height: 670px;
-}
+              <img
+                class="p06-background deferred-page06-asset"
+                data-src="./assets/page02-bg.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
 
-/* =========================================================
-   BOTTOM ORNAMENT
-========================================================= */
+              <img
+                class="p06-confetti deferred-page06-asset"
+                data-src="./assets/page06-confetti.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-.p02-bottom-ornament,
-.p03-bottom-ornament,
-.p06-bottom-ornament,
-.p07-bottom-ornament,
-.p08-bottom-ornament {
-  position: absolute;
 
-  z-index: 36;
+              <div
+                class="p06-entry-fireworks"
+                id="page06EntryFireworks"
+                aria-hidden="true"
+              ></div>
 
-  left: 50%;
-  bottom: -1px;
 
-  display: block;
+              <img
+                class="p06-cloud p06-cloud--01 deferred-page06-asset"
+                data-src="./assets/page02-cloud-02.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  width: 120px;
-  height: auto;
+              <img
+                class="p06-cloud p06-cloud--02 deferred-page06-asset"
+                data-src="./assets/page02-cloud-03.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  transform:
-    translateX(-50%);
+              <img
+                class="p06-cloud p06-cloud--03 deferred-page06-asset"
+                data-src="./assets/page02-cloud-04.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  pointer-events: none;
-}
+              <img
+                class="p06-cloud p06-cloud--04 deferred-page06-asset"
+                data-src="./assets/page02-cloud-01.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
 
-/* =========================================================
-   AMBIENT
-========================================================= */
+              <div
+                class="p06-card-wrap"
+                id="luckyCard"
+              >
 
-@keyframes wedding-ambient-float {
+                <img
+                  class="p06-lucky-card deferred-page06-asset"
+                  data-src="./assets/page06-lucky-card.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
 
-  0%,
-  100% {
-    transform:
-      translateY(0);
-  }
 
-  50% {
-    transform:
-      translateY(-6px);
-  }
-}
+                <h2 class="p06-title">
+                  Nhận số may mắn của bạn
+                </h2>
 
 
-.p02-cloud,
-.p03-cloud,
-.p06-cloud,
-.p08-cloud {
-  position: absolute;
+                <div
+                  class="p06-number-slot"
+                  id="luckyNumber"
+                  aria-live="polite"
+                  aria-atomic="true"
+                >
+                  88
+                </div>
 
-  z-index: 60;
 
-  height: auto;
+                <p
+                  class="p06-number-hint"
+                  id="luckyHint"
+                >
+                  Nhấn để nhận số may mắn
+                </p>
 
-  pointer-events: none;
 
-  animation:
-    wedding-ambient-float
-    var(--ambient-duration)
-    ease-in-out
-    infinite;
-}
+                <div
+                  class="p06-fireworks"
+                  id="luckyFireworks"
+                  aria-hidden="true"
+                ></div>
 
 
-/* =========================================================
-   PAGE 02
-========================================================= */
+                <button
+                  class="p06-lucky-trigger"
+                  id="luckyTrigger"
+                  type="button"
+                  aria-label="Nhấn để nhận số may mắn"
+                ></button>
 
-.p02-cloud--01 {
-  left: 28px;
-  top: 116px;
+              </div>
 
-  width: 88px;
-}
 
+              <div
+                class="p06-bottom-items"
+                aria-hidden="true"
+              >
 
-.p02-cloud--02 {
-  right: 19px;
-  top: 133px;
+                <img
+                  class="p06-lucky-item p06-ingots deferred-page06-asset"
+                  data-src="./assets/page06-lucky-ingots.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
 
-  width: 80px;
-}
+                <img
+                  class="p06-lucky-item p06-knot deferred-page06-asset"
+                  data-src="./assets/page06-lucky-knot.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
 
+                <img
+                  class="p06-lucky-item p06-bag deferred-page06-asset"
+                  data-src="./assets/page06-lucky-bag.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
 
-.p02-cloud--03 {
-  left: 18px;
-  top: 219px;
+                <img
+                  class="p06-lucky-item p06-coins deferred-page06-asset"
+                  data-src="./assets/page06-lucky-coins.png"
+                  alt=""
+                  draggable="false"
+                  decoding="async"
+                />
 
-  width: 65px;
-}
+              </div>
 
 
-.p02-cloud--04 {
-  right: 28px;
-  top: 265px;
+              <img
+                class="p06-frame deferred-page06-asset"
+                data-src="./assets/page02-frame.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  width: 65px;
-}
 
+              <img
+                class="p06-bottom-ornament deferred-page06-asset"
+                data-src="./assets/page02-bottom-ornament.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-/* PAGE 02 ENTRY */
+            </section>
 
-.page02-layout
-.p02-cloud,
 
-.page02-layout
-.p02-confetti-cluster,
+            <!-- =================================================
+                 PAGE 07
+            ================================================== -->
 
-.page02-layout
-.p02-procession {
-  opacity: 0;
+            <section
+              class="invitation-page page07-layout"
+              id="page07"
+              aria-label="Xác nhận tham dự"
+            >
 
-  transition:
-    translate
-    var(--entry-duration)
-    var(--entry-ease),
+              <img
+                class="p07-background deferred-page07-asset"
+                data-src="./assets/page02-bg.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-    opacity
-    700ms
-    ease;
-}
 
+              <img
+                class="p07-top-left-decoration deferred-page07-asset"
+                data-src="./assets/page07-top-left-branch-lantern.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-.page02-layout
-.p02-cloud--01,
 
-.page02-layout
-.p02-cloud--03 {
-  translate:
-    -85px 0;
-}
+              <img
+                class="p07-butterfly deferred-page07-asset"
+                data-src="./assets/page07-butterfly.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
 
-.page02-layout
-.p02-cloud--02,
+              <h2 class="p07-rsvp-title">
+                XÁC NHẬN<br />
+                THAM DỰ
+              </h2>
 
-.page02-layout
-.p02-cloud--04 {
-  translate:
-    85px 0;
-}
 
+              <img
+                class="p07-divider-ornament p07-divider-ornament--top deferred-page07-asset"
+                data-src="./assets/page07-divider-ornament.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-.page02-layout
-.p02-confetti-cluster,
 
-.page02-layout
-.p02-procession {
-  translate:
-    0 46px;
-}
+              <p class="p07-rsvp-subtitle">
+                Sự hiện diện của bạn là niềm vui lớn<br />
+                dành cho chúng mình!
+              </p>
 
 
-.page02-layout.is-entering
-.p02-cloud,
+              <form
+                class="p07-rsvp-form"
+                id="rsvpForm"
+              >
 
-.page02-layout.is-entering
-.p02-confetti-cluster,
 
-.page02-layout.is-entering
-.p02-procession {
-  opacity: 1;
+                <!-- NAME -->
 
-  translate:
-    0 0;
-}
+                <div class="p07-form-group p07-form-group--name">
 
+                  <label
+                    class="p07-form-label"
+                    for="rsvpGuestName"
+                  >
+                    Tên khách mời
+                  </label>
 
-/* =========================================================
-   PAGE 02 TEXT
-========================================================= */
 
-.p02-invite,
-.p02-personalized-guest,
-.p02-to,
-.p02-wedding-title,
-.p02-couple-names {
-  position: absolute;
+                  <div class="p07-field p07-field--name">
 
-  z-index: 20;
+                    <input
+                      id="rsvpGuestName"
+                      class="p07-text-input"
+                      type="text"
+                      name="guestName"
+                      autocomplete="name"
+                      placeholder="Nhập tên của bạn..."
+                    />
 
-  left: 50%;
 
-  margin: 0;
+                    <img
+                      class="p07-field-lotus deferred-page07-asset"
+                      data-src="./assets/page07-lotus.png"
+                      alt=""
+                      draggable="false"
+                      decoding="async"
+                    />
 
-  text-align: center;
+                  </div>
 
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
+                </div>
 
-  font-weight: 400;
 
-  color:
-    var(--invitation-green);
-}
+                <!-- ATTENDANCE -->
 
+                <fieldset class="p07-form-group p07-form-group--attendance">
 
-.p02-invite {
-  top: 45px;
+                  <legend class="p07-form-label">
+                    Bạn sẽ tới chung vui cùng chúng mình chứ?
+                  </legend>
 
-  width: 320px;
 
-  font-size: 15px;
+                  <div class="p07-attendance-options">
 
-  transform:
-    translateX(-50%)
-    scaleX(.94);
-}
+                    <label class="p07-attendance-option">
 
+                      <input
+                        id="rsvpAttendanceYes"
+                        type="radio"
+                        name="attendance"
+                        value="yes"
+                        checked
+                      />
 
-/* PERSONALIZED NAME FROM SHEET F */
+                      <span class="p07-radio-mark"></span>
 
-.p02-personalized-guest {
-  top: 70px;
+                      <span class="p07-attendance-text">
+                        Có
+                      </span>
 
-  width: 310px;
+                    </label>
 
-  transform:
-    translateX(-50%);
 
-  color:
-    var(--invitation-red);
+                    <label class="p07-attendance-option">
 
-  font-size: 13px;
+                      <input
+                        id="rsvpAttendanceNo"
+                        type="radio"
+                        name="attendance"
+                        value="no"
+                      />
 
-  font-style: italic;
+                      <span class="p07-radio-mark"></span>
 
-  line-height: 1.1;
+                      <span
+                        class="p07-attendance-text"
+                        id="rsvpAttendanceNoText"
+                      >
+                        Không
+                      </span>
 
-  white-space: nowrap;
+                    </label>
 
-  overflow: hidden;
+                  </div>
 
-  text-overflow: ellipsis;
-}
+                </fieldset>
 
 
-.p02-personalized-guest[hidden] {
-  display: none;
-}
+                <!-- COUNT -->
 
+                <div class="p07-form-group p07-form-group--count">
 
-.p02-divider {
-  position: absolute;
+                  <span class="p07-form-label">
+                    Số lượng người tham dự
+                  </span>
 
-  z-index: 20;
 
-  left: 50%;
-  top: 100px;
+                  <div class="p07-counter">
 
-  width: 220px;
-  height: 1px;
+                    <button
+                      class="p07-counter-button"
+                      id="rsvpMinus"
+                      type="button"
+                      aria-label="Giảm số người tham dự"
+                    >
+                      −
+                    </button>
 
-  transform:
-    translateX(-50%);
 
-  background:
-    rgba(153, 111, 52, .72);
-}
+                    <output
+                      class="p07-counter-value"
+                      id="rsvpGuestCount"
+                      for="rsvpMinus rsvpPlus"
+                    >
+                      1
+                    </output>
 
 
-.p02-divider::after {
-  content: "•••";
+                    <button
+                      class="p07-counter-button"
+                      id="rsvpPlus"
+                      type="button"
+                      aria-label="Tăng số người tham dự"
+                    >
+                      +
+                    </button>
 
-  position: absolute;
+                  </div>
 
-  left: 50%;
-  top: 50%;
+                </div>
 
-  padding: 0 4px;
 
-  transform:
-    translate(-50%, -56%);
+                <!-- MESSAGE -->
 
-  background: #f1dfbd;
+                <div class="p07-form-group p07-form-group--message">
 
-  color:
-    var(--invitation-gold);
+                  <label
+                    class="p07-form-label"
+                    for="rsvpMessage"
+                  >
+                    Lời nhắn tới cô dâu chú rể
+                  </label>
 
-  font-size: 7px;
-}
 
+                  <div class="p07-field p07-field--message">
 
-.p02-to {
-  top: 125px;
+                    <textarea
+                      id="rsvpMessage"
+                      class="p07-message-input"
+                      name="message"
+                      rows="3"
+                      placeholder="Gửi lời chúc tốt đẹp đến chúng mình..."
+                    ></textarea>
 
-  width: 320px;
 
-  font-size: 16px;
+                    <img
+                      class="p07-field-lotus p07-field-lotus--message deferred-page07-asset"
+                      data-src="./assets/page07-lotus.png"
+                      alt=""
+                      draggable="false"
+                      decoding="async"
+                    />
 
-  transform:
-    translateX(-50%)
-    scaleX(.8);
-}
+                  </div>
 
+                </div>
 
-.p02-wedding-title {
-  top: 160px;
 
-  width: 330px;
+                <!-- VIDEO -> GOOGLE DRIVE -->
 
-  font-size: 19px;
+                <div class="p07-form-group p07-form-group--video">
 
-  transform:
-    translateX(-50%)
-    scaleX(.77);
-}
+                  <a
+                    class="p07-video-field"
+                    href="https://drive.google.com/drive/folders/1e1acGQ5Nmtk5DlyNHUvbc7HcXA1gaj1i?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Mở Google Drive để tải video lời chúc lên"
+                  >
 
+                    <span class="p07-video-text">
+                      Video lời chúc gửi tới cô dâu chú rể
+                    </span>
 
-.p02-couple-names {
-  top: 200px;
 
-  width: 370px;
+                    <img
+                      class="p07-field-lotus p07-field-lotus--video deferred-page07-asset"
+                      data-src="./assets/page07-lotus.png"
+                      alt=""
+                      draggable="false"
+                      decoding="async"
+                    />
 
-  display: flex;
+                  </a>
 
-  flex-direction: column;
+                </div>
 
-  align-items: center;
 
-  line-height: .87;
+                <!-- SUBMIT -->
 
-  color:
-    var(--invitation-red);
+                <button
+                  class="p07-submit"
+                  id="rsvpSubmit"
+                  type="submit"
+                >
 
-  transform:
-    translateX(-50%);
-}
+                  <span>
+                    GỬI XÁC NHẬN
+                  </span>
 
 
-.p02-name {
-  width: 100%;
+                  <svg
+                    class="p07-submit-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
 
-  color:
-    var(--invitation-red);
+                    <path
+                      d="M22 2L9.7 14.3"
+                    ></path>
 
-  font-size: 25px;
+                    <path
+                      d="M22 2l-7.8 20-4.5-7.7L2 9.8 22 2z"
+                    ></path>
 
-  line-height: .95;
+                  </svg>
 
-  white-space: nowrap;
+                </button>
 
-  transform:
-    scaleX(.82);
-}
+              </form>
 
 
-.p02-ampersand {
-  margin:
-    4px 0 3px;
+              <img
+                class="p07-bottom-ornament deferred-page07-asset"
+                data-src="./assets/page02-bottom-ornament.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  color:
-    var(--invitation-green);
 
-  font-size: 25px;
-}
+              <img
+                class="p07-frame deferred-page07-asset"
+                data-src="./assets/page02-frame.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
+            </section>
 
-.p02-date-divider {
-  position: absolute;
 
-  z-index: 20;
+            <!-- =================================================
+                 PAGE 08
+            ================================================== -->
 
-  left: 50%;
-  top: 297px;
+            <section
+              class="invitation-page page08-layout"
+              id="page08"
+              aria-label="Lời cảm ơn"
+            >
 
-  width: 64px;
-  height: 1px;
+              <img
+                class="p08-background deferred-page08-asset"
+                data-src="./assets/page02-bg.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  transform:
-    translateX(-50%);
 
-  background:
-    rgba(153, 111, 52, .56);
-}
+              <div class="p08-content">
 
 
-.p02-date-divider::after {
-  content: "◇";
+                <h2 class="p08-title">
+                  Lời cảm ơn
+                </h2>
 
-  position: absolute;
 
-  left: 50%;
-  top: 50%;
+                <div
+                  class="p08-thanks-divider p08-thanks-divider--title-bottom"
+                  aria-hidden="true"
+                >
+                  <span></span>
+                  <b>✤</b>
+                  <span></span>
+                </div>
 
-  padding: 0 3px;
 
-  transform:
-    translate(-50%, -51%);
+                <p class="p08-english-title">
+                  THANK YOU FOR BEING PART OF OUR STORY
+                </p>
 
-  background: #f1dfbd;
 
-  color:
-    var(--invitation-gold);
+                <div class="p08-vietnamese-copy">
 
-  font-size: 8px;
-}
+                  <p>
+                    Từ một cuộc gặp gỡ rất tình cờ, chúng mình đã đi qua những
+                    khác biệt, những vui buồn và cả những lúc tưởng như chẳng thể thiếu nhau.
+                    Nhưng sau tất cả, chúng mình vẫn chọn ở lại, học cách lắng nghe,
+                    thấu hiểu và yêu thương nhau theo một cách trưởng thành hơn.
+                  </p>
 
+                  <p>
+                    Ngày hôm nay, khi cùng nhau bước vào một chặng đường mới,
+                    chúng mình càng biết ơn gia đình và bạn bè đã luôn yêu thương,
+                    đồng hành và dành cho chúng mình thật nhiều điều tốt đẹp.
+                  </p>
 
-.p02-ceremony-info {
-  position: absolute;
+                  <p>
+                    Sự hiện diện của mọi người trong ngày đặc biệt này là món quà quý giá nhất.
+                    Cảm ơn vì đã đến, đã chứng kiến và đã trở thành một phần
+                    trong câu chuyện của chúng mình.
+                  </p>
 
-  z-index: 21;
+                </div>
 
-  left: 50%;
-  top: 315px;
 
-  width: 345px;
+                <div
+                  class="p08-thanks-divider p08-thanks-divider--middle"
+                  aria-hidden="true"
+                >
+                  <span></span>
+                  <b>✤</b>
+                  <span></span>
+                </div>
 
-  transform:
-    translateX(-50%);
 
-  text-align: center;
+                <p class="p08-english-copy">
+                  From two very different people, somehow, we found our way<br />
+                  to each other. And today, we choose each other again, and again.
+                </p>
 
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-}
 
+                <p class="p08-with-love">
+                  With love,
+                </p>
 
-.p02-ceremony-info p {
-  margin: 0;
-}
 
+                <p class="p08-signature">
+                  Thư &amp; Bách
+                </p>
 
-.p02-time-line {
-  color:
-    var(--invitation-green);
+              </div>
 
-  font-size: 13px;
-}
 
+              <img
+                class="p08-cloud p08-cloud--left deferred-page08-asset"
+                data-src="./assets/page02-cloud-03.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-.p02-time-line strong {
-  color:
-    var(--invitation-red);
+              <img
+                class="p08-cloud p08-cloud--right deferred-page08-asset"
+                data-src="./assets/page02-cloud-01.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  font-size: 14px;
 
-  font-weight: 400;
-}
+              <img
+                class="p08-water-ground p08-water-ground--base deferred-page08-asset"
+                data-src="./assets/page08-water-ground.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
 
-.p02-lunar-date {
-  margin-top:
-    5px !important;
+              <img
+                class="p08-masion deferred-page08-asset"
+                data-src="./assets/page08-masion.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  color:
-    var(--invitation-green);
 
-  font-size:
-    10.5px;
-}
+              <img
+                class="p08-water-ground p08-water-ground--front deferred-page08-asset"
+                data-src="./assets/page08-water-ground.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
 
-.p02-at {
-  margin-top:
-    11px !important;
+              <img
+                class="p08-couple deferred-page08-asset"
+                data-src="./assets/page08-couple-back.png"
+                alt="Bách và Thư"
+                draggable="false"
+                decoding="async"
+              />
 
-  color:
-    var(--invitation-green);
 
-  font-size: 13px;
-}
+              <img
+                class="p08-lotus p08-lotus--left deferred-page08-asset"
+                data-src="./assets/page08-lotus-left.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
+              <img
+                class="p08-lotus p08-lotus--right deferred-page08-asset"
+                data-src="./assets/page08-lotus-right.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-.p02-at strong {
-  color:
-    var(--invitation-red);
 
-  font-size: 14px;
+              <img
+                class="p08-frame deferred-page08-asset"
+                data-src="./assets/page02-frame.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-  font-weight: 400;
-}
 
+              <img
+                class="p08-bottom-ornament deferred-page08-asset"
+                data-src="./assets/page02-bottom-ornament.png"
+                alt=""
+                draggable="false"
+                decoding="async"
+              />
 
-.p02-venue-address {
-  margin-top:
-    5px !important;
+            </section>
 
-  color:
-    var(--invitation-green);
 
-  font-size: 10.5px;
-}
+          </div>
 
+        </section>
 
-.p02-family-info {
-  position: absolute;
+      </div>
 
-  z-index: 22;
+    </div>
 
-  left: 50%;
-  top: 406px;
+  </main>
 
-  display: grid;
+</body>
 
-  grid-template-columns:
-    1fr 1fr;
-
-  column-gap: 28px;
-
-  width: 330px;
-
-  transform:
-    translateX(-50%);
-
-  color:
-    var(--invitation-green);
-
-  text-align: center;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-}
-
-
-.p02-family-title {
-  margin:
-    0 0 7px;
-
-  font-size: 11px;
-
-  font-weight: 600;
-}
-
-
-.p02-family p {
-  margin: 0;
-
-  font-size: 10px;
-
-  line-height: 1.35;
-
-  white-space: nowrap;
-}
-
-
-/* PAGE 02 TEXT ENTRY */
-
-.page02-layout
-.p02-invite,
-
-.page02-layout
-.p02-personalized-guest,
-
-.page02-layout
-.p02-divider,
-
-.page02-layout
-.p02-to,
-
-.page02-layout
-.p02-wedding-title,
-
-.page02-layout
-.p02-couple-names,
-
-.page02-layout
-.p02-date-divider,
-
-.page02-layout
-.p02-ceremony-info,
-
-.page02-layout
-.p02-family-info {
-  opacity: 0;
-
-  translate:
-    0 -10px;
-
-  transition:
-    opacity 620ms ease,
-    translate 920ms cubic-bezier(.2, .78, .28, 1);
-}
-
-
-.page02-layout.is-entering
-.p02-invite,
-
-.page02-layout.is-entering
-.p02-personalized-guest,
-
-.page02-layout.is-entering
-.p02-divider,
-
-.page02-layout.is-entering
-.p02-to,
-
-.page02-layout.is-entering
-.p02-wedding-title,
-
-.page02-layout.is-entering
-.p02-couple-names,
-
-.page02-layout.is-entering
-.p02-date-divider,
-
-.page02-layout.is-entering
-.p02-ceremony-info,
-
-.page02-layout.is-entering
-.p02-family-info {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-.page02-layout.is-entering
-.p02-invite {
-  transition-delay: 100ms;
-}
-
-
-.page02-layout.is-entering
-.p02-personalized-guest {
-  transition-delay: 150ms;
-}
-
-
-.page02-layout.is-entering
-.p02-divider {
-  transition-delay: 200ms;
-}
-
-
-.page02-layout.is-entering
-.p02-to {
-  transition-delay: 280ms;
-}
-
-
-.page02-layout.is-entering
-.p02-wedding-title {
-  transition-delay: 360ms;
-}
-
-
-.page02-layout.is-entering
-.p02-couple-names {
-  transition-delay: 440ms;
-}
-
-
-.page02-layout.is-entering
-.p02-date-divider {
-  transition-delay: 520ms;
-}
-
-
-.page02-layout.is-entering
-.p02-ceremony-info {
-  transition-delay: 600ms;
-}
-
-
-.page02-layout.is-entering
-.p02-family-info {
-  transition-delay: 680ms;
-}
-
-
-/* =========================================================
-   PAGE 02 CONFETTI
-========================================================= */
-
-.p02-confetti-cluster {
-  position: absolute;
-
-  z-index: 14;
-
-  inset: 0;
-
-  top: 65px;
-  left: -5px;
-
-  scale: .8;
-
-  transform-origin: center;
-
-  pointer-events: none;
-}
-
-
-.p02-confetti-piece {
-  position: absolute;
-
-  display: block;
-
-  background-image:
-    var(--p02-confetti-sprite, none);
-
-  background-repeat: no-repeat;
-
-  background-size:
-    361.25px 780.93px;
-
-  opacity: 1;
-
-  filter:
-    saturate(1.18)
-    brightness(1.02)
-    contrast(1.03);
-
-  animation:
-    tiny-element-sway
-    2100ms
-    ease-in-out
-    infinite;
-}
-
-
-@keyframes tiny-element-sway {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(-5deg);
-  }
-
-  50% {
-    transform:
-      translateY(-4px)
-      rotate(5deg);
-  }
-}
-
-
-.p02-confetti-piece--01 {
-  left: 9px;
-  top: 451px;
-  width: 11.01px;
-  height: 11.43px;
-  background-position: -116.46px -37.27px;
-}
-
-.p02-confetti-piece--02 {
-  left: 338px;
-  top: 485px;
-  width: 11.01px;
-  height: 10.59px;
-  background-position: -68.61px -65.64px;
-}
-
-.p02-confetti-piece--03 {
-  left: 244px;
-  top: 433px;
-  width: 12.28px;
-  height: 11.43px;
-  background-position: -154.58px -94.86px;
-}
-
-.p02-confetti-piece--04 {
-  left: 164px;
-  top: 430px;
-  width: 11.01px;
-  height: 10.59px;
-  background-position: -74.54px -112.65px;
-}
-
-.p02-confetti-piece--05 {
-  left: 125px;
-  top: 438px;
-  width: 11.01px;
-  height: 8.47px;
-  background-position: -302.38px -114.77px;
-}
-
-.p02-confetti-piece--06 {
-  left: 215px;
-  top: 435px;
-  width: 11.43px;
-  height: 11.43px;
-  background-position: -196.08px -132.98px;
-}
-
-.p02-confetti-piece--07 {
-  left: 325px;
-  top: 455px;
-  width: 8.05px;
-  height: 8.05px;
-  background-position: -112.23px -146.53px;
-}
-
-.p02-confetti-piece--08 {
-  left: 43px;
-  top: 454px;
-  width: 10.59px;
-  height: 10.59px;
-  background-position: -32.19px -413.76px;
-}
-
-.p02-confetti-piece--09 {
-  left: 183px;
-  top: 456px;
-  width: 11.01px;
-  height: 10.59px;
-  background-position: -33.46px -267.65px;
-}
-
-.p02-confetti-piece--10 {
-  left: 300px;
-  top: 438px;
-  width: 11.01px;
-  height: 10.59px;
-  background-position: -318.05px -327.79px;
-}
-
-.p02-confetti-piece--11 {
-  left: 140px;
-  top: 460px;
-  width: 10.59px;
-  height: 10.59px;
-  background-position: -32.19px -413.76px;
-}
-
-.p02-confetti-piece--12 {
-  left: 207px;
-  top: 477px;
-  width: 10.59px;
-  height: 10.16px;
-  background-position: -312.12px -486.18px;
-}
-
-.p02-confetti-piece--13 {
-  left: 73px;
-  top: 475px;
-  width: 11.01px;
-  height: 10.59px;
-  background-position: -37.27px -578.08px;
-}
-
-.p02-confetti-piece--14 {
-  left: 85px;
-  top: 444px;
-  width: 11.86px;
-  height: 9.74px;
-  background-position: -57.60px -739.01px;
-}
-
-.p02-confetti-piece--15 {
-  left: 236px;
-  top: 465px;
-  width: 11.01px;
-  height: 10.59px;
-  background-position: -68.61px -65.64px;
-}
-
-.p02-confetti-piece--16 {
-  left: 377px;
-  top: 478px;
-  width: 11.01px;
-  height: 10.59px;
-  background-position: -37.27px -578.08px;
-}
-
-.p02-confetti-piece--17 {
-  left: 116px;
-  top: 474px;
-  width: 10.59px;
-  height: 10.59px;
-  background-position: -32.19px -413.76px;
-}
-
-.p02-confetti-piece--18 {
-  left: 156px;
-  top: 486px;
-  width: 11.01px;
-  height: 10.59px;
-  background-position: -318.05px -327.79px;
-}
-
-.p02-confetti-piece--19 {
-  left: 271px;
-  top: 446px;
-  width: 11.43px;
-  height: 11.43px;
-  background-position: -196.08px -132.98px;
-}
-
-.p02-confetti-piece--20 {
-  left: 354px;
-  top: 448px;
-  width: 11.01px;
-  height: 8.47px;
-  background-position: -302.38px -114.77px;
-}
-
-
-/* =========================================================
-   PAGE 02 PROCESSION
-========================================================= */
-
-.p02-procession {
-  position: absolute;
-
-  z-index: 30;
-
-  left: 11px;
-  bottom: 30px;
-
-  width: 390px;
-  height: 196px;
-
-  pointer-events: none;
-}
-
-
-.p02-procession-item {
-  position: absolute;
-
-  width: auto;
-
-  max-width: none;
-
-  object-fit: contain;
-
-  transform-origin:
-    50% 90%;
-
-  pointer-events: none;
-
-  animation:
-    procession-sway
-    var(--procession-speed)
-    ease-in-out
-    infinite;
-}
-
-
-@keyframes procession-sway {
-
-  0%,
-  100% {
-    transform:
-      rotate(
-        calc(var(--procession-angle) * -1)
-      );
-  }
-
-  50% {
-    transform:
-      rotate(
-        var(--procession-angle)
-      );
-  }
-}
-
-
-.p02-flag-bearer {
-  --procession-angle: 2deg;
-  --procession-speed: 3100ms;
-
-  z-index: 31;
-
-  left: -9px;
-  bottom: 0;
-
-  height: 150px;
-}
-
-
-.p02-couple {
-  --procession-angle: 2.5deg;
-  --procession-speed: 2900ms;
-
-  z-index: 34;
-
-  left: 74px;
-  bottom: 0;
-
-  height: 125px;
-}
-
-
-.p02-lion-dance {
-  --procession-angle: 2.3deg;
-  --procession-speed: 3000ms;
-
-  z-index: 33;
-
-  left: 120px;
-  bottom: 3px;
-
-  height: 150px;
-}
-
-
-.p02-drummer {
-  --procession-angle: 4deg;
-  --procession-speed: 2550ms;
-
-  z-index: 32;
-
-  right: 35px;
-  bottom: 1px;
-
-  height: 110px;
-}
-
-
-/* =========================================================
-   PAGE 03
-========================================================= */
-
-.page03-layout {
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-}
-
-
-.p03-title-divider,
-.p03-timeline,
-.p03-illustration {
-  position: absolute;
-
-  display: block;
-
-  height: auto;
-
-  max-width: none;
-
-  pointer-events: none;
-}
-
-
-.p03-cloud--01 {
-  left: 38px;
-  top: 68px;
-
-  width: 72px;
-}
-
-
-.p03-cloud--02 {
-  left: 16px;
-  top: 315px;
-
-  width: 53px;
-}
-
-
-.p03-cloud--03 {
-  right: 2px;
-  top: 144px;
-
-  width: 60px;
-}
-
-
-.p03-cloud--04 {
-  right: 40px;
-  top: 545px;
-
-  width: 59px;
-}
-
-
-.page03-layout
-.p03-cloud--01,
-
-.page03-layout
-.p03-cloud--02 {
-  opacity: 0;
-
-  translate:
-    -75px 0;
-
-  transition:
-    translate
-    var(--entry-duration)
-    var(--entry-ease),
-
-    opacity
-    700ms
-    ease;
-}
-
-
-.page03-layout
-.p03-cloud--03,
-
-.page03-layout
-.p03-cloud--04 {
-  opacity: 0;
-
-  translate:
-    75px 0;
-
-  transition:
-    translate
-    var(--entry-duration)
-    var(--entry-ease),
-
-    opacity
-    700ms
-    ease;
-}
-
-
-.page03-layout.is-active
-.p03-cloud {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-.p03-title {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 38px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  color: #405d48;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 26px;
-
-  font-weight: 400;
-
-  line-height: 1;
-
-  letter-spacing: .03em;
-
-  white-space: nowrap;
-
-  opacity: 0;
-
-  translate:
-    0 -16px;
-
-  transition:
-    translate
-    950ms
-    var(--entry-ease),
-
-    opacity
-    650ms
-    ease;
-}
-
-
-.page03-layout.is-active
-.p03-title {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-.p03-title-divider {
-  z-index: 20;
-
-  left: 50%;
-  top: 81px;
-
-  width: 112px;
-
-  transform:
-    translateX(-50%);
-
-  opacity: 0;
-
-  scale:
-    .72 1;
-
-  transition:
-    opacity
-    650ms
-    ease
-    150ms,
-
-    scale
-    950ms
-    ease
-    150ms;
-}
-
-
-.page03-layout.is-active
-.p03-title-divider {
-  opacity: 1;
-
-  scale:
-    1 1;
-}
-
-
-.p03-timeline {
-  z-index: 14;
-
-  left: 118px;
-  top: 95px;
-
-  width: 168px;
-
-  object-fit: contain;
-
-  clip-path:
-    inset(0 0 100% 0);
-
-  opacity: .15;
-
-  transition:
-    clip-path
-    1700ms
-    cubic-bezier(.22, .8, .2, 1)
-    180ms,
-
-    opacity
-    600ms
-    ease
-    180ms;
-}
-
-
-.page03-layout.is-active
-.p03-timeline {
-  clip-path:
-    inset(0 0 0 0);
-
-  opacity: 1;
-}
-
-
-.p03-illustration {
-  z-index: 12;
-
-  object-fit: contain;
-
-  transform-origin:
-    50% 86%;
-
-  animation:
-    p03-element-sway
-    var(--p03-speed)
-    ease-in-out
-    infinite;
-}
-
-
-@keyframes p03-element-sway {
-
-  0%,
-  100% {
-    transform:
-      rotate(
-        calc(var(--p03-angle) * -1)
-      )
-      translateY(0);
-  }
-
-  50% {
-    transform:
-      rotate(
-        var(--p03-angle)
-      )
-      translateY(-3px);
-  }
-}
-
-
-.p03-kieu {
-  --p03-angle: 3deg;
-  --p03-speed: 2900ms;
-
-  left: 210px;
-  top: 145px;
-
-  width: 140px;
-}
-
-
-.p03-mam-co {
-  --p03-angle: 3.5deg;
-  --p03-speed: 2700ms;
-
-  left: 38px;
-  top: 285px;
-
-  width: 135px;
-}
-
-
-.p03-cheers {
-  --p03-angle: 5deg;
-  --p03-speed: 2350ms;
-
-  left: 190px;
-  top: 423px;
-
-  width: 115px;
-}
-
-
-.page03-layout
-.p03-event--02,
-
-.page03-layout
-.p03-mam-co,
-
-.page03-layout
-.p03-event--04 {
-  opacity: 0;
-
-  translate:
-    -72px 0;
-
-  transition:
-    translate
-    1150ms
-    var(--entry-ease),
-
-    opacity
-    700ms
-    ease;
-}
-
-
-.page03-layout
-.p03-kieu,
-
-.page03-layout
-.p03-event--03,
-
-.page03-layout
-.p03-cheers {
-  opacity: 0;
-
-  translate:
-    72px 0;
-
-  transition:
-    translate
-    1150ms
-    var(--entry-ease),
-
-    opacity
-    700ms
-    ease;
-}
-
-
-.page03-layout
-.p03-event--02,
-
-.page03-layout
-.p03-kieu {
-  transition-delay: 300ms;
-}
-
-
-.page03-layout
-.p03-mam-co,
-
-.page03-layout
-.p03-event--03 {
-  transition-delay: 600ms;
-}
-
-
-.page03-layout
-.p03-event--04,
-
-.page03-layout
-.p03-cheers {
-  transition-delay: 900ms;
-}
-
-
-.page03-layout.is-active
-.p03-event,
-
-.page03-layout.is-active
-.p03-illustration {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-.p03-event {
-  position: absolute;
-
-  z-index: 22;
-
-  width: 165px;
-
-  color: #304c3c;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-}
-
-
-.p03-event h3,
-.p03-event p {
-  margin: 0;
-}
-
-
-.p03-event-title {
-  margin-bottom:
-    8px !important;
-
-  color: #ad4629;
-
-  font-size: 17px;
-
-  font-weight: 400;
-
-  line-height: 1;
-
-  white-space: nowrap;
-}
-
-
-.p03-event-date {
-  margin-bottom:
-    5px !important;
-
-  color: #ad4629;
-
-  font-size: 12px;
-
-  line-height: 1.1;
-
-  white-space: nowrap;
-}
-
-
-.p03-event-time {
-  position: relative;
-
-  left: 60px;
-  top: -17px;
-
-  margin-bottom:
-    10px !important;
-
-  color: #304c3c;
-
-  font-size: 11px;
-
-  line-height: 1.1;
-
-  white-space: nowrap;
-}
-
-
-.p03-event--02 {
-  left: 100px;
-  top: 177px;
-
-  width: 170px;
-}
-
-
-.p03-event--02
-.p03-location {
-  left: -25px;
-  top: -18px;
-
-  width: 185px;
-
-  font-size: 8.7px;
-}
-
-
-.p03-event--02
-.p03-location strong {
-  font-size: 9.5px;
-}
-
-
-.p03-event--02
-.p03-location
-> div
-> span {
-  left: -13px;
-}
-
-
-.p03-event--03 {
-  left: 215px;
-  top: 307px;
-}
-
-
-.p03-event--04 {
-  left: 50px;
-  top: 445px;
-}
-
-
-.p03-location {
-  position: relative;
-
-  top: -20px;
-
-  display: flex;
-
-  align-items: flex-start;
-
-  gap: 8px;
-
-  margin-top: 7px;
-
-  color: #304c3c;
-
-  font-size: 9.5px;
-
-  line-height: 1.42;
-}
-
-
-.p03-location > div {
-  display: flex;
-
-  flex-direction: column;
-
-  min-width: 0;
-}
-
-
-.p03-location strong {
-  display: block;
-
-  margin-bottom: 2px;
-
-  font-size: 10px;
-
-  font-weight: 400;
-
-  white-space: nowrap;
-}
-
-
-.p03-location
-> div
-> span {
-  position: relative;
-
-  left: -15px;
-
-  display: block;
-
-  white-space: nowrap;
-}
-
-
-.p03-event--04
-.p03-location
-> div
-> span {
-  left: 0;
-}
-
-
-.p03-location-pin {
-  position: relative;
-
-  flex:
-    0 0 auto;
-
-  width: 8px;
-  height: 8px;
-
-  margin-top: 2px;
-
-  border-radius:
-    50% 50% 50% 0;
-
-  background: #b64b2d;
-
-  transform:
-    rotate(-45deg);
-}
-
-
-.p03-location-pin::after {
-  content: "";
-
-  position: absolute;
-
-  left: 2.5px;
-  top: 2.5px;
-
-  width: 3px;
-  height: 3px;
-
-  border-radius: 50%;
-
-  background: #f3dfb8;
-}
-
-
-.p03-dress-code {
-  position: absolute;
-
-  z-index: 21;
-
-  left: 50%;
-  bottom: 34px;
-
-  width: 285px;
-  height: 68px;
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  clip-path:
-    inset(0 0 100% 0);
-
-  opacity: 0;
-
-  transition:
-    clip-path
-    1050ms
-    cubic-bezier(.22, .8, .2, 1)
-    1450ms,
-
-    opacity
-    600ms
-    ease
-    1450ms;
-}
-
-
-.page03-layout.is-active
-.p03-dress-code {
-  clip-path:
-    inset(0 0 0 0);
-
-  opacity: 1;
-}
-
-
-.p03-dress-title {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 8px;
-
-  margin:
-    0 0 7px;
-
-  color: #405d48;
-
-  font-size: 12px;
-
-  font-weight: 600;
-}
-
-
-.p03-dress-title span {
-  color: #c38d31;
-
-  font-size: 9px;
-}
-
-
-.p03-color-list {
-  display: flex;
-
-  align-items: flex-start;
-
-  justify-content: center;
-
-  gap: 14px;
-}
-
-
-.p03-color-item {
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  gap: 3px;
-
-  min-width: 37px;
-
-  color: #3e4539;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 8.5px;
-
-  line-height: 1;
-}
-
-
-.p03-color {
-  display: block;
-
-  width: 23px;
-  height: 23px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, .92);
-
-  border-radius: 50%;
-
-  box-shadow:
-    0 0 0 1px
-    rgba(93, 76, 57, .08);
-}
-
-
-.p03-color--brown {
-  background: #85624e;
-}
-
-.p03-color--pink {
-  background: #ce9c95;
-}
-
-.p03-color--beige {
-  background: #dbccb5;
-}
-
-.p03-color--sage {
-  background: #c1d1af;
-}
-
-
-/* =========================================================
-   PAGE 06
-========================================================= */
-
-.page06-layout {
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-}
-
-
-.page06-layout h1,
-.page06-layout h2,
-.page06-layout h3,
-.page06-layout p,
-.page06-layout span,
-.page06-layout button,
-.page06-layout output,
-.page06-layout div {
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-}
-
-
-.p06-confetti {
-  position: absolute;
-
-  z-index: 4;
-
-  left: 20px;
-  top: 25px;
-
-  width: 350px;
-  height: 600px;
-
-  object-fit: fill;
-
-  opacity: 0;
-
-  pointer-events: none;
-
-  scale: .96;
-
-  transition:
-    opacity 700ms ease,
-    scale 1000ms ease;
-}
-
-
-.page06-layout.is-confetti-visible
-.p06-confetti {
-  opacity: .86;
-
-  scale: 1;
-}
-
-
-.p06-entry-fireworks {
-  position: absolute;
-
-  z-index: 35;
-
-  left: 50%;
-  top: 48%;
-
-  width: 1px;
-  height: 1px;
-
-  pointer-events: none;
-}
-
-
-.p06-cloud--01 {
-  right: 35px;
-  top: 37px;
-
-  width: 92px;
-}
-
-
-.p06-cloud--02 {
-  left: 18px;
-  top: 127px;
-
-  width: 67px;
-}
-
-
-.p06-cloud--03 {
-  right: -10px;
-  top: 332px;
-
-  width: 74px;
-}
-
-
-.p06-cloud--04 {
-  left: -5px;
-  top: 409px;
-
-  width: 70px;
-}
-
-
-.page06-layout
-.p06-cloud--02,
-
-.page06-layout
-.p06-cloud--04 {
-  opacity: 0;
-
-  translate:
-    -75px 0;
-
-  transition:
-    translate
-    var(--entry-duration)
-    var(--entry-ease),
-
-    opacity
-    700ms
-    ease;
-}
-
-
-.page06-layout
-.p06-cloud--01,
-
-.page06-layout
-.p06-cloud--03 {
-  opacity: 0;
-
-  translate:
-    75px 0;
-
-  transition:
-    translate
-    var(--entry-duration)
-    var(--entry-ease),
-
-    opacity
-    700ms
-    ease;
-}
-
-
-.page06-layout.is-active
-.p06-cloud {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-.p06-card-wrap {
-  position: absolute;
-
-  z-index: 16;
-
-  left: 50%;
-  top: 50%;
-
-  width: 246px;
-
-  transform:
-    translate(-50%, -50%);
-
-  opacity: 0;
-
-  translate:
-    0 20px;
-
-  transition:
-    translate
-    1100ms
-    var(--entry-ease)
-    150ms,
-
-    opacity
-    700ms
-    ease
-    150ms;
-}
-
-
-.page06-layout.is-active
-.p06-card-wrap {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-.p06-lucky-card {
-  position: relative;
-
-  z-index: 1;
-
-  display: block;
-
-  width: 100%;
-  height: auto;
-
-  clip-path:
-    inset(0 round 14px);
-
-  pointer-events: none;
-}
-
-
-.p06-title {
-  position: absolute;
-
-  z-index: 5;
-
-  left: 50%;
-  top: 86px;
-
-  width: 230px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  color: #315747;
-
-  text-align: center;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 18px;
-
-  font-weight: 400;
-
-  white-space: nowrap;
-}
-
-
-.p06-number-slot {
-  position: absolute;
-
-  z-index: 7;
-
-  left: 50%;
-  top: 150px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  width: 205px;
-  height: 125px;
-
-  transform:
-    translateX(-50%);
-
-  color: #a52f15;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 94px;
-
-  font-variant-numeric:
-    tabular-nums;
-}
-
-
-.p06-card-wrap.is-idle-shuffling
-.p06-number-slot {
-  animation:
-    lucky-idle-jitter
-    430ms
-    ease-in-out
-    infinite;
-}
-
-
-@keyframes lucky-idle-jitter {
-
-  0%,
-  100% {
-    transform:
-      translateX(-50%)
-      translateY(0)
-      rotate(-1deg);
-  }
-
-  50% {
-    transform:
-      translateX(-50%)
-      translateY(-2px)
-      rotate(1deg);
-  }
-}
-
-
-.p06-card-wrap.is-rolling
-.p06-number-slot {
-  animation:
-    lucky-rolling-chaos
-    140ms
-    linear
-    infinite;
-}
-
-
-@keyframes lucky-rolling-chaos {
-
-  0% {
-    transform:
-      translateX(-50%)
-      translate(-3px, -2px);
-  }
-
-  25% {
-    transform:
-      translateX(-50%)
-      translate(3px, 1px);
-  }
-
-  50% {
-    transform:
-      translateX(-50%)
-      translate(-2px, 3px);
-  }
-
-  75% {
-    transform:
-      translateX(-50%)
-      translate(4px, -1px);
-  }
-
-  100% {
-    transform:
-      translateX(-50%);
-  }
-}
-
-
-.p06-card-wrap.is-revealed
-.p06-number-slot {
-  animation:
-    lucky-number-reveal
-    1100ms
-    cubic-bezier(.16, .85, .25, 1);
-}
-
-
-@keyframes lucky-number-reveal {
-
-  0% {
-    transform:
-      translateX(-50%)
-      scale(.72);
-
-    opacity: .3;
-  }
-
-  40% {
-    transform:
-      translateX(-50%)
-      scale(1.20);
-
-    opacity: 1;
-  }
-
-  65% {
-    transform:
-      translateX(-50%)
-      scale(.96);
-  }
-
-  100% {
-    transform:
-      translateX(-50%)
-      scale(1);
-  }
-}
-
-
-.p06-number-hint {
-  position: absolute;
-
-  z-index: 8;
-
-  left: 50%;
-  top: 275px;
-
-  width: 210px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  color: #6b5a3d;
-
-  text-align: center;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 11px;
-
-  font-style: italic;
-
-  opacity: .82;
-}
-
-
-.p06-lucky-trigger {
-  position: absolute;
-
-  z-index: 10;
-
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  border: 0;
-
-  background: transparent;
-
-  cursor: pointer;
-}
-
-
-.p06-fireworks {
-  position: absolute;
-
-  z-index: 30;
-
-  left: 50%;
-  top: 214px;
-
-  width: 1px;
-  height: 1px;
-
-  overflow: visible;
-
-  pointer-events: none;
-}
-
-
-.p06-firework-particle {
-  --x: 0px;
-  --y: 0px;
-  --size: 4px;
-  --delay: 0ms;
-  --rotation: 0deg;
-  --particle-color: #b93b1e;
-
-  position: absolute;
-
-  width: var(--size);
-  height: var(--size);
-
-  border-radius: 50%;
-
-  background:
-    var(--particle-color);
-
-  opacity: 0;
-
-  animation:
-    lucky-firework-burst
-    1150ms
-    cubic-bezier(.12, .72, .2, 1)
-    var(--delay)
-    forwards;
-}
-
-
-@keyframes lucky-firework-burst {
-
-  0% {
-    opacity: 1;
-
-    transform:
-      translate(-50%, -50%)
-      scale(.35);
-  }
-
-  100% {
-    opacity: 0;
-
-    transform:
-      translate(
-        calc(-50% + var(--x)),
-        calc(-50% + var(--y))
-      )
-      scale(.75)
-      rotate(
-        var(--rotation)
-      );
-  }
-}
-
-
-.p06-bottom-items {
-  position: absolute;
-
-  z-index: 24;
-
-  inset: 0;
-
-  transform:
-    translateY(-25px);
-
-  pointer-events: none;
-}
-
-
-.p06-lucky-item {
-  position: absolute;
-
-  height: auto;
-
-  transform-origin:
-    50% 90%;
-
-  pointer-events: none;
-
-  opacity: 0;
-
-  animation:
-    p06-item-sway
-    var(--p06-speed)
-    ease-in-out
-    infinite;
-
-  transition:
-    translate
-    1150ms
-    var(--entry-ease),
-
-    opacity
-    700ms
-    ease;
-}
-
-
-@keyframes p06-item-sway {
-
-  0%,
-  100% {
-    transform:
-      rotate(
-        var(--p06-start)
-      );
-  }
-
-  50% {
-    transform:
-      rotate(
-        var(--p06-end)
-      );
-  }
-}
-
-
-.p06-ingots {
-  --p06-start: 5deg;
-  --p06-end: -5deg;
-  --p06-speed: 2450ms;
-
-  z-index: 25;
-
-  left: 35px;
-  bottom: 47px;
-
-  width: 75px;
-
-  translate:
-    -72px 0;
-}
-
-
-.p06-knot {
-  --p06-start: 7deg;
-  --p06-end: -7deg;
-  --p06-speed: 2250ms;
-
-  z-index: 28;
-
-  left: 97px;
-  bottom: 39px;
-
-  width: 77px;
-
-  translate:
-    -72px 0;
-}
-
-
-.p06-bag {
-  --p06-start: -4deg;
-  --p06-end: 4deg;
-  --p06-speed: 2800ms;
-
-  z-index: 26;
-
-  right: 33px;
-  bottom: 46px;
-
-  width: 105px;
-
-  translate:
-    72px 0;
-}
-
-
-.p06-coins {
-  --p06-start: -8deg;
-  --p06-end: 8deg;
-  --p06-speed: 2150ms;
-
-  z-index: 29;
-
-  right: 109px;
-  bottom: 38px;
-
-  width: 53px;
-
-  translate:
-    72px 0;
-}
-
-
-.page06-layout.is-active
-.p06-lucky-item {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-/* =========================================================
-   PAGE 07
-========================================================= */
-
-.page07-layout {
-  color:
-    var(--p07-green);
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-}
-
-
-.p07-top-left-decoration,
-.p07-butterfly,
-.p07-divider-ornament,
-.p07-field-lotus {
-  position: absolute;
-
-  height: auto;
-
-  pointer-events: none;
-}
-
-
-.p07-top-left-decoration {
-  z-index: 8;
-
-  left: 12px;
-  top: 14px;
-
-  width: 102px;
-
-  transform-origin:
-    14% 8%;
-
-  animation:
-    p07-branch-sway
-    2800ms
-    ease-in-out
-    infinite;
-}
-
-
-@keyframes p07-branch-sway {
-
-  0%,
-  100% {
-    transform:
-      rotate(-2.5deg);
-  }
-
-  50% {
-    transform:
-      rotate(2.5deg);
-  }
-}
-
-
-.p07-butterfly {
-  z-index: 8;
-
-  right: 11px;
-  top: 21px;
-
-  width: 88px;
-
-  animation:
-    p07-butterfly-float
-    2200ms
-    ease-in-out
-    infinite;
-}
-
-
-@keyframes p07-butterfly-float {
-
-  0%,
-  100% {
-    translate:
-      0 0;
-
-    rotate:
-      -2deg;
-  }
-
-  50% {
-    translate:
-      -5px -9px;
-
-    rotate:
-      4deg;
-  }
-}
-
-
-.p07-rsvp-title {
-  position: absolute;
-
-  z-index: 10;
-
-  left: 50%;
-  top: 59px;
-
-  width: 260px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  color:
-    var(--p07-red);
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 30px;
-
-  font-weight: 400;
-
-  line-height: 1.3;
-
-  text-align: center;
-}
-
-
-.p07-divider-ornament--top {
-  z-index: 9;
-
-  left: 50%;
-  top: 130px;
-
-  width: 143px;
-
-  transform:
-    translateX(-50%);
-}
-
-
-.p07-rsvp-subtitle {
-  position: absolute;
-
-  z-index: 10;
-
-  left: 50%;
-  top: 175px;
-
-  width: 290px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  font-size: 11px;
-
-  font-style: italic;
-
-  line-height: 1.22;
-}
-
-
-.p07-rsvp-form {
-  position: absolute;
-
-  z-index: 15;
-
-  left: 50%;
-  top: 217px;
-
-  width: 316px;
-  height: 374px;
-
-  transform:
-    translateX(-50%);
-}
-
-
-.p07-form-group {
-  position: absolute;
-
-  left: 0;
-
-  width: 100%;
-
-  margin: 0;
-  padding: 0;
-
-  border: 0;
-}
-
-
-.p07-form-group--name {
-  top: 0;
-}
-
-
-.p07-form-group--attendance {
-  top: 62px;
-}
-
-
-.p07-form-group--count {
-  top: 127px;
-}
-
-
-.p07-form-group--message {
-  top: 190px;
-}
-
-
-.p07-form-group--video {
-  top: 270px;
-}
-
-
-.p07-form-label {
-  display: block;
-
-  margin:
-    0 0 5px;
-
-  color:
-    var(--p07-green);
-
-  font-size: 12px;
-}
-
-
-.p07-field,
-.p07-counter,
-.p07-video-field {
-  position: relative;
-
-  width: 100%;
-
-  border:
-    1px solid
-    rgba(154, 119, 72, .72);
-
-  border-radius: 3px;
-
-  background:
-    rgba(255, 250, 235, .38);
-
-  overflow: hidden;
-}
-
-
-/* NAME */
-
-.p07-field--name {
-  height: 35px;
-}
-
-
-.p07-text-input {
-  width: 100%;
-  height: 100%;
-
-  padding:
-    0 48px
-    0 14px;
-
-  border: 0;
-  outline: none;
-
-  background: transparent;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 11.5px;
-
-  font-style: italic;
-}
-
-
-.p07-text-input::placeholder,
-.p07-message-input::placeholder {
-  color:
-    rgba(89, 72, 62, .45);
-
-  opacity: 1;
-}
-
-
-.p07-field-lotus {
-  z-index: 4;
-
-  right: 3px;
-  bottom: -7px;
-
-  width: 39px;
-}
-
-
-/* ATTENDANCE */
-
-.p07-attendance-options {
-  display: grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap: 12px;
-}
-
-
-.p07-attendance-option {
-  position: relative;
-
-  display: flex;
-
-  align-items: center;
-
-  height: 39px;
-
-  padding:
-    0 17px;
-
-  border:
-    1px solid
-    rgba(154, 119, 72, .64);
-
-  border-radius: 3px;
-
-  background:
-    rgba(255, 250, 235, .34);
-
-  cursor: pointer;
-}
-
-
-.p07-attendance-option input {
-  position: absolute;
-
-  opacity: 0;
-}
-
-
-.p07-radio-mark {
-  position: relative;
-
-  width: 20px;
-  height: 20px;
-
-  margin-right: 14px;
-
-  border:
-    1.4px solid
-    var(--p07-green);
-
-  border-radius: 50%;
-}
-
-
-.p07-radio-mark::after {
-  content: "";
-
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 12px;
-  height: 12px;
-
-  border-radius: 50%;
-
-  background:
-    var(--p07-red);
-
-  transform:
-    translate(-50%, -50%)
-    scale(0);
-
-  transition:
-    transform 220ms ease;
-}
-
-
-.p07-attendance-option
-input:checked
-+
-.p07-radio-mark::after {
-  transform:
-    translate(-50%, -50%)
-    scale(1);
-}
-
-
-.p07-attendance-text {
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 16px;
-}
-
-
-/* COUNTER */
-
-.p07-counter {
-  display: grid;
-
-  grid-template-columns:
-    1fr 1fr 1fr;
-
-  align-items: center;
-
-  height: 38px;
-}
-
-
-.p07-counter-button {
-  height: 100%;
-
-  border: 0;
-
-  background: transparent;
-
-  color:
-    var(--p07-green);
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 22px;
-
-  cursor: pointer;
-}
-
-
-.p07-counter-value {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  color:
-    var(--p07-green);
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 18px;
-}
-
-
-/* MESSAGE */
-
-.p07-field--message {
-  height: 57px;
-}
-
-
-.p07-message-input {
-  width: 100%;
-  height: 100%;
-
-  padding:
-    10px 48px
-    8px 14px;
-
-  border: 0;
-  outline: none;
-
-  resize: none;
-
-  background: transparent;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 11px;
-
-  font-style: italic;
-}
-
-
-.p07-field-lotus--message {
-  right: 1px;
-  bottom: -8px;
-
-  width: 42px;
-}
-
-
-/* VIDEO */
-
-.p07-video-field {
-  display: flex;
-
-  align-items: center;
-
-  height: 38px;
-
-  cursor: pointer;
-}
-
-
-.p07-video-text {
-  width: 100%;
-
-  padding:
-    0 48px
-    0 14px;
-
-  overflow: hidden;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 10.5px;
-
-  font-style: italic;
-
-  line-height: 38px;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-}
-
-
-.p07-video-input {
-  position: absolute;
-
-  width: 1px;
-  height: 1px;
-
-  opacity: 0;
-}
-
-
-.p07-field-lotus--video {
-  right: 2px;
-  bottom: -7px;
-
-  width: 36px;
-}
-
-
-/* SUBMIT */
-
-.p07-submit {
-  position: absolute;
-
-  left: 50%;
-  top: 322px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 12px;
-
-  width: 236px;
-  height: 40px;
-
-  transform:
-    translateX(-50%);
-
-  border:
-    1px solid
-    #8f2f1c;
-
-  border-radius: 18px;
-
-  background:
-    linear-gradient(
-      180deg,
-      #b83d27,
-      #9f2f20
-    );
-
-  color: #fff9e9;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 15px;
-
-  cursor: pointer;
-
-  transition:
-    opacity 250ms ease,
-    filter 250ms ease;
-}
-
-
-.p07-submit:disabled {
-  opacity: .72;
-
-  cursor: wait;
-
-  filter:
-    saturate(.8);
-}
-
-
-.p07-submit-icon {
-  width: 18px;
-  height: 18px;
-
-  fill: none;
-
-  stroke: #fff9e9;
-
-  stroke-width: 1.8;
-}
-
-
-.p07-submit-status {
-  position: absolute;
-
-  left: 50%;
-  top: 365px;
-
-  width: 290px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 9px;
-
-  font-style: italic;
-
-  opacity: 0;
-
-  transition:
-    opacity 400ms ease;
-}
-
-
-.p07-submit-status.is-visible {
-  opacity: 1;
-}
-
-
-/* PAGE 07 ENTRY */
-
-.page07-layout
-.p07-top-left-decoration,
-
-.page07-layout
-.p07-butterfly,
-
-.page07-layout
-.p07-rsvp-title,
-
-.page07-layout
-.p07-divider-ornament--top,
-
-.page07-layout
-.p07-rsvp-subtitle,
-
-.page07-layout
-.p07-rsvp-form {
-  opacity: 0;
-
-  transition:
-    opacity 700ms ease,
-    translate 1100ms var(--entry-ease);
-}
-
-
-.page07-layout
-.p07-top-left-decoration {
-  translate:
-    -45px 0;
-}
-
-
-.page07-layout
-.p07-butterfly {
-  translate:
-    45px 0;
-}
-
-
-.page07-layout
-.p07-rsvp-title,
-
-.page07-layout
-.p07-divider-ornament--top,
-
-.page07-layout
-.p07-rsvp-subtitle,
-
-.page07-layout
-.p07-rsvp-form {
-  translate:
-    0 -16px;
-}
-
-
-.page07-layout.is-active
-.p07-top-left-decoration,
-
-.page07-layout.is-active
-.p07-butterfly,
-
-.page07-layout.is-active
-.p07-rsvp-title,
-
-.page07-layout.is-active
-.p07-divider-ornament--top,
-
-.page07-layout.is-active
-.p07-rsvp-subtitle,
-
-.page07-layout.is-active
-.p07-rsvp-form {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-/* =========================================================
-   PAGE 08
-========================================================= */
-
-.page08-layout {
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  color: #345447;
-}
-
-
-.p08-content {
-  position: absolute;
-
-  z-index: 15;
-
-  left: 50%;
-  top: 25px;
-
-  width: 356px;
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  pointer-events: none;
-
-  opacity: 0;
-
-  translate:
-    0 -18px;
-
-  transition:
-    opacity 700ms ease,
-    translate 1100ms var(--entry-ease);
-}
-
-
-.page08-layout.is-active
-.p08-content {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-.p08-thanks-divider {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  width: 132px;
-
-  margin-left: auto;
-  margin-right: auto;
-
-  color: #a83a22;
-}
-
-
-.p08-thanks-divider span {
-  display: block;
-
-  width: 46px;
-  height: 1px;
-
-  background:
-    rgba(168, 58, 34, .75);
-}
-
-
-.p08-thanks-divider b {
-  margin:
-    0 7px;
-
-  color: #a83a22;
-
-  font-size: 13px;
-
-  font-weight: 400;
-}
-
-
-.p08-thanks-divider--title-bottom {
-  margin-top: 2px;
-}
-
-
-.p08-thanks-divider--middle {
-  margin-top: 6px;
-  margin-bottom: 6px;
-}
-
-
-.p08-title {
-  margin:
-    4px 0 0;
-
-  color: #a8301c;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 39px;
-
-  font-style: normal;
-
-  font-weight: 400;
-
-  line-height: 1;
-
-  letter-spacing: -.4px;
-}
-
-
-.p08-english-title {
-  margin:
-    7px 0 0;
-
-  color: #405948;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 10.5px;
-
-  letter-spacing: .55px;
-
-  white-space: nowrap;
-}
-
-
-.p08-vietnamese-copy {
-  width: 350px;
-
-  margin:
-    10px auto 0;
-
-  color: #405948;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 8.7px;
-
-  line-height: 1.38;
-
-  letter-spacing: 0;
-
-  word-spacing: 0;
-}
-
-
-.p08-vietnamese-copy p {
-  margin:
-    0 0 8px;
-}
-
-
-.p08-vietnamese-copy p:last-child {
-  margin-bottom: 0;
-}
-
-
-.p08-english-copy {
-  margin:
-    0 auto;
-
-  width: 340px;
-
-  color: #405948;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 8.8px;
-
-  line-height: 1.4;
-}
-
-
-.p08-with-love {
-  margin:
-    5px 0 0;
-
-  color: #405948;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 10px;
-
-  font-style: italic;
-}
-
-
-.p08-signature {
-  margin:
-    1px 0 0;
-
-  color: #a8301c;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 26px;
-
-  font-style: normal;
-
-  font-weight: 400;
-}
-
-
-/* CLOUDS */
-
-.p08-cloud--left {
-  width: 77px;
-
-  left: 36px;
-  top: 350px;
-
-  opacity: 0;
-
-  translate:
-    -70px 0;
-
-  transition:
-    translate
-    1150ms
-    var(--entry-ease),
-
-    opacity
-    700ms
-    ease;
-}
-
-
-.p08-cloud--right {
-  width: 68px;
-
-  right: 31px;
-  top: 300px;
-
-  opacity: 0;
-
-  translate:
-    70px 0;
-
-  transition:
-    translate
-    1150ms
-    var(--entry-ease),
-
-    opacity
-    700ms
-    ease;
-}
-
-
-.page08-layout.is-active
-.p08-cloud {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-/* ORIGINAL WATER */
-
-.p08-water-ground--base {
-  position: absolute;
-
-  z-index: 4;
-
-  width: 300px;
-
-  left: 190px;
-  bottom: 32px;
-
-  transform:
-    translateX(-50%);
-
-  opacity: 0;
-
-  translate:
-    0 25px;
-
-  transition:
-    translate
-    1200ms
-    var(--entry-ease)
-    180ms,
-
-    opacity
-    700ms
-    ease
-    180ms;
-}
-
-
-.page08-layout.is-active
-.p08-water-ground--base {
-  opacity: .47;
-
-  translate:
-    0 0;
-}
-
-
-/* MANSION */
-
-.p08-masion {
-  position: absolute;
-
-  z-index: 7;
-
-  width: 233px;
-
-  left: 240px;
-  bottom: 142px;
-
-  transform:
-    translateX(-50%);
-
-  opacity: 0;
-
-  translate:
-    65px 0;
-
-  transition:
-    translate
-    1250ms
-    var(--entry-ease)
-    180ms,
-
-    opacity
-    700ms
-    ease
-    180ms;
-}
-
-
-.page08-layout.is-active
-.p08-masion {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-/* FRONT WATER */
-
-.p08-water-ground--front {
-  position: absolute;
-
-  z-index: 8;
-
-  width: 112px;
-
-  left: 240px;
-  bottom: 124px;
-
-  transform:
-    translateX(-50%);
-
-  opacity: 0;
-
-  translate:
-    0 18px;
-
-  transition:
-    translate
-    1100ms
-    var(--entry-ease)
-    360ms,
-
-    opacity
-    700ms
-    ease
-    360ms;
-}
-
-
-.page08-layout.is-active
-.p08-water-ground--front {
-  opacity: .5;
-
-  translate:
-    0 0;
-}
-
-
-/* COUPLE */
-
-.p08-couple {
-  position: absolute;
-
-  z-index: 10;
-
-  width: 120px;
-
-  left: 63px;
-  bottom: 72px;
-
-  opacity: 0;
-
-  translate:
-    -65px 0;
-
-  transition:
-    translate
-    1150ms
-    var(--entry-ease)
-    200ms,
-
-    opacity
-    700ms
-    ease
-    200ms;
-}
-
-
-.page08-layout.is-active
-.p08-couple {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-/* LOTUS */
-
-.p08-lotus {
-  position: absolute;
-
-  z-index: 9;
-
-  height: auto;
-
-  transform-origin:
-    50% 90%;
-
-  opacity: 0;
-
-  animation:
-    p08-lotus-sway
-    var(--lotus-speed)
-    ease-in-out
-    infinite;
-
-  transition:
-    translate
-    1150ms
-    var(--entry-ease)
-    280ms,
-
-    opacity
-    700ms
-    ease
-    280ms;
-}
-
-
-@keyframes p08-lotus-sway {
-
-  0%,
-  100% {
-    transform:
-      rotate(
-        calc(var(--lotus-angle) * -1)
-      );
-  }
-
-  50% {
-    transform:
-      rotate(
-        var(--lotus-angle)
-      )
-      translateY(-3px);
-  }
-}
-
-
-.p08-lotus--left {
-  --lotus-angle: 4.5deg;
-  --lotus-speed: 2500ms;
-
-  width: 120px;
-
-  left: 1px;
-  bottom: 52px;
-
-  translate:
-    -65px 0;
-}
-
-
-.p08-lotus--right {
-  --lotus-angle: 4.2deg;
-  --lotus-speed: 2650ms;
-
-  width: 122px;
-
-  right: 4px;
-  bottom: 48px;
-
-  translate:
-    65px 0;
-}
-
-
-.page08-layout.is-active
-.p08-lotus {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-/* =========================================================
-   PERFORMANCE
-========================================================= */
-
-.invitation-page:not(.is-nearby)
-.p02-cloud,
-
-.invitation-page:not(.is-nearby)
-.p03-cloud,
-
-.invitation-page:not(.is-nearby)
-.p06-cloud,
-
-.invitation-page:not(.is-nearby)
-.p08-cloud,
-
-.invitation-page:not(.is-nearby)
-.p02-confetti-piece,
-
-.invitation-page:not(.is-nearby)
-.p02-procession-item,
-
-.invitation-page:not(.is-nearby)
-.p03-illustration,
-
-.invitation-page:not(.is-nearby)
-.p06-lucky-item,
-
-.invitation-page:not(.is-nearby)
-.p07-top-left-decoration,
-
-.invitation-page:not(.is-nearby)
-.p07-butterfly,
-
-.invitation-page:not(.is-nearby)
-.p08-lotus {
-  animation-play-state:
-    paused !important;
-}
-
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-@media (
-  prefers-reduced-motion:
-  reduce
-) {
-
-  *,
-  *::before,
-  *::after {
-    animation-duration:
-      .001ms !important;
-
-    animation-iteration-count:
-      1 !important;
-
-    transition-duration:
-      .001ms !important;
-  }
-}
+</html>
