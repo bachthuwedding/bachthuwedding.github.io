@@ -2,17 +2,83 @@
   "use strict";
 
 
+  /* =======================================================
+     CONFIG
+  ======================================================= */
+
   const DESIGN_WIDTH = 390;
   const DESIGN_HEIGHT = 680;
 
   const LUCKY_MIN = 1;
   const LUCKY_MAX = 99;
 
-  const LUCKY_TEST_MODE = true;
+  const LUCKY_TEST_MODE = false;
+
+  const MAX_VIDEO_BYTES =
+    20 * 1024 * 1024;
+
+
+  /*
+    GOOGLE APPS SCRIPT WEB APP
+  */
+
+  const WEDDING_API_URL =
+    "https://script.google.com/macros/s/AKfycbzZgGDz-UI1bGQI8M4FoYe1GzxUWCI9V1k_hK6N_9WftwU9qyH-Utm9csjz9NkdW6Axhg/exec";
 
 
   /* =======================================================
-     VIETNAMESE NFC NORMALIZATION
+     GUEST ID
+  ======================================================= */
+
+  const urlParams =
+    new URLSearchParams(
+      window.location.search
+    );
+
+
+  const currentGuestSlug =
+    normalizeGuestSlug(
+      urlParams.get("guest") || ""
+    );
+
+
+  let currentGuestData =
+    null;
+
+
+  function normalizeGuestSlug(value) {
+
+    return String(
+      value || ""
+    )
+      .trim()
+      .toLowerCase()
+      .replace(
+        /[^a-z0-9-]/g,
+        ""
+      );
+  }
+
+
+  function isBackendConfigured() {
+
+    return (
+      typeof WEDDING_API_URL ===
+      "string"
+      &&
+      WEDDING_API_URL.startsWith(
+        "https://script.google.com/macros/s/"
+      )
+      &&
+      WEDDING_API_URL.includes(
+        "/exec"
+      )
+    );
+  }
+
+
+  /* =======================================================
+     VIETNAMESE NFC
   ======================================================= */
 
   function normalizeVietnameseText(value) {
@@ -179,14 +245,18 @@
 
 
   const pages = [
-
     page02Layout,
     page03,
     page06,
     page07,
     page08
-
   ].filter(Boolean);
+
+
+  const personalizedGuestName =
+    document.getElementById(
+      "personalizedGuestName"
+    );
 
 
   const page06EntryFireworks =
@@ -273,6 +343,12 @@
     );
 
 
+  const rsvpMessage =
+    document.getElementById(
+      "rsvpMessage"
+    );
+
+
   const rsvpVideo =
     document.getElementById(
       "rsvpVideo"
@@ -313,40 +389,372 @@
     new Map();
 
 
-  let pageMode =
-    false;
+  let pageMode = false;
+
+  let resizeRaf = 0;
+
+  let scrollRaf = 0;
+
+  let activePageIndex = -1;
+
+  let luckyIdleTimer = null;
+
+  let luckyRolling = false;
+
+  let luckyLocked = false;
+
+  let rsvpCount = 1;
+
+  let page06EntryTimer = null;
 
 
-  let resizeRaf =
-    0;
+  /* =======================================================
+     BACKEND — JSONP
+  ======================================================= */
+
+  function jsonpRequest(
+    params = {},
+    timeout = 12000
+  ) {
+
+    return new Promise(
+      (resolve, reject) => {
+
+        if (
+          !isBackendConfigured()
+        ) {
+
+          reject(
+            new Error(
+              "Apps Script chưa được cấu hình."
+            )
+          );
+
+          return;
+        }
 
 
-  let scrollRaf =
-    0;
+        const callbackName =
+          `__wedding_${Date.now()}_${Math
+            .random()
+            .toString(36)
+            .slice(2)}`;
 
 
-  let activePageIndex =
-    -1;
+        const script =
+          document.createElement(
+            "script"
+          );
 
 
-  let luckyIdleTimer =
-    null;
+        const query =
+          new URLSearchParams();
 
 
-  let luckyRolling =
-    false;
+        Object.entries(
+          params
+        )
+          .forEach(
+            ([key, value]) => {
+
+              if (
+                value ===
+                undefined
+                ||
+                value ===
+                null
+              ) {
+
+                return;
+              }
 
 
-  let luckyLocked =
-    false;
+              query.set(
+                key,
+                String(value)
+              );
+            }
+          );
 
 
-  let rsvpCount =
-    1;
+        query.set(
+          "callback",
+          callbackName
+        );
 
 
-  let page06EntryTimer =
-    null;
+        let timer = null;
+
+
+        const cleanup =
+          () => {
+
+            if (
+              timer !==
+              null
+            ) {
+
+              clearTimeout(
+                timer
+              );
+            }
+
+
+            try {
+
+              delete window[
+                callbackName
+              ];
+
+            } catch (_) {
+
+              window[
+                callbackName
+              ] =
+                undefined;
+            }
+
+
+            script.remove();
+          };
+
+
+        window[
+          callbackName
+        ] =
+          (data) => {
+
+            cleanup();
+
+            resolve(
+              data
+            );
+          };
+
+
+        script.onerror =
+          () => {
+
+            cleanup();
+
+            reject(
+              new Error(
+                "Không thể kết nối tới Apps Script."
+              )
+            );
+          };
+
+
+        const separator =
+          WEDDING_API_URL.includes(
+            "?"
+          )
+            ?
+            "&"
+            :
+            "?";
+
+
+        script.src =
+          `${WEDDING_API_URL}${separator}${query.toString()}`;
+
+
+        script.async =
+          true;
+
+
+        timer =
+          setTimeout(
+            () => {
+
+              cleanup();
+
+              reject(
+                new Error(
+                  "Apps Script phản hồi quá lâu."
+                )
+              );
+            },
+            timeout
+          );
+
+
+        document.head.appendChild(
+          script
+        );
+      }
+    );
+  }
+
+
+  /* =======================================================
+     BACKEND — POST
+  ======================================================= */
+
+  async function postToBackend(
+    data
+  ) {
+
+    if (
+      !isBackendConfigured()
+    ) {
+
+      throw new Error(
+        "Apps Script chưa được cấu hình."
+      );
+    }
+
+
+    const body =
+      new URLSearchParams();
+
+
+    Object.entries(
+      data
+    )
+      .forEach(
+        ([key, value]) => {
+
+          if (
+            value ===
+            undefined
+            ||
+            value ===
+            null
+          ) {
+
+            return;
+          }
+
+
+          body.append(
+            key,
+            String(value)
+          );
+        }
+      );
+
+
+    await fetch(
+      WEDDING_API_URL,
+      {
+        method: "POST",
+        mode: "no-cors",
+        body
+      }
+    );
+
+
+    return true;
+  }
+
+
+  /* =======================================================
+     PERSONALIZATION
+  ======================================================= */
+
+  async function loadGuestPersonalization() {
+
+    if (
+      !currentGuestSlug
+      ||
+      !isBackendConfigured()
+    ) {
+
+      return;
+    }
+
+
+    try {
+
+      const response =
+        await jsonpRequest(
+          {
+            action: "guest",
+            guest:
+              currentGuestSlug
+          }
+        );
+
+
+      if (
+        !response
+        ||
+        response.ok !== true
+      ) {
+
+        console.warn(
+          "Không tìm thấy khách mời:",
+          currentGuestSlug
+        );
+
+
+        return;
+      }
+
+
+      currentGuestData =
+        response;
+
+
+      const displayName =
+        normalizeVietnameseText(
+          response.displayName ||
+          response.name ||
+          ""
+        );
+
+
+      if (
+        displayName
+        &&
+        personalizedGuestName
+      ) {
+
+        personalizedGuestName.textContent =
+          displayName;
+
+
+        personalizedGuestName.hidden =
+          false;
+      }
+
+
+      /*
+        Prefill RSVP từ cột D.
+      */
+
+      if (
+        response.name
+        &&
+        rsvpGuestName
+        &&
+        !rsvpGuestName.value
+      ) {
+
+        rsvpGuestName.value =
+          normalizeVietnameseText(
+            response.name
+          );
+      }
+
+
+      if (
+        displayName
+      ) {
+
+        document.title =
+          `${displayName} | Bách & Thư`;
+      }
+
+    } catch (error) {
+
+      console.warn(
+        "Không tải được thông tin khách mời:",
+        error
+      );
+    }
+  }
 
 
   /* =======================================================
@@ -861,7 +1269,7 @@
 
 
   /* =======================================================
-     FIREWORK PARTICLES
+     FIREWORK
   ======================================================= */
 
   const fireworkColors = [
@@ -985,6 +1393,7 @@
       () => {
 
         target.replaceChildren();
+
       },
       cleanup
     );
@@ -1122,7 +1531,7 @@
 
 
   /* =======================================================
-     NEARBY PAGES
+     NEARBY
   ======================================================= */
 
   function setNearbyPages(
@@ -1219,8 +1628,7 @@
       requestAnimationFrame(
         () => {
 
-          scrollRaf =
-            0;
+          scrollRaf = 0;
 
 
           const index =
@@ -1274,8 +1682,7 @@
     }
 
 
-    pageMode =
-      true;
+    pageMode = true;
 
 
     await loadPage(
@@ -1306,8 +1713,7 @@
       );
 
 
-    activePageIndex =
-      0;
+    activePageIndex = 0;
 
 
     setNearbyPages(
@@ -1518,6 +1924,66 @@
   }
 
 
+  async function requestGuestLuckyNumber() {
+
+    if (
+      !currentGuestSlug
+      ||
+      !isBackendConfigured()
+    ) {
+
+      return randomLuckyNumber();
+    }
+
+
+    try {
+
+      const response =
+        await jsonpRequest(
+          {
+            action: "lucky",
+            guest:
+              currentGuestSlug
+          }
+        );
+
+
+      const serverNumber =
+        Number(
+          response?.luckyNumber
+        );
+
+
+      if (
+        response?.ok === true
+        &&
+        Number.isInteger(
+          serverNumber
+        )
+        &&
+        serverNumber >=
+          LUCKY_MIN
+        &&
+        serverNumber <=
+          LUCKY_MAX
+      ) {
+
+        return serverNumber;
+      }
+
+    } catch (error) {
+
+      console.warn(
+        "Không đồng bộ được số may mắn:",
+        error
+      );
+    }
+
+
+    return randomLuckyNumber();
+  }
+
+
   function rollLuckyNumber() {
 
     if (
@@ -1532,8 +1998,7 @@
     stopLuckyIdleShuffle();
 
 
-    luckyRolling =
-      true;
+    luckyRolling = true;
 
 
     luckyCard
@@ -1561,8 +2026,8 @@
     }
 
 
-    const finalNumber =
-      randomLuckyNumber();
+    const finalNumberPromise =
+      requestGuestLuckyNumber();
 
 
     const start =
@@ -1573,8 +2038,7 @@
       1850;
 
 
-    let lastUpdate =
-      0;
+    let lastUpdate = 0;
 
 
     function frame(
@@ -1631,12 +2095,30 @@
       }
 
 
-      luckyRolling =
-        false;
+      finishLuckyRoll();
+    }
 
 
-      luckyLocked =
-        true;
+    async function finishLuckyRoll() {
+
+      let finalNumber;
+
+
+      try {
+
+        finalNumber =
+          await finalNumberPromise;
+
+      } catch (_) {
+
+        finalNumber =
+          randomLuckyNumber();
+      }
+
+
+      luckyRolling = false;
+
+      luckyLocked = true;
 
 
       luckyCard
@@ -1743,6 +2225,61 @@
   }
 
 
+  function showRsvpStatus(
+    message
+  ) {
+
+    if (
+      !rsvpStatus
+    ) {
+
+      return;
+    }
+
+
+    rsvpStatus.textContent =
+      normalizeVietnameseText(
+        message
+      );
+
+
+    rsvpStatus
+      .classList
+      .add(
+        "is-visible"
+      );
+  }
+
+
+  function setSubmitText(
+    text
+  ) {
+
+    if (
+      !rsvpSubmit
+    ) {
+
+      return;
+    }
+
+
+    const span =
+      rsvpSubmit
+        .querySelector(
+          "span"
+        );
+
+
+    if (
+      span
+    ) {
+
+      span.textContent =
+        text;
+    }
+  }
+
+
   rsvpMinus
     ?.addEventListener(
       "click",
@@ -1807,9 +2344,7 @@
           rsvpAttendanceNo.checked
         ) {
 
-          rsvpCount =
-            0;
-
+          rsvpCount = 0;
 
           updateCount();
         }
@@ -1826,14 +2361,12 @@
 
 
         if (
-          rsvpAttendanceYes.checked &&
-          rsvpCount <
-          1
+          rsvpAttendanceYes.checked
+          &&
+          rsvpCount < 1
         ) {
 
-          rsvpCount =
-            1;
-
+          rsvpCount = 1;
 
           updateCount();
         }
@@ -1853,7 +2386,49 @@
 
 
         if (
-          file &&
+          !file
+        ) {
+
+          if (
+            rsvpVideoLabel
+          ) {
+
+            rsvpVideoLabel.textContent =
+              "Video lời chúc gửi tới cô dâu chú rể";
+          }
+
+
+          return;
+        }
+
+
+        if (
+          file.size >
+          MAX_VIDEO_BYTES
+        ) {
+
+          showRsvpStatus(
+            "Video tối đa 20 MB. Bạn chọn video ngắn hoặc dung lượng nhỏ hơn giúp chúng mình nhé."
+          );
+
+
+          rsvpVideo.value = "";
+
+
+          if (
+            rsvpVideoLabel
+          ) {
+
+            rsvpVideoLabel.textContent =
+              "Video lời chúc gửi tới cô dâu chú rể";
+          }
+
+
+          return;
+        }
+
+
+        if (
           rsvpVideoLabel
         ) {
 
@@ -1866,10 +2441,84 @@
     );
 
 
+  function fileToBase64(
+    file
+  ) {
+
+    return new Promise(
+      (
+        resolve,
+        reject
+      ) => {
+
+        const reader =
+          new FileReader();
+
+
+        reader.onerror =
+          () => {
+
+            reject(
+              new Error(
+                "Không đọc được video."
+              )
+            );
+          };
+
+
+        reader.onload =
+          () => {
+
+            const result =
+              String(
+                reader.result ||
+                ""
+              );
+
+
+            const commaIndex =
+              result.indexOf(
+                ","
+              );
+
+
+            if (
+              commaIndex <
+              0
+            ) {
+
+              reject(
+                new Error(
+                  "Không chuyển đổi được video."
+                )
+              );
+
+              return;
+            }
+
+
+            resolve(
+              result.slice(
+                commaIndex + 1
+              )
+            );
+          };
+
+
+        reader.readAsDataURL(
+          file
+        );
+      }
+    );
+  }
+
+
   rsvpForm
     ?.addEventListener(
       "submit",
-      (event) => {
+      async (
+        event
+      ) => {
 
         event.preventDefault();
 
@@ -1880,26 +2529,36 @@
             .trim();
 
 
+        const message =
+          rsvpMessage
+            ?.value
+            .trim() ||
+          "";
+
+
+        const attendance =
+          rsvpAttendanceNo
+            ?.checked
+            ?
+            "no"
+            :
+            "yes";
+
+
+        const videoFile =
+          rsvpVideo
+            ?.files
+            ?.[0] ||
+          null;
+
+
         if (
           !name
         ) {
 
-          if (
-            rsvpStatus
-          ) {
-
-            rsvpStatus.textContent =
-              normalizeVietnameseText(
-                "Bạn nhập tên khách mời giúp chúng mình nhé."
-              );
-
-
-            rsvpStatus
-              .classList
-              .add(
-                "is-visible"
-              );
-          }
+          showRsvpStatus(
+            "Bạn nhập tên khách mời giúp chúng mình nhé."
+          );
 
 
           return;
@@ -1907,20 +2566,44 @@
 
 
         if (
-          rsvpStatus
+          !currentGuestSlug
         ) {
 
-          rsvpStatus.textContent =
-            normalizeVietnameseText(
-              "Đã ghi nhận xác nhận của bạn."
-            );
+          showRsvpStatus(
+            "Link thiệp này chưa có mã khách mời. Bạn vui lòng mở đúng link được gửi riêng nhé."
+          );
 
 
-          rsvpStatus
-            .classList
-            .add(
-              "is-visible"
-            );
+          return;
+        }
+
+
+        if (
+          !isBackendConfigured()
+        ) {
+
+          showRsvpStatus(
+            "Website chưa kết nối Google Sheet. Vui lòng cấu hình Apps Script URL."
+          );
+
+
+          return;
+        }
+
+
+        if (
+          videoFile
+          &&
+          videoFile.size >
+          MAX_VIDEO_BYTES
+        ) {
+
+          showRsvpStatus(
+            "Video tối đa 20 MB."
+          );
+
+
+          return;
         }
 
 
@@ -1930,21 +2613,109 @@
 
           rsvpSubmit.disabled =
             true;
+        }
 
 
-          const text =
-            rsvpSubmit
-              .querySelector(
-                "span"
-              );
+        setSubmitText(
+          "ĐANG GỬI..."
+        );
+
+
+        showRsvpStatus(
+          "Đang gửi xác nhận..."
+        );
+
+
+        try {
+
+          await postToBackend(
+            {
+              action:
+                "rsvp",
+
+              guest:
+                currentGuestSlug,
+
+              name,
+
+              attendance,
+
+              guestCount:
+                rsvpCount,
+
+              message
+            }
+          );
 
 
           if (
-            text
+            videoFile
           ) {
 
-            text.textContent =
-              "ĐÃ GỬI XÁC NHẬN";
+            showRsvpStatus(
+              "Đang tải video lời chúc lên Drive..."
+            );
+
+
+            const videoBase64 =
+              await fileToBase64(
+                videoFile
+              );
+
+
+            await postToBackend(
+              {
+                action:
+                  "uploadVideo",
+
+                guest:
+                  currentGuestSlug,
+
+                fileName:
+                  videoFile.name,
+
+                mimeType:
+                  videoFile.type ||
+                  "video/mp4",
+
+                videoBase64
+              }
+            );
+          }
+
+
+          showRsvpStatus(
+            "Đã ghi nhận xác nhận của bạn."
+          );
+
+
+          setSubmitText(
+            "ĐÃ GỬI XÁC NHẬN"
+          );
+
+        } catch (error) {
+
+          console.error(
+            error
+          );
+
+
+          showRsvpStatus(
+            "Có lỗi khi gửi xác nhận. Bạn thử lại giúp chúng mình nhé."
+          );
+
+
+          setSubmitText(
+            "GỬI XÁC NHẬN"
+          );
+
+
+          if (
+            rsvpSubmit
+          ) {
+
+            rsvpSubmit.disabled =
+              false;
           }
         }
       }
@@ -1971,7 +2742,8 @@
         stopLuckyIdleShuffle();
 
       } else if (
-        !luckyLocked &&
+        !luckyLocked
+        &&
         !luckyRolling
       ) {
 
@@ -1979,5 +2751,12 @@
       }
     }
   );
+
+
+  /* =======================================================
+     INIT
+  ======================================================= */
+
+  loadGuestPersonalization();
 
 })();
