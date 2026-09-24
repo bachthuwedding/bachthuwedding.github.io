@@ -45,11 +45,11 @@
 
   <link
     rel="stylesheet"
-    href="./styles.css?v=20260924-1"
+    href="./styles.css?v=20260924-2"
   />
 
   <script
-    src="./script.js?v=20260924-1"
+    src="./script.js?v=20260924-2"
     defer
   ></script>
 </head>
@@ -195,8 +195,8 @@
 
 
               <!--
-                TÊN CÁ NHÂN HÓA.
-                Nội dung được lấy từ cột F của Google Sheet.
+                CỘT F GOOGLE SHEET
+                Sẽ được JS điền vào đây.
               -->
 
               <p
@@ -518,6 +518,7 @@
                     class="p03-location-pin"
                     aria-hidden="true"
                   ></span>
+
 
                   <div>
 
@@ -1129,19 +1130,19 @@
                 </div>
 
 
-                <!-- VIDEO -->
+                <!-- VIDEO -> GOOGLE DRIVE -->
 
                 <div class="p07-form-group p07-form-group--video">
 
-                  <label
+                  <a
                     class="p07-video-field"
-                    for="rsvpVideo"
+                    href="https://drive.google.com/drive/folders/1e1acGQ5Nmtk5DlyNHUvbc7HcXA1gaj1i?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Mở Google Drive để tải video lời chúc lên"
                   >
 
-                    <span
-                      class="p07-video-text"
-                      id="rsvpVideoLabel"
-                    >
+                    <span class="p07-video-text">
                       Video lời chúc gửi tới cô dâu chú rể
                     </span>
 
@@ -1154,16 +1155,7 @@
                       decoding="async"
                     />
 
-
-                    <input
-                      id="rsvpVideo"
-                      class="p07-video-input"
-                      type="file"
-                      name="video"
-                      accept="video/*"
-                    />
-
-                  </label>
+                  </a>
 
                 </div>
 
@@ -1198,13 +1190,6 @@
                   </svg>
 
                 </button>
-
-
-                <p
-                  class="p07-submit-status"
-                  id="rsvpStatus"
-                  aria-live="polite"
-                ></p>
 
               </form>
 
