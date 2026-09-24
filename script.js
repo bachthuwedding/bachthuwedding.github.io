@@ -12,22 +12,17 @@
   const LUCKY_MIN = 1;
   const LUCKY_MAX = 99;
 
-  const LUCKY_TEST_MODE = false;
-
-  const MAX_VIDEO_BYTES =
-    20 * 1024 * 1024;
-
-
-  /*
-    GOOGLE APPS SCRIPT WEB APP
-  */
 
   const WEDDING_API_URL =
     "https://script.google.com/macros/s/AKfycbzZgGDz-UI1bGQI8M4FoYe1GzxUWCI9V1k_hK6N_9WftwU9qyH-Utm9csjz9NkdW6Axhg/exec";
 
 
+  const LUCKY_HINT_REVEALED =
+    "Hãy giữ con số may mắn của bạn tới ngày cưới của chúng mình nhé!";
+
+
   /* =======================================================
-     GUEST ID
+     GUEST
   ======================================================= */
 
   const urlParams =
@@ -70,7 +65,7 @@
         "https://script.google.com/macros/s/"
       )
       &&
-      WEDDING_API_URL.includes(
+      WEDDING_API_URL.endsWith(
         "/exec"
       )
     );
@@ -78,7 +73,7 @@
 
 
   /* =======================================================
-     VIETNAMESE NFC
+     TEXT NORMALIZATION
   ======================================================= */
 
   function normalizeVietnameseText(value) {
@@ -100,7 +95,10 @@
 
   function normalizeDocumentVietnamese() {
 
-    if (!document.body) {
+    if (
+      !document.body
+    ) {
+
       return;
     }
 
@@ -349,27 +347,9 @@
     );
 
 
-  const rsvpVideo =
-    document.getElementById(
-      "rsvpVideo"
-    );
-
-
-  const rsvpVideoLabel =
-    document.getElementById(
-      "rsvpVideoLabel"
-    );
-
-
   const rsvpSubmit =
     document.getElementById(
       "rsvpSubmit"
-    );
-
-
-  const rsvpStatus =
-    document.getElementById(
-      "rsvpStatus"
     );
 
 
@@ -389,32 +369,49 @@
     new Map();
 
 
-  let pageMode = false;
+  let pageMode =
+    false;
 
-  let resizeRaf = 0;
 
-  let scrollRaf = 0;
+  let resizeRaf =
+    0;
 
-  let activePageIndex = -1;
 
-  let luckyIdleTimer = null;
+  let scrollRaf =
+    0;
 
-  let luckyRolling = false;
 
-  let luckyLocked = false;
+  let activePageIndex =
+    -1;
 
-  let rsvpCount = 1;
 
-  let page06EntryTimer = null;
+  let luckyIdleTimer =
+    null;
+
+
+  let luckyRolling =
+    false;
+
+
+  let luckyLocked =
+    false;
+
+
+  let rsvpCount =
+    1;
+
+
+  let page06EntryTimer =
+    null;
 
 
   /* =======================================================
-     BACKEND — JSONP
+     JSONP READ
   ======================================================= */
 
   function jsonpRequest(
     params = {},
-    timeout = 12000
+    timeout = 15000
   ) {
 
     return new Promise(
@@ -439,12 +436,6 @@
             .random()
             .toString(36)
             .slice(2)}`;
-
-
-        const script =
-          document.createElement(
-            "script"
-          );
 
 
         const query =
@@ -483,7 +474,20 @@
         );
 
 
-        let timer = null;
+        query.set(
+          "_",
+          Date.now().toString()
+        );
+
+
+        const script =
+          document.createElement(
+            "script"
+          );
+
+
+        let timer =
+          null;
 
 
         const cleanup =
@@ -539,24 +543,14 @@
 
             reject(
               new Error(
-                "Không thể kết nối tới Apps Script."
+                "Không thể đọc dữ liệu từ Apps Script."
               )
             );
           };
 
 
-        const separator =
-          WEDDING_API_URL.includes(
-            "?"
-          )
-            ?
-            "&"
-            :
-            "?";
-
-
         script.src =
-          `${WEDDING_API_URL}${separator}${query.toString()}`;
+          `${WEDDING_API_URL}?${query.toString()}`;
 
 
         script.async =
@@ -588,7 +582,7 @@
 
 
   /* =======================================================
-     BACKEND — POST
+     POST WRITE
   ======================================================= */
 
   async function postToBackend(
@@ -638,14 +632,260 @@
     await fetch(
       WEDDING_API_URL,
       {
-        method: "POST",
-        mode: "no-cors",
-        body
+        method:
+          "POST",
+
+        mode:
+          "no-cors",
+
+        body,
+
+        keepalive:
+          true
       }
     );
 
 
     return true;
+  }
+
+
+  /* =======================================================
+     ĐÁNH DẤU ĐÃ MỞ THIỆP
+     H = timestamp lần đầu
+  ======================================================= */
+
+  function markInvitationOpened() {
+
+    if (
+      !currentGuestSlug
+      ||
+      !isBackendConfigured()
+    ) {
+
+      return;
+    }
+
+
+    postToBackend(
+      {
+        action:
+          "markOpened",
+
+        guest:
+          currentGuestSlug
+      }
+    )
+      .catch(
+        (error) => {
+
+          console.warn(
+            "Không ghi được trạng thái đã mở:",
+            error
+          );
+        }
+      );
+  }
+
+
+  /* =======================================================
+     LOCAL LUCKY CACHE
+  ======================================================= */
+
+  function getLuckyStorageKey() {
+
+    if (
+      !currentGuestSlug
+    ) {
+
+      return "";
+    }
+
+
+    return `bach-thu-lucky-${currentGuestSlug}`;
+  }
+
+
+  function readLocalLuckyNumber() {
+
+    const key =
+      getLuckyStorageKey();
+
+
+    if (
+      !key
+    ) {
+
+      return null;
+    }
+
+
+    try {
+
+      const value =
+        Number(
+          window.localStorage.getItem(
+            key
+          )
+        );
+
+
+      if (
+        Number.isInteger(
+          value
+        )
+        &&
+        value >=
+          LUCKY_MIN
+        &&
+        value <=
+          LUCKY_MAX
+      ) {
+
+        return value;
+      }
+
+    } catch (_) {}
+
+
+    return null;
+  }
+
+
+  function saveLocalLuckyNumber(
+    value
+  ) {
+
+    const key =
+      getLuckyStorageKey();
+
+
+    if (
+      !key
+    ) {
+
+      return;
+    }
+
+
+    try {
+
+      window.localStorage.setItem(
+        key,
+        String(value)
+      );
+
+    } catch (_) {}
+  }
+
+
+  /* =======================================================
+     DISPLAY EXISTING LUCKY
+  ======================================================= */
+
+  function lockLuckyNumber(
+    value,
+    animate = false
+  ) {
+
+    const number =
+      Number(
+        value
+      );
+
+
+    if (
+      !Number.isInteger(
+        number
+      )
+      ||
+      number <
+        LUCKY_MIN
+      ||
+      number >
+        LUCKY_MAX
+    ) {
+
+      return;
+    }
+
+
+    stopLuckyIdleShuffle();
+
+
+    luckyLocked =
+      true;
+
+
+    luckyRolling =
+      false;
+
+
+    showLuckyNumber(
+      number
+    );
+
+
+    saveLocalLuckyNumber(
+      number
+    );
+
+
+    luckyCard
+      ?.classList
+      .remove(
+        "is-rolling",
+        "is-idle-shuffling"
+      );
+
+
+    if (
+      animate
+    ) {
+
+      luckyCard
+        ?.classList
+        .remove(
+          "is-revealed"
+        );
+
+
+      void luckyCard
+        ?.offsetWidth;
+
+
+      luckyCard
+        ?.classList
+        .add(
+          "is-revealed"
+        );
+    }
+
+
+    if (
+      luckyHint
+    ) {
+
+      luckyHint.textContent =
+        normalizeVietnameseText(
+          LUCKY_HINT_REVEALED
+        );
+    }
+
+
+    if (
+      luckyTrigger
+    ) {
+
+      luckyTrigger.disabled =
+        true;
+
+
+      luckyTrigger.setAttribute(
+        "aria-label",
+        "Bạn đã nhận số may mắn"
+      );
+    }
   }
 
 
@@ -670,7 +910,9 @@
       const response =
         await jsonpRequest(
           {
-            action: "guest",
+            action:
+              "guest",
+
             guest:
               currentGuestSlug
           }
@@ -680,12 +922,14 @@
       if (
         !response
         ||
-        response.ok !== true
+        response.ok !==
+          true
       ) {
 
         console.warn(
           "Không tìm thấy khách mời:",
-          currentGuestSlug
+          currentGuestSlug,
+          response
         );
 
 
@@ -699,11 +943,17 @@
 
       const displayName =
         normalizeVietnameseText(
-          response.displayName ||
-          response.name ||
+          response.displayName
+          ||
+          response.name
+          ||
           ""
         );
 
+
+      /*
+        CỘT F -> THIỆP
+      */
 
       if (
         displayName
@@ -721,7 +971,7 @@
 
 
       /*
-        Prefill RSVP từ cột D.
+        CỘT D -> PREFILL TÊN RSVP
       */
 
       if (
@@ -737,6 +987,144 @@
             response.name
           );
       }
+
+
+      /*
+        Nếu cột I đã có số,
+        reload trang vẫn hiện số cũ
+        và khóa nút roll.
+      */
+
+      const existingLuckyNumber =
+        Number(
+          response.luckyNumber
+        );
+
+
+      if (
+        Number.isInteger(
+          existingLuckyNumber
+        )
+        &&
+        existingLuckyNumber >=
+          LUCKY_MIN
+        &&
+        existingLuckyNumber <=
+          LUCKY_MAX
+      ) {
+
+        lockLuckyNumber(
+          existingLuckyNumber,
+          false
+        );
+      }
+
+
+      /*
+        Có RSVP cũ thì prefill.
+      */
+
+      if (
+        response.rsvpName
+        &&
+        rsvpGuestName
+      ) {
+
+        rsvpGuestName.value =
+          normalizeVietnameseText(
+            response.rsvpName
+          );
+      }
+
+
+      if (
+        response.message
+        &&
+        rsvpMessage
+      ) {
+
+        rsvpMessage.value =
+          normalizeVietnameseText(
+            response.message
+          );
+      }
+
+
+      if (
+        response.attendance ===
+        "Có"
+      ) {
+
+        if (
+          rsvpAttendanceYes
+        ) {
+
+          rsvpAttendanceYes.checked =
+            true;
+        }
+
+
+        if (
+          rsvpAttendanceNo
+        ) {
+
+          rsvpAttendanceNo.checked =
+            false;
+        }
+      }
+
+
+      if (
+        response.attendance ===
+        "Không"
+      ) {
+
+        if (
+          rsvpAttendanceNo
+        ) {
+
+          rsvpAttendanceNo.checked =
+            true;
+        }
+
+
+        if (
+          rsvpAttendanceYes
+        ) {
+
+          rsvpAttendanceYes.checked =
+            false;
+        }
+      }
+
+
+      const existingCount =
+        Number(
+          response.guestCount
+        );
+
+
+      if (
+        Number.isInteger(
+          existingCount
+        )
+        &&
+        existingCount >=
+          0
+        &&
+        existingCount <=
+          10
+      ) {
+
+        rsvpCount =
+          existingCount;
+
+
+        updateCount();
+      }
+
+
+      updateAttendanceNoLabel();
 
 
       if (
@@ -768,12 +1156,14 @@
 
 
     const viewportWidth =
-      viewport?.width ||
+      viewport?.width
+      ||
       window.innerWidth;
 
 
     const viewportHeight =
-      viewport?.height ||
+      viewport?.height
+      ||
       window.innerHeight;
 
 
@@ -834,7 +1224,8 @@
     "resize",
     scheduleScale,
     {
-      passive: true
+      passive:
+        true
     }
   );
 
@@ -844,9 +1235,75 @@
       "resize",
       scheduleScale,
       {
-        passive: true
+        passive:
+          true
       }
     );
+
+
+  /* =======================================================
+     SCROLL NGOÀI THIỆP
+  ======================================================= */
+
+  window.addEventListener(
+    "wheel",
+    (event) => {
+
+      if (
+        !pageMode
+        ||
+        !pageScroller
+      ) {
+
+        return;
+      }
+
+
+      /*
+        Nếu chuột đã nằm trong thiệp,
+        để browser xử lý scroll bình thường.
+
+        Chỉ forward wheel khi chuột nằm
+        bên ngoài vùng thiệp.
+      */
+
+      if (
+        event.target
+        &&
+        pageScroller.contains(
+          event.target
+        )
+      ) {
+
+        return;
+      }
+
+
+      if (
+        Math.abs(
+          event.deltaY
+        )
+        <=
+        Math.abs(
+          event.deltaX
+        )
+      ) {
+
+        return;
+      }
+
+
+      event.preventDefault();
+
+
+      pageScroller.scrollTop +=
+        event.deltaY;
+    },
+    {
+      passive:
+        false
+    }
+  );
 
 
   /* =======================================================
@@ -881,7 +1338,7 @@
 
 
   /* =======================================================
-     PRELOAD URL
+     PRELOAD
   ======================================================= */
 
   function preloadUrl(
@@ -889,7 +1346,9 @@
     priority = "low"
   ) {
 
-    if (!url) {
+    if (
+      !url
+    ) {
 
       return Promise.resolve();
     }
@@ -955,7 +1414,8 @@
             "load",
             finish,
             {
-              once: true
+              once:
+                true
             }
           );
 
@@ -964,7 +1424,8 @@
             "error",
             resolve,
             {
-              once: true
+              once:
+                true
             }
           );
 
@@ -993,16 +1454,14 @@
   }
 
 
-  /* =======================================================
-     LOAD IMAGE
-  ======================================================= */
-
   function loadImage(
     image,
     priority = "low"
   ) {
 
-    if (!image) {
+    if (
+      !image
+    ) {
 
       return Promise.resolve();
     }
@@ -1024,7 +1483,9 @@
       image.dataset.src;
 
 
-    if (!source) {
+    if (
+      !source
+    ) {
 
       return Promise.resolve();
     }
@@ -1070,7 +1531,8 @@
             "load",
             finish,
             {
-              once: true
+              once:
+                true
             }
           );
 
@@ -1079,7 +1541,8 @@
             "error",
             resolve,
             {
-              once: true
+              once:
+                true
             }
           );
 
@@ -1113,16 +1576,14 @@
   }
 
 
-  /* =======================================================
-     LOAD PAGE
-  ======================================================= */
-
   function loadPage(
     page,
     priority = "low"
   ) {
 
-    if (!page) {
+    if (
+      !page
+    ) {
 
       return Promise.resolve();
     }
@@ -1178,29 +1639,27 @@
 
 
           jobs.push(
-
             preloadUrl(
               spriteUrl,
               priority
             )
+              .then(
+                () => {
 
-            .then(
-              () => {
-
-                spriteHost
-                  .style
-                  .setProperty(
-                    "--p02-confetti-sprite",
-                    `url("${spriteUrl}")`
-                  );
+                  spriteHost
+                    .style
+                    .setProperty(
+                      "--p02-confetti-sprite",
+                      `url("${spriteUrl}")`
+                    );
 
 
-                spriteHost
-                  .removeAttribute(
-                    "data-sprite-src"
-                  );
-              }
-            )
+                  spriteHost
+                    .removeAttribute(
+                      "data-sprite-src"
+                    );
+                }
+              )
           );
         }
 
@@ -1292,7 +1751,9 @@
     } = {}
   ) {
 
-    if (!target) {
+    if (
+      !target
+    ) {
 
       return;
     }
@@ -1323,16 +1784,21 @@
 
 
       const angle =
-        Math.random() *
-        Math.PI *
+        Math.random()
+        *
+        Math.PI
+        *
         2;
 
 
       const distance =
-        minDistance +
-        Math.random() *
+        minDistance
+        +
+        Math.random()
+        *
         (
-          maxDistance -
+          maxDistance
+          -
           minDistance
         );
 
@@ -1371,7 +1837,8 @@
         "--particle-color",
         fireworkColors[
           Math.floor(
-            Math.random() *
+            Math.random()
+            *
             fireworkColors.length
           )
         ]
@@ -1393,7 +1860,6 @@
       () => {
 
         target.replaceChildren();
-
       },
       cleanup
     );
@@ -1406,7 +1872,9 @@
 
   function playPage06Entrance() {
 
-    if (!page06) {
+    if (
+      !page06
+    ) {
 
       return;
     }
@@ -1427,10 +1895,17 @@
     spawnFireworks(
       page06EntryFireworks,
       {
-        count: 115,
-        minDistance: 60,
-        maxDistance: 170,
-        cleanup: 1500
+        count:
+          115,
+
+        minDistance:
+          60,
+
+        maxDistance:
+          170,
+
+        cleanup:
+          1500
       }
     );
 
@@ -1495,7 +1970,8 @@
 
 
         if (
-          page === page06 &&
+          page === page06
+          &&
           !active
         ) {
 
@@ -1530,10 +2006,6 @@
   }
 
 
-  /* =======================================================
-     NEARBY
-  ======================================================= */
-
   function setNearbyPages(
     index
   ) {
@@ -1557,7 +2029,8 @@
         page.classList.toggle(
           "is-nearby",
           Math.abs(
-            pageIndex -
+            pageIndex
+            -
             safeIndex
           ) <= 1
         );
@@ -1588,7 +2061,7 @@
 
 
   /* =======================================================
-     SCROLL
+     INTERNAL SCROLL
   ======================================================= */
 
   function getCurrentPageIndex() {
@@ -1606,7 +2079,8 @@
       Math.min(
         pages.length - 1,
         Math.round(
-          pageScroller.scrollTop /
+          pageScroller.scrollTop
+          /
           DESIGN_HEIGHT
         )
       )
@@ -1628,7 +2102,8 @@
       requestAnimationFrame(
         () => {
 
-          scrollRaf = 0;
+          scrollRaf =
+            0;
 
 
           const index =
@@ -1663,7 +2138,8 @@
       "scroll",
       onPageScroll,
       {
-        passive: true
+        passive:
+          true
       }
     );
 
@@ -1682,7 +2158,8 @@
     }
 
 
-    pageMode = true;
+    pageMode =
+      true;
 
 
     await loadPage(
@@ -1713,7 +2190,8 @@
       );
 
 
-    activePageIndex = 0;
+    activePageIndex =
+      0;
 
 
     setNearbyPages(
@@ -1755,7 +2233,8 @@
         );
       },
       {
-        passive: true
+        passive:
+          true
       }
     );
 
@@ -1785,14 +2264,16 @@
 
 
   /* =======================================================
-     LUCKY NUMBER
+     LUCKY
   ======================================================= */
 
   function randomLuckyNumber() {
 
     const range =
-      LUCKY_MAX -
-      LUCKY_MIN +
+      LUCKY_MAX
+      -
+      LUCKY_MIN
+      +
       1;
 
 
@@ -1802,7 +2283,9 @@
     ) {
 
       const data =
-        new Uint32Array(1);
+        new Uint32Array(
+          1
+        );
 
 
       window.crypto
@@ -1812,20 +2295,78 @@
 
 
       return (
-        LUCKY_MIN +
-        data[0] %
+        LUCKY_MIN
+        +
+        data[0]
+        %
         range
       );
     }
 
 
     return (
-      LUCKY_MIN +
+      LUCKY_MIN
+      +
       Math.floor(
-        Math.random() *
+        Math.random()
+        *
         range
       )
     );
+  }
+
+
+  /*
+    Fallback ổn định:
+    cùng guest slug luôn ra cùng 1 số.
+
+    Chỉ được dùng khi request Apps Script
+    không trả về được.
+  */
+
+  function deterministicLuckyNumber(
+    slug
+  ) {
+
+    const text =
+      String(
+        slug || ""
+      );
+
+
+    let hash =
+      2166136261;
+
+
+    for (
+      let i = 0;
+      i < text.length;
+      i += 1
+    ) {
+
+      hash ^=
+        text.charCodeAt(
+          i
+        );
+
+
+      hash =
+        Math.imul(
+          hash,
+          16777619
+        );
+    }
+
+
+    return (
+      Math.abs(
+        hash >>> 0
+      )
+      %
+      99
+    )
+    +
+    1;
   }
 
 
@@ -1842,7 +2383,9 @@
 
 
     luckyNumber.textContent =
-      String(value)
+      String(
+        value
+      )
         .padStart(
           2,
           "0"
@@ -1878,8 +2421,10 @@
   function startLuckyIdleShuffle() {
 
     if (
-      !luckyCard ||
-      luckyLocked ||
+      !luckyCard
+      ||
+      luckyLocked
+      ||
       luckyRolling
     ) {
 
@@ -1915,10 +2460,17 @@
     spawnFireworks(
       luckyFireworks,
       {
-        count: 102,
-        minDistance: 55,
-        maxDistance: 155,
-        cleanup: 1700
+        count:
+          102,
+
+        minDistance:
+          55,
+
+        maxDistance:
+          155,
+
+        cleanup:
+          1700
       }
     );
   }
@@ -1932,7 +2484,7 @@
       !isBackendConfigured()
     ) {
 
-      return randomLuckyNumber();
+      return null;
     }
 
 
@@ -1941,7 +2493,9 @@
       const response =
         await jsonpRequest(
           {
-            action: "lucky",
+            action:
+              "lucky",
+
             guest:
               currentGuestSlug
           }
@@ -1950,12 +2504,14 @@
 
       const serverNumber =
         Number(
-          response?.luckyNumber
+          response
+            ?.luckyNumber
         );
 
 
       if (
-        response?.ok === true
+        response?.ok ===
+          true
         &&
         Number.isInteger(
           serverNumber
@@ -1974,20 +2530,59 @@
     } catch (error) {
 
       console.warn(
-        "Không đồng bộ được số may mắn:",
+        "Không lấy được số từ server:",
         error
       );
     }
 
 
-    return randomLuckyNumber();
+    return null;
+  }
+
+
+  function saveLuckyFallback(
+    value
+  ) {
+
+    if (
+      !currentGuestSlug
+      ||
+      !isBackendConfigured()
+    ) {
+
+      return;
+    }
+
+
+    postToBackend(
+      {
+        action:
+          "saveLucky",
+
+        guest:
+          currentGuestSlug,
+
+        luckyNumber:
+          value
+      }
+    )
+      .catch(
+        (error) => {
+
+          console.warn(
+            "Không ghi được số may mắn fallback:",
+            error
+          );
+        }
+      );
   }
 
 
   function rollLuckyNumber() {
 
     if (
-      luckyRolling ||
+      luckyRolling
+      ||
       luckyLocked
     ) {
 
@@ -1998,7 +2593,8 @@
     stopLuckyIdleShuffle();
 
 
-    luckyRolling = true;
+    luckyRolling =
+      true;
 
 
     luckyCard
@@ -2020,9 +2616,7 @@
     ) {
 
       luckyHint.textContent =
-        normalizeVietnameseText(
-          "Đang tìm số may mắn..."
-        );
+        "Đang tìm số may mắn...";
     }
 
 
@@ -2038,7 +2632,8 @@
       1850;
 
 
-    let lastUpdate = 0;
+    let lastUpdate =
+      0;
 
 
     function frame(
@@ -2048,26 +2643,32 @@
       const progress =
         Math.min(
           (
-            now -
+            now
+            -
             start
-          ) /
+          )
+          /
           duration,
           1
         );
 
 
       const interval =
-        45 +
+        45
+        +
         Math.pow(
           progress,
           3
-        ) *
+        )
+        *
         145;
 
 
       if (
-        now -
-        lastUpdate >=
+        now
+        -
+        lastUpdate
+        >=
         interval
       ) {
 
@@ -2101,7 +2702,8 @@
 
     async function finishLuckyRoll() {
 
-      let finalNumber;
+      let finalNumber =
+        null;
 
 
       try {
@@ -2109,62 +2711,47 @@
         finalNumber =
           await finalNumberPromise;
 
-      } catch (_) {
+      } catch (_) {}
+
+
+      /*
+        Nếu JSONP lỗi, dùng số ổn định
+        theo guest slug rồi POST ghi I.
+      */
+
+      if (
+        !Number.isInteger(
+          finalNumber
+        )
+      ) {
 
         finalNumber =
-          randomLuckyNumber();
+          currentGuestSlug
+            ?
+            deterministicLuckyNumber(
+              currentGuestSlug
+            )
+            :
+            randomLuckyNumber();
+
+
+        saveLuckyFallback(
+          finalNumber
+        );
       }
 
 
-      luckyRolling = false;
-
-      luckyLocked = true;
-
-
-      luckyCard
-        ?.classList
-        .remove(
-          "is-rolling"
-        );
+      luckyRolling =
+        false;
 
 
-      luckyCard
-        ?.classList
-        .add(
-          "is-revealed"
-        );
-
-
-      showLuckyNumber(
-        finalNumber
+      lockLuckyNumber(
+        finalNumber,
+        true
       );
 
 
       fireLuckyFireworks();
-
-
-      if (
-        luckyHint
-      ) {
-
-        luckyHint.textContent =
-          normalizeVietnameseText(
-            LUCKY_TEST_MODE
-              ?
-              "Tải lại trang để thử lại"
-              :
-              "Số may mắn của bạn"
-          );
-      }
-
-
-      if (
-        luckyTrigger
-      ) {
-
-        luckyTrigger.disabled =
-          true;
-      }
     }
 
 
@@ -2174,7 +2761,28 @@
   }
 
 
-  startLuckyIdleShuffle();
+  /*
+    Nếu browser đã roll trước đó,
+    hiện ngay số cũ trong lúc chờ Sheet.
+  */
+
+  const locallySavedLucky =
+    readLocalLuckyNumber();
+
+
+  if (
+    locallySavedLucky
+  ) {
+
+    lockLuckyNumber(
+      locallySavedLucky,
+      false
+    );
+
+  } else {
+
+    startLuckyIdleShuffle();
+  }
 
 
   luckyTrigger
@@ -2222,32 +2830,6 @@
         "Kó"
         :
         "Không";
-  }
-
-
-  function showRsvpStatus(
-    message
-  ) {
-
-    if (
-      !rsvpStatus
-    ) {
-
-      return;
-    }
-
-
-    rsvpStatus.textContent =
-      normalizeVietnameseText(
-        message
-      );
-
-
-    rsvpStatus
-      .classList
-      .add(
-        "is-visible"
-      );
   }
 
 
@@ -2344,7 +2926,9 @@
           rsvpAttendanceNo.checked
         ) {
 
-          rsvpCount = 0;
+          rsvpCount =
+            0;
+
 
           updateCount();
         }
@@ -2363,154 +2947,18 @@
         if (
           rsvpAttendanceYes.checked
           &&
-          rsvpCount < 1
+          rsvpCount <
+            1
         ) {
 
-          rsvpCount = 1;
+          rsvpCount =
+            1;
+
 
           updateCount();
         }
       }
     );
-
-
-  rsvpVideo
-    ?.addEventListener(
-      "change",
-      () => {
-
-        const file =
-          rsvpVideo
-            .files
-            ?.[0];
-
-
-        if (
-          !file
-        ) {
-
-          if (
-            rsvpVideoLabel
-          ) {
-
-            rsvpVideoLabel.textContent =
-              "Video lời chúc gửi tới cô dâu chú rể";
-          }
-
-
-          return;
-        }
-
-
-        if (
-          file.size >
-          MAX_VIDEO_BYTES
-        ) {
-
-          showRsvpStatus(
-            "Video tối đa 20 MB. Bạn chọn video ngắn hoặc dung lượng nhỏ hơn giúp chúng mình nhé."
-          );
-
-
-          rsvpVideo.value = "";
-
-
-          if (
-            rsvpVideoLabel
-          ) {
-
-            rsvpVideoLabel.textContent =
-              "Video lời chúc gửi tới cô dâu chú rể";
-          }
-
-
-          return;
-        }
-
-
-        if (
-          rsvpVideoLabel
-        ) {
-
-          rsvpVideoLabel.textContent =
-            normalizeVietnameseText(
-              file.name
-            );
-        }
-      }
-    );
-
-
-  function fileToBase64(
-    file
-  ) {
-
-    return new Promise(
-      (
-        resolve,
-        reject
-      ) => {
-
-        const reader =
-          new FileReader();
-
-
-        reader.onerror =
-          () => {
-
-            reject(
-              new Error(
-                "Không đọc được video."
-              )
-            );
-          };
-
-
-        reader.onload =
-          () => {
-
-            const result =
-              String(
-                reader.result ||
-                ""
-              );
-
-
-            const commaIndex =
-              result.indexOf(
-                ","
-              );
-
-
-            if (
-              commaIndex <
-              0
-            ) {
-
-              reject(
-                new Error(
-                  "Không chuyển đổi được video."
-                )
-              );
-
-              return;
-            }
-
-
-            resolve(
-              result.slice(
-                commaIndex + 1
-              )
-            );
-          };
-
-
-        reader.readAsDataURL(
-          file
-        );
-      }
-    );
-  }
 
 
   rsvpForm
@@ -2532,7 +2980,8 @@
         const message =
           rsvpMessage
             ?.value
-            .trim() ||
+            .trim()
+          ||
           "";
 
 
@@ -2545,18 +2994,11 @@
             "yes";
 
 
-        const videoFile =
-          rsvpVideo
-            ?.files
-            ?.[0] ||
-          null;
-
-
         if (
           !name
         ) {
 
-          showRsvpStatus(
+          window.alert(
             "Bạn nhập tên khách mời giúp chúng mình nhé."
           );
 
@@ -2569,7 +3011,7 @@
           !currentGuestSlug
         ) {
 
-          showRsvpStatus(
+          window.alert(
             "Link thiệp này chưa có mã khách mời. Bạn vui lòng mở đúng link được gửi riêng nhé."
           );
 
@@ -2582,24 +3024,8 @@
           !isBackendConfigured()
         ) {
 
-          showRsvpStatus(
-            "Website chưa kết nối Google Sheet. Vui lòng cấu hình Apps Script URL."
-          );
-
-
-          return;
-        }
-
-
-        if (
-          videoFile
-          &&
-          videoFile.size >
-          MAX_VIDEO_BYTES
-        ) {
-
-          showRsvpStatus(
-            "Video tối đa 20 MB."
+          window.alert(
+            "Website chưa kết nối Google Sheet."
           );
 
 
@@ -2621,12 +3047,14 @@
         );
 
 
-        showRsvpStatus(
-          "Đang gửi xác nhận..."
-        );
-
-
         try {
+
+          /*
+            J = tên
+            K = Có / Không
+            L = số lượng
+            M = lời nhắn
+          */
 
           await postToBackend(
             {
@@ -2648,47 +3076,6 @@
           );
 
 
-          if (
-            videoFile
-          ) {
-
-            showRsvpStatus(
-              "Đang tải video lời chúc lên Drive..."
-            );
-
-
-            const videoBase64 =
-              await fileToBase64(
-                videoFile
-              );
-
-
-            await postToBackend(
-              {
-                action:
-                  "uploadVideo",
-
-                guest:
-                  currentGuestSlug,
-
-                fileName:
-                  videoFile.name,
-
-                mimeType:
-                  videoFile.type ||
-                  "video/mp4",
-
-                videoBase64
-              }
-            );
-          }
-
-
-          showRsvpStatus(
-            "Đã ghi nhận xác nhận của bạn."
-          );
-
-
           setSubmitText(
             "ĐÃ GỬI XÁC NHẬN"
           );
@@ -2697,11 +3084,6 @@
 
           console.error(
             error
-          );
-
-
-          showRsvpStatus(
-            "Có lỗi khi gửi xác nhận. Bạn thử lại giúp chúng mình nhé."
           );
 
 
@@ -2717,6 +3099,11 @@
             rsvpSubmit.disabled =
               false;
           }
+
+
+          window.alert(
+            "Có lỗi khi gửi xác nhận. Bạn thử lại giúp chúng mình nhé."
+          );
         }
       }
     );
@@ -2756,6 +3143,18 @@
   /* =======================================================
      INIT
   ======================================================= */
+
+  /*
+    Ghi H độc lập.
+    Không cần đợi JSONP guest lookup.
+  */
+
+  markInvitationOpened();
+
+
+  /*
+    Đọc F, I và dữ liệu RSVP cũ.
+  */
 
   loadGuestPersonalization();
 
