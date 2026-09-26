@@ -17,6 +17,14 @@
     "https://script.google.com/macros/s/AKfycbzZgGDz-UI1bGQI8M4FoYe1GzxUWCI9V1k_hK6N_9WftwU9qyH-Utm9csjz9NkdW6Axhg/exec";
 
 
+  const SPREADSHEET_ID =
+    "1Met6W9whg2I9Ho_GVBgpp4QZOrBF_24pKOk0lPiC7Yo";
+
+
+  const SHEET_NAME =
+    "Danh sách khách mời";
+
+
   const DRIVE_UPLOAD_URL =
     "https://drive.google.com/drive/folders/1e1acGQ5Nmtk5DlyNHUvbc7HcXA1gaj1i?usp=sharing";
 
@@ -25,8 +33,40 @@
     "Hãy giữ con số may mắn của bạn tới ngày cưới của chúng mình nhé!";
 
 
+  /*
+    Ta đọc:
+
+    D = guest name
+    F = display name
+    G = invitation URL
+    H = opened
+    I = lucky number
+    J = RSVP name
+    K = attendance
+    L = guest count
+    M = message
+    N = video
+
+    Theo thứ tự select bên dưới:
+
+    index 0 = D
+    index 1 = F
+    index 2 = G
+    index 3 = H
+    index 4 = I
+    index 5 = J
+    index 6 = K
+    index 7 = L
+    index 8 = M
+    index 9 = N
+  */
+
+  const GVIZ_QUERY =
+    "select D,F,G,H,I,J,K,L,M,N";
+
+
   /* =======================================================
-     GUEST
+     URL GUEST
   ======================================================= */
 
   const urlParams =
@@ -51,6 +91,51 @@
       .replace(
         /[^a-z0-9-]/g,
         ""
+      );
+  }
+
+
+  function slugifyGuestName(value) {
+
+    return String(
+      value || ""
+    )
+      .trim()
+
+      .replace(
+        /Đ/g,
+        "D"
+      )
+
+      .replace(
+        /đ/g,
+        "d"
+      )
+
+      .normalize(
+        "NFD"
+      )
+
+      .replace(
+        /[\u0300-\u036f]/g,
+        ""
+      )
+
+      .toLowerCase()
+
+      .replace(
+        /[^a-z0-9]+/g,
+        "-"
+      )
+
+      .replace(
+        /^-+|-+$/g,
+        ""
+      )
+
+      .replace(
+        /-+/g,
+        "-"
       );
   }
 
@@ -325,17 +410,16 @@
 
 
   /* =======================================================
-     JSONP
+     GOOGLE SHEET GVIZ READ
 
-     Google Apps Script ContentService hỗ trợ chính thức
-     JSONP bằng parameter "prefix".
+     Đây là phần thay cho Apps Script JSONP.
 
-     KHÔNG iframe.
-     KHÔNG transport=bridge.
+     docs.google.com/spreadsheets/.../gviz/tq
+     -> script injection
+     -> responseHandler(...)
   ======================================================= */
 
-  function jsonpRequest(
-    params = {},
+  function gvizRequest(
     timeout = 20000
   ) {
 
@@ -346,70 +430,13 @@
       ) => {
 
         const callbackName =
-          "__bachThuWedding"
+          "__bachThuSheet"
           +
           Date.now()
           +
           Math.random()
             .toString(36)
             .slice(2);
-
-
-        const query =
-          new URLSearchParams();
-
-
-        Object.entries(
-          params
-        )
-          .forEach(
-            (
-              [
-                key,
-                value
-              ]
-            ) => {
-
-              if (
-                value === undefined
-                ||
-                value === null
-              ) {
-
-                return;
-              }
-
-
-              query.set(
-                key,
-                String(value)
-              );
-            }
-          );
-
-
-        /*
-          Quan trọng:
-          dùng PREFIX theo tài liệu Apps Script.
-        */
-
-        query.set(
-          "prefix",
-          callbackName
-        );
-
-
-        /*
-          Cache bust bằng parameter t.
-          Không dùng bridge nữa.
-        */
-
-        query.set(
-          "t",
-          String(
-            Date.now()
-          )
-        );
 
 
         const script =
@@ -424,7 +451,9 @@
 
         function cleanup() {
 
-          if (finished) {
+          if (
+            finished
+          ) {
 
             return;
           }
@@ -469,6 +498,42 @@
             cleanup();
 
 
+            if (
+              !response
+            ) {
+
+              reject(
+                new Error(
+                  "Google Sheet không trả dữ liệu."
+                )
+              );
+
+              return;
+            }
+
+
+            if (
+              response.status
+              &&
+              response.status !== "ok"
+            ) {
+
+              console.error(
+                "[Wedding] GViz response:",
+                response
+              );
+
+
+              reject(
+                new Error(
+                  "Google Sheet trả về lỗi truy vấn."
+                )
+              );
+
+              return;
+            }
+
+
             resolve(
               response
             );
@@ -483,21 +548,61 @@
 
             reject(
               new Error(
-                "Không tải được dữ liệu từ Google Apps Script."
+                "Không tải được dữ liệu trực tiếp từ Google Sheet."
               )
             );
           };
 
 
-        script.async = true;
+        /*
+          tqx responseHandler là cơ chế callback
+          của Google Visualization.
+        */
+
+        const tqx =
+          `responseHandler:${callbackName}`;
+
+
+        const url =
+          "https://docs.google.com/spreadsheets/d/"
+          +
+          encodeURIComponent(
+            SPREADSHEET_ID
+          )
+          +
+          "/gviz/tq"
+          +
+          "?sheet="
+          +
+          encodeURIComponent(
+            SHEET_NAME
+          )
+          +
+          "&headers=1"
+          +
+          "&tq="
+          +
+          encodeURIComponent(
+            GVIZ_QUERY
+          )
+          +
+          "&tqx="
+          +
+          encodeURIComponent(
+            tqx
+          )
+          +
+          "&t="
+          +
+          Date.now();
+
+
+        script.async =
+          true;
 
 
         script.src =
-          WEDDING_API_URL
-          +
-          "?"
-          +
-          query.toString();
+          url;
 
 
         timer =
@@ -509,7 +614,7 @@
 
               reject(
                 new Error(
-                  "Google Apps Script phản hồi quá lâu."
+                  "Google Sheet phản hồi quá lâu."
                 )
               );
 
@@ -527,10 +632,561 @@
 
 
   /* =======================================================
-     POST
+     GVIZ VALUE HELPERS
   ======================================================= */
 
-  async function postToBackend(data) {
+  function getGvizCell(
+    row,
+    columnIndex
+  ) {
+
+    if (
+      !row
+      ||
+      !Array.isArray(
+        row.c
+      )
+    ) {
+
+      return "";
+    }
+
+
+    const cell =
+      row.c[
+        columnIndex
+      ];
+
+
+    if (
+      !cell
+    ) {
+
+      return "";
+    }
+
+
+    /*
+      .v = raw value
+      .f = formatted value
+
+      Với text, ưu tiên .v.
+      Với date, .f dễ đọc hơn nhưng ta không dùng H ở frontend.
+    */
+
+    if (
+      cell.v !==
+      undefined
+      &&
+      cell.v !==
+      null
+    ) {
+
+      return cell.v;
+    }
+
+
+    if (
+      cell.f !==
+      undefined
+      &&
+      cell.f !==
+      null
+    ) {
+
+      return cell.f;
+    }
+
+
+    return "";
+  }
+
+
+  function getGvizDisplayCell(
+    row,
+    columnIndex
+  ) {
+
+    if (
+      !row
+      ||
+      !Array.isArray(
+        row.c
+      )
+    ) {
+
+      return "";
+    }
+
+
+    const cell =
+      row.c[
+        columnIndex
+      ];
+
+
+    if (!cell) {
+
+      return "";
+    }
+
+
+    if (
+      cell.f !==
+      undefined
+      &&
+      cell.f !==
+      null
+    ) {
+
+      return cell.f;
+    }
+
+
+    if (
+      cell.v !==
+      undefined
+      &&
+      cell.v !==
+      null
+    ) {
+
+      return cell.v;
+    }
+
+
+    return "";
+  }
+
+
+  /* =======================================================
+     EXTRACT ?guest FROM COLUMN G
+  ======================================================= */
+
+  function extractGuestSlugFromLink(
+    link
+  ) {
+
+    const text =
+      String(
+        link || ""
+      );
+
+
+    const match =
+      text.match(
+        /[?&]guest=([^&#]+)/
+      );
+
+
+    if (!match) {
+
+      return "";
+    }
+
+
+    try {
+
+      return normalizeGuestSlug(
+        decodeURIComponent(
+          match[1]
+        )
+      );
+
+    } catch (_) {
+
+      return normalizeGuestSlug(
+        match[1]
+      );
+    }
+  }
+
+
+  /* =======================================================
+     FIND CURRENT GUEST IN SHEET
+
+     Ưu tiên G = Link thiệp.
+     Fallback D = tên khách.
+  ======================================================= */
+
+  function findGuestInGvizResponse(
+    response
+  ) {
+
+    const rows =
+      response
+        ?.table
+        ?.rows;
+
+
+    if (
+      !Array.isArray(
+        rows
+      )
+    ) {
+
+      throw new Error(
+        "Google Sheet không có danh sách khách."
+      );
+    }
+
+
+    /*
+      -----------------------------------------------------
+      PASS 1:
+      tìm chính xác slug trong G.
+      -----------------------------------------------------
+    */
+
+    for (
+      let i = 0;
+      i < rows.length;
+      i += 1
+    ) {
+
+      const row =
+        rows[i];
+
+
+      const inviteLink =
+        getGvizDisplayCell(
+          row,
+          2
+        );
+
+
+      const slug =
+        extractGuestSlugFromLink(
+          inviteLink
+        );
+
+
+      if (
+        slug
+        &&
+        slug ===
+        currentGuestSlug
+      ) {
+
+        return parseGuestRow(
+          row,
+          i
+        );
+      }
+    }
+
+
+    /*
+      -----------------------------------------------------
+      PASS 2:
+      fallback D.
+
+      Có xử lý duplicate:
+      abc
+      abc-2
+      abc-3
+      -----------------------------------------------------
+    */
+
+    const duplicateCounter =
+      Object.create(
+        null
+      );
+
+
+    for (
+      let i = 0;
+      i < rows.length;
+      i += 1
+    ) {
+
+      const row =
+        rows[i];
+
+
+      const guestName =
+        String(
+          getGvizDisplayCell(
+            row,
+            0
+          )
+          ||
+          ""
+        )
+          .trim();
+
+
+      if (!guestName) {
+
+        continue;
+      }
+
+
+      const baseSlug =
+        slugifyGuestName(
+          guestName
+        );
+
+
+      if (!baseSlug) {
+
+        continue;
+      }
+
+
+      duplicateCounter[
+        baseSlug
+      ] =
+        (
+          duplicateCounter[
+            baseSlug
+          ]
+          ||
+          0
+        )
+        +
+        1;
+
+
+      const occurrence =
+        duplicateCounter[
+          baseSlug
+        ];
+
+
+      const slug =
+        occurrence === 1
+          ?
+          baseSlug
+          :
+          `${baseSlug}-${occurrence}`;
+
+
+      if (
+        slug ===
+        currentGuestSlug
+      ) {
+
+        return parseGuestRow(
+          row,
+          i
+        );
+      }
+    }
+
+
+    throw new Error(
+      `Không tìm thấy khách "${currentGuestSlug}" trong Google Sheet.`
+    );
+  }
+
+
+  /* =======================================================
+     MAP GVIZ ROW -> WEBSITE DATA
+  ======================================================= */
+
+  function parseGuestRow(
+    row,
+    rowIndex
+  ) {
+
+    /*
+      select D,F,G,H,I,J,K,L,M,N
+
+      0 D
+      1 F
+      2 G
+      3 H
+      4 I
+      5 J
+      6 K
+      7 L
+      8 M
+      9 N
+    */
+
+    const luckyRaw =
+      getGvizCell(
+        row,
+        4
+      );
+
+
+    const guestCountRaw =
+      getGvizCell(
+        row,
+        7
+      );
+
+
+    const luckyNumber =
+      Number(
+        luckyRaw
+      );
+
+
+    const guestCount =
+      Number(
+        guestCountRaw
+      );
+
+
+    return {
+
+      ok:
+        true,
+
+      guest:
+        currentGuestSlug,
+
+      /*
+        +2 vì:
+        row 1 là header,
+        GViz rows bắt đầu từ dòng data đầu tiên.
+      */
+
+      row:
+        rowIndex + 2,
+
+      name:
+        normalizeText(
+          getGvizDisplayCell(
+            row,
+            0
+          )
+        )
+          .trim(),
+
+      /*
+        QUAN TRỌNG:
+        Page 2 chỉ dùng cột F.
+      */
+
+      displayName:
+        normalizeText(
+          getGvizDisplayCell(
+            row,
+            1
+          )
+        )
+          .trim(),
+
+      displayNameSource:
+        "F / Google Sheet GViz",
+
+      inviteLink:
+        String(
+          getGvizDisplayCell(
+            row,
+            2
+          )
+          ||
+          ""
+        ),
+
+      luckyNumber:
+        Number.isInteger(
+          luckyNumber
+        )
+          ?
+          luckyNumber
+          :
+          "",
+
+      rsvpName:
+        normalizeText(
+          getGvizDisplayCell(
+            row,
+            5
+          )
+        )
+          .trim(),
+
+      attendance:
+        normalizeText(
+          getGvizDisplayCell(
+            row,
+            6
+          )
+        )
+          .trim(),
+
+      guestCount:
+        Number.isFinite(
+          guestCount
+        )
+          ?
+          guestCount
+          :
+          "",
+
+      message:
+        normalizeText(
+          getGvizDisplayCell(
+            row,
+            8
+          )
+        ),
+
+      video:
+        String(
+          getGvizDisplayCell(
+            row,
+            9
+          )
+          ||
+          ""
+        )
+    };
+  }
+
+
+  /* =======================================================
+     REQUEST CURRENT GUEST
+
+     Không chạm Apps Script GET.
+  ======================================================= */
+
+  async function requestGuestData() {
+
+    if (
+      !currentGuestSlug
+    ) {
+
+      return null;
+    }
+
+
+    const response =
+      await gvizRequest();
+
+
+    const guest =
+      findGuestInGvizResponse(
+        response
+      );
+
+
+    console.log(
+      "[Wedding] Sheet guest:",
+      guest
+    );
+
+
+    return guest;
+  }
+
+
+  /* =======================================================
+     POST TO APPS SCRIPT
+
+     Phần này của bạn đang chạy đúng.
+     Giữ nguyên.
+  ======================================================= */
+
+  async function postToBackend(
+    data
+  ) {
 
     const body =
       new URLSearchParams();
@@ -559,7 +1215,9 @@
 
           body.append(
             key,
-            String(value)
+            String(
+              value
+            )
           );
         }
       );
@@ -623,7 +1281,9 @@
 
     root.style.setProperty(
       "--design-scale",
-      String(scale)
+      String(
+        scale
+      )
     );
 
 
@@ -684,7 +1344,7 @@
 
 
   /* =======================================================
-     OUTSIDE SCROLL
+     SCROLL NGOÀI THIỆP
   ======================================================= */
 
   window.addEventListener(
@@ -1110,7 +1770,7 @@
 
 
   /* =======================================================
-     PAGE 2 GUEST NAME
+     PAGE 02 GUEST NAME
   ======================================================= */
 
   function ensureGuestNameElement() {
@@ -1190,9 +1850,14 @@
 
     if (!text) {
 
-      element.textContent = "";
+      element.textContent =
+        "";
 
-      element.hidden = true;
+      element.hidden =
+        true;
+
+      element.style.display =
+        "none";
 
       return;
     }
@@ -1212,8 +1877,8 @@
 
 
     /*
-      Đây là vị trí bạn vừa test bằng DevTools
-      và đã nhìn thấy đúng.
+      Đúng vị trí bạn đã test
+      và ép thành công trong DevTools.
     */
 
     element.style.cssText =
@@ -1246,53 +1911,9 @@
 
 
     console.log(
-      "[Wedding] Page 2 name from column F:",
+      "[Wedding] Page 2 F:",
       text
     );
-  }
-
-
-  /* =======================================================
-     READ GUEST
-  ======================================================= */
-
-  async function requestGuestData() {
-
-    if (
-      !currentGuestSlug
-    ) {
-
-      return null;
-    }
-
-
-    const response =
-      await jsonpRequest(
-        {
-          action:
-            "guest",
-
-          guest:
-            currentGuestSlug
-        }
-      );
-
-
-    if (
-      !response
-      ||
-      response.ok !== true
-    ) {
-
-      throw new Error(
-        response?.error
-        ||
-        "Không tìm thấy khách mời."
-      );
-    }
-
-
-    return response;
   }
 
 
@@ -1307,7 +1928,8 @@
     if (
       !response
       ||
-      response.ok !== true
+      response.ok !==
+      true
     ) {
 
       return;
@@ -1322,14 +1944,15 @@
       true;
 
 
-    /*
-      PAGE 2:
-      chỉ response.displayName = cột F.
-    */
+    /* ===================================================
+       PAGE 2 = F
+    =================================================== */
 
     const displayName =
       normalizeText(
-        response.displayName || ""
+        response.displayName
+        ||
+        ""
       )
         .trim();
 
@@ -1348,11 +1971,12 @@
     }
 
 
-    /*
-      PAGE 7 NAME:
-      J đã có -> J.
-      Chưa có -> D.
-    */
+    /* ===================================================
+       RSVP NAME
+
+       J nếu đã nhập.
+       Nếu chưa thì D.
+    =================================================== */
 
     if (
       rsvpGuestName
@@ -1379,9 +2003,9 @@
     }
 
 
-    /*
-      LUCKY.
-    */
+    /* ===================================================
+       LUCKY
+    =================================================== */
 
     const existingLucky =
       Number(
@@ -1408,9 +2032,9 @@
     }
 
 
-    /*
-      RSVP ATTENDANCE.
-    */
+    /* ===================================================
+       ATTENDANCE
+    =================================================== */
 
     if (
       response.attendance ===
@@ -1433,6 +2057,7 @@
         rsvpAttendanceYes.checked =
           false;
       }
+
 
     } else if (
       response.attendance ===
@@ -1458,16 +2083,19 @@
     }
 
 
-    /*
-      RSVP COUNT.
-    */
+    /* ===================================================
+       COUNT
+    =================================================== */
 
     if (
-      response.guestCount !== ""
+      response.guestCount !==
+        ""
       &&
-      response.guestCount !== null
+      response.guestCount !==
+        null
       &&
-      response.guestCount !== undefined
+      response.guestCount !==
+        undefined
     ) {
 
       const savedCount =
@@ -1481,9 +2109,11 @@
           savedCount
         )
         &&
-        savedCount >= 0
+        savedCount >=
+          0
         &&
-        savedCount <= 10
+        savedCount <=
+          10
       ) {
 
         rsvpCount =
@@ -1492,9 +2122,9 @@
     }
 
 
-    /*
-      MESSAGE.
-    */
+    /* ===================================================
+       MESSAGE
+    =================================================== */
 
     if (
       rsvpMessage
@@ -1502,7 +2132,9 @@
 
       rsvpMessage.value =
         normalizeText(
-          response.message || ""
+          response.message
+          ||
+          ""
         );
     }
 
@@ -1513,9 +2145,11 @@
 
 
     if (
-      response.attendance === "Có"
+      response.attendance ===
+        "Có"
       ||
-      response.attendance === "Không"
+      response.attendance ===
+        "Không"
     ) {
 
       setSubmitText(
@@ -1526,7 +2160,7 @@
 
 
   /* =======================================================
-     LOAD PERSONALIZATION
+     LOAD GUEST
   ======================================================= */
 
   async function loadGuestPersonalization(
@@ -1566,8 +2200,8 @@
 
         const delays = [
           0,
-          600,
-          1400
+          500,
+          1200
         ];
 
 
@@ -1597,12 +2231,6 @@
               await requestGuestData();
 
 
-            console.log(
-              "[Wedding] guest API:",
-              response
-            );
-
-
             applyGuestData(
               response
             );
@@ -1618,7 +2246,7 @@
 
 
             console.warn(
-              `[Wedding] guest attempt ${i + 1}`,
+              `[Wedding] Sheet load attempt ${i + 1}`,
               error
             );
           }
@@ -1626,7 +2254,7 @@
 
 
         console.error(
-          "[Wedding] guest loading failed",
+          "[Wedding] Sheet load failed",
           lastError
         );
 
@@ -1648,7 +2276,7 @@
 
 
   /* =======================================================
-     PAGE 2 ENTRANCE
+     PAGE 02 ENTRANCE
   ======================================================= */
 
   function playPage02Entrance() {
@@ -1925,7 +2553,8 @@
       ) => {
 
         const active =
-          pageIndex === safeIndex;
+          pageIndex ===
+          safeIndex;
 
 
         page.classList.toggle(
@@ -1935,7 +2564,8 @@
 
 
         if (
-          page === page06
+          page ===
+          page06
           &&
           !active
         ) {
@@ -1951,7 +2581,9 @@
 
 
     if (
-      pages[safeIndex] ===
+      pages[
+        safeIndex
+      ] ===
       page02Layout
     ) {
 
@@ -1982,7 +2614,9 @@
 
 
     if (
-      pages[safeIndex] ===
+      pages[
+        safeIndex
+      ] ===
       page06
     ) {
 
@@ -2014,15 +2648,20 @@
         page.classList.toggle(
           "is-nearby",
           Math.abs(
-            pageIndex - safeIndex
-          ) <= 1
+            pageIndex
+            -
+            safeIndex
+          ) <=
+            1
         );
       }
     );
 
 
     loadPage(
-      pages[safeIndex],
+      pages[
+        safeIndex
+      ],
       "high"
     );
 
@@ -2081,7 +2720,8 @@
       requestAnimationFrame(
         () => {
 
-          scrollRaf = 0;
+          scrollRaf =
+            0;
 
 
           const index =
@@ -2122,7 +2762,7 @@
 
 
   /* =======================================================
-     OPEN
+     OPEN INVITATION
   ======================================================= */
 
   async function enterInvitation() {
@@ -2135,7 +2775,8 @@
     }
 
 
-    pageMode = true;
+    pageMode =
+      true;
 
 
     loadGuestPersonalization();
@@ -2151,7 +2792,8 @@
       pageScroller
     ) {
 
-      pageScroller.scrollTop = 0;
+      pageScroller.scrollTop =
+        0;
 
 
       pageScroller.setAttribute(
@@ -2168,7 +2810,8 @@
       );
 
 
-    activePageIndex = 0;
+    activePageIndex =
+      0;
 
 
     setNearbyPages(
@@ -2283,9 +2926,11 @@
           value
         )
         &&
-        value >= LUCKY_MIN
+        value >=
+          LUCKY_MIN
         &&
-        value <= LUCKY_MAX
+        value <=
+          LUCKY_MAX
       ) {
 
         return value;
@@ -2299,7 +2944,9 @@
   }
 
 
-  function saveLocalLuckyNumber(value) {
+  function saveLocalLuckyNumber(
+    value
+  ) {
 
     const key =
       getLuckyStorageKey();
@@ -2315,7 +2962,9 @@
 
       localStorage.setItem(
         key,
-        String(value)
+        String(
+          value
+        )
       );
 
     } catch (_) {}
@@ -2375,7 +3024,9 @@
   }
 
 
-  function showLuckyNumber(value) {
+  function showLuckyNumber(
+    value
+  ) {
 
     if (
       !luckyNumber
@@ -2386,7 +3037,9 @@
 
 
     luckyNumber.textContent =
-      String(value)
+      String(
+        value
+      )
         .padStart(
           2,
           "0"
@@ -2397,7 +3050,8 @@
   function stopLuckyIdleShuffle() {
 
     if (
-      luckyIdleTimer !== null
+      luckyIdleTimer !==
+      null
     ) {
 
       clearInterval(
@@ -2405,7 +3059,8 @@
       );
 
 
-      luckyIdleTimer = null;
+      luckyIdleTimer =
+        null;
     }
 
 
@@ -2471,9 +3126,11 @@
         number
       )
       ||
-      number < LUCKY_MIN
+      number <
+        LUCKY_MIN
       ||
-      number > LUCKY_MAX
+      number >
+        LUCKY_MAX
     ) {
 
       return;
@@ -2483,9 +3140,12 @@
     stopLuckyIdleShuffle();
 
 
-    luckyLocked = true;
+    luckyLocked =
+      true;
 
-    luckyRolling = false;
+
+    luckyRolling =
+      false;
 
 
     showLuckyNumber(
@@ -2554,48 +3214,107 @@
     spawnFireworks(
       luckyFireworks,
       {
-        count: 102,
-        minDistance: 55,
-        maxDistance: 155,
-        cleanup: 1700
+        count:
+          102,
+
+        minDistance:
+          55,
+
+        maxDistance:
+          155,
+
+        cleanup:
+          1700
       }
     );
   }
 
 
-  async function requestGuestLuckyNumber() {
+  /* =======================================================
+     READ AUTHORITATIVE LUCKY NUMBER FROM SHEET
 
-    const response =
-      await jsonpRequest(
-        {
-          action:
-            "lucky",
+     Poll vài lần vì POST có thể ghi xong
+     chậm hơn browser một chút.
+  ======================================================= */
 
-          guest:
-            currentGuestSlug
-        }
-      );
+  async function readLuckyAfterSave(
+    candidate
+  ) {
+
+    const delays = [
+      350,
+      700,
+      1200,
+      1800
+    ];
 
 
-    if (
-      !response
-      ||
-      response.ok !== true
+    for (
+      const delay of delays
     ) {
 
-      throw new Error(
-        response?.error
-        ||
-        "Không lấy được số may mắn."
+      await sleep(
+        delay
       );
+
+
+      try {
+
+        const guest =
+          await requestGuestData();
+
+
+        const number =
+          Number(
+            guest
+              ?.luckyNumber
+          );
+
+
+        if (
+          Number.isInteger(
+            number
+          )
+          &&
+          number >=
+            LUCKY_MIN
+          &&
+          number <=
+            LUCKY_MAX
+        ) {
+
+          return number;
+        }
+
+
+      } catch (error) {
+
+        console.warn(
+          "[Wedding] lucky readback:",
+          error
+        );
+      }
     }
 
 
-    return Number(
-      response.luckyNumber
-    );
+    /*
+      Chỉ fallback candidate nếu Sheet chưa kịp trả.
+      Backend vẫn là nơi đảm bảo không overwrite
+      lucky number cũ.
+    */
+
+    return candidate;
   }
 
+
+  /* =======================================================
+     ROLL LUCKY
+
+     1. Sinh candidate ở browser.
+     2. POST saveLucky.
+     3. Đọc lại cột I từ Sheet.
+     4. Hiện số authoritative.
+  ======================================================= */
 
   function rollLuckyNumber() {
 
@@ -2624,7 +3343,15 @@
     stopLuckyIdleShuffle();
 
 
-    luckyRolling = true;
+    luckyRolling =
+      true;
+
+
+    luckyCard
+      ?.classList
+      .remove(
+        "is-revealed"
+      );
 
 
     luckyCard
@@ -2643,8 +3370,29 @@
     }
 
 
-    const resultPromise =
-      requestGuestLuckyNumber();
+    const candidate =
+      randomLuckyNumber();
+
+
+    /*
+      Backend:
+      nếu I đã có -> không overwrite.
+      nếu I trống -> lưu candidate.
+    */
+
+    const savePromise =
+      postToBackend(
+        {
+          action:
+            "saveLucky",
+
+          guest:
+            currentGuestSlug,
+
+          luckyNumber:
+            candidate
+        }
+      );
 
 
     const start =
@@ -2655,7 +3403,8 @@
       1850;
 
 
-    let lastUpdate = 0;
+    let lastUpdate =
+      0;
 
 
     function frame(now) {
@@ -2687,7 +3436,8 @@
         interval
       ) {
 
-        lastUpdate = now;
+        lastUpdate =
+          now;
 
 
         showLuckyNumber(
@@ -2697,7 +3447,8 @@
 
 
       if (
-        progress < 1
+        progress <
+        1
       ) {
 
         requestAnimationFrame(
@@ -2716,8 +3467,13 @@
 
       try {
 
+        await savePromise;
+
+
         const finalNumber =
-          await resultPromise;
+          await readLuckyAfterSave(
+            candidate
+          );
 
 
         lockLuckyNumber(
@@ -2737,7 +3493,8 @@
         );
 
 
-        luckyRolling = false;
+        luckyRolling =
+          false;
 
 
         luckyCard
@@ -2775,7 +3532,7 @@
 
 
   /* =======================================================
-     RSVP UI
+     RSVP
   ======================================================= */
 
   function updateCount() {
@@ -2812,7 +3569,9 @@
   }
 
 
-  function setSubmitText(text) {
+  function setSubmitText(
+    text
+  ) {
 
     const span =
       rsvpSubmit
@@ -2825,7 +3584,8 @@
       span
     ) {
 
-      span.textContent = text;
+      span.textContent =
+        text;
     }
   }
 
@@ -2891,7 +3651,8 @@
           rsvpAttendanceNo.checked
         ) {
 
-          rsvpCount = 0;
+          rsvpCount =
+            0;
 
 
           updateCount();
@@ -2914,7 +3675,8 @@
           rsvpCount < 1
         ) {
 
-          rsvpCount = 1;
+          rsvpCount =
+            1;
 
 
           updateCount();
@@ -2927,10 +3689,12 @@
 
 
   /* =======================================================
-     VIDEO -> DRIVE
+     VIDEO -> GOOGLE DRIVE
   ======================================================= */
 
-  function openVideoDrive(event) {
+  function openVideoDrive(
+    event
+  ) {
 
     event
       ?.preventDefault();
@@ -2948,9 +3712,12 @@
     rsvpVideo
   ) {
 
-    rsvpVideo.disabled = true;
+    rsvpVideo.disabled =
+      true;
 
-    rsvpVideo.tabIndex = -1;
+
+    rsvpVideo.tabIndex =
+      -1;
   }
 
 
@@ -2964,7 +3731,8 @@
     );
 
 
-    rsvpVideoField.tabIndex = 0;
+    rsvpVideoField.tabIndex =
+      0;
 
 
     rsvpVideoField.addEventListener(
@@ -2978,9 +3746,11 @@
       (event) => {
 
         if (
-          event.key === "Enter"
+          event.key ===
+            "Enter"
           ||
-          event.key === " "
+          event.key ===
+            " "
         ) {
 
           openVideoDrive(
@@ -2999,7 +3769,7 @@
   async function backgroundRefreshGuestData() {
 
     await sleep(
-      1200
+      900
     );
 
 
@@ -3010,30 +3780,34 @@
 
 
       if (
-        response
-        &&
-        response.ok === true
+        !response
+        ||
+        response.ok !==
+          true
       ) {
 
-        currentGuestData =
-          response;
+        return;
+      }
 
 
-        if (
+      currentGuestData =
+        response;
+
+
+      if (
+        response.displayName
+      ) {
+
+        renderGuestDisplayName(
           response.displayName
-        ) {
-
-          renderGuestDisplayName(
-            response.displayName
-          );
-        }
+        );
       }
 
 
     } catch (error) {
 
       console.warn(
-        "[Wedding] background sync:",
+        "[Wedding] background refresh:",
         error
       );
     }
@@ -3133,7 +3907,8 @@
         }
 
 
-        rsvpSubmit.disabled = true;
+        rsvpSubmit.disabled =
+          true;
 
 
         setSubmitText(
@@ -3280,6 +4055,13 @@
     localLucky
   ) {
 
+    /*
+      Hiện nhanh local trước.
+
+      Khi Sheet load xong,
+      cột I sẽ override bằng giá trị authoritative.
+    */
+
     lockLuckyNumber(
       localLucky,
       false
@@ -3318,6 +4100,13 @@
 
 
   markInvitationOpened();
+
+
+  /*
+    Từ đây trở đi:
+    READ = Google Sheet GViz
+    WRITE = Apps Script POST
+  */
 
   loadGuestPersonalization();
 
