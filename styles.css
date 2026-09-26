@@ -1,1413 +1,3974 @@
-<!doctype html>
-<html lang="vi">
-
-<head>
-  <meta charset="utf-8" />
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover"
-  />
-
-  <meta
-    name="theme-color"
-    content="#ead5ad"
-  />
-
-  <meta
-    name="description"
-    content="Thiệp cưới Bách & Thư"
-  />
-
-  <title>Bách & Thư</title>
-
-  <link
-    rel="icon"
-    type="image/png"
-    href="./assets/favicon.png"
-  />
-
-  <link
-    rel="preload"
-    href="./assets/page01-bg-optimized.webp"
-    as="image"
-    type="image/webp"
-    fetchpriority="high"
-  />
-
-  <link
-    rel="preload"
-    href="./assets/envelope-closed-optimized.png"
-    as="image"
-    type="image/png"
-    fetchpriority="high"
-  />
-
-  <link
-    rel="stylesheet"
-    href="./styles.css?v=20260924-2"
-  />
-
-  <script
-    src="./script.js?v=20260924-2"
-    defer
-  ></script>
-</head>
-
-
-<body>
-
-  <main
-    class="site-shell"
-    id="siteShell"
-  >
-
-    <div
-      class="site-scale"
-      id="siteScale"
-    >
-
-      <div class="design-stage">
-
-
-        <!-- =================================================
-             PAGE 01
-        ================================================== -->
-
-        <section
-          class="opening-page"
-          id="opening"
-          aria-label="Thiệp cưới Bách và Thư"
-        >
-
-          <button
-            class="opening-card-button"
-            id="openingCardButton"
-            type="button"
-            aria-label="Xem thiệp cưới"
-          >
-
-            <img
-              class="opening-card-image"
-              src="./assets/envelope-closed-optimized.png"
-              alt=""
-              draggable="false"
-              loading="eager"
-              decoding="async"
-              fetchpriority="high"
-              width="800"
-              height="1200"
-            />
-
-            <span
-              class="monogram-pulse"
-              aria-hidden="true"
-            ></span>
-
-          </button>
-
-        </section>
-
-
-        <!-- =================================================
-             INVITATION FLOW
-        ================================================== -->
-
-        <section
-          class="page-02"
-          id="page02"
-          aria-hidden="true"
-        >
+:root {
+  --design-width: 390px;
+  --design-height: 680px;
 
-          <div
-            class="invitation-flow"
-            id="invitationFlow"
-          >
+  --design-scale: 1;
+  --render-width: 390px;
+  --render-height: 680px;
 
+  --paper: #ead5ad;
+  --page-background: #d8c59f;
+  --invitation-paper: #efe0bc;
 
-            <!-- =================================================
-                 PAGE 02
-            ================================================== -->
+  --invitation-green: #28513f;
+  --invitation-red: #a63019;
+  --invitation-gold: #a78042;
 
-            <section
-              class="invitation-page page02-layout"
-              id="page02Layout"
-              aria-label="Lễ thành hôn Bách và Thư"
-            >
+  --p07-red: #a52f21;
+  --p07-green: #2f6d6a;
 
-              <img
-                class="p02-background deferred-page02-asset"
-                data-src="./assets/page02-bg.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  --ambient-duration: 2800ms;
+  --entry-duration: 1150ms;
 
-              <img
-                class="p02-frame deferred-page02-asset"
-                data-src="./assets/page02-frame.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  --entry-ease:
+    cubic-bezier(.18, .82, .25, 1);
+}
 
 
-              <!-- CLOUDS -->
+/* =========================================================
+   RESET
+========================================================= */
 
-              <img
-                class="p02-cloud p02-cloud--01 deferred-page02-asset"
-                data-src="./assets/page02-cloud-01.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+* {
+  box-sizing: border-box;
+}
 
-              <img
-                class="p02-cloud p02-cloud--02 deferred-page02-asset"
-                data-src="./assets/page02-cloud-02.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+html,
+body {
+  width: 100%;
+  height: 100%;
 
-              <img
-                class="p02-cloud p02-cloud--03 deferred-page02-asset"
-                data-src="./assets/page02-cloud-03.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  margin: 0;
+  padding: 0;
+}
 
-              <img
-                class="p02-cloud p02-cloud--04 deferred-page02-asset"
-                data-src="./assets/page02-cloud-04.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+html {
+  background: var(--page-background);
+}
 
+body {
+  display: grid;
+  place-items: center;
 
-              <!-- TEXT -->
+  overflow: hidden;
 
-              <p class="p02-invite">
-                TRÂN TRỌNG KÍNH MỜI
-              </p>
+  background: var(--page-background);
 
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
 
-              <!--
-                CỘT F GOOGLE SHEET
-                Sẽ được JS điền vào đây.
-              -->
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+}
 
-              <p
-                class="p02-personalized-guest"
-                id="personalizedGuestName"
-                hidden
-              ></p>
+button,
+input,
+textarea,
+a {
+  font: inherit;
+}
 
+img {
+  -webkit-user-drag: none;
+}
 
-              <div
-                class="p02-divider"
-                aria-hidden="true"
-              ></div>
 
+/* =========================================================
+   FIXED ARTBOARD
+========================================================= */
 
-              <p class="p02-to">
-                TỚI
-              </p>
+.site-shell {
+  position: relative;
 
+  width: var(--render-width);
+  height: var(--render-height);
 
-              <p class="p02-wedding-title">
-                LỄ THÀNH HÔN
-              </p>
+  flex: 0 0 auto;
 
+  overflow: hidden;
 
-              <h1 class="p02-couple-names">
+  background: var(--paper);
 
-                <span class="p02-name">
-                  ĐỒNG THANH BÁCH
-                </span>
+  opacity: 0;
 
-                <span class="p02-ampersand">
-                  &amp;
-                </span>
+  isolation: isolate;
 
-                <span class="p02-name">
-                  NGUYỄN ANH THƯ
-                </span>
+  box-shadow:
+    0 0 40px
+    rgba(80, 46, 24, .12);
 
-              </h1>
+  transition:
+    opacity 100ms linear;
+}
 
+.site-shell.is-scale-ready {
+  opacity: 1;
+}
 
-              <div
-                class="p02-date-divider"
-                aria-hidden="true"
-              ></div>
+.site-scale {
+  position: absolute;
 
+  left: 0;
+  top: 0;
 
-              <!-- CEREMONY -->
+  width: 390px;
+  height: 680px;
 
-              <div class="p02-ceremony-info">
+  transform-origin: left top;
 
-                <p class="p02-time-line">
+  transform:
+    scale(var(--design-scale));
+}
 
-                  <span>
-                    Vào lúc
-                  </span>
+.design-stage {
+  position: relative;
 
-                  <strong>
-                    10:30 thứ Ba ngày 24/11/2026
-                  </strong>
+  width: 390px;
+  height: 680px;
 
-                </p>
+  overflow: hidden;
 
+  background: var(--paper);
 
-                <p class="p02-lunar-date">
-                  (Tức ngày 16 tháng 10 năm Bính Ngọ)
-                </p>
+  isolation: isolate;
+}
 
 
-                <p class="p02-at">
+/* =========================================================
+   PAGE 01
+========================================================= */
 
-                  <span>
-                    Tại
-                  </span>
+.opening-page {
+  position: absolute;
 
-                  <strong>
-                    khách sạn Sheraton Hanoi
-                  </strong>
+  inset: 0;
 
-                </p>
+  z-index: 2;
 
+  overflow: hidden;
 
-                <p class="p02-venue-address">
-                  (K5 Nghi Tàm, 11 Xuân Diệu Tây Hồ, Hà Nội)
-                </p>
+  background-color: #ead5ad;
 
-              </div>
+  background-image:
+    url("./assets/page01-bg-optimized.webp");
 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 
-              <!-- FAMILY -->
+  opacity: 1;
 
-              <div class="p02-family-info">
+  transition:
+    opacity 520ms ease;
+}
 
-                <section class="p02-family">
+.opening-card-button {
+  position: absolute;
 
-                  <h3 class="p02-family-title">
-                    NHÀ TRAI
-                  </h3>
+  left: 50%;
+  top: calc(14.5% + 18px);
 
-                  <p>
-                    Ông Đồng Thanh Tùng
-                  </p>
+  width: 82%;
+  max-width: 352px;
 
-                  <p>
-                    Bà Nguyễn Thị Thu Hương
-                  </p>
+  aspect-ratio: 2 / 3;
 
-                </section>
+  transform:
+    translateX(-50%);
 
+  margin: 0;
+  padding: 0;
 
-                <section class="p02-family">
+  border: 0;
+  outline: none;
 
-                  <h3 class="p02-family-title">
-                    NHÀ GÁI
-                  </h3>
+  background: transparent;
 
-                  <p>
-                    Ông Nguyễn Anh Thơ
-                  </p>
+  cursor: pointer;
+}
 
-                  <p>
-                    Bà Nguyễn Thị Thu Hương
-                  </p>
+.opening-card-image {
+  position: absolute;
 
-                </section>
+  inset: 0;
 
-              </div>
+  width: 100%;
+  height: 100%;
 
+  object-fit: contain;
 
-              <!-- CONFETTI -->
+  transform:
+    translate3d(0, 24px, 0);
 
-              <div
-                class="p02-confetti-cluster"
-                data-sprite-src="./assets/page06-confetti.png"
-                aria-hidden="true"
-              >
+  transform-origin:
+    50% 55%;
 
-                <span class="p02-confetti-piece p02-confetti-piece--01"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--02"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--03"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--04"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--05"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--06"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--07"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--08"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--09"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--10"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--11"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--12"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--13"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--14"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--15"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--16"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--17"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--18"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--19"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--20"></span>
+  filter:
+    drop-shadow(
+      0 12px 9px
+      rgba(62, 24, 14, .16)
+    );
 
-              </div>
+  animation:
+    opening-card-shake
+    2500ms
+    cubic-bezier(.36, .07, .19, .97)
+    infinite;
 
+  pointer-events: none;
+}
 
-              <!-- PROCESSION -->
+@keyframes opening-card-shake {
 
-              <div
-                class="p02-procession"
-                aria-hidden="true"
-              >
+  0%,
+  50%,
+  100% {
+    transform:
+      translate3d(0, 24px, 0)
+      rotate(0);
+  }
 
-                <img
-                  class="p02-procession-item p02-flag-bearer deferred-page02-asset"
-                  data-src="./assets/page02-flag-bearer.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
+  57% {
+    transform:
+      translate3d(-5px, 21px, 0)
+      rotate(-2deg);
+  }
 
-                <img
-                  class="p02-procession-item p02-couple deferred-page02-asset"
-                  data-src="./assets/page02-couple.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
+  64% {
+    transform:
+      translate3d(6px, 22px, 0)
+      rotate(2.2deg);
+  }
 
-                <img
-                  class="p02-procession-item p02-lion-dance deferred-page02-asset"
-                  data-src="./assets/page02-lion-dance.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
+  71% {
+    transform:
+      translate3d(-5px, 21px, 0)
+      rotate(-2.1deg);
+  }
 
-                <img
-                  class="p02-procession-item p02-drummer deferred-page02-asset"
-                  data-src="./assets/page02-drummer.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
+  78% {
+    transform:
+      translate3d(5px, 23px, 0)
+      rotate(1.8deg);
+  }
 
-              </div>
+  92% {
+    transform:
+      translate3d(0, 24px, 0)
+      rotate(0);
+  }
+}
 
+.monogram-pulse {
+  position: absolute;
 
-              <img
-                class="p02-bottom-ornament deferred-page02-asset"
-                data-src="./assets/page02-bottom-ornament.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  z-index: 5;
 
-            </section>
+  left: 50%;
+  top: calc(60.5% + 24px);
 
+  width: 31%;
 
-            <!-- =================================================
-                 PAGE 03
-            ================================================== -->
+  aspect-ratio: 1;
 
-            <section
-              class="invitation-page page03-layout"
-              id="page03"
-              aria-label="Lịch trình đám cưới"
-            >
+  border-radius: 50%;
 
-              <img
-                class="p03-background deferred-page03-asset"
-                data-src="./assets/page02-bg.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  transform:
+    translate(-50%, -50%);
 
-              <img
-                class="p03-frame deferred-page03-asset"
-                data-src="./assets/page02-frame.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  pointer-events: none;
+}
 
+.monogram-pulse::before,
+.monogram-pulse::after {
+  content: "";
 
-              <img
-                class="p03-cloud p03-cloud--01 deferred-page03-asset"
-                data-src="./assets/page02-cloud-01.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  position: absolute;
 
-              <img
-                class="p03-cloud p03-cloud--02 deferred-page03-asset"
-                data-src="./assets/page02-cloud-03.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  inset: 0;
 
-              <img
-                class="p03-cloud p03-cloud--03 deferred-page03-asset"
-                data-src="./assets/page02-cloud-02.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  border:
+    1.5px solid
+    rgba(237, 196, 96, .52);
 
-              <img
-                class="p03-cloud p03-cloud--04 deferred-page03-asset"
-                data-src="./assets/page02-cloud-04.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  border-radius: 50%;
 
+  opacity: 0;
 
-              <h2 class="p03-title">
-                LỊCH TRÌNH
-              </h2>
+  animation:
+    tap-ring
+    2700ms
+    ease-out
+    infinite;
+}
 
+.monogram-pulse::after {
+  animation-delay: 1350ms;
+}
 
-              <img
-                class="p03-title-divider deferred-page03-asset"
-                data-src="./assets/page03-title-divider.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+@keyframes tap-ring {
 
+  0% {
+    transform: scale(.5);
+    opacity: 0;
+  }
 
-              <img
-                class="p03-timeline deferred-page03-asset"
-                data-src="./assets/page03-timeline-new.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  18% {
+    opacity: .58;
+  }
 
+  100% {
+    transform: scale(1.22);
+    opacity: 0;
+  }
+}
 
-              <!-- ĐÓN DÂU -->
 
-              <article class="p03-event p03-event--02">
+/* =========================================================
+   FLOW
+========================================================= */
 
-                <h3 class="p03-event-title">
-                  ĐÓN DÂU
-                </h3>
+.page-02 {
+  position: absolute;
 
-                <p class="p03-event-date">
-                  24.11.2026
-                </p>
+  inset: 0;
 
-                <p class="p03-event-time">
-                  9:00
-                </p>
+  z-index: 1;
 
+  width: 390px;
+  height: 680px;
 
-                <div class="p03-location">
+  overflow-x: hidden;
+  overflow-y: auto;
 
-                  <span
-                    class="p03-location-pin"
-                    aria-hidden="true"
-                  ></span>
+  background: var(--invitation-paper);
 
+  opacity: 0;
 
-                  <div>
+  pointer-events: none;
 
-                    <strong>
-                      Tư gia nhà gái
-                    </strong>
+  scrollbar-width: none;
 
-                    <span>
-                      AD-14, Ocean Park 3
-                    </span>
+  overscroll-behavior: contain;
 
-                    <span>
-                      Nghĩa Trụ, Văn Giang, Hưng Yên
-                    </span>
+  touch-action: pan-y;
 
-                  </div>
+  -webkit-overflow-scrolling: touch;
 
-                </div>
+  transition:
+    opacity 520ms ease;
+}
 
-              </article>
+.page-02::-webkit-scrollbar {
+  display: none;
+}
 
+.site-shell.is-page-02
+.opening-page {
+  opacity: 0;
 
-              <img
-                class="p03-illustration p03-kieu deferred-page03-asset"
-                data-src="./assets/page03-kieu.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  pointer-events: none;
+}
 
+.site-shell.is-page-02
+.page-02 {
+  z-index: 3;
 
-              <!-- TIỆC CƯỚI -->
+  opacity: 1;
 
-              <img
-                class="p03-illustration p03-mam-co deferred-page03-asset"
-                data-src="./assets/page03-mam-co.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  pointer-events: auto;
+}
 
+.invitation-flow {
+  position: relative;
 
-              <article class="p03-event p03-event--03">
+  width: 390px;
 
-                <h3 class="p03-event-title">
-                  TIỆC CƯỚI
-                </h3>
+  height: auto;
+}
 
-                <p class="p03-event-date">
-                  24.11.2026
-                </p>
+.invitation-page {
+  position: relative;
 
-                <p class="p03-event-time">
-                  11:00 - 14:00
-                </p>
+  width: 390px;
+  height: 680px;
 
+  overflow: hidden;
 
-                <div class="p03-location">
+  background: #f1dfbd;
 
-                  <span
-                    class="p03-location-pin"
-                    aria-hidden="true"
-                  ></span>
+  isolation: isolate;
+}
 
 
-                  <div>
+/* =========================================================
+   COMMON BACKGROUND
+========================================================= */
 
-                    <strong>
-                      Sheraton Hanoi Hotel
-                    </strong>
+.p02-background,
+.p03-background,
+.p06-background,
+.p07-background,
+.p08-background {
+  position: absolute;
 
-                    <span>
-                      K5 Nghi Tàm, 11 Xuân Diệu
-                    </span>
+  inset: 0;
 
-                    <span>
-                      Tây Hồ, Hà Nội
-                    </span>
+  z-index: 0;
 
-                  </div>
+  width: 100%;
+  height: 100%;
 
-                </div>
+  object-fit: cover;
 
-              </article>
+  pointer-events: none;
+}
 
 
-              <!-- AFTER PARTY -->
+/* =========================================================
+   COMMON FRAME
+========================================================= */
 
-              <article class="p03-event p03-event--04">
+.p02-frame,
+.p03-frame,
+.p06-frame,
+.p07-frame,
+.p08-frame {
+  position: absolute;
 
-                <h3 class="p03-event-title">
-                  AFTER PARTY
-                </h3>
+  display: block;
 
-                <p class="p03-event-date">
-                  24.11.2026
-                </p>
+  max-width: none;
 
-                <p class="p03-event-time">
-                  18:30 - 22:00
-                </p>
+  object-fit: fill;
 
+  pointer-events: none;
+}
 
-                <div class="p03-location">
+.p02-frame,
+.p03-frame {
+  z-index: 5;
 
-                  <span
-                    class="p03-location-pin"
-                    aria-hidden="true"
-                  ></span>
+  inset: 0;
 
+  width: 100%;
+  height: 100%;
+}
 
-                  <div>
+.p06-frame {
+  z-index: 40;
 
-                    <strong>
-                      Sheraton Hanoi Hotel
-                    </strong>
+  inset: 0;
 
-                    <span>
-                      (dự kiến)
-                    </span>
+  width: 100%;
+  height: 100%;
+}
 
-                  </div>
+.p07-frame,
+.p08-frame {
+  z-index: 40;
 
-                </div>
+  left: 5px;
+  top: 5px;
 
-              </article>
+  width: 380px;
+  height: 670px;
+}
 
 
-              <img
-                class="p03-illustration p03-cheers deferred-page03-asset"
-                data-src="./assets/page03-cheers.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+/* =========================================================
+   BOTTOM ORNAMENT
+========================================================= */
 
+.p02-bottom-ornament,
+.p03-bottom-ornament,
+.p06-bottom-ornament,
+.p07-bottom-ornament,
+.p08-bottom-ornament {
+  position: absolute;
 
-              <!-- DRESS CODE -->
+  z-index: 36;
 
-              <section
-                class="p03-dress-code"
-                aria-label="Dress code"
-              >
+  left: 50%;
+  bottom: -1px;
 
-                <h3 class="p03-dress-title">
+  display: block;
 
-                  <span>✦</span>
+  width: 120px;
+  height: auto;
 
-                  DRESS CODE
+  transform:
+    translateX(-50%);
 
-                  <span>✦</span>
+  pointer-events: none;
+}
 
-                </h3>
+.p07-bottom-ornament,
+.p08-bottom-ornament {
+  bottom: 3px;
+}
 
 
-                <div class="p03-color-list">
+/* =========================================================
+   AMBIENT
+========================================================= */
 
-                  <div class="p03-color-item">
-                    <span class="p03-color p03-color--brown"></span>
-                    <span>Nâu</span>
-                  </div>
+@keyframes wedding-ambient-float {
 
-                  <div class="p03-color-item">
-                    <span class="p03-color p03-color--pink"></span>
-                    <span>Hồng</span>
-                  </div>
+  0%,
+  100% {
+    transform:
+      translateY(0);
+  }
 
-                  <div class="p03-color-item">
-                    <span class="p03-color p03-color--beige"></span>
-                    <span>Be</span>
-                  </div>
+  50% {
+    transform:
+      translateY(-6px);
+  }
+}
 
-                  <div class="p03-color-item">
-                    <span class="p03-color p03-color--sage"></span>
-                    <span>Xanh</span>
-                  </div>
+.p02-cloud,
+.p03-cloud,
+.p06-cloud,
+.p08-cloud {
+  position: absolute;
 
-                </div>
+  z-index: 60;
 
-              </section>
+  height: auto;
 
+  pointer-events: none;
 
-              <img
-                class="p03-bottom-ornament deferred-page03-asset"
-                data-src="./assets/page02-bottom-ornament.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  animation:
+    wedding-ambient-float
+    var(--ambient-duration)
+    ease-in-out
+    infinite;
+}
 
-            </section>
 
+/* =========================================================
+   PAGE 02
+========================================================= */
 
-            <!-- =================================================
-                 PAGE 06
-            ================================================== -->
+.p02-cloud--01 {
+  left: 28px;
+  top: 116px;
 
-            <section
-              class="invitation-page page06-layout"
-              id="page06"
-              aria-label="Nhận số may mắn của bạn"
-            >
+  width: 88px;
+}
 
-              <img
-                class="p06-background deferred-page06-asset"
-                data-src="./assets/page02-bg.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+.p02-cloud--02 {
+  right: 19px;
+  top: 133px;
 
+  width: 80px;
+}
 
-              <img
-                class="p06-confetti deferred-page06-asset"
-                data-src="./assets/page06-confetti.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+.p02-cloud--03 {
+  left: 18px;
+  top: 219px;
 
+  width: 65px;
+}
 
-              <div
-                class="p06-entry-fireworks"
-                id="page06EntryFireworks"
-                aria-hidden="true"
-              ></div>
+.p02-cloud--04 {
+  right: 28px;
+  top: 265px;
 
+  width: 65px;
+}
 
-              <img
-                class="p06-cloud p06-cloud--01 deferred-page06-asset"
-                data-src="./assets/page02-cloud-02.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
 
-              <img
-                class="p06-cloud p06-cloud--02 deferred-page06-asset"
-                data-src="./assets/page02-cloud-03.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+/* PAGE 02 ENTRY */
 
-              <img
-                class="p06-cloud p06-cloud--03 deferred-page06-asset"
-                data-src="./assets/page02-cloud-04.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+.page02-layout
+.p02-cloud,
 
-              <img
-                class="p06-cloud p06-cloud--04 deferred-page06-asset"
-                data-src="./assets/page02-cloud-01.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+.page02-layout
+.p02-confetti-cluster,
 
+.page02-layout
+.p02-procession {
+  opacity: 0;
 
-              <div
-                class="p06-card-wrap"
-                id="luckyCard"
-              >
+  transition:
+    translate
+    var(--entry-duration)
+    var(--entry-ease),
 
-                <img
-                  class="p06-lucky-card deferred-page06-asset"
-                  data-src="./assets/page06-lucky-card.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
+    opacity
+    700ms
+    ease;
+}
 
+.page02-layout
+.p02-cloud--01,
 
-                <h2 class="p06-title">
-                  Nhận số may mắn của bạn
-                </h2>
+.page02-layout
+.p02-cloud--03 {
+  translate:
+    -85px 0;
+}
 
+.page02-layout
+.p02-cloud--02,
 
-                <div
-                  class="p06-number-slot"
-                  id="luckyNumber"
-                  aria-live="polite"
-                  aria-atomic="true"
-                >
-                  88
-                </div>
+.page02-layout
+.p02-cloud--04 {
+  translate:
+    85px 0;
+}
 
+.page02-layout
+.p02-confetti-cluster,
 
-                <p
-                  class="p06-number-hint"
-                  id="luckyHint"
-                >
-                  Nhấn để nhận số may mắn
-                </p>
+.page02-layout
+.p02-procession {
+  translate:
+    0 46px;
+}
 
+.page02-layout.is-entering
+.p02-cloud,
 
-                <div
-                  class="p06-fireworks"
-                  id="luckyFireworks"
-                  aria-hidden="true"
-                ></div>
+.page02-layout.is-entering
+.p02-confetti-cluster,
 
+.page02-layout.is-entering
+.p02-procession {
+  opacity: 1;
 
-                <button
-                  class="p06-lucky-trigger"
-                  id="luckyTrigger"
-                  type="button"
-                  aria-label="Nhấn để nhận số may mắn"
-                ></button>
+  translate:
+    0 0;
+}
 
-              </div>
 
+/* PAGE 02 TEXT */
 
-              <div
-                class="p06-bottom-items"
-                aria-hidden="true"
-              >
+.p02-invite,
+.p02-personalized-guest,
+.p02-to,
+.p02-wedding-title,
+.p02-couple-names {
+  position: absolute;
 
-                <img
-                  class="p06-lucky-item p06-ingots deferred-page06-asset"
-                  data-src="./assets/page06-lucky-ingots.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
+  z-index: 20;
 
-                <img
-                  class="p06-lucky-item p06-knot deferred-page06-asset"
-                  data-src="./assets/page06-lucky-knot.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
+  left: 50%;
 
-                <img
-                  class="p06-lucky-item p06-bag deferred-page06-asset"
-                  data-src="./assets/page06-lucky-bag.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
+  margin: 0;
 
-                <img
-                  class="p06-lucky-item p06-coins deferred-page06-asset"
-                  data-src="./assets/page06-lucky-coins.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
+  text-align: center;
 
-              </div>
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
 
+  font-weight: 400;
 
-              <img
-                class="p06-frame deferred-page06-asset"
-                data-src="./assets/page02-frame.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  color:
+    var(--invitation-green);
+}
 
+.p02-invite {
+  top: 45px;
 
-              <img
-                class="p06-bottom-ornament deferred-page06-asset"
-                data-src="./assets/page02-bottom-ornament.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  width: 320px;
 
-            </section>
+  font-size: 15px;
 
+  transform:
+    translateX(-50%)
+    scaleX(.94);
+}
 
-            <!-- =================================================
-                 PAGE 07
-            ================================================== -->
 
-            <section
-              class="invitation-page page07-layout"
-              id="page07"
-              aria-label="Xác nhận tham dự"
-            >
+/* PERSONALIZED GUEST */
 
-              <img
-                class="p07-background deferred-page07-asset"
-                data-src="./assets/page02-bg.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+.p02-personalized-guest {
+  top: 70px;
 
+  width: 330px;
 
-              <img
-                class="p07-top-left-decoration deferred-page07-asset"
-                data-src="./assets/page07-top-left-branch-lantern.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  transform:
+    translateX(-50%);
 
+  color:
+    var(--invitation-red);
 
-              <img
-                class="p07-butterfly deferred-page07-asset"
-                data-src="./assets/page07-butterfly.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  font-size: 13px;
 
+  font-style: italic;
 
-              <h2 class="p07-rsvp-title">
-                XÁC NHẬN<br />
-                THAM DỰ
-              </h2>
+  line-height: 1.15;
 
+  white-space: normal;
+}
 
-              <img
-                class="p07-divider-ornament p07-divider-ornament--top deferred-page07-asset"
-                data-src="./assets/page07-divider-ornament.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+.p02-personalized-guest[hidden] {
+  display: none;
+}
 
 
-              <p class="p07-rsvp-subtitle">
-                Sự hiện diện của bạn là niềm vui lớn<br />
-                dành cho chúng mình!
-              </p>
+.p02-divider {
+  position: absolute;
 
+  z-index: 20;
 
-              <form
-                class="p07-rsvp-form"
-                id="rsvpForm"
-              >
+  left: 50%;
+  top: 100px;
 
+  width: 220px;
+  height: 1px;
 
-                <!-- NAME -->
+  transform:
+    translateX(-50%);
 
-                <div class="p07-form-group p07-form-group--name">
+  background:
+    rgba(153, 111, 52, .72);
+}
 
-                  <label
-                    class="p07-form-label"
-                    for="rsvpGuestName"
-                  >
-                    Tên khách mời
-                  </label>
+.p02-divider::after {
+  content: "•••";
 
+  position: absolute;
 
-                  <div class="p07-field p07-field--name">
+  left: 50%;
+  top: 50%;
 
-                    <input
-                      id="rsvpGuestName"
-                      class="p07-text-input"
-                      type="text"
-                      name="guestName"
-                      autocomplete="name"
-                      placeholder="Nhập tên của bạn..."
-                    />
+  padding: 0 4px;
 
+  transform:
+    translate(-50%, -56%);
 
-                    <img
-                      class="p07-field-lotus deferred-page07-asset"
-                      data-src="./assets/page07-lotus.png"
-                      alt=""
-                      draggable="false"
-                      decoding="async"
-                    />
+  background: #f1dfbd;
 
-                  </div>
+  color:
+    var(--invitation-gold);
 
-                </div>
+  font-size: 7px;
+}
 
+.p02-to {
+  top: 125px;
 
-                <!-- ATTENDANCE -->
+  width: 320px;
 
-                <fieldset class="p07-form-group p07-form-group--attendance">
+  font-size: 16px;
 
-                  <legend class="p07-form-label">
-                    Bạn sẽ tới chung vui cùng chúng mình chứ?
-                  </legend>
+  transform:
+    translateX(-50%)
+    scaleX(.8);
+}
 
+.p02-wedding-title {
+  top: 160px;
 
-                  <div class="p07-attendance-options">
+  width: 330px;
 
-                    <label class="p07-attendance-option">
+  font-size: 19px;
 
-                      <input
-                        id="rsvpAttendanceYes"
-                        type="radio"
-                        name="attendance"
-                        value="yes"
-                        checked
-                      />
+  transform:
+    translateX(-50%)
+    scaleX(.77);
+}
 
-                      <span class="p07-radio-mark"></span>
+.p02-couple-names {
+  top: 200px;
 
-                      <span class="p07-attendance-text">
-                        Có
-                      </span>
+  width: 370px;
 
-                    </label>
+  display: flex;
 
+  flex-direction: column;
 
-                    <label class="p07-attendance-option">
+  align-items: center;
 
-                      <input
-                        id="rsvpAttendanceNo"
-                        type="radio"
-                        name="attendance"
-                        value="no"
-                      />
+  line-height: .87;
 
-                      <span class="p07-radio-mark"></span>
+  color:
+    var(--invitation-red);
 
-                      <span
-                        class="p07-attendance-text"
-                        id="rsvpAttendanceNoText"
-                      >
-                        Không
-                      </span>
+  transform:
+    translateX(-50%);
+}
 
-                    </label>
+.p02-name {
+  width: 100%;
 
-                  </div>
+  color:
+    var(--invitation-red);
 
-                </fieldset>
+  font-size: 25px;
 
+  line-height: .95;
 
-                <!-- COUNT -->
+  white-space: nowrap;
 
-                <div class="p07-form-group p07-form-group--count">
+  transform:
+    scaleX(.82);
+}
 
-                  <span class="p07-form-label">
-                    Số lượng người tham dự
-                  </span>
+.p02-ampersand {
+  margin:
+    4px 0 3px;
 
+  color:
+    var(--invitation-green);
 
-                  <div class="p07-counter">
+  font-size: 25px;
+}
 
-                    <button
-                      class="p07-counter-button"
-                      id="rsvpMinus"
-                      type="button"
-                      aria-label="Giảm số người tham dự"
-                    >
-                      −
-                    </button>
+.p02-date-divider {
+  position: absolute;
 
+  z-index: 20;
 
-                    <output
-                      class="p07-counter-value"
-                      id="rsvpGuestCount"
-                      for="rsvpMinus rsvpPlus"
-                    >
-                      1
-                    </output>
+  left: 50%;
+  top: 297px;
 
+  width: 64px;
+  height: 1px;
 
-                    <button
-                      class="p07-counter-button"
-                      id="rsvpPlus"
-                      type="button"
-                      aria-label="Tăng số người tham dự"
-                    >
-                      +
-                    </button>
+  transform:
+    translateX(-50%);
 
-                  </div>
+  background:
+    rgba(153, 111, 52, .56);
+}
 
-                </div>
+.p02-date-divider::after {
+  content: "◇";
 
+  position: absolute;
 
-                <!-- MESSAGE -->
+  left: 50%;
+  top: 50%;
 
-                <div class="p07-form-group p07-form-group--message">
+  padding: 0 3px;
 
-                  <label
-                    class="p07-form-label"
-                    for="rsvpMessage"
-                  >
-                    Lời nhắn tới cô dâu chú rể
-                  </label>
+  transform:
+    translate(-50%, -51%);
 
+  background: #f1dfbd;
 
-                  <div class="p07-field p07-field--message">
+  color:
+    var(--invitation-gold);
 
-                    <textarea
-                      id="rsvpMessage"
-                      class="p07-message-input"
-                      name="message"
-                      rows="3"
-                      placeholder="Gửi lời chúc tốt đẹp đến chúng mình..."
-                    ></textarea>
+  font-size: 8px;
+}
 
+.p02-ceremony-info {
+  position: absolute;
 
-                    <img
-                      class="p07-field-lotus p07-field-lotus--message deferred-page07-asset"
-                      data-src="./assets/page07-lotus.png"
-                      alt=""
-                      draggable="false"
-                      decoding="async"
-                    />
+  z-index: 21;
 
-                  </div>
+  left: 50%;
+  top: 315px;
 
-                </div>
+  width: 345px;
 
+  transform:
+    translateX(-50%);
 
-                <!-- VIDEO -> GOOGLE DRIVE -->
+  text-align: center;
 
-                <div class="p07-form-group p07-form-group--video">
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+}
 
-                  <a
-                    class="p07-video-field"
-                    href="https://drive.google.com/drive/folders/1e1acGQ5Nmtk5DlyNHUvbc7HcXA1gaj1i?usp=sharing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Mở Google Drive để tải video lời chúc lên"
-                  >
+.p02-ceremony-info p {
+  margin: 0;
+}
 
-                    <span class="p07-video-text">
-                      Video lời chúc gửi tới cô dâu chú rể
-                    </span>
+.p02-time-line {
+  color:
+    var(--invitation-green);
 
+  font-size: 13px;
+}
 
-                    <img
-                      class="p07-field-lotus p07-field-lotus--video deferred-page07-asset"
-                      data-src="./assets/page07-lotus.png"
-                      alt=""
-                      draggable="false"
-                      decoding="async"
-                    />
+.p02-time-line strong {
+  color:
+    var(--invitation-red);
 
-                  </a>
+  font-size: 14px;
 
-                </div>
+  font-weight: 400;
+}
 
+.p02-lunar-date {
+  margin-top:
+    5px !important;
 
-                <!-- SUBMIT -->
+  color:
+    var(--invitation-green);
 
-                <button
-                  class="p07-submit"
-                  id="rsvpSubmit"
-                  type="submit"
-                >
+  font-size: 10.5px;
+}
 
-                  <span>
-                    GỬI XÁC NHẬN
-                  </span>
+.p02-at {
+  margin-top:
+    11px !important;
 
+  color:
+    var(--invitation-green);
 
-                  <svg
-                    class="p07-submit-icon"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
+  font-size: 13px;
+}
 
-                    <path
-                      d="M22 2L9.7 14.3"
-                    ></path>
+.p02-at strong {
+  color:
+    var(--invitation-red);
 
-                    <path
-                      d="M22 2l-7.8 20-4.5-7.7L2 9.8 22 2z"
-                    ></path>
+  font-size: 14px;
 
-                  </svg>
+  font-weight: 400;
+}
 
-                </button>
+.p02-venue-address {
+  margin-top:
+    5px !important;
 
-              </form>
+  color:
+    var(--invitation-green);
 
+  font-size: 10.5px;
+}
 
-              <img
-                class="p07-bottom-ornament deferred-page07-asset"
-                data-src="./assets/page02-bottom-ornament.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+.p02-family-info {
+  position: absolute;
 
+  z-index: 22;
 
-              <img
-                class="p07-frame deferred-page07-asset"
-                data-src="./assets/page02-frame.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  left: 50%;
+  top: 406px;
 
-            </section>
+  display: grid;
 
+  grid-template-columns:
+    1fr 1fr;
 
-            <!-- =================================================
-                 PAGE 08
-            ================================================== -->
+  column-gap: 28px;
 
-            <section
-              class="invitation-page page08-layout"
-              id="page08"
-              aria-label="Lời cảm ơn"
-            >
+  width: 330px;
 
-              <img
-                class="p08-background deferred-page08-asset"
-                data-src="./assets/page02-bg.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  transform:
+    translateX(-50%);
 
+  color:
+    var(--invitation-green);
 
-              <div class="p08-content">
+  text-align: center;
 
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+}
 
-                <h2 class="p08-title">
-                  Lời cảm ơn
-                </h2>
+.p02-family-title {
+  margin:
+    0 0 7px;
 
+  font-size: 11px;
 
-                <div
-                  class="p08-thanks-divider p08-thanks-divider--title-bottom"
-                  aria-hidden="true"
-                >
-                  <span></span>
-                  <b>✤</b>
-                  <span></span>
-                </div>
+  font-weight: 600;
+}
 
+.p02-family p {
+  margin: 0;
 
-                <p class="p08-english-title">
-                  THANK YOU FOR BEING PART OF OUR STORY
-                </p>
+  font-size: 10px;
 
+  line-height: 1.35;
 
-                <div class="p08-vietnamese-copy">
+  white-space: nowrap;
+}
 
-                  <p>
-                    Từ một cuộc gặp gỡ rất tình cờ, chúng mình đã đi qua những
-                    khác biệt, những vui buồn và cả những lúc tưởng như chẳng thể thiếu nhau.
-                    Nhưng sau tất cả, chúng mình vẫn chọn ở lại, học cách lắng nghe,
-                    thấu hiểu và yêu thương nhau theo một cách trưởng thành hơn.
-                  </p>
 
-                  <p>
-                    Ngày hôm nay, khi cùng nhau bước vào một chặng đường mới,
-                    chúng mình càng biết ơn gia đình và bạn bè đã luôn yêu thương,
-                    đồng hành và dành cho chúng mình thật nhiều điều tốt đẹp.
-                  </p>
+/* PAGE 02 TEXT ENTRY */
 
-                  <p>
-                    Sự hiện diện của mọi người trong ngày đặc biệt này là món quà quý giá nhất.
-                    Cảm ơn vì đã đến, đã chứng kiến và đã trở thành một phần
-                    trong câu chuyện của chúng mình.
-                  </p>
+.page02-layout
+.p02-invite,
 
-                </div>
+.page02-layout
+.p02-personalized-guest,
 
+.page02-layout
+.p02-divider,
 
-                <div
-                  class="p08-thanks-divider p08-thanks-divider--middle"
-                  aria-hidden="true"
-                >
-                  <span></span>
-                  <b>✤</b>
-                  <span></span>
-                </div>
+.page02-layout
+.p02-to,
 
+.page02-layout
+.p02-wedding-title,
 
-                <p class="p08-english-copy">
-                  From two very different people, somehow, we found our way<br />
-                  to each other. And today, we choose each other again, and again.
-                </p>
+.page02-layout
+.p02-couple-names,
 
+.page02-layout
+.p02-date-divider,
 
-                <p class="p08-with-love">
-                  With love,
-                </p>
+.page02-layout
+.p02-ceremony-info,
 
+.page02-layout
+.p02-family-info {
+  opacity: 0;
 
-                <p class="p08-signature">
-                  Thư &amp; Bách
-                </p>
+  translate:
+    0 -10px;
 
-              </div>
+  transition:
+    opacity 620ms ease,
+    translate 920ms cubic-bezier(.2, .78, .28, 1);
+}
 
+.page02-layout.is-entering
+.p02-invite,
 
-              <img
-                class="p08-cloud p08-cloud--left deferred-page08-asset"
-                data-src="./assets/page02-cloud-03.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+.page02-layout.is-entering
+.p02-personalized-guest,
 
-              <img
-                class="p08-cloud p08-cloud--right deferred-page08-asset"
-                data-src="./assets/page02-cloud-01.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+.page02-layout.is-entering
+.p02-divider,
 
+.page02-layout.is-entering
+.p02-to,
 
-              <img
-                class="p08-water-ground p08-water-ground--base deferred-page08-asset"
-                data-src="./assets/page08-water-ground.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+.page02-layout.is-entering
+.p02-wedding-title,
 
+.page02-layout.is-entering
+.p02-couple-names,
 
-              <img
-                class="p08-masion deferred-page08-asset"
-                data-src="./assets/page08-masion.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+.page02-layout.is-entering
+.p02-date-divider,
 
+.page02-layout.is-entering
+.p02-ceremony-info,
 
-              <img
-                class="p08-water-ground p08-water-ground--front deferred-page08-asset"
-                data-src="./assets/page08-water-ground.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+.page02-layout.is-entering
+.p02-family-info {
+  opacity: 1;
 
+  translate:
+    0 0;
+}
 
-              <img
-                class="p08-couple deferred-page08-asset"
-                data-src="./assets/page08-couple-back.png"
-                alt="Bách và Thư"
-                draggable="false"
-                decoding="async"
-              />
 
+/* CONFETTI */
 
-              <img
-                class="p08-lotus p08-lotus--left deferred-page08-asset"
-                data-src="./assets/page08-lotus-left.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+.p02-confetti-cluster {
+  position: absolute;
 
-              <img
-                class="p08-lotus p08-lotus--right deferred-page08-asset"
-                data-src="./assets/page08-lotus-right.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  z-index: 14;
 
+  inset: 0;
 
-              <img
-                class="p08-frame deferred-page08-asset"
-                data-src="./assets/page02-frame.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  top: 65px;
+  left: -5px;
 
+  scale: .8;
 
-              <img
-                class="p08-bottom-ornament deferred-page08-asset"
-                data-src="./assets/page02-bottom-ornament.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  transform-origin: center;
 
-            </section>
+  pointer-events: none;
+}
 
+.p02-confetti-piece {
+  position: absolute;
 
-          </div>
+  display: block;
 
-        </section>
+  background-image:
+    var(--p02-confetti-sprite, none);
 
-      </div>
+  background-repeat:
+    no-repeat;
 
-    </div>
+  background-size:
+    361.25px 780.93px;
 
-  </main>
+  filter:
+    saturate(1.18)
+    brightness(1.02)
+    contrast(1.03);
 
-</body>
+  animation:
+    tiny-element-sway
+    2100ms
+    ease-in-out
+    infinite;
+}
 
-</html>
+@keyframes tiny-element-sway {
+
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      rotate(-5deg);
+  }
+
+  50% {
+    transform:
+      translateY(-4px)
+      rotate(5deg);
+  }
+}
+
+.p02-confetti-piece--01 {
+  left: 9px;
+  top: 451px;
+  width: 11.01px;
+  height: 11.43px;
+  background-position: -116.46px -37.27px;
+}
+
+.p02-confetti-piece--02 {
+  left: 338px;
+  top: 485px;
+  width: 11.01px;
+  height: 10.59px;
+  background-position: -68.61px -65.64px;
+}
+
+.p02-confetti-piece--03 {
+  left: 244px;
+  top: 433px;
+  width: 12.28px;
+  height: 11.43px;
+  background-position: -154.58px -94.86px;
+}
+
+.p02-confetti-piece--04 {
+  left: 164px;
+  top: 430px;
+  width: 11.01px;
+  height: 10.59px;
+  background-position: -74.54px -112.65px;
+}
+
+.p02-confetti-piece--05 {
+  left: 125px;
+  top: 438px;
+  width: 11.01px;
+  height: 8.47px;
+  background-position: -302.38px -114.77px;
+}
+
+.p02-confetti-piece--06 {
+  left: 215px;
+  top: 435px;
+  width: 11.43px;
+  height: 11.43px;
+  background-position: -196.08px -132.98px;
+}
+
+.p02-confetti-piece--07 {
+  left: 325px;
+  top: 455px;
+  width: 8.05px;
+  height: 8.05px;
+  background-position: -112.23px -146.53px;
+}
+
+.p02-confetti-piece--08 {
+  left: 43px;
+  top: 454px;
+  width: 10.59px;
+  height: 10.59px;
+  background-position: -32.19px -413.76px;
+}
+
+.p02-confetti-piece--09 {
+  left: 183px;
+  top: 456px;
+  width: 11.01px;
+  height: 10.59px;
+  background-position: -33.46px -267.65px;
+}
+
+.p02-confetti-piece--10 {
+  left: 300px;
+  top: 438px;
+  width: 11.01px;
+  height: 10.59px;
+  background-position: -318.05px -327.79px;
+}
+
+.p02-confetti-piece--11 {
+  left: 140px;
+  top: 460px;
+  width: 10.59px;
+  height: 10.59px;
+  background-position: -32.19px -413.76px;
+}
+
+.p02-confetti-piece--12 {
+  left: 207px;
+  top: 477px;
+  width: 10.59px;
+  height: 10.16px;
+  background-position: -312.12px -486.18px;
+}
+
+.p02-confetti-piece--13 {
+  left: 73px;
+  top: 475px;
+  width: 11.01px;
+  height: 10.59px;
+  background-position: -37.27px -578.08px;
+}
+
+.p02-confetti-piece--14 {
+  left: 85px;
+  top: 444px;
+  width: 11.86px;
+  height: 9.74px;
+  background-position: -57.60px -739.01px;
+}
+
+.p02-confetti-piece--15 {
+  left: 236px;
+  top: 465px;
+  width: 11.01px;
+  height: 10.59px;
+  background-position: -68.61px -65.64px;
+}
+
+.p02-confetti-piece--16 {
+  left: 377px;
+  top: 478px;
+  width: 11.01px;
+  height: 10.59px;
+  background-position: -37.27px -578.08px;
+}
+
+.p02-confetti-piece--17 {
+  left: 116px;
+  top: 474px;
+  width: 10.59px;
+  height: 10.59px;
+  background-position: -32.19px -413.76px;
+}
+
+.p02-confetti-piece--18 {
+  left: 156px;
+  top: 486px;
+  width: 11.01px;
+  height: 10.59px;
+  background-position: -318.05px -327.79px;
+}
+
+.p02-confetti-piece--19 {
+  left: 271px;
+  top: 446px;
+  width: 11.43px;
+  height: 11.43px;
+  background-position: -196.08px -132.98px;
+}
+
+.p02-confetti-piece--20 {
+  left: 354px;
+  top: 448px;
+  width: 11.01px;
+  height: 8.47px;
+  background-position: -302.38px -114.77px;
+}
+
+
+/* PROCESSION */
+
+.p02-procession {
+  position: absolute;
+
+  z-index: 30;
+
+  left: 11px;
+  bottom: 30px;
+
+  width: 390px;
+  height: 196px;
+
+  pointer-events: none;
+}
+
+.p02-procession-item {
+  position: absolute;
+
+  width: auto;
+
+  max-width: none;
+
+  object-fit: contain;
+
+  transform-origin:
+    50% 90%;
+
+  pointer-events: none;
+
+  animation:
+    procession-sway
+    var(--procession-speed)
+    ease-in-out
+    infinite;
+}
+
+@keyframes procession-sway {
+
+  0%,
+  100% {
+    transform:
+      rotate(
+        calc(
+          var(--procession-angle) * -1
+        )
+      );
+  }
+
+  50% {
+    transform:
+      rotate(
+        var(--procession-angle)
+      );
+  }
+}
+
+.p02-flag-bearer {
+  --procession-angle: 2deg;
+  --procession-speed: 3100ms;
+
+  z-index: 31;
+
+  left: -9px;
+  bottom: 0;
+
+  height: 150px;
+}
+
+.p02-couple {
+  --procession-angle: 2.5deg;
+  --procession-speed: 2900ms;
+
+  z-index: 34;
+
+  left: 74px;
+  bottom: 0;
+
+  height: 125px;
+}
+
+.p02-lion-dance {
+  --procession-angle: 2.3deg;
+  --procession-speed: 3000ms;
+
+  z-index: 33;
+
+  left: 120px;
+  bottom: 3px;
+
+  height: 150px;
+}
+
+.p02-drummer {
+  --procession-angle: 4deg;
+  --procession-speed: 2550ms;
+
+  z-index: 32;
+
+  right: 35px;
+  bottom: 1px;
+
+  height: 110px;
+}
+
+
+/* =========================================================
+   PAGE 03
+========================================================= */
+
+.page03-layout {
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+}
+
+.p03-title-divider,
+.p03-timeline,
+.p03-illustration {
+  position: absolute;
+
+  display: block;
+
+  height: auto;
+
+  max-width: none;
+
+  pointer-events: none;
+}
+
+
+/* DEVTOOLS VALUES */
+
+.p03-cloud--01 {
+  left: 33px;
+  top: 78px;
+
+  width: 81px;
+}
+
+.p03-cloud--02 {
+  left: 19px;
+  top: 395px;
+
+  width: 53px;
+}
+
+.p03-cloud--03 {
+  right: 18px;
+  top: 100px;
+
+  width: 56px;
+}
+
+.p03-cloud--04 {
+  right: 42px;
+  top: 545px;
+
+  width: 63px;
+}
+
+
+.page03-layout
+.p03-cloud--01,
+
+.page03-layout
+.p03-cloud--02 {
+  opacity: 0;
+
+  translate:
+    -75px 0;
+
+  transition:
+    translate
+    var(--entry-duration)
+    var(--entry-ease),
+
+    opacity
+    700ms
+    ease;
+}
+
+.page03-layout
+.p03-cloud--03,
+
+.page03-layout
+.p03-cloud--04 {
+  opacity: 0;
+
+  translate:
+    75px 0;
+
+  transition:
+    translate
+    var(--entry-duration)
+    var(--entry-ease),
+
+    opacity
+    700ms
+    ease;
+}
+
+.page03-layout.is-active
+.p03-cloud {
+  opacity: 1;
+
+  translate:
+    0 0;
+}
+
+
+.p03-title {
+  position: absolute;
+
+  z-index: 20;
+
+  left: 50%;
+  top: 38px;
+
+  margin: 0;
+
+  transform:
+    translateX(-50%);
+
+  color: #405d48;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+
+  font-size: 26px;
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  letter-spacing: .03em;
+
+  white-space: nowrap;
+
+  opacity: 0;
+
+  translate:
+    0 -16px;
+
+  transition:
+    translate
+    950ms
+    var(--entry-ease),
+
+    opacity
+    650ms
+    ease;
+}
+
+.page03-layout.is-active
+.p03-title {
+  opacity: 1;
+
+  translate:
+    0 0;
+}
+
+.p03-title-divider {
+  z-index: 20;
+
+  left: 50%;
+  top: 81px;
+
+  width: 112px;
+
+  transform:
+    translateX(-50%);
+
+  opacity: 0;
+
+  scale:
+    .72 1;
+
+  transition:
+    opacity
+    650ms
+    ease
+    150ms,
+
+    scale
+    950ms
+    ease
+    150ms;
+}
+
+.page03-layout.is-active
+.p03-title-divider {
+  opacity: 1;
+
+  scale:
+    1 1;
+}
+
+
+/* DEVTOOLS: LEFT 114 */
+
+.p03-timeline {
+  z-index: 14;
+
+  left: 114px;
+  top: 95px;
+
+  width: 168px;
+
+  object-fit: contain;
+
+  clip-path:
+    inset(0 0 100% 0);
+
+  opacity: .15;
+
+  transition:
+    clip-path
+    1700ms
+    cubic-bezier(.22, .8, .2, 1)
+    180ms,
+
+    opacity
+    600ms
+    ease
+    180ms;
+}
+
+.page03-layout.is-active
+.p03-timeline {
+  clip-path:
+    inset(0 0 0 0);
+
+  opacity: 1;
+}
+
+
+.p03-illustration {
+  z-index: 12;
+
+  object-fit: contain;
+
+  transform-origin:
+    50% 86%;
+
+  animation:
+    p03-element-sway
+    var(--p03-speed)
+    ease-in-out
+    infinite;
+}
+
+@keyframes p03-element-sway {
+
+  0%,
+  100% {
+    transform:
+      rotate(
+        calc(var(--p03-angle) * -1)
+      )
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      rotate(
+        var(--p03-angle)
+      )
+      translateY(-3px);
+  }
+}
+
+.p03-kieu {
+  --p03-angle: 3deg;
+  --p03-speed: 2900ms;
+
+  left: 210px;
+  top: 145px;
+
+  width: 140px;
+}
+
+.p03-mam-co {
+  --p03-angle: 3.5deg;
+  --p03-speed: 2700ms;
+
+  left: 38px;
+  top: 285px;
+
+  width: 135px;
+}
+
+.p03-cheers {
+  --p03-angle: 5deg;
+  --p03-speed: 2350ms;
+
+  left: 190px;
+  top: 423px;
+
+  width: 115px;
+}
+
+
+.page03-layout
+.p03-event--02,
+
+.page03-layout
+.p03-mam-co,
+
+.page03-layout
+.p03-event--04 {
+  opacity: 0;
+
+  translate:
+    -72px 0;
+
+  transition:
+    translate
+    1150ms
+    var(--entry-ease),
+
+    opacity
+    700ms
+    ease;
+}
+
+.page03-layout
+.p03-kieu,
+
+.page03-layout
+.p03-event--03,
+
+.page03-layout
+.p03-cheers {
+  opacity: 0;
+
+  translate:
+    72px 0;
+
+  transition:
+    translate
+    1150ms
+    var(--entry-ease),
+
+    opacity
+    700ms
+    ease;
+}
+
+.page03-layout
+.p03-event--02,
+
+.page03-layout
+.p03-kieu {
+  transition-delay:
+    300ms;
+}
+
+.page03-layout
+.p03-mam-co,
+
+.page03-layout
+.p03-event--03 {
+  transition-delay:
+    600ms;
+}
+
+.page03-layout
+.p03-event--04,
+
+.page03-layout
+.p03-cheers {
+  transition-delay:
+    900ms;
+}
+
+.page03-layout.is-active
+.p03-event,
+
+.page03-layout.is-active
+.p03-illustration {
+  opacity: 1;
+
+  translate:
+    0 0;
+}
+
+
+.p03-event {
+  position: absolute;
+
+  z-index: 22;
+
+  width: 165px;
+
+  color: #304c3c;
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+}
+
+.p03-event h3,
+.p03-event p {
+  margin: 0;
+}
+
+.p03-event-title {
+  margin-bottom:
+    8px !important;
+
+  color: #ad4629;
+
+  font-size: 17px;
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  white-space: nowrap;
+}
+
+.p03-event-date {
+  margin-bottom:
+    5px !important;
+
+  color: #ad4629;
+
+  font-size: 12px;
+
+  line-height: 1.1;
+
+  white-space: nowrap;
+}
+
+.p03-event-time {
+  position: relative;
+
+  left: 60px;
+  top: -17px;
+
+  margin-bottom:
+    10px !important;
+
+  color: #304c3c;
+
+  font-size: 11px;
+
+  line-height: 1.1;
+
+  white-space: nowrap;
+}
+
+
+/* DEVTOOLS EVENT 02 */
+
+.p03-event--02 {
+  left: 88px;
+  top: 177px;
+
+  width: 170px;
+}
+
+.p03-event--02
+.p03-event-time {
+  top: -18px;
+}
+
+.p03-event--02
+.p03-location {
+  left: -1px;
+  top: -18px;
+
+  width: 185px;
+
+  font-size: 8.7px;
+}
+
+.p03-event--02
+.p03-location strong {
+  font-size: 9.5px;
+}
+
+
+/* Bạn đã hide hai dòng địa chỉ này trong DevTools */
+
+.p03-event--02
+.p03-location
+> div
+> span {
+  display: none;
+}
+
+
+.p03-event--03 {
+  left: 215px;
+  top: 307px;
+}
+
+.p03-event--04 {
+  left: 50px;
+  top: 445px;
+}
+
+
+.p03-location {
+  position: relative;
+
+  top: -20px;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 8px;
+
+  margin-top: 7px;
+
+  color: #304c3c;
+
+  font-size: 9.5px;
+
+  line-height: 1.42;
+}
+
+.p03-location > div {
+  display: flex;
+
+  flex-direction: column;
+
+  min-width: 0;
+}
+
+.p03-location strong {
+  display: block;
+
+  margin-bottom: 2px;
+
+  font-size: 10px;
+
+  font-weight: 400;
+
+  white-space: nowrap;
+}
+
+.p03-location
+> div
+> span {
+  position: relative;
+
+  left: -15px;
+
+  display: block;
+
+  white-space: nowrap;
+}
+
+.p03-event--04
+.p03-location
+> div
+> span {
+  left: 0;
+}
+
+.p03-location-pin {
+  position: relative;
+
+  flex:
+    0 0 auto;
+
+  width: 8px;
+  height: 8px;
+
+  margin-top: 2px;
+
+  border-radius:
+    50% 50% 50% 0;
+
+  background: #b64b2d;
+
+  transform:
+    rotate(-45deg);
+}
+
+.p03-location-pin::after {
+  content: "";
+
+  position: absolute;
+
+  left: 2.5px;
+  top: 2.5px;
+
+  width: 3px;
+  height: 3px;
+
+  border-radius: 50%;
+
+  background: #f3dfb8;
+}
+
+
+.p03-dress-code {
+  position: absolute;
+
+  z-index: 21;
+
+  left: 50%;
+  bottom: 34px;
+
+  width: 285px;
+  height: 68px;
+
+  transform:
+    translateX(-50%);
+
+  text-align: center;
+
+  clip-path:
+    inset(0 0 100% 0);
+
+  opacity: 0;
+
+  transition:
+    clip-path
+    1050ms
+    cubic-bezier(.22, .8, .2, 1)
+    1450ms,
+
+    opacity
+    600ms
+    ease
+    1450ms;
+}
+
+.page03-layout.is-active
+.p03-dress-code {
+  clip-path:
+    inset(0 0 0 0);
+
+  opacity: 1;
+}
+
+.p03-dress-title {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  margin:
+    0 0 7px;
+
+  color: #405d48;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.p03-dress-title span {
+  color: #c38d31;
+
+  font-size: 9px;
+}
+
+.p03-color-list {
+  display: flex;
+
+  align-items: flex-start;
+
+  justify-content: center;
+
+  gap: 14px;
+}
+
+.p03-color-item {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 3px;
+
+  min-width: 37px;
+
+  color: #3e4539;
+
+  font-size: 8.5px;
+
+  line-height: 1;
+}
+
+.p03-color {
+  display: block;
+
+  width: 23px;
+  height: 23px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, .92);
+
+  border-radius: 50%;
+}
+
+.p03-color--brown {
+  background: #85624e;
+}
+
+.p03-color--pink {
+  background: #ce9c95;
+}
+
+.p03-color--beige {
+  background: #dbccb5;
+}
+
+.p03-color--sage {
+  background: #c1d1af;
+}
+
+
+/* =========================================================
+   PAGE 06
+========================================================= */
+
+.page06-layout,
+.page06-layout * {
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+}
+
+.p06-confetti {
+  position: absolute;
+
+  z-index: 4;
+
+  left: 20px;
+  top: 25px;
+
+  width: 350px;
+  height: 600px;
+
+  object-fit: fill;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  scale: .96;
+
+  transition:
+    opacity 700ms ease,
+    scale 1000ms ease;
+}
+
+.page06-layout.is-confetti-visible
+.p06-confetti {
+  opacity: .86;
+
+  scale: 1;
+}
+
+.p06-entry-fireworks {
+  position: absolute;
+
+  z-index: 35;
+
+  left: 50%;
+  top: 48%;
+
+  width: 1px;
+  height: 1px;
+
+  pointer-events: none;
+}
+
+.p06-cloud--01 {
+  right: 35px;
+  top: 37px;
+
+  width: 92px;
+}
+
+.p06-cloud--02 {
+  left: 18px;
+  top: 127px;
+
+  width: 67px;
+}
+
+.p06-cloud--03 {
+  right: -10px;
+  top: 332px;
+
+  width: 74px;
+}
+
+.p06-cloud--04 {
+  left: -5px;
+  top: 409px;
+
+  width: 70px;
+}
+
+.page06-layout
+.p06-cloud--02,
+
+.page06-layout
+.p06-cloud--04 {
+  opacity: 0;
+
+  translate:
+    -75px 0;
+
+  transition:
+    translate
+    var(--entry-duration)
+    var(--entry-ease),
+
+    opacity
+    700ms
+    ease;
+}
+
+.page06-layout
+.p06-cloud--01,
+
+.page06-layout
+.p06-cloud--03 {
+  opacity: 0;
+
+  translate:
+    75px 0;
+
+  transition:
+    translate
+    var(--entry-duration)
+    var(--entry-ease),
+
+    opacity
+    700ms
+    ease;
+}
+
+.page06-layout.is-active
+.p06-cloud {
+  opacity: 1;
+
+  translate:
+    0 0;
+}
+
+.p06-card-wrap {
+  position: absolute;
+
+  z-index: 16;
+
+  left: 50%;
+  top: 50%;
+
+  width: 246px;
+
+  transform:
+    translate(-50%, -50%);
+
+  opacity: 0;
+
+  translate:
+    0 20px;
+
+  transition:
+    translate
+    1100ms
+    var(--entry-ease)
+    150ms,
+
+    opacity
+    700ms
+    ease
+    150ms;
+}
+
+.page06-layout.is-active
+.p06-card-wrap {
+  opacity: 1;
+
+  translate:
+    0 0;
+}
+
+.p06-lucky-card {
+  position: relative;
+
+  z-index: 1;
+
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  clip-path:
+    inset(0 round 14px);
+
+  pointer-events: none;
+}
+
+.p06-title {
+  position: absolute;
+
+  z-index: 5;
+
+  left: 50%;
+  top: 86px;
+
+  width: 230px;
+
+  margin: 0;
+
+  transform:
+    translateX(-50%);
+
+  color: #315747;
+
+  text-align: center;
+
+  font-size: 18px;
+
+  font-weight: 400;
+
+  white-space: nowrap;
+}
+
+.p06-number-slot {
+  position: absolute;
+
+  z-index: 7;
+
+  left: 50%;
+  top: 150px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 205px;
+  height: 125px;
+
+  transform:
+    translateX(-50%);
+
+  color: #a52f15;
+
+  font-size: 94px;
+
+  font-variant-numeric:
+    tabular-nums;
+}
+
+.p06-card-wrap.is-idle-shuffling
+.p06-number-slot {
+  animation:
+    lucky-idle-jitter
+    430ms
+    ease-in-out
+    infinite;
+}
+
+@keyframes lucky-idle-jitter {
+
+  0%,
+  100% {
+    transform:
+      translateX(-50%)
+      translateY(0)
+      rotate(-1deg);
+  }
+
+  50% {
+    transform:
+      translateX(-50%)
+      translateY(-2px)
+      rotate(1deg);
+  }
+}
+
+.p06-card-wrap.is-rolling
+.p06-number-slot {
+  animation:
+    lucky-rolling-chaos
+    140ms
+    linear
+    infinite;
+}
+
+@keyframes lucky-rolling-chaos {
+
+  0% {
+    transform:
+      translateX(-50%)
+      translate(-3px, -2px);
+  }
+
+  25% {
+    transform:
+      translateX(-50%)
+      translate(3px, 1px);
+  }
+
+  50% {
+    transform:
+      translateX(-50%)
+      translate(-2px, 3px);
+  }
+
+  75% {
+    transform:
+      translateX(-50%)
+      translate(4px, -1px);
+  }
+
+  100% {
+    transform:
+      translateX(-50%);
+  }
+}
+
+.p06-card-wrap.is-revealed
+.p06-number-slot {
+  animation:
+    lucky-number-reveal
+    1100ms
+    cubic-bezier(.16, .85, .25, 1);
+}
+
+@keyframes lucky-number-reveal {
+
+  0% {
+    transform:
+      translateX(-50%)
+      scale(.72);
+
+    opacity: .3;
+  }
+
+  40% {
+    transform:
+      translateX(-50%)
+      scale(1.20);
+
+    opacity: 1;
+  }
+
+  65% {
+    transform:
+      translateX(-50%)
+      scale(.96);
+  }
+
+  100% {
+    transform:
+      translateX(-50%)
+      scale(1);
+  }
+}
+
+.p06-number-hint {
+  position: absolute;
+
+  z-index: 8;
+
+  left: 50%;
+  top: 275px;
+
+  width: 224px;
+
+  margin: 0;
+
+  transform:
+    translateX(-50%);
+
+  color: #6b5a3d;
+
+  text-align: center;
+
+  font-size: 10.5px;
+
+  font-style: italic;
+
+  line-height: 1.25;
+
+  opacity: .82;
+}
+
+.p06-lucky-trigger {
+  position: absolute;
+
+  z-index: 10;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+
+  background: transparent;
+
+  cursor: pointer;
+}
+
+.p06-lucky-trigger:disabled {
+  cursor: default;
+}
+
+.p06-fireworks {
+  position: absolute;
+
+  z-index: 30;
+
+  left: 50%;
+  top: 214px;
+
+  width: 1px;
+  height: 1px;
+
+  overflow: visible;
+
+  pointer-events: none;
+}
+
+.p06-firework-particle {
+  --x: 0px;
+  --y: 0px;
+  --size: 4px;
+  --delay: 0ms;
+  --rotation: 0deg;
+  --particle-color: #b93b1e;
+
+  position: absolute;
+
+  width: var(--size);
+  height: var(--size);
+
+  border-radius: 50%;
+
+  background:
+    var(--particle-color);
+
+  opacity: 0;
+
+  animation:
+    lucky-firework-burst
+    1150ms
+    cubic-bezier(.12, .72, .2, 1)
+    var(--delay)
+    forwards;
+}
+
+@keyframes lucky-firework-burst {
+
+  0% {
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      scale(.35);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(
+        calc(-50% + var(--x)),
+        calc(-50% + var(--y))
+      )
+      scale(.75)
+      rotate(
+        var(--rotation)
+      );
+  }
+}
+
+
+.p06-bottom-items {
+  position: absolute;
+
+  z-index: 24;
+
+  inset: 0;
+
+  transform:
+    translateY(-25px);
+
+  pointer-events: none;
+}
+
+.p06-lucky-item {
+  position: absolute;
+
+  height: auto;
+
+  transform-origin:
+    50% 90%;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  animation:
+    p06-item-sway
+    var(--p06-speed)
+    ease-in-out
+    infinite;
+
+  transition:
+    translate
+    1150ms
+    var(--entry-ease),
+
+    opacity
+    700ms
+    ease;
+}
+
+@keyframes p06-item-sway {
+
+  0%,
+  100% {
+    transform:
+      rotate(
+        var(--p06-start)
+      );
+  }
+
+  50% {
+    transform:
+      rotate(
+        var(--p06-end)
+      );
+  }
+}
+
+.p06-ingots {
+  --p06-start: 5deg;
+  --p06-end: -5deg;
+  --p06-speed: 2450ms;
+
+  z-index: 25;
+
+  left: 35px;
+  bottom: 47px;
+
+  width: 75px;
+
+  translate:
+    -72px 0;
+}
+
+
+/* DEVTOOLS */
+
+.p06-knot {
+  --p06-start: 7deg;
+  --p06-end: -7deg;
+  --p06-speed: 2250ms;
+
+  z-index: 28;
+
+  left: 166px;
+  bottom: 50px;
+
+  width: 80px;
+
+  translate:
+    -72px 0;
+}
+
+
+/* DEVTOOLS */
+
+.p06-bag {
+  --p06-start: -4deg;
+  --p06-end: 4deg;
+  --p06-speed: 2800ms;
+
+  z-index: 26;
+
+  right: 111px;
+  bottom: 46px;
+
+  width: 110px;
+
+  translate:
+    72px 0;
+}
+
+.p06-coins {
+  --p06-start: -8deg;
+  --p06-end: 8deg;
+  --p06-speed: 2150ms;
+
+  z-index: 29;
+
+  right: 109px;
+  bottom: 38px;
+
+  width: 53px;
+
+  translate:
+    72px 0;
+}
+
+.page06-layout.is-active
+.p06-lucky-item {
+  opacity: 1;
+
+  translate:
+    0 0;
+}
+
+
+/* =========================================================
+   PAGE 07
+========================================================= */
+
+.page07-layout {
+  color:
+    var(--p07-green);
+
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+}
+
+.page07-layout * {
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+}
+
+.p07-top-left-decoration,
+.p07-butterfly,
+.p07-divider-ornament,
+.p07-field-lotus {
+  position: absolute;
+
+  height: auto;
+
+  pointer-events: none;
+}
+
+
+/* DEVTOOLS */
+
+.p07-top-left-decoration {
+  z-index: 8;
+
+  left: 12px;
+  top: 22px;
+
+  width: 108px;
+
+  transform-origin:
+    14% 8%;
+
+  animation:
+    p07-branch-sway
+    2800ms
+    ease-in-out
+    infinite;
+}
+
+@keyframes p07-branch-sway {
+
+  0%,
+  100% {
+    transform:
+      rotate(-2.5deg);
+  }
+
+  50% {
+    transform:
+      rotate(2.5deg);
+  }
+}
+
+
+/* DEVTOOLS */
+
+.p07-butterfly {
+  z-index: 8;
+
+  right: 13px;
+  top: 30px;
+
+  width: 90px;
+
+  animation:
+    p07-butterfly-float
+    2200ms
+    ease-in-out
+    infinite;
+}
+
+@keyframes p07-butterfly-float {
+
+  0%,
+  100% {
+    translate:
+      0 0;
+
+    rotate:
+      -2deg;
+  }
+
+  50% {
+    translate:
+      -5px -9px;
+
+    rotate:
+      4deg;
+  }
+}
+
+
+/* DEVTOOLS */
+
+.p07-rsvp-title {
+  position: absolute;
+
+  z-index: 10;
+
+  left: 50%;
+  top: 66px;
+
+  width: 260px;
+
+  margin: 0;
+
+  transform:
+    translateX(-50%);
+
+  color:
+    var(--p07-red);
+
+  font-size: 30px;
+
+  font-weight: 400;
+
+  line-height: 1.3;
+
+  text-align: center;
+}
+
+
+/* DEVTOOLS */
+
+.p07-divider-ornament--top {
+  z-index: 9;
+
+  left: 50%;
+  top: 136px;
+
+  width: 143px;
+
+  transform:
+    translateX(-50%);
+}
+
+
+/* DEVTOOLS */
+
+.p07-rsvp-subtitle {
+  position: absolute;
+
+  z-index: 10;
+
+  left: 50%;
+  top: 178px;
+
+  width: 290px;
+
+  margin: 0;
+
+  transform:
+    translateX(-50%);
+
+  text-align: center;
+
+  font-size: 11px;
+
+  font-style: italic;
+
+  line-height: 1.22;
+}
+
+
+.p07-rsvp-form {
+  position: absolute;
+
+  z-index: 15;
+
+  left: 50%;
+  top: 217px;
+
+  width: 316px;
+  height: 420px;
+
+  transform:
+    translateX(-50%);
+}
+
+.p07-form-group {
+  position: absolute;
+
+  left: 0;
+
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+}
+
+.p07-form-group--name {
+  top: 0;
+}
+
+
+/* DEVTOOLS */
+
+.p07-form-group--attendance {
+  top: 69px;
+}
+
+
+/* DEVTOOLS */
+
+.p07-form-group--count {
+  top: 140px;
+}
+
+
+/* DEVTOOLS */
+
+.p07-form-group--message {
+  top: 212px;
+}
+
+
+/* DEVTOOLS */
+
+.p07-form-group--video {
+  top: 301px;
+}
+
+
+.p07-form-label {
+  display: block;
+
+  margin:
+    0 0 5px;
+
+  color:
+    var(--p07-green);
+
+  font-size: 12px;
+}
+
+.p07-field,
+.p07-counter,
+.p07-video-field {
+  position: relative;
+
+  width: 100%;
+
+  border:
+    1px solid
+    rgba(154, 119, 72, .72);
+
+  border-radius: 3px;
+
+  background:
+    rgba(255, 250, 235, .38);
+
+  overflow: hidden;
+}
+
+.p07-field--name {
+  height: 35px;
+}
+
+.p07-text-input {
+  width: 100%;
+  height: 100%;
+
+  padding:
+    0 48px
+    0 14px;
+
+  border: 0;
+  outline: none;
+
+  background: transparent;
+
+  font-size: 11.5px;
+
+  font-style: italic;
+}
+
+.p07-text-input::placeholder,
+.p07-message-input::placeholder {
+  color:
+    rgba(89, 72, 62, .45);
+
+  opacity: 1;
+}
+
+.p07-field-lotus {
+  z-index: 4;
+
+  right: 3px;
+  bottom: -7px;
+
+  width: 39px;
+}
+
+.p07-attendance-options {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 12px;
+}
+
+.p07-attendance-option {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  height: 39px;
+
+  padding:
+    0 17px;
+
+  border:
+    1px solid
+    rgba(154, 119, 72, .64);
+
+  border-radius: 3px;
+
+  background:
+    rgba(255, 250, 235, .34);
+
+  cursor: pointer;
+}
+
+.p07-attendance-option input {
+  position: absolute;
+
+  opacity: 0;
+}
+
+.p07-radio-mark {
+  position: relative;
+
+  width: 20px;
+  height: 20px;
+
+  margin-right: 14px;
+
+  border:
+    1.4px solid
+    var(--p07-green);
+
+  border-radius: 50%;
+}
+
+.p07-radio-mark::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 12px;
+  height: 12px;
+
+  border-radius: 50%;
+
+  background:
+    var(--p07-red);
+
+  transform:
+    translate(-50%, -50%)
+    scale(0);
+
+  transition:
+    transform 220ms ease;
+}
+
+.p07-attendance-option
+input:checked
++
+.p07-radio-mark::after {
+  transform:
+    translate(-50%, -50%)
+    scale(1);
+}
+
+.p07-attendance-text {
+  font-size: 16px;
+}
+
+.p07-counter {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr 1fr;
+
+  align-items: center;
+
+  height: 38px;
+}
+
+.p07-counter-button {
+  height: 100%;
+
+  border: 0;
+
+  background: transparent;
+
+  color:
+    var(--p07-green);
+
+  font-size: 22px;
+
+  cursor: pointer;
+}
+
+.p07-counter-value {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color:
+    var(--p07-green);
+
+  font-size: 18px;
+}
+
+.p07-field--message {
+  height: 57px;
+}
+
+.p07-message-input {
+  width: 100%;
+  height: 100%;
+
+  padding:
+    10px 48px
+    8px 14px;
+
+  border: 0;
+  outline: none;
+
+  resize: none;
+
+  background: transparent;
+
+  font-size: 11px;
+
+  font-style: italic;
+}
+
+.p07-field-lotus--message {
+  right: 1px;
+  bottom: -8px;
+
+  width: 42px;
+}
+
+
+/* VIDEO = GOOGLE DRIVE LINK */
+
+.p07-video-field {
+  display: flex;
+
+  align-items: center;
+
+  height: 38px;
+
+  color:
+    var(--p07-green);
+
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.p07-video-field:visited {
+  color:
+    var(--p07-green);
+}
+
+.p07-video-text {
+  width: 100%;
+
+  padding:
+    0 48px
+    0 14px;
+
+  overflow: hidden;
+
+  color:
+    var(--p07-green);
+
+  font-size: 10.5px;
+
+  font-style: italic;
+
+  line-height: 38px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+.p07-field-lotus--video {
+  right: 2px;
+  bottom: -7px;
+
+  width: 36px;
+}
+
+
+/* DEVTOOLS SUBMIT */
+
+.p07-submit {
+  position: absolute;
+
+  left: 50%;
+  top: 362px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  width: 236px;
+  height: 40px;
+
+  transform:
+    translateX(-50%);
+
+  border:
+    1px solid #8f2f1c;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #b83d27,
+      #9f2f20
+    );
+
+  color: #fff9e9;
+
+  font-size: 15px;
+
+  cursor: pointer;
+}
+
+.p07-submit:disabled {
+  opacity: .82;
+
+  cursor: default;
+}
+
+.p07-submit-icon {
+  width: 18px;
+  height: 18px;
+
+  fill: none;
+
+  stroke: #fff9e9;
+
+  stroke-width: 1.8;
+}
+
+
+/* PAGE 07 ENTRY */
+
+.page07-layout
+.p07-top-left-decoration,
+
+.page07-layout
+.p07-butterfly,
+
+.page07-layout
+.p07-rsvp-title,
+
+.page07-layout
+.p07-divider-ornament--top,
+
+.page07-layout
+.p07-rsvp-subtitle,
+
+.page07-layout
+.p07-rsvp-form {
+  opacity: 0;
+
+  transition:
+    opacity 700ms ease,
+    translate 1100ms var(--entry-ease);
+}
+
+.page07-layout
+.p07-top-left-decoration {
+  translate:
+    -45px 0;
+}
+
+.page07-layout
+.p07-butterfly {
+  translate:
+    45px 0;
+}
+
+.page07-layout
+.p07-rsvp-title,
+
+.page07-layout
+.p07-divider-ornament--top,
+
+.page07-layout
+.p07-rsvp-subtitle,
+
+.page07-layout
+.p07-rsvp-form {
+  translate:
+    0 -16px;
+}
+
+.page07-layout.is-active
+.p07-top-left-decoration,
+
+.page07-layout.is-active
+.p07-butterfly,
+
+.page07-layout.is-active
+.p07-rsvp-title,
+
+.page07-layout.is-active
+.p07-divider-ornament--top,
+
+.page07-layout.is-active
+.p07-rsvp-subtitle,
+
+.page07-layout.is-active
+.p07-rsvp-form {
+  opacity: 1;
+
+  translate:
+    0 0;
+}
+
+
+/* =========================================================
+   PAGE 08
+========================================================= */
+
+.page08-layout,
+.page08-layout * {
+  font-family:
+    "Times New Roman",
+    Times,
+    serif;
+}
+
+.page08-layout {
+  color: #345447;
+}
+
+
+/* DEVTOOLS TOP 45 */
+
+.p08-content {
+  position: absolute;
+
+  z-index: 15;
+
+  left: 50%;
+  top: 45px;
+
+  width: 356px;
+
+  transform:
+    translateX(-50%);
+
+  text-align: center;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  translate:
+    0 -18px;
+
+  transition:
+    opacity 700ms ease,
+    translate 1100ms var(--entry-ease);
+}
+
+.page08-layout.is-active
+.p08-content {
+  opacity: 1;
+
+  translate:
+    0 0;
+}
+
+.p08-thanks-divider {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  width: 132px;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  color: #a83a22;
+}
+
+.p08-thanks-divider span {
+  display: block;
+
+  width: 46px;
+  height: 1px;
+
+  background:
+    rgba(168, 58, 34, .75);
+}
+
+.p08-thanks-divider b {
+  margin:
+    0 7px;
+
+  color: #a83a22;
+
+  font-size: 13px;
+
+  font-weight: 400;
+}
+
+.p08-thanks-divider--title-bottom {
+  margin-top: 2px;
+}
+
+.p08-thanks-divider--middle {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
+.p08-title {
+  margin:
+    4px 0 0;
+
+  color: #a8301c;
+
+  font-size: 39px;
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  letter-spacing: -.4px;
+}
+
+.p08-english-title {
+  margin:
+    7px 0 0;
+
+  color: #405948;
+
+  font-size: 10.5px;
+
+  letter-spacing: .55px;
+
+  white-space: nowrap;
+}
+
+.p08-vietnamese-copy {
+  width: 350px;
+
+  margin:
+    10px auto 0;
+
+  color: #405948;
+
+  font-size: 9px;
+
+  line-height: 1.68;
+
+  letter-spacing: 0;
+
+  word-spacing: 0;
+}
+
+
+/* DEVTOOLS PARAGRAPH 1 */
+
+.p08-vietnamese-copy
+p:nth-child(1) {
+  margin:
+    9px 6px;
+
+  font-size: 9px;
+
+  line-height: 1.68;
+}
+
+
+/* DEVTOOLS PARAGRAPH 2 */
+
+.p08-vietnamese-copy
+p:nth-child(2) {
+  margin:
+    9px 10px;
+
+  font-size: 9px;
+
+  line-height: 1.68;
+}
+
+
+/* DEVTOOLS PARAGRAPH 3 */
+
+.p08-vietnamese-copy
+p:nth-child(3) {
+  margin:
+    9px 8px
+    9px 2px;
+
+  font-size: 9px;
+
+  line-height: 1.68;
+}
+
+.p08-english-copy {
+  margin:
+    0 auto;
+
+  width: 340px;
+
+  color: #405948;
+
+  font-size: 8.8px;
+
+  line-height: 1.4;
+}
+
+.p08-with-love {
+  margin:
+    5px 0 0;
+
+  color: #405948;
+
+  font-size: 10px;
+
+  font-style: italic;
+}
+
+.p08-signature {
+  margin:
+    1px 0 0;
+
+  color: #a8301c;
+
+  font-size: 26px;
+
+  font-weight: 400;
+}
+
+
+/* DEVTOOLS CLOUD LEFT */
+
+.p08-cloud--left {
+  width: 77px;
+
+  left: 30px;
+  top: 340px;
+
+  opacity: 0;
+
+  translate:
+    -70px 0;
+
+  transition:
+    translate
+    1150ms
+    var(--entry-ease),
+
+    opacity
+    700ms
+    ease;
+}
+
+
+/* DEVTOOLS CLOUD RIGHT */
+
+.p08-cloud--right {
+  width: 68px;
+
+  right: 18px;
+  top: 280px;
+
+  opacity: 0;
+
+  translate:
+    70px 0;
+
+  transition:
+    translate
+    1150ms
+    var(--entry-ease),
+
+    opacity
+    700ms
+    ease;
+}
+
+.page08-layout.is-active
+.p08-cloud {
+  opacity: 1;
+
+  translate:
+    0 0;
+}
+
+
+/* BASE WATER */
+
+.p08-water-ground--base {
+  position: absolute;
+
+  z-index: 4;
+
+  width: 300px;
+
+  left: 190px;
+  bottom: 32px;
+
+  transform:
+    translateX(-50%);
+
+  opacity: 0;
+
+  translate:
+    0 25px;
+
+  transition:
+    translate
+    1200ms
+    var(--entry-ease)
+    180ms,
+
+    opacity
+    700ms
+    ease
+    180ms;
+}
+
+.page08-layout.is-active
+.p08-water-ground--base {
+  opacity: .47;
+
+  translate:
+    0 0;
+}
+
+
+/* DEVTOOLS MANSION BOTTOM 120 */
+
+.p08-masion {
+  position: absolute;
+
+  z-index: 7;
+
+  width: 233px;
+
+  left: 240px;
+  bottom: 120px;
+
+  transform:
+    translateX(-50%);
+
+  opacity: 0;
+
+  translate:
+    65px 0;
+
+  transition:
+    translate
+    1250ms
+    var(--entry-ease)
+    180ms,
+
+    opacity
+    700ms
+    ease
+    180ms;
+}
+
+.page08-layout.is-active
+.p08-masion {
+  opacity: 1;
+
+  translate:
+    0 0;
+}
+
+
+/* DEVTOOLS FRONT WATER BOTTOM 110 */
+
+.p08-water-ground--front {
+  position: absolute;
+
+  z-index: 8;
+
+  width: 112px;
+
+  left: 240px;
+  bottom: 110px;
+
+  transform:
+    translateX(-50%);
+
+  opacity: 0;
+
+  translate:
+    0 18px;
+
+  transition:
+    translate
+    1100ms
+    var(--entry-ease)
+    360ms,
+
+    opacity
+    700ms
+    ease
+    360ms;
+}
+
+.page08-layout.is-active
+.p08-water-ground--front {
+  opacity: .5;
+
+  translate:
+    0 0;
+}
+
+
+/* DEVTOOLS COUPLE BOTTOM 63 */
+
+.p08-couple {
+  position: absolute;
+
+  z-index: 10;
+
+  width: 120px;
+
+  left: 63px;
+  bottom: 63px;
+
+  opacity: 0;
+
+  translate:
+    -65px 0;
+
+  transition:
+    translate
+    1150ms
+    var(--entry-ease)
+    200ms,
+
+    opacity
+    700ms
+    ease
+    200ms;
+}
+
+.page08-layout.is-active
+.p08-couple {
+  opacity: 1;
+
+  translate:
+    0 0;
+}
+
+.p08-lotus {
+  position: absolute;
+
+  z-index: 9;
+
+  height: auto;
+
+  transform-origin:
+    50% 90%;
+
+  opacity: 0;
+
+  animation:
+    p08-lotus-sway
+    var(--lotus-speed)
+    ease-in-out
+    infinite;
+
+  transition:
+    translate
+    1150ms
+    var(--entry-ease)
+    280ms,
+
+    opacity
+    700ms
+    ease
+    280ms;
+}
+
+@keyframes p08-lotus-sway {
+
+  0%,
+  100% {
+    transform:
+      rotate(
+        calc(
+          var(--lotus-angle) * -1
+        )
+      );
+  }
+
+  50% {
+    transform:
+      rotate(
+        var(--lotus-angle)
+      )
+      translateY(-3px);
+  }
+}
+
+
+/* DEVTOOLS */
+
+.p08-lotus--left {
+  --lotus-angle: 4.5deg;
+  --lotus-speed: 2500ms;
+
+  width: 120px;
+
+  left: 1px;
+  bottom: 45px;
+
+  translate:
+    -65px 0;
+}
+
+
+/* DEVTOOLS */
+
+.p08-lotus--right {
+  --lotus-angle: 4.2deg;
+  --lotus-speed: 2650ms;
+
+  width: 122px;
+
+  right: 80px;
+  bottom: 36px;
+
+  translate:
+    65px 0;
+}
+
+.page08-layout.is-active
+.p08-lotus {
+  opacity: 1;
+
+  translate:
+    0 0;
+}
+
+
+/* =========================================================
+   PERFORMANCE
+========================================================= */
+
+.invitation-page:not(.is-nearby)
+.p02-cloud,
+
+.invitation-page:not(.is-nearby)
+.p03-cloud,
+
+.invitation-page:not(.is-nearby)
+.p06-cloud,
+
+.invitation-page:not(.is-nearby)
+.p08-cloud,
+
+.invitation-page:not(.is-nearby)
+.p02-confetti-piece,
+
+.invitation-page:not(.is-nearby)
+.p02-procession-item,
+
+.invitation-page:not(.is-nearby)
+.p03-illustration,
+
+.invitation-page:not(.is-nearby)
+.p06-lucky-item,
+
+.invitation-page:not(.is-nearby)
+.p07-top-left-decoration,
+
+.invitation-page:not(.is-nearby)
+.p07-butterfly,
+
+.invitation-page:not(.is-nearby)
+.p08-lotus {
+  animation-play-state:
+    paused !important;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration:
+      .001ms !important;
+
+    animation-iteration-count:
+      1 !important;
+
+    transition-duration:
+      .001ms !important;
+  }
+}
