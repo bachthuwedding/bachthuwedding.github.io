@@ -1,1413 +1,2567 @@
-<!doctype html>
-<html lang="vi">
-
-<head>
-  <meta charset="utf-8" />
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover"
-  />
-
-  <meta
-    name="theme-color"
-    content="#ead5ad"
-  />
-
-  <meta
-    name="description"
-    content="Thiệp cưới Bách & Thư"
-  />
-
-  <title>Bách & Thư</title>
-
-  <link
-    rel="icon"
-    type="image/png"
-    href="./assets/favicon.png"
-  />
-
-  <link
-    rel="preload"
-    href="./assets/page01-bg-optimized.webp"
-    as="image"
-    type="image/webp"
-    fetchpriority="high"
-  />
-
-  <link
-    rel="preload"
-    href="./assets/envelope-closed-optimized.png"
-    as="image"
-    type="image/png"
-    fetchpriority="high"
-  />
-
-  <link
-    rel="stylesheet"
-    href="./styles.css?v=20260924-2"
-  />
-
-  <script
-    src="./script.js?v=20260924-2"
-    defer
-  ></script>
-</head>
-
-
-<body>
-
-  <main
-    class="site-shell"
-    id="siteShell"
-  >
-
-    <div
-      class="site-scale"
-      id="siteScale"
-    >
-
-      <div class="design-stage">
-
-
-        <!-- =================================================
-             PAGE 01
-        ================================================== -->
-
-        <section
-          class="opening-page"
-          id="opening"
-          aria-label="Thiệp cưới Bách và Thư"
-        >
-
-          <button
-            class="opening-card-button"
-            id="openingCardButton"
-            type="button"
-            aria-label="Xem thiệp cưới"
-          >
-
-            <img
-              class="opening-card-image"
-              src="./assets/envelope-closed-optimized.png"
-              alt=""
-              draggable="false"
-              loading="eager"
-              decoding="async"
-              fetchpriority="high"
-              width="800"
-              height="1200"
-            />
-
-            <span
-              class="monogram-pulse"
-              aria-hidden="true"
-            ></span>
-
-          </button>
-
-        </section>
-
-
-        <!-- =================================================
-             INVITATION FLOW
-        ================================================== -->
-
-        <section
-          class="page-02"
-          id="page02"
-          aria-hidden="true"
-        >
+/* =========================================================
+   BÁCH & THƯ WEDDING
+   GOOGLE APPS SCRIPT BACKEND
 
-          <div
-            class="invitation-flow"
-            id="invitationFlow"
-          >
+   VERSION: 2026-09-24-03
+========================================================= */
 
 
-            <!-- =================================================
-                 PAGE 02
-            ================================================== -->
+/* =========================================================
+   CONFIG
+========================================================= */
 
-            <section
-              class="invitation-page page02-layout"
-              id="page02Layout"
-              aria-label="Lễ thành hôn Bách và Thư"
-            >
+const CONFIG = Object.freeze({
 
-              <img
-                class="p02-background deferred-page02-asset"
-                data-src="./assets/page02-bg.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  SPREADSHEET_ID:
+    "1Met6W9whg2I9Ho_GVBgpp4QZOrBF_24pKOk0lPiC7Yo",
 
-              <img
-                class="p02-frame deferred-page02-asset"
-                data-src="./assets/page02-frame.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  SHEET_NAME:
+    "Danh sách khách mời",
 
+  SITE_BASE_URL:
+    "https://bachthuwedding.github.io/",
 
-              <!-- CLOUDS -->
+  HEADER_ROW:
+    1,
 
-              <img
-                class="p02-cloud p02-cloud--01 deferred-page02-asset"
-                data-src="./assets/page02-cloud-01.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  FIRST_DATA_ROW:
+    2,
 
-              <img
-                class="p02-cloud p02-cloud--02 deferred-page02-asset"
-                data-src="./assets/page02-cloud-02.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  TIMEZONE:
+    "Asia/Ho_Chi_Minh",
 
-              <img
-                class="p02-cloud p02-cloud--03 deferred-page02-asset"
-                data-src="./assets/page02-cloud-03.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
 
-              <img
-                class="p02-cloud p02-cloud--04 deferred-page02-asset"
-                data-src="./assets/page02-cloud-04.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  /*
+    Tên header.
 
+    Script tìm cột dựa trên header,
+    KHÔNG dựa vào số thứ tự cột.
 
-              <!-- TEXT -->
+    Vì vậy nếu sau này chèn thêm cột,
+    backend vẫn ít bị lệch hơn.
+  */
 
-              <p class="p02-invite">
-                TRÂN TRỌNG KÍNH MỜI
-              </p>
+  HEADERS: {
 
+    GUEST_NAME:
+      "Tên khách mời",
 
-              <!--
-                CỘT F GOOGLE SHEET
-                Sẽ được JS điền vào đây.
-              -->
+    DISPLAY_NAME:
+      "Hiển thị đầy đủ trên thiệp (Tự động merge)",
 
-              <p
-                class="p02-personalized-guest"
-                id="personalizedGuestName"
-                hidden
-              ></p>
+    INVITE_LINK:
+      "Link thiệp",
 
+    OPENED:
+      "Đọc/Chưa đọc",
 
-              <div
-                class="p02-divider"
-                aria-hidden="true"
-              ></div>
+    LUCKY_NUMBER:
+      "Số may mắn",
 
+    RSVP_NAME:
+      "Tên",
 
-              <p class="p02-to">
-                TỚI
-              </p>
+    ATTENDANCE:
+      "Có đi/Không đi",
 
+    GUEST_COUNT:
+      "Số lượng người tham dự",
 
-              <p class="p02-wedding-title">
-                LỄ THÀNH HÔN
-              </p>
+    MESSAGE:
+      "Lời nhắn",
 
+    VIDEO:
+      "Video"
+  }
+});
 
-              <h1 class="p02-couple-names">
 
-                <span class="p02-name">
-                  ĐỒNG THANH BÁCH
-                </span>
+/* =========================================================
+   MENU
+========================================================= */
 
-                <span class="p02-ampersand">
-                  &amp;
-                </span>
+function onOpen() {
 
-                <span class="p02-name">
-                  NGUYỄN ANH THƯ
-                </span>
+  SpreadsheetApp
+    .getUi()
+    .createMenu(
+      "💌 Wedding Invitation"
+    )
 
-              </h1>
+    .addItem(
+      "Tạo / cập nhật link thiệp",
+      "generateGuestLinks"
+    )
 
+    .addItem(
+      "Kiểm tra cấu hình backend",
+      "checkWeddingConfig"
+    )
 
-              <div
-                class="p02-date-divider"
-                aria-hidden="true"
-              ></div>
+    .addItem(
+      "Test khách đầu tiên",
+      "testFirstGuest"
+    )
 
+    .addToUi();
+}
 
-              <!-- CEREMONY -->
 
-              <div class="p02-ceremony-info">
+/* =========================================================
+   CHECK CONFIG
+========================================================= */
 
-                <p class="p02-time-line">
+function checkWeddingConfig() {
 
-                  <span>
-                    Vào lúc
-                  </span>
+  const sheet =
+    getSheet_();
 
-                  <strong>
-                    10:30 thứ Ba ngày 24/11/2026
-                  </strong>
 
-                </p>
+  const columns =
+    getColumnMap_(
+      sheet
+    );
 
 
-                <p class="p02-lunar-date">
-                  (Tức ngày 16 tháng 10 năm Bính Ngọ)
-                </p>
+  const requiredKeys = [
+    "GUEST_NAME",
+    "DISPLAY_NAME",
+    "INVITE_LINK",
+    "OPENED",
+    "LUCKY_NUMBER",
+    "RSVP_NAME",
+    "ATTENDANCE",
+    "GUEST_COUNT",
+    "MESSAGE",
+    "VIDEO"
+  ];
 
 
-                <p class="p02-at">
+  const missing =
+    requiredKeys.filter(
+      (key) =>
+        !columns[key]
+    );
 
-                  <span>
-                    Tại
-                  </span>
 
-                  <strong>
-                    khách sạn Sheraton Hanoi
-                  </strong>
+  if (
+    missing.length >
+    0
+  ) {
 
-                </p>
+    const missingNames =
+      missing.map(
+        (key) =>
+          CONFIG.HEADERS[key]
+      );
 
 
-                <p class="p02-venue-address">
-                  (K5 Nghi Tàm, 11 Xuân Diệu Tây Hồ, Hà Nội)
-                </p>
+    throw new Error(
+      "Thiếu các cột: "
+      +
+      missingNames.join(
+        ", "
+      )
+    );
+  }
 
-              </div>
 
+  SpreadsheetApp
+    .getActive()
+    .toast(
+      "Backend OK. Đã tìm thấy đầy đủ các cột.",
+      "Wedding Invitation",
+      6
+    );
+}
 
-              <!-- FAMILY -->
 
-              <div class="p02-family-info">
+/* =========================================================
+   TEST FIRST GUEST
+========================================================= */
 
-                <section class="p02-family">
+function testFirstGuest() {
 
-                  <h3 class="p02-family-title">
-                    NHÀ TRAI
-                  </h3>
+  const sheet =
+    getSheet_();
 
-                  <p>
-                    Ông Đồng Thanh Tùng
-                  </p>
 
-                  <p>
-                    Bà Nguyễn Thị Thu Hương
-                  </p>
+  const columns =
+    getColumnMap_(
+      sheet
+    );
 
-                </section>
 
+  const guestName =
+    sheet
+      .getRange(
+        CONFIG.FIRST_DATA_ROW,
+        columns.GUEST_NAME
+      )
+      .getDisplayValue()
+      .trim();
 
-                <section class="p02-family">
 
-                  <h3 class="p02-family-title">
-                    NHÀ GÁI
-                  </h3>
+  if (
+    !guestName
+  ) {
 
-                  <p>
-                    Ông Nguyễn Anh Thơ
-                  </p>
+    throw new Error(
+      "Dòng đầu tiên chưa có tên khách."
+    );
+  }
 
-                  <p>
-                    Bà Nguyễn Thị Thu Hương
-                  </p>
 
-                </section>
+  const slug =
+    slugifyGuestName_(
+      guestName
+    );
 
-              </div>
 
+  const result =
+    handleGuestLookup_(
+      slug
+    );
 
-              <!-- CONFETTI -->
 
-              <div
-                class="p02-confetti-cluster"
-                data-sprite-src="./assets/page06-confetti.png"
-                aria-hidden="true"
-              >
+  SpreadsheetApp
+    .getActive()
+    .toast(
+      JSON.stringify(
+        result
+      ),
+      "Test backend",
+      10
+    );
+}
 
-                <span class="p02-confetti-piece p02-confetti-piece--01"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--02"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--03"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--04"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--05"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--06"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--07"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--08"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--09"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--10"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--11"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--12"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--13"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--14"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--15"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--16"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--17"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--18"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--19"></span>
-                <span class="p02-confetti-piece p02-confetti-piece--20"></span>
 
-              </div>
+/* =========================================================
+   GENERATE GUEST LINKS
+========================================================= */
 
+function generateGuestLinks() {
 
-              <!-- PROCESSION -->
+  const sheet =
+    getSheet_();
 
-              <div
-                class="p02-procession"
-                aria-hidden="true"
-              >
 
-                <img
-                  class="p02-procession-item p02-flag-bearer deferred-page02-asset"
-                  data-src="./assets/page02-flag-bearer.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
+  const total =
+    generateGuestLinksForSheet_(
+      sheet
+    );
 
-                <img
-                  class="p02-procession-item p02-couple deferred-page02-asset"
-                  data-src="./assets/page02-couple.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
 
-                <img
-                  class="p02-procession-item p02-lion-dance deferred-page02-asset"
-                  data-src="./assets/page02-lion-dance.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
+  SpreadsheetApp
+    .getActive()
+    .toast(
+      `Đã tạo / cập nhật ${total} link thiệp.`,
+      "Wedding Invitation",
+      6
+    );
+}
 
-                <img
-                  class="p02-procession-item p02-drummer deferred-page02-asset"
-                  data-src="./assets/page02-drummer.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
 
-              </div>
+/* =========================================================
+   GENERATE LINKS INTERNAL
+========================================================= */
 
+function generateGuestLinksForSheet_(
+  sheet
+) {
 
-              <img
-                class="p02-bottom-ornament deferred-page02-asset"
-                data-src="./assets/page02-bottom-ornament.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  const columns =
+    getColumnMap_(
+      sheet
+    );
 
-            </section>
 
+  ensureRequiredColumn_(
+    columns,
+    "GUEST_NAME"
+  );
 
-            <!-- =================================================
-                 PAGE 03
-            ================================================== -->
 
-            <section
-              class="invitation-page page03-layout"
-              id="page03"
-              aria-label="Lịch trình đám cưới"
-            >
+  ensureRequiredColumn_(
+    columns,
+    "INVITE_LINK"
+  );
 
-              <img
-                class="p03-background deferred-page03-asset"
-                data-src="./assets/page02-bg.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
 
-              <img
-                class="p03-frame deferred-page03-asset"
-                data-src="./assets/page02-frame.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  const lastRow =
+    sheet.getLastRow();
 
 
-              <img
-                class="p03-cloud p03-cloud--01 deferred-page03-asset"
-                data-src="./assets/page02-cloud-01.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  if (
+    lastRow <
+    CONFIG.FIRST_DATA_ROW
+  ) {
 
-              <img
-                class="p03-cloud p03-cloud--02 deferred-page03-asset"
-                data-src="./assets/page02-cloud-03.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+    return 0;
+  }
 
-              <img
-                class="p03-cloud p03-cloud--03 deferred-page03-asset"
-                data-src="./assets/page02-cloud-02.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
 
-              <img
-                class="p03-cloud p03-cloud--04 deferred-page03-asset"
-                data-src="./assets/page02-cloud-04.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  const rowCount =
+    lastRow
+    -
+    CONFIG.FIRST_DATA_ROW
+    +
+    1;
 
 
-              <h2 class="p03-title">
-                LỊCH TRÌNH
-              </h2>
+  const guestNames =
+    sheet
+      .getRange(
+        CONFIG.FIRST_DATA_ROW,
+        columns.GUEST_NAME,
+        rowCount,
+        1
+      )
+      .getDisplayValues();
 
 
-              <img
-                class="p03-title-divider deferred-page03-asset"
-                data-src="./assets/page03-title-divider.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  const duplicateCounter =
+    Object.create(
+      null
+    );
 
 
-              <img
-                class="p03-timeline deferred-page03-asset"
-                data-src="./assets/page03-timeline-new.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  const links = [];
 
 
-              <!-- ĐÓN DÂU -->
+  let total =
+    0;
 
-              <article class="p03-event p03-event--02">
 
-                <h3 class="p03-event-title">
-                  ĐÓN DÂU
-                </h3>
+  for (
+    let i = 0;
+    i < guestNames.length;
+    i += 1
+  ) {
 
-                <p class="p03-event-date">
-                  24.11.2026
-                </p>
+    const guestName =
+      String(
+        guestNames[i][0] || ""
+      )
+        .trim();
 
-                <p class="p03-event-time">
-                  9:00
-                </p>
 
+    if (
+      !guestName
+    ) {
 
-                <div class="p03-location">
+      links.push(
+        [""]
+      );
 
-                  <span
-                    class="p03-location-pin"
-                    aria-hidden="true"
-                  ></span>
 
+      continue;
+    }
 
-                  <div>
 
-                    <strong>
-                      Tư gia nhà gái
-                    </strong>
+    const baseSlug =
+      slugifyGuestName_(
+        guestName
+      );
 
-                    <span>
-                      AD-14, Ocean Park 3
-                    </span>
 
-                    <span>
-                      Nghĩa Trụ, Văn Giang, Hưng Yên
-                    </span>
+    if (
+      !baseSlug
+    ) {
 
-                  </div>
+      links.push(
+        [""]
+      );
 
-                </div>
 
-              </article>
+      continue;
+    }
 
 
-              <img
-                class="p03-illustration p03-kieu deferred-page03-asset"
-                data-src="./assets/page03-kieu.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+    duplicateCounter[
+      baseSlug
+    ] =
+      (
+        duplicateCounter[
+          baseSlug
+        ]
+        ||
+        0
+      )
+      +
+      1;
 
 
-              <!-- TIỆC CƯỚI -->
+    const occurrence =
+      duplicateCounter[
+        baseSlug
+      ];
 
-              <img
-                class="p03-illustration p03-mam-co deferred-page03-asset"
-                data-src="./assets/page03-mam-co.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
 
+    const finalSlug =
+      occurrence ===
+      1
+        ?
+        baseSlug
+        :
+        `${baseSlug}-${occurrence}`;
 
-              <article class="p03-event p03-event--03">
 
-                <h3 class="p03-event-title">
-                  TIỆC CƯỚI
-                </h3>
+    const inviteUrl =
+      CONFIG.SITE_BASE_URL
+      +
+      "?guest="
+      +
+      encodeURIComponent(
+        finalSlug
+      );
 
-                <p class="p03-event-date">
-                  24.11.2026
-                </p>
 
-                <p class="p03-event-time">
-                  11:00 - 14:00
-                </p>
+    links.push(
+      [
+        inviteUrl
+      ]
+    );
 
 
-                <div class="p03-location">
+    total +=
+      1;
+  }
 
-                  <span
-                    class="p03-location-pin"
-                    aria-hidden="true"
-                  ></span>
 
+  sheet
+    .getRange(
+      CONFIG.FIRST_DATA_ROW,
+      columns.INVITE_LINK,
+      links.length,
+      1
+    )
+    .setValues(
+      links
+    );
 
-                  <div>
 
-                    <strong>
-                      Sheraton Hanoi Hotel
-                    </strong>
+  SpreadsheetApp.flush();
 
-                    <span>
-                      K5 Nghi Tàm, 11 Xuân Diệu
-                    </span>
 
-                    <span>
-                      Tây Hồ, Hà Nội
-                    </span>
+  return total;
+}
 
-                  </div>
 
-                </div>
+/* =========================================================
+   OPTIONAL:
+   AUTO REGENERATE WHEN GUEST NAME IS EDITED
+========================================================= */
 
-              </article>
+function onEdit(e) {
 
+  if (
+    !e
+    ||
+    !e.range
+  ) {
 
-              <!-- AFTER PARTY -->
+    return;
+  }
 
-              <article class="p03-event p03-event--04">
 
-                <h3 class="p03-event-title">
-                  AFTER PARTY
-                </h3>
+  const sheet =
+    e.range.getSheet();
 
-                <p class="p03-event-date">
-                  24.11.2026
-                </p>
 
-                <p class="p03-event-time">
-                  18:30 - 22:00
-                </p>
+  if (
+    sheet.getName() !==
+    CONFIG.SHEET_NAME
+  ) {
 
+    return;
+  }
 
-                <div class="p03-location">
 
-                  <span
-                    class="p03-location-pin"
-                    aria-hidden="true"
-                  ></span>
+  let columns;
 
 
-                  <div>
+  try {
 
-                    <strong>
-                      Sheraton Hanoi Hotel
-                    </strong>
+    columns =
+      getColumnMap_(
+        sheet
+      );
 
-                    <span>
-                      (dự kiến)
-                    </span>
+  } catch (_) {
 
-                  </div>
+    return;
+  }
 
-                </div>
 
-              </article>
+  if (
+    !columns.GUEST_NAME
+  ) {
 
+    return;
+  }
 
-              <img
-                class="p03-illustration p03-cheers deferred-page03-asset"
-                data-src="./assets/page03-cheers.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
 
+  const firstEditedColumn =
+    e.range.getColumn();
 
-              <!-- DRESS CODE -->
 
-              <section
-                class="p03-dress-code"
-                aria-label="Dress code"
-              >
+  const lastEditedColumn =
+    e.range.getLastColumn();
 
-                <h3 class="p03-dress-title">
 
-                  <span>✦</span>
+  /*
+    Chỉ regenerate nếu vùng được edit
+    có chạm vào cột Tên khách mời.
+  */
 
-                  DRESS CODE
+  if (
+    columns.GUEST_NAME <
+      firstEditedColumn
+    ||
+    columns.GUEST_NAME >
+      lastEditedColumn
+  ) {
 
-                  <span>✦</span>
+    return;
+  }
 
-                </h3>
 
+  generateGuestLinksForSheet_(
+    sheet
+  );
+}
 
-                <div class="p03-color-list">
 
-                  <div class="p03-color-item">
-                    <span class="p03-color p03-color--brown"></span>
-                    <span>Nâu</span>
-                  </div>
+/* =========================================================
+   WEB APP GET
+========================================================= */
 
-                  <div class="p03-color-item">
-                    <span class="p03-color p03-color--pink"></span>
-                    <span>Hồng</span>
-                  </div>
+function doGet(e) {
 
-                  <div class="p03-color-item">
-                    <span class="p03-color p03-color--beige"></span>
-                    <span>Be</span>
-                  </div>
+  try {
 
-                  <div class="p03-color-item">
-                    <span class="p03-color p03-color--sage"></span>
-                    <span>Xanh</span>
-                  </div>
+    const action =
+      getParameter_(
+        e,
+        "action",
+        "health"
+      );
 
-                </div>
 
-              </section>
+    let result;
 
 
-              <img
-                class="p03-bottom-ornament deferred-page03-asset"
-                data-src="./assets/page02-bottom-ornament.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+    switch (
+      action
+    ) {
 
-            </section>
+      /*
+        Website gọi lúc load:
+        - tìm khách
+        - trả F
+        - trả số lucky cũ
+        - trả RSVP cũ
+        - đồng thời ghi H nếu chưa đọc
+      */
 
+      case "guest":
 
-            <!-- =================================================
-                 PAGE 06
-            ================================================== -->
+        result =
+          handleGuestLookup_(
+            getParameter_(
+              e,
+              "guest",
+              ""
+            )
+          );
 
-            <section
-              class="invitation-page page06-layout"
-              id="page06"
-              aria-label="Nhận số may mắn của bạn"
-            >
+        break;
 
-              <img
-                class="p06-background deferred-page06-asset"
-                data-src="./assets/page02-bg.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
 
+      /*
+        Khi khách click roll:
+        - nếu I đã có số -> trả số cũ
+        - nếu I trống -> tạo đúng 1 lần và ghi I
+      */
 
-              <img
-                class="p06-confetti deferred-page06-asset"
-                data-src="./assets/page06-confetti.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+      case "lucky":
 
+        result =
+          handleLuckyNumber_(
+            getParameter_(
+              e,
+              "guest",
+              ""
+            )
+          );
 
-              <div
-                class="p06-entry-fireworks"
-                id="page06EntryFireworks"
-                aria-hidden="true"
-              ></div>
+        break;
 
 
-              <img
-                class="p06-cloud p06-cloud--01 deferred-page06-asset"
-                data-src="./assets/page02-cloud-02.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+      case "health":
 
-              <img
-                class="p06-cloud p06-cloud--02 deferred-page06-asset"
-                data-src="./assets/page02-cloud-03.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+        result = {
 
-              <img
-                class="p06-cloud p06-cloud--03 deferred-page06-asset"
-                data-src="./assets/page02-cloud-04.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+          ok:
+            true,
 
-              <img
-                class="p06-cloud p06-cloud--04 deferred-page06-asset"
-                data-src="./assets/page02-cloud-01.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+          service:
+            "bach-thu-wedding",
 
+          version:
+            "2026-09-24-03",
 
-              <div
-                class="p06-card-wrap"
-                id="luckyCard"
-              >
+          timestamp:
+            new Date()
+              .toISOString()
+        };
 
-                <img
-                  class="p06-lucky-card deferred-page06-asset"
-                  data-src="./assets/page06-lucky-card.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
+        break;
 
 
-                <h2 class="p06-title">
-                  Nhận số may mắn của bạn
-                </h2>
+      default:
 
+        result = {
 
-                <div
-                  class="p06-number-slot"
-                  id="luckyNumber"
-                  aria-live="polite"
-                  aria-atomic="true"
-                >
-                  88
-                </div>
+          ok:
+            false,
 
+          error:
+            "Unknown action."
+        };
+    }
 
-                <p
-                  class="p06-number-hint"
-                  id="luckyHint"
-                >
-                  Nhấn để nhận số may mắn
-                </p>
 
+    return outputResponse_(
+      result,
+      e
+    );
 
-                <div
-                  class="p06-fireworks"
-                  id="luckyFireworks"
-                  aria-hidden="true"
-                ></div>
+  } catch (error) {
 
+    return outputResponse_(
+      {
 
-                <button
-                  class="p06-lucky-trigger"
-                  id="luckyTrigger"
-                  type="button"
-                  aria-label="Nhấn để nhận số may mắn"
-                ></button>
+        ok:
+          false,
 
-              </div>
+        error:
+          getErrorMessage_(
+            error
+          )
 
+      },
+      e
+    );
+  }
+}
 
-              <div
-                class="p06-bottom-items"
-                aria-hidden="true"
-              >
 
-                <img
-                  class="p06-lucky-item p06-ingots deferred-page06-asset"
-                  data-src="./assets/page06-lucky-ingots.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
+/* =========================================================
+   WEB APP POST
+========================================================= */
 
-                <img
-                  class="p06-lucky-item p06-knot deferred-page06-asset"
-                  data-src="./assets/page06-lucky-knot.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
+function doPost(e) {
 
-                <img
-                  class="p06-lucky-item p06-bag deferred-page06-asset"
-                  data-src="./assets/page06-lucky-bag.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
+  try {
 
-                <img
-                  class="p06-lucky-item p06-coins deferred-page06-asset"
-                  data-src="./assets/page06-lucky-coins.png"
-                  alt=""
-                  draggable="false"
-                  decoding="async"
-                />
+    const params =
+      e
+      &&
+      e.parameter
+        ?
+        e.parameter
+        :
+        {};
 
-              </div>
 
+    const action =
+      String(
+        params.action || ""
+      )
+        .trim();
 
-              <img
-                class="p06-frame deferred-page06-asset"
-                data-src="./assets/page02-frame.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
 
+    let result;
 
-              <img
-                class="p06-bottom-ornament deferred-page06-asset"
-                data-src="./assets/page02-bottom-ornament.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
 
-            </section>
+    switch (
+      action
+    ) {
 
+      /*
+        Ghi H độc lập ngay khi website mở.
+      */
 
-            <!-- =================================================
-                 PAGE 07
-            ================================================== -->
+      case "markOpened":
 
-            <section
-              class="invitation-page page07-layout"
-              id="page07"
-              aria-label="Xác nhận tham dự"
-            >
+        result =
+          handleMarkOpened_(
+            params.guest
+          );
 
-              <img
-                class="p07-background deferred-page07-asset"
-                data-src="./assets/page02-bg.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+        break;
 
 
-              <img
-                class="p07-top-left-decoration deferred-page07-asset"
-                data-src="./assets/page07-top-left-branch-lantern.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+      /*
+        Fallback cho lucky number.
+        Nếu GET lucky bị lỗi ở frontend,
+        frontend vẫn có thể POST số lên.
 
+        Backend KHÔNG overwrite
+        nếu I đã có số.
+      */
 
-              <img
-                class="p07-butterfly deferred-page07-asset"
-                data-src="./assets/page07-butterfly.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+      case "saveLucky":
 
+        result =
+          handleSaveLucky_(
+            params
+          );
 
-              <h2 class="p07-rsvp-title">
-                XÁC NHẬN<br />
-                THAM DỰ
-              </h2>
+        break;
 
 
-              <img
-                class="p07-divider-ornament p07-divider-ornament--top deferred-page07-asset"
-                data-src="./assets/page07-divider-ornament.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+      /*
+        RSVP:
+        J = Tên
+        K = Có / Không
+        L = Số lượng
+        M = Lời nhắn
 
+        N = Video:
+        website KHÔNG ghi tự động.
+      */
 
-              <p class="p07-rsvp-subtitle">
-                Sự hiện diện của bạn là niềm vui lớn<br />
-                dành cho chúng mình!
-              </p>
+      case "rsvp":
 
+        result =
+          handleRsvp_(
+            params
+          );
 
-              <form
-                class="p07-rsvp-form"
-                id="rsvpForm"
-              >
+        break;
 
 
-                <!-- NAME -->
+      default:
 
-                <div class="p07-form-group p07-form-group--name">
+        result = {
 
-                  <label
-                    class="p07-form-label"
-                    for="rsvpGuestName"
-                  >
-                    Tên khách mời
-                  </label>
+          ok:
+            false,
 
+          error:
+            "Unknown POST action."
+        };
+    }
 
-                  <div class="p07-field p07-field--name">
 
-                    <input
-                      id="rsvpGuestName"
-                      class="p07-text-input"
-                      type="text"
-                      name="guestName"
-                      autocomplete="name"
-                      placeholder="Nhập tên của bạn..."
-                    />
+    return jsonOutput_(
+      result
+    );
 
+  } catch (error) {
 
-                    <img
-                      class="p07-field-lotus deferred-page07-asset"
-                      data-src="./assets/page07-lotus.png"
-                      alt=""
-                      draggable="false"
-                      decoding="async"
-                    />
+    return jsonOutput_(
+      {
 
-                  </div>
+        ok:
+          false,
 
-                </div>
+        error:
+          getErrorMessage_(
+            error
+          )
 
+      }
+    );
+  }
+}
 
-                <!-- ATTENDANCE -->
 
-                <fieldset class="p07-form-group p07-form-group--attendance">
+/* =========================================================
+   GUEST LOOKUP
+========================================================= */
 
-                  <legend class="p07-form-label">
-                    Bạn sẽ tới chung vui cùng chúng mình chứ?
-                  </legend>
+function handleGuestLookup_(
+  rawGuest
+) {
 
+  const guest =
+    normalizeGuestSlug_(
+      rawGuest
+    );
 
-                  <div class="p07-attendance-options">
 
-                    <label class="p07-attendance-option">
+  if (
+    !guest
+  ) {
 
-                      <input
-                        id="rsvpAttendanceYes"
-                        type="radio"
-                        name="attendance"
-                        value="yes"
-                        checked
-                      />
+    return {
 
-                      <span class="p07-radio-mark"></span>
+      ok:
+        false,
 
-                      <span class="p07-attendance-text">
-                        Có
-                      </span>
+      error:
+        "Missing guest."
+    };
+  }
 
-                    </label>
 
+  const sheet =
+    getSheet_();
 
-                    <label class="p07-attendance-option">
 
-                      <input
-                        id="rsvpAttendanceNo"
-                        type="radio"
-                        name="attendance"
-                        value="no"
-                      />
+  const columns =
+    getColumnMap_(
+      sheet
+    );
 
-                      <span class="p07-radio-mark"></span>
 
-                      <span
-                        class="p07-attendance-text"
-                        id="rsvpAttendanceNoText"
-                      >
-                        Không
-                      </span>
+  const row =
+    findGuestRow_(
+      sheet,
+      columns,
+      guest
+    );
 
-                    </label>
 
-                  </div>
+  if (
+    !row
+  ) {
 
-                </fieldset>
+    return {
 
+      ok:
+        false,
 
-                <!-- COUNT -->
+      error:
+        "Guest not found.",
 
-                <div class="p07-form-group p07-form-group--count">
+      guest
+    };
+  }
 
-                  <span class="p07-form-label">
-                    Số lượng người tham dự
-                  </span>
 
+  /*
+    Ghi Đã đọc lần đầu.
+  */
 
-                  <div class="p07-counter">
+  markOpenedAtRow_(
+    sheet,
+    columns,
+    row
+  );
 
-                    <button
-                      class="p07-counter-button"
-                      id="rsvpMinus"
-                      type="button"
-                      aria-label="Giảm số người tham dự"
-                    >
-                      −
-                    </button>
 
+  const guestName =
+    getCellDisplayValue_(
+      sheet,
+      row,
+      columns.GUEST_NAME
+    );
 
-                    <output
-                      class="p07-counter-value"
-                      id="rsvpGuestCount"
-                      for="rsvpMinus rsvpPlus"
-                    >
-                      1
-                    </output>
 
+  const displayName =
+    getCellDisplayValue_(
+      sheet,
+      row,
+      columns.DISPLAY_NAME
+    );
 
-                    <button
-                      class="p07-counter-button"
-                      id="rsvpPlus"
-                      type="button"
-                      aria-label="Tăng số người tham dự"
-                    >
-                      +
-                    </button>
 
-                  </div>
+  const luckyValue =
+    getCellRawValue_(
+      sheet,
+      row,
+      columns.LUCKY_NUMBER
+    );
 
-                </div>
 
+  const rsvpName =
+    getCellDisplayValue_(
+      sheet,
+      row,
+      columns.RSVP_NAME
+    );
 
-                <!-- MESSAGE -->
 
-                <div class="p07-form-group p07-form-group--message">
+  const attendance =
+    getCellDisplayValue_(
+      sheet,
+      row,
+      columns.ATTENDANCE
+    );
 
-                  <label
-                    class="p07-form-label"
-                    for="rsvpMessage"
-                  >
-                    Lời nhắn tới cô dâu chú rể
-                  </label>
 
+  const guestCountValue =
+    getCellRawValue_(
+      sheet,
+      row,
+      columns.GUEST_COUNT
+    );
 
-                  <div class="p07-field p07-field--message">
 
-                    <textarea
-                      id="rsvpMessage"
-                      class="p07-message-input"
-                      name="message"
-                      rows="3"
-                      placeholder="Gửi lời chúc tốt đẹp đến chúng mình..."
-                    ></textarea>
+  const message =
+    getCellDisplayValue_(
+      sheet,
+      row,
+      columns.MESSAGE
+    );
 
 
-                    <img
-                      class="p07-field-lotus p07-field-lotus--message deferred-page07-asset"
-                      data-src="./assets/page07-lotus.png"
-                      alt=""
-                      draggable="false"
-                      decoding="async"
-                    />
+  const video =
+    getCellDisplayValue_(
+      sheet,
+      row,
+      columns.VIDEO
+    );
 
-                  </div>
 
-                </div>
+  return {
 
+    ok:
+      true,
 
-                <!-- VIDEO -> GOOGLE DRIVE -->
+    guest,
 
-                <div class="p07-form-group p07-form-group--video">
+    row,
 
-                  <a
-                    class="p07-video-field"
-                    href="https://drive.google.com/drive/folders/1e1acGQ5Nmtk5DlyNHUvbc7HcXA1gaj1i?usp=sharing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Mở Google Drive để tải video lời chúc lên"
-                  >
+    /*
+      D
+    */
 
-                    <span class="p07-video-text">
-                      Video lời chúc gửi tới cô dâu chú rể
-                    </span>
+    name:
+      guestName,
 
+    /*
+      F
+      Đây là dòng sẽ hiện trên thiệp.
+    */
 
-                    <img
-                      class="p07-field-lotus p07-field-lotus--video deferred-page07-asset"
-                      data-src="./assets/page07-lotus.png"
-                      alt=""
-                      draggable="false"
-                      decoding="async"
-                    />
+    displayName:
+      displayName
+      ||
+      guestName,
 
-                  </a>
+    /*
+      I
+    */
 
-                </div>
+    luckyNumber:
+      normalizeLuckyNumberForResponse_(
+        luckyValue
+      ),
 
+    /*
+      J
+    */
 
-                <!-- SUBMIT -->
+    rsvpName:
+      rsvpName,
 
-                <button
-                  class="p07-submit"
-                  id="rsvpSubmit"
-                  type="submit"
-                >
+    /*
+      K
+    */
 
-                  <span>
-                    GỬI XÁC NHẬN
-                  </span>
+    attendance:
+      attendance,
 
+    /*
+      L
+    */
 
-                  <svg
-                    class="p07-submit-icon"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
+    guestCount:
+      normalizeGuestCountForResponse_(
+        guestCountValue
+      ),
 
-                    <path
-                      d="M22 2L9.7 14.3"
-                    ></path>
+    /*
+      M
+    */
 
-                    <path
-                      d="M22 2l-7.8 20-4.5-7.7L2 9.8 22 2z"
-                    ></path>
+    message:
+      message,
 
-                  </svg>
+    /*
+      N
+    */
 
-                </button>
+    video:
+      video
+  };
+}
 
-              </form>
 
+/* =========================================================
+   MARK OPENED
+========================================================= */
 
-              <img
-                class="p07-bottom-ornament deferred-page07-asset"
-                data-src="./assets/page02-bottom-ornament.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+function handleMarkOpened_(
+  rawGuest
+) {
 
+  const guest =
+    normalizeGuestSlug_(
+      rawGuest
+    );
 
-              <img
-                class="p07-frame deferred-page07-asset"
-                data-src="./assets/page02-frame.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
 
-            </section>
+  if (
+    !guest
+  ) {
 
+    return {
 
-            <!-- =================================================
-                 PAGE 08
-            ================================================== -->
+      ok:
+        false,
 
-            <section
-              class="invitation-page page08-layout"
-              id="page08"
-              aria-label="Lời cảm ơn"
-            >
+      error:
+        "Missing guest."
+    };
+  }
 
-              <img
-                class="p08-background deferred-page08-asset"
-                data-src="./assets/page02-bg.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
 
+  const sheet =
+    getSheet_();
 
-              <div class="p08-content">
 
+  const columns =
+    getColumnMap_(
+      sheet
+    );
 
-                <h2 class="p08-title">
-                  Lời cảm ơn
-                </h2>
 
+  const row =
+    findGuestRow_(
+      sheet,
+      columns,
+      guest
+    );
 
-                <div
-                  class="p08-thanks-divider p08-thanks-divider--title-bottom"
-                  aria-hidden="true"
-                >
-                  <span></span>
-                  <b>✤</b>
-                  <span></span>
-                </div>
 
+  if (
+    !row
+  ) {
 
-                <p class="p08-english-title">
-                  THANK YOU FOR BEING PART OF OUR STORY
-                </p>
+    return {
 
+      ok:
+        false,
 
-                <div class="p08-vietnamese-copy">
+      error:
+        "Guest not found.",
 
-                  <p>
-                    Từ một cuộc gặp gỡ rất tình cờ, chúng mình đã đi qua những
-                    khác biệt, những vui buồn và cả những lúc tưởng như chẳng thể thiếu nhau.
-                    Nhưng sau tất cả, chúng mình vẫn chọn ở lại, học cách lắng nghe,
-                    thấu hiểu và yêu thương nhau theo một cách trưởng thành hơn.
-                  </p>
+      guest
+    };
+  }
 
-                  <p>
-                    Ngày hôm nay, khi cùng nhau bước vào một chặng đường mới,
-                    chúng mình càng biết ơn gia đình và bạn bè đã luôn yêu thương,
-                    đồng hành và dành cho chúng mình thật nhiều điều tốt đẹp.
-                  </p>
 
-                  <p>
-                    Sự hiện diện của mọi người trong ngày đặc biệt này là món quà quý giá nhất.
-                    Cảm ơn vì đã đến, đã chứng kiến và đã trở thành một phần
-                    trong câu chuyện của chúng mình.
-                  </p>
+  const newlyMarked =
+    markOpenedAtRow_(
+      sheet,
+      columns,
+      row
+    );
 
-                </div>
 
+  return {
 
-                <div
-                  class="p08-thanks-divider p08-thanks-divider--middle"
-                  aria-hidden="true"
-                >
-                  <span></span>
-                  <b>✤</b>
-                  <span></span>
-                </div>
+    ok:
+      true,
 
+    guest,
 
-                <p class="p08-english-copy">
-                  From two very different people, somehow, we found our way<br />
-                  to each other. And today, we choose each other again, and again.
-                </p>
+    newlyMarked
+  };
+}
 
 
-                <p class="p08-with-love">
-                  With love,
-                </p>
+/* =========================================================
+   MARK OPENED INTERNAL
+========================================================= */
 
+function markOpenedAtRow_(
+  sheet,
+  columns,
+  row
+) {
 
-                <p class="p08-signature">
-                  Thư &amp; Bách
-                </p>
+  ensureRequiredColumn_(
+    columns,
+    "OPENED"
+  );
 
-              </div>
 
+  const cell =
+    sheet.getRange(
+      row,
+      columns.OPENED
+    );
 
-              <img
-                class="p08-cloud p08-cloud--left deferred-page08-asset"
-                data-src="./assets/page02-cloud-03.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
 
-              <img
-                class="p08-cloud p08-cloud--right deferred-page08-asset"
-                data-src="./assets/page02-cloud-01.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  const existingValue =
+    cell.getValue();
 
 
-              <img
-                class="p08-water-ground p08-water-ground--base deferred-page08-asset"
-                data-src="./assets/page08-water-ground.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  /*
+    Chỉ lưu thời gian lần đầu mở.
+    Reload không overwrite.
+  */
 
+  if (
+    existingValue !==
+    ""
+    &&
+    existingValue !==
+    null
+  ) {
 
-              <img
-                class="p08-masion deferred-page08-asset"
-                data-src="./assets/page08-masion.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+    return false;
+  }
 
 
-              <img
-                class="p08-water-ground p08-water-ground--front deferred-page08-asset"
-                data-src="./assets/page08-water-ground.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  cell
+    .setValue(
+      new Date()
+    )
+    .setNumberFormat(
+      "dd/MM/yyyy HH:mm:ss"
+    );
 
 
-              <img
-                class="p08-couple deferred-page08-asset"
-                data-src="./assets/page08-couple-back.png"
-                alt="Bách và Thư"
-                draggable="false"
-                decoding="async"
-              />
+  SpreadsheetApp.flush();
 
 
-              <img
-                class="p08-lotus p08-lotus--left deferred-page08-asset"
-                data-src="./assets/page08-lotus-left.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+  return true;
+}
 
-              <img
-                class="p08-lotus p08-lotus--right deferred-page08-asset"
-                data-src="./assets/page08-lotus-right.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
 
+/* =========================================================
+   LUCKY NUMBER
+========================================================= */
 
-              <img
-                class="p08-frame deferred-page08-asset"
-                data-src="./assets/page02-frame.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
+function handleLuckyNumber_(
+  rawGuest
+) {
 
+  const guest =
+    normalizeGuestSlug_(
+      rawGuest
+    );
 
-              <img
-                class="p08-bottom-ornament deferred-page08-asset"
-                data-src="./assets/page02-bottom-ornament.png"
-                alt=""
-                draggable="false"
-                decoding="async"
-              />
 
-            </section>
+  if (
+    !guest
+  ) {
 
+    return {
 
-          </div>
+      ok:
+        false,
 
-        </section>
+      error:
+        "Missing guest."
+    };
+  }
 
-      </div>
 
-    </div>
+  /*
+    Script lock để hai request cùng lúc
+    không tạo hai số khác nhau.
+  */
 
-  </main>
+  const lock =
+    LockService
+      .getScriptLock();
 
-</body>
 
-</html>
+  lock.waitLock(
+    15000
+  );
+
+
+  try {
+
+    const sheet =
+      getSheet_();
+
+
+    const columns =
+      getColumnMap_(
+        sheet
+      );
+
+
+    const row =
+      findGuestRow_(
+        sheet,
+        columns,
+        guest
+      );
+
+
+    if (
+      !row
+    ) {
+
+      return {
+
+        ok:
+          false,
+
+        error:
+          "Guest not found.",
+
+        guest
+      };
+    }
+
+
+    ensureRequiredColumn_(
+      columns,
+      "LUCKY_NUMBER"
+    );
+
+
+    const cell =
+      sheet.getRange(
+        row,
+        columns.LUCKY_NUMBER
+      );
+
+
+    const existing =
+      Number(
+        cell.getValue()
+      );
+
+
+    /*
+      Nếu đã có số:
+      trả lại số cũ.
+
+      Đây là phần đảm bảo:
+      mỗi khách chỉ roll 1 lần.
+    */
+
+    if (
+      isValidLuckyNumber_(
+        existing
+      )
+    ) {
+
+      return {
+
+        ok:
+          true,
+
+        guest,
+
+        luckyNumber:
+          existing,
+
+        existing:
+          true
+      };
+    }
+
+
+    /*
+      Chỉ random nếu ô I đang trống.
+    */
+
+    const luckyNumber =
+      randomLuckyNumber_();
+
+
+    cell.setValue(
+      luckyNumber
+    );
+
+
+    SpreadsheetApp.flush();
+
+
+    return {
+
+      ok:
+        true,
+
+      guest,
+
+      luckyNumber,
+
+      existing:
+        false
+    };
+
+  } finally {
+
+    lock.releaseLock();
+  }
+}
+
+
+/* =========================================================
+   SAVE LUCKY FALLBACK
+========================================================= */
+
+function handleSaveLucky_(
+  params
+) {
+
+  const guest =
+    normalizeGuestSlug_(
+      params.guest
+    );
+
+
+  const requestedNumber =
+    Number(
+      params.luckyNumber
+    );
+
+
+  if (
+    !guest
+  ) {
+
+    throw new Error(
+      "Missing guest."
+    );
+  }
+
+
+  if (
+    !isValidLuckyNumber_(
+      requestedNumber
+    )
+  ) {
+
+    throw new Error(
+      "Invalid lucky number."
+    );
+  }
+
+
+  const lock =
+    LockService
+      .getScriptLock();
+
+
+  lock.waitLock(
+    15000
+  );
+
+
+  try {
+
+    const sheet =
+      getSheet_();
+
+
+    const columns =
+      getColumnMap_(
+        sheet
+      );
+
+
+    const row =
+      findGuestRow_(
+        sheet,
+        columns,
+        guest
+      );
+
+
+    if (
+      !row
+    ) {
+
+      throw new Error(
+        "Guest not found."
+      );
+    }
+
+
+    ensureRequiredColumn_(
+      columns,
+      "LUCKY_NUMBER"
+    );
+
+
+    const cell =
+      sheet.getRange(
+        row,
+        columns.LUCKY_NUMBER
+      );
+
+
+    const existing =
+      Number(
+        cell.getValue()
+      );
+
+
+    /*
+      Không bao giờ overwrite
+      lucky number đã có.
+    */
+
+    if (
+      isValidLuckyNumber_(
+        existing
+      )
+    ) {
+
+      return {
+
+        ok:
+          true,
+
+        guest,
+
+        luckyNumber:
+          existing,
+
+        existing:
+          true
+      };
+    }
+
+
+    cell.setValue(
+      requestedNumber
+    );
+
+
+    SpreadsheetApp.flush();
+
+
+    return {
+
+      ok:
+        true,
+
+      guest,
+
+      luckyNumber:
+        requestedNumber,
+
+      existing:
+        false
+    };
+
+  } finally {
+
+    lock.releaseLock();
+  }
+}
+
+
+/* =========================================================
+   RSVP
+========================================================= */
+
+function handleRsvp_(
+  params
+) {
+
+  const guest =
+    normalizeGuestSlug_(
+      params.guest
+    );
+
+
+  if (
+    !guest
+  ) {
+
+    throw new Error(
+      "Missing guest."
+    );
+  }
+
+
+  const sheet =
+    getSheet_();
+
+
+  const columns =
+    getColumnMap_(
+      sheet
+    );
+
+
+  const row =
+    findGuestRow_(
+      sheet,
+      columns,
+      guest
+    );
+
+
+  if (
+    !row
+  ) {
+
+    throw new Error(
+      "Guest not found."
+    );
+  }
+
+
+  const name =
+    sanitizeTextForSheet_(
+      params.name,
+      200
+    );
+
+
+  const attendance =
+    String(
+      params.attendance || ""
+    ) ===
+    "no"
+      ?
+      "Không"
+      :
+      "Có";
+
+
+  let guestCount =
+    parseInt(
+      params.guestCount,
+      10
+    );
+
+
+  if (
+    !Number.isFinite(
+      guestCount
+    )
+  ) {
+
+    guestCount =
+      attendance ===
+      "Không"
+        ?
+        0
+        :
+        1;
+  }
+
+
+  guestCount =
+    Math.max(
+      0,
+      Math.min(
+        10,
+        guestCount
+      )
+    );
+
+
+  /*
+    Không tham dự -> số lượng = 0.
+  */
+
+  if (
+    attendance ===
+    "Không"
+  ) {
+
+    guestCount =
+      0;
+  }
+
+
+  const message =
+    sanitizeTextForSheet_(
+      params.message,
+      5000
+    );
+
+
+  ensureRequiredColumn_(
+    columns,
+    "RSVP_NAME"
+  );
+
+
+  ensureRequiredColumn_(
+    columns,
+    "ATTENDANCE"
+  );
+
+
+  ensureRequiredColumn_(
+    columns,
+    "GUEST_COUNT"
+  );
+
+
+  ensureRequiredColumn_(
+    columns,
+    "MESSAGE"
+  );
+
+
+  const lock =
+    LockService
+      .getScriptLock();
+
+
+  lock.waitLock(
+    15000
+  );
+
+
+  try {
+
+    /*
+      J - Tên
+    */
+
+    sheet
+      .getRange(
+        row,
+        columns.RSVP_NAME
+      )
+      .setValue(
+        name
+      );
+
+
+    /*
+      K - Có đi / Không đi
+    */
+
+    sheet
+      .getRange(
+        row,
+        columns.ATTENDANCE
+      )
+      .setValue(
+        attendance
+      );
+
+
+    /*
+      L - Số lượng người tham dự
+    */
+
+    sheet
+      .getRange(
+        row,
+        columns.GUEST_COUNT
+      )
+      .setValue(
+        guestCount
+      );
+
+
+    /*
+      M - Lời nhắn
+    */
+
+    sheet
+      .getRange(
+        row,
+        columns.MESSAGE
+      )
+      .setValue(
+        message
+      );
+
+
+    /*
+      N - Video
+
+      KHÔNG ghi ở đây.
+
+      Khách sẽ mở Google Drive
+      và tự upload video.
+
+      Sau đó bạn có thể paste link
+      Drive vào cột Video.
+    */
+
+
+    SpreadsheetApp.flush();
+
+
+    return {
+
+      ok:
+        true,
+
+      guest,
+
+      attendance,
+
+      guestCount
+    };
+
+  } finally {
+
+    lock.releaseLock();
+  }
+}
+
+
+/* =========================================================
+   FIND GUEST ROW
+========================================================= */
+
+function findGuestRow_(
+  sheet,
+  columns,
+  rawGuest
+) {
+
+  const guest =
+    normalizeGuestSlug_(
+      rawGuest
+    );
+
+
+  if (
+    !guest
+  ) {
+
+    return 0;
+  }
+
+
+  ensureRequiredColumn_(
+    columns,
+    "GUEST_NAME"
+  );
+
+
+  ensureRequiredColumn_(
+    columns,
+    "INVITE_LINK"
+  );
+
+
+  const lastRow =
+    sheet.getLastRow();
+
+
+  if (
+    lastRow <
+    CONFIG.FIRST_DATA_ROW
+  ) {
+
+    return 0;
+  }
+
+
+  const rowCount =
+    lastRow
+    -
+    CONFIG.FIRST_DATA_ROW
+    +
+    1;
+
+
+  /*
+    1. ƯU TIÊN CỘT LINK THIỆP
+
+    Ví dụ:
+    https://bachthuwedding.github.io/?guest=hieu
+
+    -> hieu
+  */
+
+  const inviteLinks =
+    sheet
+      .getRange(
+        CONFIG.FIRST_DATA_ROW,
+        columns.INVITE_LINK,
+        rowCount,
+        1
+      )
+      .getDisplayValues();
+
+
+  for (
+    let i = 0;
+    i < inviteLinks.length;
+    i += 1
+  ) {
+
+    const slug =
+      extractGuestSlugFromLink_(
+        inviteLinks[i][0]
+      );
+
+
+    if (
+      slug ===
+      guest
+    ) {
+
+      return (
+        CONFIG.FIRST_DATA_ROW
+        +
+        i
+      );
+    }
+  }
+
+
+  /*
+    2. FALLBACK TỪ TÊN KHÁCH MỜI
+
+    Dùng nếu cột G chưa generate.
+  */
+
+  const guestNames =
+    sheet
+      .getRange(
+        CONFIG.FIRST_DATA_ROW,
+        columns.GUEST_NAME,
+        rowCount,
+        1
+      )
+      .getDisplayValues();
+
+
+  const duplicateCounter =
+    Object.create(
+      null
+    );
+
+
+  for (
+    let i = 0;
+    i < guestNames.length;
+    i += 1
+  ) {
+
+    const name =
+      String(
+        guestNames[i][0] || ""
+      )
+        .trim();
+
+
+    if (
+      !name
+    ) {
+
+      continue;
+    }
+
+
+    const baseSlug =
+      slugifyGuestName_(
+        name
+      );
+
+
+    if (
+      !baseSlug
+    ) {
+
+      continue;
+    }
+
+
+    duplicateCounter[
+      baseSlug
+    ] =
+      (
+        duplicateCounter[
+          baseSlug
+        ]
+        ||
+        0
+      )
+      +
+      1;
+
+
+    const occurrence =
+      duplicateCounter[
+        baseSlug
+      ];
+
+
+    const finalSlug =
+      occurrence ===
+      1
+        ?
+        baseSlug
+        :
+        `${baseSlug}-${occurrence}`;
+
+
+    if (
+      finalSlug ===
+      guest
+    ) {
+
+      return (
+        CONFIG.FIRST_DATA_ROW
+        +
+        i
+      );
+    }
+  }
+
+
+  return 0;
+}
+
+
+/* =========================================================
+   GET COLUMN MAP FROM HEADERS
+========================================================= */
+
+function getColumnMap_(
+  sheet
+) {
+
+  const lastColumn =
+    sheet.getLastColumn();
+
+
+  if (
+    lastColumn <
+    1
+  ) {
+
+    throw new Error(
+      "Sheet chưa có header."
+    );
+  }
+
+
+  const headers =
+    sheet
+      .getRange(
+        CONFIG.HEADER_ROW,
+        1,
+        1,
+        lastColumn
+      )
+      .getDisplayValues()[0];
+
+
+  const normalizedHeaders =
+    headers.map(
+      (header) =>
+        normalizeHeader_(
+          header
+        )
+    );
+
+
+  const map =
+    {};
+
+
+  Object.keys(
+    CONFIG.HEADERS
+  )
+    .forEach(
+      (key) => {
+
+        const wanted =
+          normalizeHeader_(
+            CONFIG.HEADERS[key]
+          );
+
+
+        const index =
+          normalizedHeaders.indexOf(
+            wanted
+          );
+
+
+        map[key] =
+          index >=
+          0
+            ?
+            index + 1
+            :
+            0;
+      }
+    );
+
+
+  return map;
+}
+
+
+/* =========================================================
+   NORMALIZE HEADER
+========================================================= */
+
+function normalizeHeader_(
+  value
+) {
+
+  return String(
+    value || ""
+  )
+    .replace(
+      /\r?\n/g,
+      " "
+    )
+    .replace(
+      /\s+/g,
+      " "
+    )
+    .trim()
+    .toLowerCase();
+}
+
+
+/* =========================================================
+   REQUIRE COLUMN
+========================================================= */
+
+function ensureRequiredColumn_(
+  columns,
+  key
+) {
+
+  if (
+    columns[key]
+  ) {
+
+    return;
+  }
+
+
+  throw new Error(
+    `Không tìm thấy cột "${CONFIG.HEADERS[key]}".`
+  );
+}
+
+
+/* =========================================================
+   CELL HELPERS
+========================================================= */
+
+function getCellDisplayValue_(
+  sheet,
+  row,
+  column
+) {
+
+  if (
+    !column
+  ) {
+
+    return "";
+  }
+
+
+  return sheet
+    .getRange(
+      row,
+      column
+    )
+    .getDisplayValue();
+}
+
+
+function getCellRawValue_(
+  sheet,
+  row,
+  column
+) {
+
+  if (
+    !column
+  ) {
+
+    return "";
+  }
+
+
+  return sheet
+    .getRange(
+      row,
+      column
+    )
+    .getValue();
+}
+
+
+/* =========================================================
+   LUCKY HELPERS
+========================================================= */
+
+function randomLuckyNumber_() {
+
+  return (
+    Math.floor(
+      Math.random()
+      *
+      99
+    )
+    +
+    1
+  );
+}
+
+
+function isValidLuckyNumber_(
+  value
+) {
+
+  return (
+    Number.isInteger(
+      Number(
+        value
+      )
+    )
+    &&
+    Number(
+      value
+    ) >=
+      1
+    &&
+    Number(
+      value
+    ) <=
+      99
+  );
+}
+
+
+function normalizeLuckyNumberForResponse_(
+  value
+) {
+
+  const number =
+    Number(
+      value
+    );
+
+
+  if (
+    !isValidLuckyNumber_(
+      number
+    )
+  ) {
+
+    return "";
+  }
+
+
+  return number;
+}
+
+
+function normalizeGuestCountForResponse_(
+  value
+) {
+
+  if (
+    value ===
+    ""
+    ||
+    value ===
+    null
+  ) {
+
+    return "";
+  }
+
+
+  const number =
+    Number(
+      value
+    );
+
+
+  if (
+    !Number.isFinite(
+      number
+    )
+  ) {
+
+    return "";
+  }
+
+
+  return number;
+}
+
+
+/* =========================================================
+   SLUGIFY
+========================================================= */
+
+function slugifyGuestName_(
+  value
+) {
+
+  return String(
+    value || ""
+  )
+
+    .trim()
+
+    /*
+      Đ không bị tách bởi NFD,
+      xử lý riêng.
+    */
+
+    .replace(
+      /Đ/g,
+      "D"
+    )
+
+    .replace(
+      /đ/g,
+      "d"
+    )
+
+    /*
+      Trần -> Trần
+    */
+
+    .normalize(
+      "NFD"
+    )
+
+    /*
+      Xóa dấu.
+    */
+
+    .replace(
+      /[\u0300-\u036f]/g,
+      ""
+    )
+
+    .toLowerCase()
+
+    /*
+      Space / ký tự đặc biệt -> -
+    */
+
+    .replace(
+      /[^a-z0-9]+/g,
+      "-"
+    )
+
+    /*
+      Xóa - đầu cuối
+    */
+
+    .replace(
+      /^-+|-+$/g,
+      ""
+    )
+
+    /*
+      Gộp ---
+    */
+
+    .replace(
+      /-+/g,
+      "-"
+    );
+}
+
+
+/* =========================================================
+   NORMALIZE GUEST SLUG
+========================================================= */
+
+function normalizeGuestSlug_(
+  value
+) {
+
+  return String(
+    value || ""
+  )
+    .trim()
+    .toLowerCase()
+    .replace(
+      /[^a-z0-9-]/g,
+      ""
+    );
+}
+
+
+/* =========================================================
+   EXTRACT ?guest=
+========================================================= */
+
+function extractGuestSlugFromLink_(
+  link
+) {
+
+  const value =
+    String(
+      link || ""
+    );
+
+
+  const match =
+    value.match(
+      /[?&]guest=([^&#]+)/
+    );
+
+
+  if (
+    !match
+  ) {
+
+    return "";
+  }
+
+
+  try {
+
+    return normalizeGuestSlug_(
+      decodeURIComponent(
+        match[1]
+      )
+    );
+
+  } catch (_) {
+
+    return normalizeGuestSlug_(
+      match[1]
+    );
+  }
+}
+
+
+/* =========================================================
+   SHEET
+========================================================= */
+
+function getSheet_() {
+
+  const spreadsheet =
+    SpreadsheetApp
+      .openById(
+        CONFIG.SPREADSHEET_ID
+      );
+
+
+  const sheet =
+    spreadsheet
+      .getSheetByName(
+        CONFIG.SHEET_NAME
+      );
+
+
+  if (
+    !sheet
+  ) {
+
+    throw new Error(
+      `Không tìm thấy sheet "${CONFIG.SHEET_NAME}".`
+    );
+  }
+
+
+  return sheet;
+}
+
+
+/* =========================================================
+   SANITIZE TEXT FOR SHEET
+========================================================= */
+
+function sanitizeTextForSheet_(
+  value,
+  maxLength
+) {
+
+  let output =
+    String(
+      value || ""
+    )
+      .replace(
+        /\u0000/g,
+        ""
+      )
+      .trim();
+
+
+  if (
+    Number.isFinite(
+      maxLength
+    )
+  ) {
+
+    output =
+      output.slice(
+        0,
+        maxLength
+      );
+  }
+
+
+  /*
+    Chặn formula injection.
+  */
+
+  if (
+    /^[=+\-@]/.test(
+      output
+    )
+  ) {
+
+    output =
+      "'"
+      +
+      output;
+  }
+
+
+  return output;
+}
+
+
+/* =========================================================
+   REQUEST PARAMETER
+========================================================= */
+
+function getParameter_(
+  e,
+  key,
+  fallback
+) {
+
+  if (
+    !e
+    ||
+    !e.parameter
+  ) {
+
+    return fallback;
+  }
+
+
+  const value =
+    e.parameter[
+      key
+    ];
+
+
+  if (
+    value ===
+    undefined
+    ||
+    value ===
+    null
+  ) {
+
+    return fallback;
+  }
+
+
+  return String(
+    value
+  );
+}
+
+
+/* =========================================================
+   ERRORS
+========================================================= */
+
+function getErrorMessage_(
+  error
+) {
+
+  if (
+    error
+    &&
+    error.message
+  ) {
+
+    return String(
+      error.message
+    );
+  }
+
+
+  return String(
+    error
+  );
+}
+
+
+/* =========================================================
+   NORMAL JSON RESPONSE
+========================================================= */
+
+function jsonOutput_(
+  payload
+) {
+
+  return ContentService
+    .createTextOutput(
+      JSON.stringify(
+        payload
+      )
+    )
+    .setMimeType(
+      ContentService.MimeType.JSON
+    );
+}
+
+
+/* =========================================================
+   JSONP RESPONSE
+========================================================= */
+
+function outputResponse_(
+  payload,
+  e
+) {
+
+  const callback =
+    getParameter_(
+      e,
+      "callback",
+      ""
+    )
+      .trim();
+
+
+  /*
+    Chỉ chấp nhận JS identifier an toàn.
+  */
+
+  if (
+    callback
+    &&
+    /^[A-Za-z_$][0-9A-Za-z_$]*$/
+      .test(
+        callback
+      )
+  ) {
+
+    return ContentService
+      .createTextOutput(
+        `${callback}(${JSON.stringify(payload)});`
+      )
+      .setMimeType(
+        ContentService.MimeType.JAVASCRIPT
+      );
+  }
+
+
+  return jsonOutput_(
+    payload
+  );
+}
