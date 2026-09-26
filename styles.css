@@ -4506,3 +4506,97 @@ p:nth-child(3) {
   Timing đã được rút ngắn trực tiếp trên toàn bộ transition/animation
   phía trên để giữ nguyên biên độ, easing và thứ tự hiệu ứng.
 */
+
+
+/* =========================================================
+   V15 — PAGE 08 MOTION BALANCE
+   - Text reveal nhanh hơn, theo từng đoạn.
+   - Các visual element vào chậm hơn để match phần chữ.
+========================================================= */
+
+/* TEXT: reveal theo đoạn, nhanh và gọn hơn. */
+.p08-reveal-item,
+.p08-reveal-decoration,
+.p08-reveal-paragraph {
+  opacity: 0;
+  transform: translateY(-6px);
+
+  transition:
+    opacity 480ms ease var(--p08-delay, 0ms),
+    transform 620ms var(--entry-ease) var(--p08-delay, 0ms);
+}
+
+.page08-layout.is-active .p08-reveal-item,
+.page08-layout.is-active .p08-reveal-decoration,
+.page08-layout.is-active .p08-reveal-paragraph {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Không còn reveal từng dòng ở Page 08. */
+.p08-reveal-line {
+  display: inline;
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+/* VISUAL ELEMENTS: chậm hơn, kéo dài mềm hơn để đi cùng phần text. */
+.p08-cloud--left,
+.p08-cloud--right {
+  transition-duration:
+    1650ms,
+    1000ms;
+}
+
+.p08-water-ground--base {
+  transition-duration:
+    1750ms,
+    1050ms;
+
+  transition-delay:
+    150ms,
+    150ms;
+}
+
+.p08-masion {
+  transition-duration:
+    1850ms,
+    1050ms;
+
+  transition-delay:
+    180ms,
+    180ms;
+}
+
+.p08-water-ground--front {
+  transition-duration:
+    1700ms,
+    1000ms;
+
+  transition-delay:
+    340ms,
+    340ms;
+}
+
+.p08-couple {
+  transition-duration:
+    1750ms,
+    1000ms;
+
+  transition-delay:
+    210ms,
+    210ms;
+}
+
+.p08-lotus {
+  transition-duration:
+    1700ms,
+    1000ms;
+
+  transition-delay:
+    270ms,
+    270ms;
+
+  animation: none !important;
+}
