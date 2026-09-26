@@ -3514,7 +3514,7 @@ input:checked
 
   font-size: 9px;
 
-  line-height: 1.68;
+  line-height: 1.25;
 
   letter-spacing: 0;
 
@@ -3531,7 +3531,7 @@ p:nth-child(1) {
 
   font-size: 9px;
 
-  line-height: 1.68;
+  line-height: 1.25;
 }
 
 
@@ -3544,7 +3544,7 @@ p:nth-child(2) {
 
   font-size: 9px;
 
-  line-height: 1.68;
+  line-height: 1.25;
 }
 
 
@@ -3558,7 +3558,7 @@ p:nth-child(3) {
 
   font-size: 9px;
 
-  line-height: 1.68;
+  line-height: 1.25;
 }
 
 .p08-english-copy {
@@ -3571,7 +3571,7 @@ p:nth-child(3) {
 
   font-size: 8.8px;
 
-  line-height: 1.4;
+  line-height: 1.25;
 }
 
 .p08-with-love {
@@ -3971,30 +3971,30 @@ p:nth-child(3) {
 }
 
 .p02-to {
-  top: 110px;
+  top: 109px;
   font-size: 14px;
 }
 
 .page02-layout .p02-wedding-title:nth-of-type(4) {
-  top: 139px;
+  top: 137px;
   font-size: 16px;
   transform: translateX(-50%) scaleX(.95);
 }
 
 .page02-layout .p02-wedding-title:nth-of-type(5) {
-  top: 161px;
+  top: 162px;
   font-size: 16px;
   transform: translateX(-50%) scaleX(.9);
 }
 
 .p02-couple-names {
-  top: 200px;
+  top: 198px;
   line-height: 1.55;
 }
 
 .p02-name {
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 400;
   transform: scaleX(1);
 }
 
@@ -4404,3 +4404,93 @@ p:nth-child(3) {
   animation: none !important;
 }
 
+
+
+/* =========================================================
+   V13 — FINAL MOTION / PAGE 02 / PAGE 07 / PAGE 08
+========================================================= */
+
+/* PAGE 02: text xuất hiện lần lượt từ trên xuống dưới. */
+.page02-layout .p02-invite,
+.page02-layout .p02-personalized-guest,
+.page02-layout .p02-to,
+.page02-layout .p02-wedding-title,
+.page02-layout .p02-couple-names,
+.page02-layout .p02-date-divider,
+.page02-layout .p02-ceremony-info,
+.page02-layout .p02-family-info {
+  opacity: 0;
+  translate: 0 -16px;
+  transition:
+    opacity 900ms ease,
+    translate 1350ms var(--entry-ease);
+}
+
+.page02-layout.is-entering .p02-invite,
+.page02-layout.is-entering .p02-personalized-guest,
+.page02-layout.is-entering .p02-to,
+.page02-layout.is-entering .p02-wedding-title,
+.page02-layout.is-entering .p02-couple-names,
+.page02-layout.is-entering .p02-date-divider,
+.page02-layout.is-entering .p02-ceremony-info,
+.page02-layout.is-entering .p02-family-info {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.page02-layout .p02-invite { transition-delay: 0ms; }
+.page02-layout .p02-personalized-guest { transition-delay: 150ms; }
+.page02-layout .p02-to { transition-delay: 300ms; }
+.page02-layout .p02-wedding-title:nth-of-type(4) { transition-delay: 450ms; }
+.page02-layout .p02-wedding-title:nth-of-type(5) { transition-delay: 600ms; }
+.page02-layout .p02-couple-names { transition-delay: 760ms; }
+.page02-layout .p02-date-divider { transition-delay: 930ms; }
+.page02-layout .p02-ceremony-info { transition-delay: 1090ms; }
+.page02-layout .p02-family-info { transition-delay: 1260ms; }
+
+/* PAGE 07: nội dung form xuất hiện lần lượt từ trên xuống dưới. */
+.page07-layout .p07-rsvp-form {
+  opacity: 1;
+  translate: 0 0;
+  transition: none;
+}
+
+.page07-layout .p07-rsvp-title,
+.page07-layout .p07-divider-ornament--top,
+.page07-layout .p07-rsvp-subtitle,
+.page07-layout .p07-form-group,
+.page07-layout .p07-submit {
+  opacity: 0;
+  translate: 0 -16px;
+  transition:
+    opacity 900ms ease,
+    translate 1350ms var(--entry-ease);
+}
+
+.page07-layout.is-active .p07-rsvp-title,
+.page07-layout.is-active .p07-divider-ornament--top,
+.page07-layout.is-active .p07-rsvp-subtitle,
+.page07-layout.is-active .p07-form-group,
+.page07-layout.is-active .p07-submit {
+  opacity: 1;
+  translate: 0 0;
+}
+
+.page07-layout .p07-rsvp-title { transition-delay: 80ms; }
+.page07-layout .p07-divider-ornament--top { transition-delay: 230ms; }
+.page07-layout .p07-rsvp-subtitle { transition-delay: 380ms; }
+.page07-layout .p07-form-group--name { transition-delay: 550ms; }
+.page07-layout .p07-form-group--attendance { transition-delay: 700ms; }
+.page07-layout .p07-form-group--count { transition-delay: 850ms; }
+.page07-layout .p07-form-group--message { transition-delay: 1000ms; }
+.page07-layout .p07-form-group--video { transition-delay: 1150ms; }
+.page07-layout .p07-submit { transition-delay: 1300ms; }
+
+/* PAGE 08: body text gọn hơn. */
+.p08-vietnamese-copy,
+.p08-vietnamese-copy p:nth-child(1),
+.p08-vietnamese-copy p:nth-child(2),
+.p08-vietnamese-copy p:nth-child(3),
+.p08-english-copy {
+  line-height: 1.25;
+}
