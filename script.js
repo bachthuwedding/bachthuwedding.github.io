@@ -300,7 +300,7 @@
 
   /* =======================================================
      JSONP
-     CHỈ DÙNG ĐỂ ĐỌC / XÁC NHẬN DỮ LIỆU
+     CHỈ DÙNG CHO REQUEST ĐỌC
   ======================================================= */
 
   function jsonpRequest(
@@ -364,10 +364,6 @@
           callbackName
         );
 
-
-        /*
-          Không cache response.
-        */
 
         query.set(
           "_",
@@ -485,215 +481,89 @@
 
 
   /* =======================================================
-     POST QUA HIDDEN FORM
+     POST
+     GỬI THẲNG TỚI doPost()
 
-     Không phụ thuộc CORS.
-     Browser gửi POST thẳng tới Apps Script.
+     QUAN TRỌNG:
+     - no-cors vì GitHub Pages -> Apps Script là cross-origin.
+     - Không đọc response của POST.
+     - Sau đó GET lại Sheet để xác nhận.
   ======================================================= */
 
-  function postToBackend(
-    data
-  ) {
-
-    return new Promise(
-      (
-        resolve,
-        reject
-      ) => {
-
-        try {
-
-          const requestId =
-            Date.now()
-            +
-            "_"
-            +
-            Math.random()
-              .toString(36)
-              .slice(2);
-
-
-          const iframeName =
-            "wedding_post_"
-            +
-            requestId;
-
-
-          const iframe =
-            document.createElement(
-              "iframe"
-            );
-
-
-          iframe.name =
-            iframeName;
-
-
-          iframe.setAttribute(
-            "aria-hidden",
-            "true"
-          );
-
-
-          iframe.style.position =
-            "fixed";
-
-
-          iframe.style.left =
-            "-10000px";
-
-
-          iframe.style.top =
-            "-10000px";
-
-
-          iframe.style.width =
-            "1px";
-
-
-          iframe.style.height =
-            "1px";
-
-
-          iframe.style.border =
-            "0";
-
-
-          iframe.style.opacity =
-            "0";
-
-
-          iframe.style.pointerEvents =
-            "none";
-
-
-          const form =
-            document.createElement(
-              "form"
-            );
-
-
-          form.method =
-            "POST";
-
-
-          form.action =
-            WEDDING_API_URL;
-
-
-          form.target =
-            iframeName;
-
-
-          form.acceptCharset =
-            "UTF-8";
-
-
-          form.style.display =
-            "none";
-
-
-          Object.entries(
-            data
-          )
-            .forEach(
-              (
-                [
-                  key,
-                  value
-                ]
-              ) => {
-
-                if (
-                  value === undefined
-                  ||
-                  value === null
-                ) {
-
-                  return;
-                }
-
-
-                const input =
-                  document.createElement(
-                    "input"
-                  );
-
-
-                input.type =
-                  "hidden";
-
-
-                input.name =
-                  key;
-
-
-                input.value =
-                  String(
-                    value
-                  );
-
-
-                form.appendChild(
-                  input
-                );
-              }
-            );
-
-
-          document.body.appendChild(
-            iframe
-          );
-
-
-          document.body.appendChild(
-            form
-          );
-
-
-          /*
-            Khi form submit:
-            request POST đã được gửi.
-          */
-
-          form.submit();
-
-
-          form.remove();
-
-
-          /*
-            Không thể đọc body response vì cross-origin,
-            nên xác nhận bằng action=guest sau đó.
-          */
-
-          resolve();
-
-
-          setTimeout(
-            () => {
-
-              iframe.remove();
-
-            },
-            20000
-          );
-
-
-        } catch (error) {
-
-          reject(
-            error
+  async function postToBackend(data) {
+
+    const body =
+      new URLSearchParams();
+
+
+    Object.entries(
+      data
+    )
+      .forEach(
+        (
+          [
+            key,
+            value
+          ]
+        ) => {
+
+          if (
+            value === undefined
+            ||
+            value === null
+          ) {
+
+            return;
+          }
+
+
+          body.append(
+            key,
+            String(value)
           );
         }
+      );
+
+
+    /*
+      Không tự thêm Content-Type header.
+
+      Browser tự gửi body URLSearchParams theo
+      application/x-www-form-urlencoded.
+
+      Apps Script sẽ đọc được bằng e.parameter.
+    */
+
+    await fetch(
+      WEDDING_API_URL,
+      {
+        method:
+          "POST",
+
+        mode:
+          "no-cors",
+
+        cache:
+          "no-store",
+
+        redirect:
+          "follow",
+
+        body
       }
+    );
+
+
+    console.log(
+      "[Wedding RSVP] POST dispatched",
+      Object.fromEntries(
+        body.entries()
+      )
     );
   }
 
 
-  function sleep(
-    milliseconds
-  ) {
+  function sleep(milliseconds) {
 
     return new Promise(
       (resolve) => {
@@ -891,7 +761,7 @@
 
 
   /* =======================================================
-     PRELOAD
+     PRELOAD IMAGE
   ======================================================= */
 
   function preloadUrl(
@@ -921,9 +791,7 @@
 
     const promise =
       new Promise(
-        (
-          resolve
-        ) => {
+        (resolve) => {
 
           const image =
             new Image();
@@ -1046,9 +914,7 @@
 
     const promise =
       new Promise(
-        (
-          resolve
-        ) => {
+        (resolve) => {
 
           try {
 
@@ -1167,9 +1033,7 @@
 
         const jobs =
           images.map(
-            (
-              image
-            ) =>
+            (image) =>
               loadImage(
                 image,
                 priority
@@ -1284,7 +1148,7 @@
 
 
   /* =======================================================
-     FIREWORK
+     FIREWORKS
   ======================================================= */
 
   const fireworkColors = [
@@ -1485,9 +1349,7 @@
      PAGE ACTIVATION
   ======================================================= */
 
-  function activatePage(
-    index
-  ) {
+  function activatePage(index) {
 
     const safeIndex =
       Math.max(
@@ -1553,9 +1415,7 @@
   }
 
 
-  function setNearbyPages(
-    index
-  ) {
+  function setNearbyPages(index) {
 
     const safeIndex =
       Math.max(
@@ -1622,8 +1482,7 @@
       Math.min(
         pages.length - 1,
         Math.round(
-          pageScroller.scrollTop
-          /
+          pageScroller.scrollTop /
           DESIGN_HEIGHT
         )
       )
@@ -1654,8 +1513,7 @@
 
 
           if (
-            index !==
-            activePageIndex
+            index !== activePageIndex
           ) {
 
             activePageIndex =
@@ -1784,9 +1642,7 @@
   openingCardButton
     ?.addEventListener(
       "click",
-      (
-        event
-      ) => {
+      (event) => {
 
         event.preventDefault();
 
@@ -1868,9 +1724,7 @@
   }
 
 
-  function saveLocalLuckyNumber(
-    value
-  ) {
+  function saveLocalLuckyNumber(value) {
 
     const key =
       getLuckyStorageKey();
@@ -1929,9 +1783,7 @@
       return (
         LUCKY_MIN
         +
-        array[0]
-        %
-        range
+        array[0] % range
       );
     }
 
@@ -1940,17 +1792,14 @@
       LUCKY_MIN
       +
       Math.floor(
-        Math.random()
-        *
+        Math.random() *
         range
       )
     );
   }
 
 
-  function showLuckyNumber(
-    value
-  ) {
+  function showLuckyNumber(value) {
 
     if (
       !luckyNumber
@@ -1972,8 +1821,7 @@
   function stopLuckyIdleShuffle() {
 
     if (
-      luckyIdleTimer !==
-      null
+      luckyIdleTimer !== null
     ) {
 
       clearInterval(
@@ -2253,16 +2101,12 @@
       0;
 
 
-    function frame(
-      now
-    ) {
+    function frame(now) {
 
       const progress =
         Math.min(
           (
-            now
-            -
-            start
+            now - start
           )
           /
           duration,
@@ -2282,11 +2126,8 @@
 
 
       if (
-        now
-        -
-        lastUpdate
-        >=
-        interval
+        now - lastUpdate
+        >= interval
       ) {
 
         lastUpdate =
@@ -2379,7 +2220,7 @@
 
 
   /* =======================================================
-     RSVP
+     RSVP UI
   ======================================================= */
 
   function updateCount() {
@@ -2407,8 +2248,11 @@
 
 
     /*
-      UI vẫn dùng Kó khi chọn Không.
-      Sheet vẫn lưu "Không".
+      Giao diện:
+      nếu chọn Không -> hiện "Kó".
+
+      Google Sheet:
+      backend vẫn ghi "Không".
     */
 
     rsvpAttendanceNoText.textContent =
@@ -2421,9 +2265,7 @@
   }
 
 
-  function setSubmitText(
-    text
-  ) {
+  function setSubmitText(text) {
 
     const span =
       rsvpSubmit
@@ -2541,13 +2383,11 @@
 
 
   /* =======================================================
-     VERIFY RSVP IN SHEET
+     VERIFY RSVP
 
-     POST được gửi trước.
-     Sau đó đọc lại Sheet nhiều lần.
+     Sau POST sẽ đọc lại Sheet.
 
-     Không còn tình trạng chỉ chờ 700ms
-     rồi kết luận lỗi quá sớm.
+     Tối đa khoảng 15 giây.
   ======================================================= */
 
   async function waitForRsvpConfirmation(
@@ -2555,7 +2395,7 @@
   ) {
 
     const MAX_ATTEMPTS =
-      14;
+      20;
 
 
     for (
@@ -2564,17 +2404,12 @@
       attempt += 1
     ) {
 
-      /*
-        Cho Apps Script + Google Sheets
-        một chút thời gian để flush.
-      */
-
       await sleep(
         attempt === 0
           ?
-          550
+          700
           :
-          650
+          700
       );
 
 
@@ -2591,6 +2426,12 @@
             },
             12000
           );
+
+
+        console.log(
+          `[Wedding RSVP] verify ${attempt + 1}`,
+          response
+        );
 
 
         if (
@@ -2663,12 +2504,10 @@
 
           return response;
         }
-
-
       } catch (error) {
 
         console.warn(
-          `RSVP verify attempt ${attempt + 1} failed:`,
+          `[Wedding RSVP] verify attempt ${attempt + 1} failed`,
           error
         );
       }
@@ -2682,18 +2521,18 @@
 
 
   /* =======================================================
-     SUBMIT RSVP
+     RSVP SUBMIT
 
-     Có thể submit lại vô hạn.
-     Mỗi lần POST sẽ overwrite J/K/L/M.
+     MỖI LẦN GỬI:
+     - POST dữ liệu mới
+     - J/K/L/M bị overwrite
+     - Khách vẫn có thể sửa rồi gửi lại
   ======================================================= */
 
   rsvpForm
     ?.addEventListener(
       "submit",
-      async (
-        event
-      ) => {
+      async (event) => {
 
         event.preventDefault();
 
@@ -2800,8 +2639,25 @@
 
         try {
 
+          console.log(
+            "[Wedding RSVP] sending",
+            {
+              guest:
+                currentGuestSlug,
+
+              name,
+
+              attendance,
+
+              guestCount,
+
+              message
+            }
+          );
+
+
           /*
-            1. GỬI POST THẬT
+            1. GỬI POST TỚI doPost()
           */
 
           await postToBackend(
@@ -2824,23 +2680,31 @@
 
 
           /*
-            2. KIỂM TRA SHEET ĐÃ CÓ
-               ĐÚNG DỮ LIỆU MỚI CHƯA
+            2. ĐỌC LẠI SHEET
           */
 
           const confirmed =
             await waitForRsvpConfirmation(
               {
                 name,
+
                 attendanceLabel,
+
                 guestCount,
+
                 message
               }
             );
 
 
+          console.log(
+            "[Wedding RSVP] confirmed",
+            confirmed
+          );
+
+
           /*
-            3. DÙNG KẾT QUẢ THỰC TỪ SHEET
+            3. UPDATE GIAO DIỆN
           */
 
           const savedCount =
@@ -2869,8 +2733,8 @@
 
 
           /*
-            Không khóa form.
-            Khách có thể sửa và gửi lại.
+            Không khóa nút.
+            Cho phép gửi lại form.
           */
 
           rsvpSubmit.disabled =
@@ -2898,7 +2762,7 @@
         } catch (error) {
 
           console.error(
-            "RSVP submit error:",
+            "[Wedding RSVP] submit error",
             error
           );
 
@@ -2912,12 +2776,6 @@
           );
 
 
-          /*
-            Tạm thời hiện lý do cụ thể.
-            Nếu vẫn lỗi, ảnh popup này
-            sẽ giúp xác định chính xác hơn.
-          */
-
           alert(
             "Có lỗi khi gửi xác nhận.\n\n"
             +
@@ -2929,7 +2787,7 @@
 
 
   /* =======================================================
-     LOAD GUEST
+     LOAD GUEST DATA
   ======================================================= */
 
   async function loadGuestPersonalization() {
@@ -2971,9 +2829,9 @@
       }
 
 
-      /* ===============================================
-         F -> TÊN HIỂN THỊ TRÊN THIỆP
-      =============================================== */
+      /* ===================================================
+         F -> HIỂN THỊ TRÊN THIỆP
+      =================================================== */
 
       const displayName =
         normalizeText(
@@ -3004,9 +2862,9 @@
       }
 
 
-      /* ===============================================
-         TÊN RSVP GẦN NHẤT
-      =============================================== */
+      /* ===================================================
+         NAME
+      =================================================== */
 
       if (
         rsvpGuestName
@@ -3033,9 +2891,9 @@
       }
 
 
-      /* ===============================================
+      /* ===================================================
          LUCKY NUMBER
-      =============================================== */
+      =================================================== */
 
       const existingLucky =
         Number(
@@ -3048,11 +2906,9 @@
           existingLucky
         )
         &&
-        existingLucky >=
-          LUCKY_MIN
+        existingLucky >= LUCKY_MIN
         &&
-        existingLucky <=
-          LUCKY_MAX
+        existingLucky <= LUCKY_MAX
       ) {
 
         lockLuckyNumber(
@@ -3062,9 +2918,9 @@
       }
 
 
-      /* ===============================================
+      /* ===================================================
          RSVP GẦN NHẤT
-      =============================================== */
+      =================================================== */
 
       if (
         response.attendance ===
@@ -3146,9 +3002,7 @@
 
         rsvpMessage.value =
           normalizeText(
-            response.message
-            ||
-            ""
+            response.message || ""
           );
       }
 
@@ -3159,8 +3013,8 @@
 
 
       /*
-        Nếu khách từng gửi form,
-        nút cho biết có thể cập nhật lại.
+        Nếu đã từng gửi xác nhận,
+        hiện nút "CẬP NHẬT XÁC NHẬN".
       */
 
       if (
@@ -3188,8 +3042,7 @@
   /* =======================================================
      MARK OPENED
 
-     Dùng POST hidden form.
-     Không phụ thuộc CORS.
+     Dùng POST giống RSVP.
   ======================================================= */
 
   function markInvitationOpened() {
