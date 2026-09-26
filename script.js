@@ -1901,7 +1901,6 @@
         "padding:0",
         "transform:translateX(-50%)",
         "display:block",
-        "opacity:1",
         "visibility:visible",
         "pointer-events:none",
         "text-align:center",
@@ -1917,6 +1916,39 @@
         .join(";")
       +
       ";";
+
+
+    /*
+      Nếu dữ liệu tên khách về sau khi Page 2 đã bắt đầu hiện,
+      vẫn cho riêng tên khách chạy transition từ trên xuống.
+    */
+    if (
+      page02Layout
+        ?.classList
+        .contains(
+          "is-entering"
+        )
+    ) {
+      element.style.opacity =
+        "0";
+
+      element.style.translate =
+        "0 -16px";
+
+      requestAnimationFrame(
+        () => {
+          requestAnimationFrame(
+            () => {
+              element.style.opacity =
+                "";
+
+              element.style.translate =
+                "";
+            }
+          );
+        }
+      );
+    }
 
 
     console.log(
@@ -2468,7 +2500,7 @@
 
       particle.style.setProperty(
         "--size",
-        `${2 + Math.random() * 4}px`
+        `${3 + Math.random() * 5}px`
       );
 
 
@@ -2542,16 +2574,16 @@
       page06EntryFireworks,
       {
         count:
-          115,
+          145,
 
         minDistance:
-          60,
+          75,
 
         maxDistance:
-          190,
+          240,
 
         cleanup:
-          1500
+          1750
       }
     );
 
@@ -3266,16 +3298,16 @@
       luckyFireworks,
       {
         count:
-          102,
+          125,
 
         minDistance:
-          55,
+          65,
 
         maxDistance:
-          172,
+          210,
 
         cleanup:
-          1700
+          1850
       }
     );
   }
