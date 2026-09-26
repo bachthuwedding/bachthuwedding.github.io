@@ -4649,3 +4649,17 @@ p:nth-child(3) {
   font-size: 10px;
   line-height: 1.25;
 }
+
+
+/* =========================================================
+   V18 — PAGE 08 LINE HEIGHT
+   Font size và transition giữ nguyên v17.
+========================================================= */
+
+.p08-vietnamese-copy,
+.p08-vietnamese-copy p:nth-child(1),
+.p08-vietnamese-copy p:nth-child(2),
+.p08-vietnamese-copy p:nth-child(3),
+.p08-english-copy {
+  line-height: 1.3;
+}
