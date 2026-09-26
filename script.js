@@ -6,15 +6,26 @@
      CONFIG
   ======================================================= */
 
-  const DESIGN_WIDTH = 390;
-  const DESIGN_HEIGHT = 680;
+  const DESIGN_WIDTH =
+    390;
 
-  const LUCKY_MIN = 1;
-  const LUCKY_MAX = 99;
+  const DESIGN_HEIGHT =
+    680;
+
+
+  const LUCKY_MIN =
+    1;
+
+  const LUCKY_MAX =
+    99;
 
 
   const WEDDING_API_URL =
     "https://script.google.com/macros/s/AKfycbzZgGDz-UI1bGQI8M4FoYe1GzxUWCI9V1k_hK6N_9WftwU9qyH-Utm9csjz9NkdW6Axhg/exec";
+
+
+  const DRIVE_UPLOAD_URL =
+    "https://drive.google.com/drive/folders/1e1acGQ5Nmtk5DlyNHUvbc7HcXA1gaj1i?usp=sharing";
 
 
   const LUCKY_HINT_REVEALED =
@@ -22,7 +33,7 @@
 
 
   /* =======================================================
-     URL GUEST
+     GUEST PARAM
   ======================================================= */
 
   const urlParams =
@@ -33,11 +44,17 @@
 
   const currentGuestSlug =
     normalizeGuestSlug(
-      urlParams.get("guest") || ""
+      urlParams.get(
+        "guest"
+      )
+      ||
+      ""
     );
 
 
-  function normalizeGuestSlug(value) {
+  function normalizeGuestSlug(
+    value
+  ) {
 
     return String(
       value || ""
@@ -51,7 +68,9 @@
   }
 
 
-  function normalizeText(value) {
+  function normalizeText(
+    value
+  ) {
 
     return String(
       value ?? ""
@@ -62,14 +81,18 @@
   }
 
 
-  function sleep(ms) {
+  function sleep(
+    milliseconds
+  ) {
 
     return new Promise(
-      (resolve) =>
+      (resolve) => {
+
         setTimeout(
           resolve,
-          ms
-        )
+          milliseconds
+        );
+      }
     );
   }
 
@@ -112,6 +135,18 @@
     );
 
 
+  const page04 =
+    document.getElementById(
+      "page04"
+    );
+
+
+  const page05 =
+    document.getElementById(
+      "page05"
+    );
+
+
   const page06 =
     document.getElementById(
       "page06"
@@ -131,12 +166,24 @@
 
 
   const pages = [
+
     page02Layout,
+
     page03,
+
+    page04,
+
+    page05,
+
     page06,
+
     page07,
+
     page08
-  ].filter(Boolean);
+
+  ].filter(
+    Boolean
+  );
 
 
   let personalizedGuestName =
@@ -241,6 +288,18 @@
     );
 
 
+  const rsvpVideo =
+    document.getElementById(
+      "rsvpVideo"
+    );
+
+
+  const rsvpVideoField =
+    document.querySelector(
+      ".p07-video-field"
+    );
+
+
   /* =======================================================
      STATE
   ======================================================= */
@@ -257,38 +316,70 @@
     new Map();
 
 
-  let pageMode = false;
+  let pageMode =
+    false;
 
-  let resizeRaf = 0;
 
-  let scrollRaf = 0;
+  let resizeRaf =
+    0;
 
-  let activePageIndex = -1;
 
-  let luckyIdleTimer = null;
+  let scrollRaf =
+    0;
 
-  let luckyRolling = false;
 
-  let luckyLocked = false;
+  let activePageIndex =
+    -1;
 
-  let rsvpCount = 1;
 
-  let page06EntryTimer = null;
+  let luckyIdleTimer =
+    null;
 
-  let submitResetTimer = null;
 
-  let currentGuestData = null;
+  let luckyRolling =
+    false;
 
-  let guestDataLoaded = false;
 
-  let guestLoadPromise = null;
+  let luckyLocked =
+    false;
+
+
+  let rsvpCount =
+    1;
+
+
+  let page06EntryTimer =
+    null;
+
+
+  let submitResetTimer =
+    null;
+
+
+  let currentGuestData =
+    null;
+
+
+  let guestDataLoaded =
+    false;
+
+
+  let guestLoadPromise =
+    null;
 
 
   /* =======================================================
-     JSONP
+     APPS SCRIPT BRIDGE
+
+     Không JSONP.
+     Không fetch GET.
+     Không phụ thuộc CORS.
+
+     Website tạo iframe ẩn.
+     Apps Script postMessage kết quả về.
   ======================================================= */
 
-  function jsonpRequest(
+  function bridgeRequest(
     params = {},
     timeout = 15000
   ) {
@@ -299,8 +390,8 @@
         reject
       ) => {
 
-        const callbackName =
-          "__wedding_"
+        const requestId =
+          "wedding_"
           +
           Date.now()
           +
@@ -327,9 +418,11 @@
             ) => {
 
               if (
-                value === undefined
+                value ===
+                undefined
                 ||
-                value === null
+                value ===
+                null
               ) {
 
                 return;
@@ -338,15 +431,23 @@
 
               query.set(
                 key,
-                String(value)
+                String(
+                  value
+                )
               );
             }
           );
 
 
         query.set(
-          "callback",
-          callbackName
+          "transport",
+          "bridge"
+        );
+
+
+        query.set(
+          "requestId",
+          requestId
         );
 
 
@@ -358,19 +459,85 @@
         );
 
 
-        const script =
+        const iframe =
           document.createElement(
-            "script"
+            "iframe"
           );
 
 
-        let timer = null;
+        iframe.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+
+        iframe.tabIndex =
+          -1;
+
+
+        iframe.style.position =
+          "fixed";
+
+
+        iframe.style.left =
+          "-10000px";
+
+
+        iframe.style.top =
+          "-10000px";
+
+
+        iframe.style.width =
+          "1px";
+
+
+        iframe.style.height =
+          "1px";
+
+
+        iframe.style.border =
+          "0";
+
+
+        iframe.style.opacity =
+          "0";
+
+
+        iframe.style.pointerEvents =
+          "none";
+
+
+        let finished =
+          false;
+
+
+        let timer =
+          null;
 
 
         function cleanup() {
 
           if (
-            timer !== null
+            finished
+          ) {
+
+            return;
+          }
+
+
+          finished =
+            true;
+
+
+          window.removeEventListener(
+            "message",
+            handleMessage
+          );
+
+
+          if (
+            timer !==
+            null
           ) {
 
             clearTimeout(
@@ -379,39 +546,67 @@
           }
 
 
-          try {
-
-            delete window[
-              callbackName
-            ];
-
-          } catch (_) {
-
-            window[
-              callbackName
-            ] = undefined;
-          }
-
-
-          script.remove();
+          iframe.remove();
         }
 
 
-        window[
-          callbackName
-        ] =
-          (response) => {
+        function handleMessage(
+          event
+        ) {
 
-            cleanup();
-
-
-            resolve(
-              response
-            );
-          };
+          const data =
+            event.data;
 
 
-        script.onerror =
+          if (
+            !data
+            ||
+            typeof data !==
+              "object"
+          ) {
+
+            return;
+          }
+
+
+          if (
+            data.source !==
+            "bach-thu-wedding-bridge"
+          ) {
+
+            return;
+          }
+
+
+          if (
+            data.requestId !==
+            requestId
+          ) {
+
+            return;
+          }
+
+
+          const payload =
+            data.payload;
+
+
+          cleanup();
+
+
+          resolve(
+            payload
+          );
+        }
+
+
+        window.addEventListener(
+          "message",
+          handleMessage
+        );
+
+
+        iframe.onerror =
           () => {
 
             cleanup();
@@ -419,21 +614,10 @@
 
             reject(
               new Error(
-                "Không kết nối được Google Apps Script."
+                "Không tải được Wedding Bridge."
               )
             );
           };
-
-
-        script.src =
-          WEDDING_API_URL
-          +
-          "?"
-          +
-          query.toString();
-
-
-        script.async = true;
 
 
         timer =
@@ -445,7 +629,7 @@
 
               reject(
                 new Error(
-                  "Google Apps Script phản hồi quá lâu."
+                  "Wedding Bridge phản hồi quá lâu."
                 )
               );
 
@@ -454,8 +638,16 @@
           );
 
 
-        document.head.appendChild(
-          script
+        iframe.src =
+          WEDDING_API_URL
+          +
+          "?"
+          +
+          query.toString();
+
+
+        document.body.appendChild(
+          iframe
         );
       }
     );
@@ -464,9 +656,14 @@
 
   /* =======================================================
      POST
+
+     RSVP của bạn đang chạy tốt.
+     Giữ nguyên cơ chế này.
   ======================================================= */
 
-  async function postToBackend(data) {
+  async function postToBackend(
+    data
+  ) {
 
     const body =
       new URLSearchParams();
@@ -484,9 +681,11 @@
         ) => {
 
           if (
-            value === undefined
+            value ===
+            undefined
             ||
-            value === null
+            value ===
+            null
           ) {
 
             return;
@@ -495,7 +694,9 @@
 
           body.append(
             key,
-            String(value)
+            String(
+              value
+            )
           );
         }
       );
@@ -559,7 +760,9 @@
 
     root.style.setProperty(
       "--design-scale",
-      String(scale)
+      String(
+        scale
+      )
     );
 
 
@@ -604,7 +807,8 @@
     "resize",
     scheduleScale,
     {
-      passive: true
+      passive:
+        true
     }
   );
 
@@ -614,13 +818,14 @@
       "resize",
       scheduleScale,
       {
-        passive: true
+        passive:
+          true
       }
     );
 
 
   /* =======================================================
-     SCROLL NGOÀI THIỆP
+     SCROLL KHI CHUỘT Ở NGOÀI THIỆP
   ======================================================= */
 
   window.addEventListener(
@@ -670,7 +875,8 @@
         event.deltaY;
     },
     {
-      passive: false
+      passive:
+        false
     }
   );
 
@@ -715,9 +921,7 @@
     priority = "low"
   ) {
 
-    if (
-      !url
-    ) {
+    if (!url) {
 
       return Promise.resolve();
     }
@@ -783,7 +987,8 @@
             "load",
             finish,
             {
-              once: true
+              once:
+                true
             }
           );
 
@@ -792,12 +997,14 @@
             "error",
             resolve,
             {
-              once: true
+              once:
+                true
             }
           );
 
 
-          image.src = url;
+          image.src =
+            url;
 
 
           if (
@@ -825,9 +1032,7 @@
     priority = "low"
   ) {
 
-    if (
-      !image
-    ) {
+    if (!image) {
 
       return Promise.resolve();
     }
@@ -849,9 +1054,7 @@
       image.dataset.src;
 
 
-    if (
-      !source
-    ) {
+    if (!source) {
 
       return Promise.resolve();
     }
@@ -897,7 +1100,8 @@
             "load",
             finish,
             {
-              once: true
+              once:
+                true
             }
           );
 
@@ -906,12 +1110,14 @@
             "error",
             resolve,
             {
-              once: true
+              once:
+                true
             }
           );
 
 
-          image.src = source;
+          image.src =
+            source;
 
 
           image.removeAttribute(
@@ -944,9 +1150,7 @@
     priority = "low"
   ) {
 
-    if (
-      !page
-    ) {
+    if (!page) {
 
       return Promise.resolve();
     }
@@ -977,11 +1181,13 @@
 
         const jobs =
           images.map(
-            (image) =>
-              loadImage(
+            (image) => {
+
+              return loadImage(
                 image,
                 priority
-              )
+              );
+            }
           );
 
 
@@ -1050,9 +1256,9 @@
 
 
   /* =======================================================
-     PAGE 02 — GUEST DISPLAY NAME
+     PAGE 02 - TÊN KHÁCH
 
-     CHỈ HIỂN THỊ response.displayName = CỘT F
+     Chỉ lấy response.displayName = cột F.
   ======================================================= */
 
   function ensureGuestNameElement() {
@@ -1074,15 +1280,12 @@
 
 
     const invite =
-      page02Layout
-        .querySelector(
-          ".p02-invite"
-        );
+      page02Layout.querySelector(
+        ".p02-invite"
+      );
 
 
-    if (
-      !invite
-    ) {
+    if (!invite) {
 
       return null;
     }
@@ -1120,9 +1323,7 @@
       ensureGuestNameElement();
 
 
-    if (
-      !element
-    ) {
+    if (!element) {
 
       return;
     }
@@ -1135,21 +1336,15 @@
         .trim();
 
 
-    /*
-      Nếu cột F trống:
-      không hiện fallback nào.
-    */
+    if (!text) {
 
-    if (
-      !text
-    ) {
+      element.textContent =
+        "";
 
-      element.textContent = "";
 
-      element.hidden = true;
+      element.hidden =
+        true;
 
-      element.style.display =
-        "none";
 
       return;
     }
@@ -1169,113 +1364,50 @@
 
 
     /*
-      QUAN TRỌNG
-
-      Các phần khác của Page 2 đều là absolute layer.
-      Nếu guest name không absolute + z-index,
-      nó có thể nằm SAU background.
-
-      Ép style ở đây để chắc chắn luôn nhìn thấy.
+      Đây chính là style bạn vừa test
+      trong DevTools và đã thấy đúng.
     */
 
-    element.style.position =
-      "absolute";
-
-
-    element.style.zIndex =
-      "25";
-
-
-    element.style.left =
-      "50%";
-
-
-    /*
-      Nằm dưới "TRÂN TRỌNG KÍNH MỜI",
-      trên divider.
-    */
-
-    element.style.top =
-      "82px";
-
-
-    element.style.width =
-      "300px";
-
-
-    element.style.margin =
-      "0";
-
-
-    element.style.padding =
-      "0";
-
-
-    element.style.transform =
-      "translateX(-50%)";
-
-
-    element.style.display =
-      "block";
-
-
-    element.style.visibility =
-      "visible";
-
-
-    element.style.opacity =
-      "1";
-
-
-    element.style.pointerEvents =
-      "none";
-
-
-    element.style.textAlign =
-      "center";
-
-
-    element.style.color =
-      "#405948";
-
-
-    element.style.fontFamily =
-      '"Times New Roman", Times, serif';
-
-
-    element.style.fontSize =
-      "12px";
-
-
-    element.style.fontWeight =
-      "400";
-
-
-    element.style.fontStyle =
-      "normal";
-
-
-    element.style.lineHeight =
-      "1.25";
-
-
-    element.style.letterSpacing =
-      "0";
-
-
-    element.style.whiteSpace =
-      "normal";
+    element.style.cssText =
+      [
+        "position:absolute",
+        "z-index:25",
+        "left:50%",
+        "top:82px",
+        "width:300px",
+        "margin:0",
+        "padding:0",
+        "transform:translateX(-50%)",
+        "display:block",
+        "opacity:1",
+        "visibility:visible",
+        "pointer-events:none",
+        "text-align:center",
+        "color:#405948",
+        'font-family:"Times New Roman", Times, serif',
+        "font-size:12px",
+        "font-weight:400",
+        "font-style:italic",
+        "line-height:1.25",
+        "letter-spacing:0",
+        "white-space:normal"
+      ]
+        .join(
+          ";"
+        )
+      +
+      ";";
 
 
     console.log(
-      "[Wedding] Page 2 displayName from column F:",
+      "[Wedding] Page 2 displayName:",
       text
     );
   }
 
 
   /* =======================================================
-     GET GUEST
+     GET GUEST DATA VIA BRIDGE
   ======================================================= */
 
   async function requestGuestData() {
@@ -1289,7 +1421,7 @@
 
 
     const response =
-      await jsonpRequest(
+      await bridgeRequest(
         {
           action:
             "guest",
@@ -1297,14 +1429,15 @@
           guest:
             currentGuestSlug
         },
-        15000
+        20000
       );
 
 
     if (
       !response
       ||
-      response.ok !== true
+      response.ok !==
+        true
     ) {
 
       throw new Error(
@@ -1330,7 +1463,8 @@
     if (
       !response
       ||
-      response.ok !== true
+      response.ok !==
+        true
     ) {
 
       return;
@@ -1345,33 +1479,21 @@
       true;
 
 
-    /* ===================================================
-       PAGE 2
+    /*
+      =====================================================
+      PAGE 2
 
-       BACKEND:
-       response.displayName = CỘT F
-
-       Ví dụ:
-       "Bạn ABC cùng sự cô đơn"
-    =================================================== */
+      Chỉ cột F.
+      =====================================================
+    */
 
     const displayNameFromColumnF =
       normalizeText(
-        response.displayName || ""
+        response.displayName
+        ||
+        ""
       )
         .trim();
-
-
-    console.log(
-      "[Wedding] API response:",
-      response
-    );
-
-
-    console.log(
-      "[Wedding] displayName F:",
-      displayNameFromColumnF
-    );
 
 
     renderGuestDisplayName(
@@ -1388,12 +1510,17 @@
     }
 
 
-    /* ===================================================
-       RSVP NAME
+    /*
+      =====================================================
+      PAGE 7 - NAME
 
-       J nếu khách từng nhập.
-       Nếu chưa có J thì dùng tên gốc D.
-    =================================================== */
+      Nếu đã RSVP:
+      lấy J.
+
+      Nếu chưa:
+      lấy D.
+      =====================================================
+    */
 
     if (
       rsvpGuestName
@@ -1420,9 +1547,9 @@
     }
 
 
-    /* ===================================================
-       LUCKY NUMBER
-    =================================================== */
+    /*
+      Lucky number.
+    */
 
     const existingLucky =
       Number(
@@ -1435,9 +1562,11 @@
         existingLucky
       )
       &&
-      existingLucky >= LUCKY_MIN
+      existingLucky >=
+        LUCKY_MIN
       &&
-      existingLucky <= LUCKY_MAX
+      existingLucky <=
+        LUCKY_MAX
     ) {
 
       lockLuckyNumber(
@@ -1447,9 +1576,9 @@
     }
 
 
-    /* ===================================================
-       RSVP GẦN NHẤT
-    =================================================== */
+    /*
+      RSVP attendance.
+    */
 
     if (
       response.attendance ===
@@ -1472,6 +1601,7 @@
         rsvpAttendanceYes.checked =
           false;
       }
+
 
     } else if (
       response.attendance ===
@@ -1497,12 +1627,19 @@
     }
 
 
+    /*
+      RSVP count.
+    */
+
     if (
-      response.guestCount !== ""
+      response.guestCount !==
+        ""
       &&
-      response.guestCount !== null
+      response.guestCount !==
+        null
       &&
-      response.guestCount !== undefined
+      response.guestCount !==
+        undefined
     ) {
 
       const savedCount =
@@ -1516,9 +1653,11 @@
           savedCount
         )
         &&
-        savedCount >= 0
+        savedCount >=
+          0
         &&
-        savedCount <= 10
+        savedCount <=
+          10
       ) {
 
         rsvpCount =
@@ -1527,13 +1666,19 @@
     }
 
 
+    /*
+      RSVP message.
+    */
+
     if (
       rsvpMessage
     ) {
 
       rsvpMessage.value =
         normalizeText(
-          response.message || ""
+          response.message
+          ||
+          ""
         );
     }
 
@@ -1544,9 +1689,11 @@
 
 
     if (
-      response.attendance === "Có"
+      response.attendance ===
+        "Có"
       ||
-      response.attendance === "Không"
+      response.attendance ===
+        "Không"
     ) {
 
       setSubmitText(
@@ -1596,11 +1743,18 @@
       (async () => {
 
         const delays = [
+
           0,
+
           450,
-          900,
-          1600
+
+          1000
+
         ];
+
+
+        let lastError =
+          null;
 
 
         for (
@@ -1610,7 +1764,8 @@
         ) {
 
           if (
-            delays[i] > 0
+            delays[i] >
+            0
           ) {
 
             await sleep(
@@ -1635,12 +1790,22 @@
 
           } catch (error) {
 
+            lastError =
+              error;
+
+
             console.warn(
-              `[Wedding] guest load attempt ${i + 1}`,
+              `[Wedding] guest bridge attempt ${i + 1}`,
               error
             );
           }
         }
+
+
+        console.error(
+          "[Wedding] guest bridge failed",
+          lastError
+        );
 
 
         return null;
@@ -1696,17 +1861,14 @@
               );
 
 
-            /*
-              Re-apply tên khách sau animation
-              để tránh CSS entrance ghi đè opacity.
-            */
-
             if (
-              currentGuestData?.displayName
+              currentGuestData
+              ?.displayName
             ) {
 
               renderGuestDisplayName(
-                currentGuestData.displayName
+                currentGuestData
+                  .displayName
               );
             }
           }
@@ -1721,12 +1883,19 @@
   ======================================================= */
 
   const fireworkColors = [
+
     "#a63019",
+
     "#c99633",
+
     "#e5b747",
+
     "#315747",
+
     "#d76b35",
+
     "#f0d37b"
+
   ];
 
 
@@ -1740,9 +1909,7 @@
     } = {}
   ) {
 
-    if (
-      !target
-    ) {
+    if (!target) {
 
       return;
     }
@@ -1858,9 +2025,7 @@
 
   function playPage06Entrance() {
 
-    if (
-      !page06
-    ) {
+    if (!page06) {
 
       return;
     }
@@ -1881,10 +2046,17 @@
     spawnFireworks(
       page06EntryFireworks,
       {
-        count: 115,
-        minDistance: 60,
-        maxDistance: 170,
-        cleanup: 1500
+        count:
+          115,
+
+        minDistance:
+          60,
+
+        maxDistance:
+          170,
+
+        cleanup:
+          1500
       }
     );
 
@@ -1918,7 +2090,9 @@
      PAGE ACTIVATION
   ======================================================= */
 
-  function activatePage(index) {
+  function activatePage(
+    index
+  ) {
 
     const safeIndex =
       Math.max(
@@ -1948,7 +2122,8 @@
 
 
         if (
-          page === page06
+          page ===
+          page06
           &&
           !active
         ) {
@@ -1981,17 +2156,14 @@
       }
 
 
-      /*
-        Nếu data đã có sẵn,
-        render lại tên ngay khi Page 2 active.
-      */
-
       if (
-        currentGuestData?.displayName
+        currentGuestData
+        ?.displayName
       ) {
 
         renderGuestDisplayName(
-          currentGuestData.displayName
+          currentGuestData
+            .displayName
         );
       }
     }
@@ -2009,7 +2181,9 @@
   }
 
 
-  function setNearbyPages(index) {
+  function setNearbyPages(
+    index
+  ) {
 
     const safeIndex =
       Math.max(
@@ -2033,14 +2207,17 @@
             pageIndex
             -
             safeIndex
-          ) <= 1
+          ) <=
+            1
         );
       }
     );
 
 
     loadPage(
-      pages[safeIndex],
+      pages[
+        safeIndex
+      ],
       "high"
     );
 
@@ -2076,7 +2253,8 @@
       Math.min(
         pages.length - 1,
         Math.round(
-          pageScroller.scrollTop /
+          pageScroller.scrollTop
+          /
           DESIGN_HEIGHT
         )
       )
@@ -2098,7 +2276,8 @@
       requestAnimationFrame(
         () => {
 
-          scrollRaf = 0;
+          scrollRaf =
+            0;
 
 
           const index =
@@ -2133,7 +2312,8 @@
       "scroll",
       onPageScroll,
       {
-        passive: true
+        passive:
+          true
       }
     );
 
@@ -2152,12 +2332,9 @@
     }
 
 
-    pageMode = true;
+    pageMode =
+      true;
 
-
-    /*
-      Guest API chạy song song.
-    */
 
     loadGuestPersonalization();
 
@@ -2172,7 +2349,8 @@
       pageScroller
     ) {
 
-      pageScroller.scrollTop = 0;
+      pageScroller.scrollTop =
+        0;
 
 
       pageScroller.setAttribute(
@@ -2189,7 +2367,8 @@
       );
 
 
-    activePageIndex = 0;
+    activePageIndex =
+      0;
 
 
     setNearbyPages(
@@ -2202,19 +2381,17 @@
     );
 
 
-    /*
-      Render thêm một lần sau khi chuyển Page 1 -> 2.
-    */
-
     if (
-      currentGuestData?.displayName
+      currentGuestData
+      ?.displayName
     ) {
 
       requestAnimationFrame(
         () => {
 
           renderGuestDisplayName(
-            currentGuestData.displayName
+            currentGuestData
+              .displayName
           );
         }
       );
@@ -2251,7 +2428,8 @@
         );
       },
       {
-        passive: true
+        passive:
+          true
       }
     );
 
@@ -2302,9 +2480,7 @@
       getLuckyStorageKey();
 
 
-    if (
-      !key
-    ) {
+    if (!key) {
 
       return null;
     }
@@ -2325,9 +2501,11 @@
           value
         )
         &&
-        value >= LUCKY_MIN
+        value >=
+          LUCKY_MIN
         &&
-        value <= LUCKY_MAX
+        value <=
+          LUCKY_MAX
       ) {
 
         return value;
@@ -2341,15 +2519,15 @@
   }
 
 
-  function saveLocalLuckyNumber(value) {
+  function saveLocalLuckyNumber(
+    value
+  ) {
 
     const key =
       getLuckyStorageKey();
 
 
-    if (
-      !key
-    ) {
+    if (!key) {
 
       return;
     }
@@ -2359,7 +2537,9 @@
 
       localStorage.setItem(
         key,
-        String(value)
+        String(
+          value
+        )
       );
 
     } catch (_) {}
@@ -2400,7 +2580,8 @@
       return (
         LUCKY_MIN
         +
-        array[0] %
+        array[0]
+        %
         range
       );
     }
@@ -2410,14 +2591,17 @@
       LUCKY_MIN
       +
       Math.floor(
-        Math.random() *
+        Math.random()
+        *
         range
       )
     );
   }
 
 
-  function showLuckyNumber(value) {
+  function showLuckyNumber(
+    value
+  ) {
 
     if (
       !luckyNumber
@@ -2428,7 +2612,9 @@
 
 
     luckyNumber.textContent =
-      String(value)
+      String(
+        value
+      )
         .padStart(
           2,
           "0"
@@ -2439,7 +2625,8 @@
   function stopLuckyIdleShuffle() {
 
     if (
-      luckyIdleTimer !== null
+      luckyIdleTimer !==
+      null
     ) {
 
       clearInterval(
@@ -2447,7 +2634,8 @@
       );
 
 
-      luckyIdleTimer = null;
+      luckyIdleTimer =
+        null;
     }
 
 
@@ -2503,7 +2691,9 @@
   ) {
 
     const number =
-      Number(value);
+      Number(
+        value
+      );
 
 
     if (
@@ -2511,9 +2701,11 @@
         number
       )
       ||
-      number < LUCKY_MIN
+      number <
+        LUCKY_MIN
       ||
-      number > LUCKY_MAX
+      number >
+        LUCKY_MAX
     ) {
 
       return;
@@ -2523,9 +2715,12 @@
     stopLuckyIdleShuffle();
 
 
-    luckyLocked = true;
+    luckyLocked =
+      true;
 
-    luckyRolling = false;
+
+    luckyRolling =
+      false;
 
 
     showLuckyNumber(
@@ -2583,7 +2778,8 @@
       luckyTrigger
     ) {
 
-      luckyTrigger.disabled = true;
+      luckyTrigger.disabled =
+        true;
     }
   }
 
@@ -2593,14 +2789,25 @@
     spawnFireworks(
       luckyFireworks,
       {
-        count: 102,
-        minDistance: 55,
-        maxDistance: 155,
-        cleanup: 1700
+        count:
+          102,
+
+        minDistance:
+          55,
+
+        maxDistance:
+          155,
+
+        cleanup:
+          1700
       }
     );
   }
 
+
+  /* =======================================================
+     REQUEST LUCKY VIA BRIDGE
+  ======================================================= */
 
   async function requestGuestLuckyNumber() {
 
@@ -2613,21 +2820,23 @@
 
 
     const response =
-      await jsonpRequest(
+      await bridgeRequest(
         {
           action:
             "lucky",
 
           guest:
             currentGuestSlug
-        }
+        },
+        20000
       );
 
 
     if (
       !response
       ||
-      response.ok !== true
+      response.ok !==
+        true
     ) {
 
       throw new Error(
@@ -2671,7 +2880,8 @@
     stopLuckyIdleShuffle();
 
 
-    luckyRolling = true;
+    luckyRolling =
+      true;
 
 
     luckyCard
@@ -2709,15 +2919,20 @@
       1850;
 
 
-    let lastUpdate = 0;
+    let lastUpdate =
+      0;
 
 
-    function frame(now) {
+    function frame(
+      now
+    ) {
 
       const progress =
         Math.min(
           (
-            now - start
+            now
+            -
+            start
           )
           /
           duration,
@@ -2737,11 +2952,15 @@
 
 
       if (
-        now - lastUpdate
-        >= interval
+        now
+        -
+        lastUpdate
+        >=
+        interval
       ) {
 
-        lastUpdate = now;
+        lastUpdate =
+          now;
 
 
         showLuckyNumber(
@@ -2751,7 +2970,8 @@
 
 
       if (
-        progress < 1
+        progress <
+        1
       ) {
 
         requestAnimationFrame(
@@ -2786,12 +3006,13 @@
       } catch (error) {
 
         console.error(
-          "Lucky number error:",
+          "[Wedding] Lucky error",
           error
         );
 
 
-        luckyRolling = false;
+        luckyRolling =
+          false;
 
 
         luckyCard
@@ -2829,7 +3050,7 @@
 
 
   /* =======================================================
-     RSVP
+     RSVP UI
   ======================================================= */
 
   function updateCount() {
@@ -2856,6 +3077,14 @@
     }
 
 
+    /*
+      UI:
+      chọn Không -> Kó.
+
+      Sheet:
+      backend vẫn ghi Không.
+    */
+
     rsvpAttendanceNoText.textContent =
       rsvpAttendanceNo
         ?.checked
@@ -2866,7 +3095,9 @@
   }
 
 
-  function setSubmitText(text) {
+  function setSubmitText(
+    text
+  ) {
 
     const span =
       rsvpSubmit
@@ -2879,7 +3110,8 @@
       span
     ) {
 
-      span.textContent = text;
+      span.textContent =
+        text;
     }
   }
 
@@ -2945,7 +3177,8 @@
           rsvpAttendanceNo.checked
         ) {
 
-          rsvpCount = 0;
+          rsvpCount =
+            0;
 
 
           updateCount();
@@ -2965,10 +3198,12 @@
         if (
           rsvpAttendanceYes.checked
           &&
-          rsvpCount < 1
+          rsvpCount <
+            1
         ) {
 
-          rsvpCount = 1;
+          rsvpCount =
+            1;
 
 
           updateCount();
@@ -2981,13 +3216,95 @@
 
 
   /* =======================================================
-     BACKGROUND SYNC
+     VIDEO -> GOOGLE DRIVE
+  ======================================================= */
+
+  function openVideoDrive(
+    event
+  ) {
+
+    event
+      ?.preventDefault();
+
+
+    window.open(
+      DRIVE_UPLOAD_URL,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  }
+
+
+  if (
+    rsvpVideo
+  ) {
+
+    /*
+      Không mở file picker máy.
+    */
+
+    rsvpVideo.disabled =
+      true;
+
+
+    rsvpVideo.tabIndex =
+      -1;
+  }
+
+
+  if (
+    rsvpVideoField
+  ) {
+
+    rsvpVideoField.setAttribute(
+      "role",
+      "button"
+    );
+
+
+    rsvpVideoField.tabIndex =
+      0;
+
+
+    rsvpVideoField.addEventListener(
+      "click",
+      openVideoDrive
+    );
+
+
+    rsvpVideoField.addEventListener(
+      "keydown",
+      (event) => {
+
+        if (
+          event.key ===
+          "Enter"
+          ||
+          event.key ===
+          " "
+        ) {
+
+          openVideoDrive(
+            event
+          );
+        }
+      }
+    );
+  }
+
+
+  /* =======================================================
+     BACKGROUND REFRESH
+
+     Sau submit đọc lại ngầm.
+     Không block UI.
+     Không popup.
   ======================================================= */
 
   async function backgroundRefreshGuestData() {
 
     await sleep(
-      1200
+      1000
     );
 
 
@@ -2998,28 +3315,34 @@
 
 
       if (
-        response?.ok
+        !response
+        ||
+        response.ok !==
+          true
       ) {
 
-        currentGuestData =
-          response;
+        return;
+      }
 
 
-        /*
-          Không update form ở đây,
-          tránh ghi đè thao tác khách đang nhập.
+      currentGuestData =
+        response;
 
-          Chỉ cập nhật lại Page 2.
-        */
 
-        if (
+      /*
+        Chỉ refresh tên Page 2.
+
+        Không overwrite form khách
+        đang tiếp tục chỉnh.
+      */
+
+      if (
+        response.displayName
+      ) {
+
+        renderGuestDisplayName(
           response.displayName
-        ) {
-
-          renderGuestDisplayName(
-            response.displayName
-          );
-        }
+        );
       }
 
 
@@ -3040,7 +3363,9 @@
   rsvpForm
     ?.addEventListener(
       "submit",
-      async (event) => {
+      async (
+        event
+      ) => {
 
         event.preventDefault();
 
@@ -3096,9 +3421,7 @@
             );
 
 
-        if (
-          !name
-        ) {
+        if (!name) {
 
           alert(
             "Bạn nhập tên khách mời giúp chúng mình nhé."
@@ -3128,7 +3451,8 @@
         }
 
 
-        rsvpSubmit.disabled = true;
+        rsvpSubmit.disabled =
+          true;
 
 
         setSubmitText(
@@ -3191,13 +3515,17 @@
             );
 
 
+          /*
+            Chạy ngầm.
+          */
+
           backgroundRefreshGuestData();
 
 
         } catch (error) {
 
           console.error(
-            "[Wedding] POST failed",
+            "[Wedding] RSVP POST failed",
             error
           );
 
@@ -3221,9 +3549,12 @@
 
   /* =======================================================
      MARK OPENED
+
+     POST no-cors.
+     Không cần response.
   ======================================================= */
 
-  async function markInvitationOpened() {
+  function markInvitationOpened() {
 
     if (
       !currentGuestSlug
@@ -3233,31 +3564,29 @@
     }
 
 
-    try {
+    postToBackend(
+      {
+        action:
+          "markOpened",
 
-      await jsonpRequest(
-        {
-          action:
-            "markOpened",
+        guest:
+          currentGuestSlug
+      }
+    )
+      .catch(
+        (error) => {
 
-          guest:
-            currentGuestSlug
+          console.warn(
+            "[Wedding] mark opened failed",
+            error
+          );
         }
       );
-
-
-    } catch (error) {
-
-      console.warn(
-        "[Wedding] mark opened failed",
-        error
-      );
-    }
   }
 
 
   /* =======================================================
-     INITIAL
+     INITIAL UI
   ======================================================= */
 
   updateCount();
@@ -3315,6 +3644,15 @@
   ======================================================= */
 
   markInvitationOpened();
+
+
+  /*
+    Đây là request đọc mới.
+
+    Không còn JSONP nên lỗi
+    "[Wedding] guest load attempt..."
+    cũ sẽ biến mất.
+  */
 
   loadGuestPersonalization();
 
