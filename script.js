@@ -2432,7 +2432,7 @@
       count = 90,
       minDistance = 45,
       maxDistance = 135,
-      cleanup = 1500
+      cleanup = 1200
     } = {}
   ) {
 
@@ -2506,7 +2506,7 @@
 
       particle.style.setProperty(
         "--delay",
-        `${Math.random() * 150}ms`
+        `${Math.random() * 120}ms`
       );
 
 
@@ -2608,7 +2608,7 @@
           }
 
         },
-        600
+        480
       );
   }
 
@@ -3188,7 +3188,7 @@
           );
 
         },
-        145
+        116
       );
   }
 
@@ -3483,7 +3483,7 @@
 
 
     const duration =
-      1850;
+      1480;
 
 
     let lastUpdate =
