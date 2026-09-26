@@ -1,7 +1,6 @@
 (() => {
   "use strict";
 
-
   /* =======================================================
      CONFIG
   ======================================================= */
@@ -12,68 +11,38 @@
   const LUCKY_MIN = 1;
   const LUCKY_MAX = 99;
 
-
   const WEDDING_API_URL =
     "https://script.google.com/macros/s/AKfycbzZgGDz-UI1bGQI8M4FoYe1GzxUWCI9V1k_hK6N_9WftwU9qyH-Utm9csjz9NkdW6Axhg/exec";
-
 
   const SPREADSHEET_ID =
     "1Met6W9whg2I9Ho_GVBgpp4QZOrBF_24pKOk0lPiC7Yo";
 
-
   const SHEET_NAME =
     "Danh sách khách mời";
-
-
-  const DRIVE_UPLOAD_URL =
-    "https://drive.google.com/drive/folders/1e1acGQ5Nmtk5DlyNHUvbc7HcXA1gaj1i?usp=sharing";
-
-
-  const LUCKY_HINT_REVEALED =
-    "Hãy giữ con số may mắn của bạn tới ngày cưới của chúng mình nhé!";
-
-
-  /*
-    Ta đọc:
-
-    D = guest name
-    F = display name
-    G = invitation URL
-    H = opened
-    I = lucky number
-    J = RSVP name
-    K = attendance
-    L = guest count
-    M = message
-    N = video
-
-    Theo thứ tự select bên dưới:
-
-    index 0 = D
-    index 1 = F
-    index 2 = G
-    index 3 = H
-    index 4 = I
-    index 5 = J
-    index 6 = K
-    index 7 = L
-    index 8 = M
-    index 9 = N
-  */
 
   const GVIZ_QUERY =
     "select D,F,G,H,I,J,K,L,M,N";
 
+  const LUCKY_HINT_REVEALED =
+    "Hãy giữ con số may mắn của bạn tới ngày cưới của chúng mình nhé!";
+
+  const VIDEO_FOLDER_WAIT_DELAYS = [
+    350,
+    650,
+    1000,
+    1500,
+    2200
+  ];
+
 
   /* =======================================================
-     URL GUEST
+     GUEST FROM URL
   ======================================================= */
 
   const urlParams =
     new URLSearchParams(
       window.location.search
     );
-
 
   const currentGuestSlug =
     normalizeGuestSlug(
@@ -82,86 +51,43 @@
 
 
   function normalizeGuestSlug(value) {
-
-    return String(
-      value || ""
-    )
+    return String(value || "")
       .trim()
       .toLowerCase()
-      .replace(
-        /[^a-z0-9-]/g,
-        ""
-      );
+      .replace(/[^a-z0-9-]/g, "");
   }
 
 
   function slugifyGuestName(value) {
-
-    return String(
-      value || ""
-    )
+    return String(value || "")
       .trim()
-
-      .replace(
-        /Đ/g,
-        "D"
-      )
-
-      .replace(
-        /đ/g,
-        "d"
-      )
-
-      .normalize(
-        "NFD"
-      )
-
-      .replace(
-        /[\u0300-\u036f]/g,
-        ""
-      )
-
+      .replace(/Đ/g, "D")
+      .replace(/đ/g, "d")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase()
-
-      .replace(
-        /[^a-z0-9]+/g,
-        "-"
-      )
-
-      .replace(
-        /^-+|-+$/g,
-        ""
-      )
-
-      .replace(
-        /-+/g,
-        "-"
-      );
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .replace(/-+/g, "-");
   }
 
 
   function normalizeText(value) {
-
-    return String(
-      value ?? ""
-    )
-      .normalize(
-        "NFC"
-      );
+    return String(value ?? "")
+      .normalize("NFC");
   }
 
 
   function sleep(ms) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  }
 
-    return new Promise(
-      (resolve) => {
 
-        setTimeout(
-          resolve,
-          ms
-        );
-      }
-    );
+  function isDriveFolderUrl(value) {
+    return /^https:\/\/drive\.google\.com\/drive\/folders\/[A-Za-z0-9_-]+/i
+      .test(String(value || "").trim());
   }
 
 
@@ -172,83 +98,44 @@
   const root =
     document.documentElement;
 
-
   const siteShell =
-    document.getElementById(
-      "siteShell"
-    );
-
+    document.getElementById("siteShell");
 
   const openingCardButton =
-    document.getElementById(
-      "openingCardButton"
-    );
-
+    document.getElementById("openingCardButton");
 
   const pageScroller =
-    document.getElementById(
-      "page02"
-    );
-
+    document.getElementById("page02");
 
   const page02Layout =
-    document.getElementById(
-      "page02Layout"
-    );
-
+    document.getElementById("page02Layout");
 
   const page03 =
-    document.getElementById(
-      "page03"
-    );
-
+    document.getElementById("page03");
 
   const page04 =
-    document.getElementById(
-      "page04"
-    );
-
+    document.getElementById("page04");
 
   const page05 =
-    document.getElementById(
-      "page05"
-    );
-
+    document.getElementById("page05");
 
   const page06 =
-    document.getElementById(
-      "page06"
-    );
-
+    document.getElementById("page06");
 
   const page07 =
-    document.getElementById(
-      "page07"
-    );
-
+    document.getElementById("page07");
 
   const page08 =
-    document.getElementById(
-      "page08"
-    );
-
+    document.getElementById("page08");
 
   const pages = [
-
     page02Layout,
-
     page03,
-
     page04,
-
     page05,
-
     page06,
-
     page07,
-
     page08
-
   ].filter(Boolean);
 
 
@@ -263,30 +150,25 @@
       "page06EntryFireworks"
     );
 
-
   const luckyCard =
     document.getElementById(
       "luckyCard"
     );
-
 
   const luckyNumber =
     document.getElementById(
       "luckyNumber"
     );
 
-
   const luckyHint =
     document.getElementById(
       "luckyHint"
     );
 
-
   const luckyTrigger =
     document.getElementById(
       "luckyTrigger"
     );
-
 
   const luckyFireworks =
     document.getElementById(
@@ -299,54 +181,45 @@
       "rsvpForm"
     );
 
-
   const rsvpGuestName =
     document.getElementById(
       "rsvpGuestName"
     );
-
 
   const rsvpAttendanceYes =
     document.getElementById(
       "rsvpAttendanceYes"
     );
 
-
   const rsvpAttendanceNo =
     document.getElementById(
       "rsvpAttendanceNo"
     );
-
 
   const rsvpAttendanceNoText =
     document.getElementById(
       "rsvpAttendanceNoText"
     );
 
-
   const rsvpGuestCount =
     document.getElementById(
       "rsvpGuestCount"
     );
-
 
   const rsvpMinus =
     document.getElementById(
       "rsvpMinus"
     );
 
-
   const rsvpPlus =
     document.getElementById(
       "rsvpPlus"
     );
 
-
   const rsvpMessage =
     document.getElementById(
       "rsvpMessage"
     );
-
 
   const rsvpSubmit =
     document.getElementById(
@@ -354,13 +227,19 @@
     );
 
 
-  const rsvpVideo =
+  /*
+    index.html mới có:
+
+    id="rsvpVideoLink"
+  */
+
+  const rsvpVideoLink =
     document.getElementById(
-      "rsvpVideo"
+      "rsvpVideoLink"
     );
 
-
   const rsvpVideoField =
+    rsvpVideoLink ||
     document.querySelector(
       ".p07-video-field"
     );
@@ -373,10 +252,8 @@
   const imagePromises =
     new WeakMap();
 
-
   const pagePromises =
     new WeakMap();
-
 
   const urlPromises =
     new Map();
@@ -410,79 +287,61 @@
 
 
   /* =======================================================
-     GOOGLE SHEET GVIZ READ
+     GOOGLE SHEET GVIZ
 
-     Đây là phần thay cho Apps Script JSONP.
+     READ:
+     D,F,G,H,I,J,K,L,M,N
 
-     docs.google.com/spreadsheets/.../gviz/tq
-     -> script injection
-     -> responseHandler(...)
+     D = tên khách
+     F = tên hiển thị trên thiệp
+     G = link thiệp
+     H = đã đọc
+     I = số may mắn
+     J = tên RSVP
+     K = attendance
+     L = guest count
+     M = lời nhắn
+     N = folder video
   ======================================================= */
 
-  function gvizRequest(
-    timeout = 20000
-  ) {
-
+  function gvizRequest(timeout = 20000) {
     return new Promise(
-      (
-        resolve,
-        reject
-      ) => {
+      (resolve, reject) => {
 
         const callbackName =
-          "__bachThuSheet"
-          +
-          Date.now()
-          +
+          "__bachThuSheet" +
+          Date.now() +
           Math.random()
             .toString(36)
             .slice(2);
-
 
         const script =
           document.createElement(
             "script"
           );
 
-
         let timer = null;
         let finished = false;
 
 
         function cleanup() {
-
-          if (
-            finished
-          ) {
-
+          if (finished) {
             return;
           }
 
-
           finished = true;
 
-
-          if (
-            timer !== null
-          ) {
-
-            clearTimeout(
-              timer
-            );
+          if (timer !== null) {
+            clearTimeout(timer);
           }
-
 
           script.remove();
 
-
           try {
-
             delete window[
               callbackName
             ];
-
           } catch (_) {
-
             window[
               callbackName
             ] = undefined;
@@ -492,132 +351,93 @@
 
         window[
           callbackName
-        ] =
-          (response) => {
+        ] = (response) => {
 
-            cleanup();
+          cleanup();
 
+          if (!response) {
+            reject(
+              new Error(
+                "Google Sheet không trả dữ liệu."
+              )
+            );
+            return;
+          }
 
-            if (
-              !response
-            ) {
-
-              reject(
-                new Error(
-                  "Google Sheet không trả dữ liệu."
-                )
-              );
-
-              return;
-            }
-
-
-            if (
-              response.status
-              &&
-              response.status !== "ok"
-            ) {
-
-              console.error(
-                "[Wedding] GViz response:",
-                response
-              );
-
-
-              reject(
-                new Error(
-                  "Google Sheet trả về lỗi truy vấn."
-                )
-              );
-
-              return;
-            }
-
-
-            resolve(
+          if (
+            response.status &&
+            response.status !== "ok"
+          ) {
+            console.error(
+              "[Wedding] GViz:",
               response
             );
-          };
-
-
-        script.onerror =
-          () => {
-
-            cleanup();
-
 
             reject(
               new Error(
-                "Không tải được dữ liệu trực tiếp từ Google Sheet."
+                "Google Sheet trả về lỗi truy vấn."
               )
             );
-          };
+
+            return;
+          }
+
+          resolve(response);
+        };
 
 
-        /*
-          tqx responseHandler là cơ chế callback
-          của Google Visualization.
-        */
+        script.onerror = () => {
+          cleanup();
+
+          reject(
+            new Error(
+              "Không tải được dữ liệu trực tiếp từ Google Sheet."
+            )
+          );
+        };
+
 
         const tqx =
           `responseHandler:${callbackName}`;
 
-
         const url =
-          "https://docs.google.com/spreadsheets/d/"
-          +
+          "https://docs.google.com/spreadsheets/d/" +
           encodeURIComponent(
             SPREADSHEET_ID
-          )
-          +
-          "/gviz/tq"
-          +
-          "?sheet="
-          +
+          ) +
+          "/gviz/tq" +
+          "?sheet=" +
           encodeURIComponent(
             SHEET_NAME
-          )
-          +
-          "&headers=1"
-          +
-          "&tq="
-          +
+          ) +
+          "&headers=1" +
+          "&tq=" +
           encodeURIComponent(
             GVIZ_QUERY
-          )
-          +
-          "&tqx="
-          +
+          ) +
+          "&tqx=" +
           encodeURIComponent(
             tqx
-          )
-          +
-          "&t="
-          +
+          ) +
+          "&t=" +
           Date.now();
 
 
-        script.async =
-          true;
+        script.async = true;
 
-
-        script.src =
-          url;
+        script.src = url;
 
 
         timer =
           setTimeout(
             () => {
-
               cleanup();
-
 
               reject(
                 new Error(
                   "Google Sheet phản hồi quá lâu."
                 )
               );
-
             },
             timeout
           );
@@ -631,72 +451,37 @@
   }
 
 
-  /* =======================================================
-     GVIZ VALUE HELPERS
-  ======================================================= */
-
   function getGvizCell(
     row,
     columnIndex
   ) {
-
     if (
-      !row
-      ||
-      !Array.isArray(
-        row.c
-      )
+      !row ||
+      !Array.isArray(row.c)
     ) {
-
       return "";
     }
-
 
     const cell =
-      row.c[
-        columnIndex
-      ];
+      row.c[columnIndex];
 
-
-    if (
-      !cell
-    ) {
-
+    if (!cell) {
       return "";
     }
 
-
-    /*
-      .v = raw value
-      .f = formatted value
-
-      Với text, ưu tiên .v.
-      Với date, .f dễ đọc hơn nhưng ta không dùng H ở frontend.
-    */
-
     if (
-      cell.v !==
-      undefined
-      &&
-      cell.v !==
-      null
+      cell.v !== undefined &&
+      cell.v !== null
     ) {
-
       return cell.v;
     }
 
-
     if (
-      cell.f !==
-      undefined
-      &&
-      cell.f !==
-      null
+      cell.f !== undefined &&
+      cell.f !== null
     ) {
-
       return cell.f;
     }
-
 
     return "";
   }
@@ -706,95 +491,58 @@
     row,
     columnIndex
   ) {
-
     if (
-      !row
-      ||
-      !Array.isArray(
-        row.c
-      )
+      !row ||
+      !Array.isArray(row.c)
     ) {
-
       return "";
     }
-
 
     const cell =
-      row.c[
-        columnIndex
-      ];
-
+      row.c[columnIndex];
 
     if (!cell) {
-
       return "";
     }
 
-
     if (
-      cell.f !==
-      undefined
-      &&
-      cell.f !==
-      null
+      cell.f !== undefined &&
+      cell.f !== null
     ) {
-
       return cell.f;
     }
 
-
     if (
-      cell.v !==
-      undefined
-      &&
-      cell.v !==
-      null
+      cell.v !== undefined &&
+      cell.v !== null
     ) {
-
       return cell.v;
     }
-
 
     return "";
   }
 
 
-  /* =======================================================
-     EXTRACT ?guest FROM COLUMN G
-  ======================================================= */
-
   function extractGuestSlugFromLink(
     link
   ) {
-
-    const text =
-      String(
-        link || ""
-      );
-
-
     const match =
-      text.match(
-        /[?&]guest=([^&#]+)/
-      );
-
+      String(link || "")
+        .match(
+          /[?&]guest=([^&#]+)/
+        );
 
     if (!match) {
-
       return "";
     }
 
-
     try {
-
       return normalizeGuestSlug(
         decodeURIComponent(
           match[1]
         )
       );
-
     } catch (_) {
-
       return normalizeGuestSlug(
         match[1]
       );
@@ -803,28 +551,18 @@
 
 
   /* =======================================================
-     FIND CURRENT GUEST IN SHEET
-
-     Ưu tiên G = Link thiệp.
-     Fallback D = tên khách.
+     FIND GUEST
   ======================================================= */
 
   function findGuestInGvizResponse(
     response
   ) {
-
     const rows =
       response
         ?.table
         ?.rows;
 
-
-    if (
-      !Array.isArray(
-        rows
-      )
-    ) {
-
+    if (!Array.isArray(rows)) {
       throw new Error(
         "Google Sheet không có danh sách khách."
       );
@@ -832,10 +570,7 @@
 
 
     /*
-      -----------------------------------------------------
-      PASS 1:
-      tìm chính xác slug trong G.
-      -----------------------------------------------------
+      Ưu tiên tìm theo link thiệp cột G.
     */
 
     for (
@@ -843,10 +578,7 @@
       i < rows.length;
       i += 1
     ) {
-
-      const row =
-        rows[i];
-
+      const row = rows[i];
 
       const inviteLink =
         getGvizDisplayCell(
@@ -854,20 +586,15 @@
           2
         );
 
-
       const slug =
         extractGuestSlugFromLink(
           inviteLink
         );
 
-
       if (
-        slug
-        &&
-        slug ===
-        currentGuestSlug
+        slug &&
+        slug === currentGuestSlug
       ) {
-
         return parseGuestRow(
           row,
           i
@@ -877,21 +604,11 @@
 
 
     /*
-      -----------------------------------------------------
-      PASS 2:
-      fallback D.
-
-      Có xử lý duplicate:
-      abc
-      abc-2
-      abc-3
-      -----------------------------------------------------
+      Fallback theo D.
     */
 
     const duplicateCounter =
-      Object.create(
-        null
-      );
+      Object.create(null);
 
 
     for (
@@ -899,40 +616,28 @@
       i < rows.length;
       i += 1
     ) {
-
-      const row =
-        rows[i];
-
+      const row = rows[i];
 
       const guestName =
         String(
           getGvizDisplayCell(
             row,
             0
-          )
-          ||
-          ""
-        )
-          .trim();
-
+          ) || ""
+        ).trim();
 
       if (!guestName) {
-
         continue;
       }
-
 
       const baseSlug =
         slugifyGuestName(
           guestName
         );
 
-
       if (!baseSlug) {
-
         continue;
       }
-
 
       duplicateCounter[
         baseSlug
@@ -940,12 +645,8 @@
         (
           duplicateCounter[
             baseSlug
-          ]
-          ||
-          0
-        )
-        +
-        1;
+          ] || 0
+        ) + 1;
 
 
       const occurrence =
@@ -956,17 +657,13 @@
 
       const slug =
         occurrence === 1
-          ?
-          baseSlug
-          :
-          `${baseSlug}-${occurrence}`;
+          ? baseSlug
+          : `${baseSlug}-${occurrence}`;
 
 
       if (
-        slug ===
-        currentGuestSlug
+        slug === currentGuestSlug
       ) {
-
         return parseGuestRow(
           row,
           i
@@ -981,36 +678,15 @@
   }
 
 
-  /* =======================================================
-     MAP GVIZ ROW -> WEBSITE DATA
-  ======================================================= */
-
   function parseGuestRow(
     row,
     rowIndex
   ) {
-
-    /*
-      select D,F,G,H,I,J,K,L,M,N
-
-      0 D
-      1 F
-      2 G
-      3 H
-      4 I
-      5 J
-      6 K
-      7 L
-      8 M
-      9 N
-    */
-
     const luckyRaw =
       getGvizCell(
         row,
         4
       );
-
 
     const guestCountRaw =
       getGvizCell(
@@ -1018,12 +694,10 @@
         7
       );
 
-
-    const luckyNumber =
+    const luckyNumberValue =
       Number(
         luckyRaw
       );
-
 
     const guestCount =
       Number(
@@ -1032,21 +706,17 @@
 
 
     return {
-
-      ok:
-        true,
+      ok: true,
 
       guest:
         currentGuestSlug,
 
-      /*
-        +2 vì:
-        row 1 là header,
-        GViz rows bắt đầu từ dòng data đầu tiên.
-      */
-
       row:
         rowIndex + 2,
+
+      /*
+        D
+      */
 
       name:
         normalizeText(
@@ -1054,12 +724,10 @@
             row,
             0
           )
-        )
-          .trim(),
+        ).trim(),
 
       /*
-        QUAN TRỌNG:
-        Page 2 chỉ dùng cột F.
+        F
       */
 
       displayName:
@@ -1068,30 +736,37 @@
             row,
             1
           )
-        )
-          .trim(),
+        ).trim(),
 
       displayNameSource:
         "F / Google Sheet GViz",
+
+      /*
+        G
+      */
 
       inviteLink:
         String(
           getGvizDisplayCell(
             row,
             2
-          )
-          ||
-          ""
+          ) || ""
         ),
+
+      /*
+        I
+      */
 
       luckyNumber:
         Number.isInteger(
-          luckyNumber
+          luckyNumberValue
         )
-          ?
-          luckyNumber
-          :
-          "",
+          ? luckyNumberValue
+          : "",
+
+      /*
+        J
+      */
 
       rsvpName:
         normalizeText(
@@ -1099,8 +774,11 @@
             row,
             5
           )
-        )
-          .trim(),
+        ).trim(),
+
+      /*
+        K
+      */
 
       attendance:
         normalizeText(
@@ -1108,17 +786,22 @@
             row,
             6
           )
-        )
-          .trim(),
+        ).trim(),
+
+      /*
+        L
+      */
 
       guestCount:
         Number.isFinite(
           guestCount
         )
-          ?
-          guestCount
-          :
-          "",
+          ? guestCount
+          : "",
+
+      /*
+        M
+      */
 
       message:
         normalizeText(
@@ -1128,50 +811,38 @@
           )
         ),
 
+      /*
+        N
+      */
+
       video:
         String(
           getGvizDisplayCell(
             row,
             9
-          )
-          ||
-          ""
-        )
+          ) || ""
+        ).trim()
     };
   }
 
 
-  /* =======================================================
-     REQUEST CURRENT GUEST
-
-     Không chạm Apps Script GET.
-  ======================================================= */
-
   async function requestGuestData() {
-
-    if (
-      !currentGuestSlug
-    ) {
-
+    if (!currentGuestSlug) {
       return null;
     }
 
-
     const response =
       await gvizRequest();
-
 
     const guest =
       findGuestInGvizResponse(
         response
       );
 
-
     console.log(
       "[Wedding] Sheet guest:",
       guest
     );
-
 
     return guest;
   }
@@ -1179,45 +850,29 @@
 
   /* =======================================================
      POST TO APPS SCRIPT
-
-     Phần này của bạn đang chạy đúng.
-     Giữ nguyên.
   ======================================================= */
 
   async function postToBackend(
     data
   ) {
-
     const body =
       new URLSearchParams();
 
 
-    Object.entries(
-      data
-    )
+    Object.entries(data)
       .forEach(
-        (
-          [
-            key,
-            value
-          ]
-        ) => {
+        ([key, value]) => {
 
           if (
-            value === undefined
-            ||
+            value === undefined ||
             value === null
           ) {
-
             return;
           }
 
-
           body.append(
             key,
-            String(
-              value
-            )
+            String(value)
           );
         }
       );
@@ -1226,20 +881,15 @@
     await fetch(
       WEDDING_API_URL,
       {
-        method:
-          "POST",
+        method: "POST",
 
-        mode:
-          "no-cors",
+        mode: "no-cors",
 
-        cache:
-          "no-store",
+        cache: "no-store",
 
-        redirect:
-          "follow",
+        redirect: "follow",
 
-        credentials:
-          "omit",
+        credentials: "omit",
 
         body
       }
@@ -1252,52 +902,41 @@
   ======================================================= */
 
   function updateScale() {
-
     const viewport =
       window.visualViewport;
 
-
     const viewportWidth =
-      viewport?.width
-      ||
+      viewport?.width ||
       window.innerWidth;
 
-
     const viewportHeight =
-      viewport?.height
-      ||
+      viewport?.height ||
       window.innerHeight;
-
 
     const scale =
       Math.min(
         viewportWidth /
-        DESIGN_WIDTH,
+          DESIGN_WIDTH,
 
         viewportHeight /
-        DESIGN_HEIGHT
+          DESIGN_HEIGHT
       );
 
 
     root.style.setProperty(
       "--design-scale",
-      String(
-        scale
-      )
+      String(scale)
     );
-
 
     root.style.setProperty(
       "--render-width",
       `${DESIGN_WIDTH * scale}px`
     );
 
-
     root.style.setProperty(
       "--render-height",
       `${DESIGN_HEIGHT * scale}px`
     );
-
 
     siteShell
       ?.classList
@@ -1308,11 +947,9 @@
 
 
   function scheduleScale() {
-
     cancelAnimationFrame(
       resizeRaf
     );
-
 
     resizeRaf =
       requestAnimationFrame(
@@ -1344,7 +981,7 @@
 
 
   /* =======================================================
-     SCROLL NGOÀI THIỆP
+     SCROLL OUTSIDE INVITATION
   ======================================================= */
 
   window.addEventListener(
@@ -1352,43 +989,29 @@
     (event) => {
 
       if (
-        !pageMode
-        ||
+        !pageMode ||
         !pageScroller
       ) {
-
         return;
       }
 
-
       if (
-        event.target
-        &&
+        event.target &&
         pageScroller.contains(
           event.target
         )
       ) {
-
         return;
       }
-
 
       if (
-        Math.abs(
-          event.deltaY
-        )
-        <=
-        Math.abs(
-          event.deltaX
-        )
+        Math.abs(event.deltaY) <=
+        Math.abs(event.deltaX)
       ) {
-
         return;
       }
 
-
       event.preventDefault();
-
 
       pageScroller.scrollTop +=
         event.deltaY;
@@ -1407,12 +1030,10 @@
     callback,
     timeout = 1000
   ) {
-
     if (
       "requestIdleCallback"
       in window
     ) {
-
       return window
         .requestIdleCallback(
           callback,
@@ -1422,7 +1043,6 @@
         );
     }
 
-
     return window.setTimeout(
       callback,
       160
@@ -1431,26 +1051,20 @@
 
 
   /* =======================================================
-     PRELOAD
+     IMAGE PRELOAD
   ======================================================= */
 
   function preloadUrl(
     url,
     priority = "low"
   ) {
-
     if (!url) {
-
       return Promise.resolve();
     }
 
-
     if (
-      urlPromises.has(
-        url
-      )
+      urlPromises.has(url)
     ) {
-
       return urlPromises.get(
         url
       );
@@ -1464,38 +1078,26 @@
           const image =
             new Image();
 
-
           image.decoding =
             "async";
 
-
           try {
-
             image.fetchPriority =
               priority;
-
           } catch (_) {}
 
 
           const finish =
             () => {
-
               if (
                 typeof image.decode ===
                 "function"
               ) {
-
                 image
                   .decode()
-                  .catch(
-                    () => {}
-                  )
-                  .finally(
-                    resolve
-                  );
-
+                  .catch(() => {})
+                  .finally(resolve);
               } else {
-
                 resolve();
               }
             };
@@ -1509,7 +1111,6 @@
             }
           );
 
-
           image.addEventListener(
             "error",
             resolve,
@@ -1518,15 +1119,9 @@
             }
           );
 
+          image.src = url;
 
-          image.src =
-            url;
-
-
-          if (
-            image.complete
-          ) {
-
+          if (image.complete) {
             finish();
           }
         }
@@ -1538,7 +1133,6 @@
       promise
     );
 
-
     return promise;
   }
 
@@ -1547,19 +1141,13 @@
     image,
     priority = "low"
   ) {
-
     if (!image) {
-
       return Promise.resolve();
     }
 
-
     if (
-      imagePromises.has(
-        image
-      )
+      imagePromises.has(image)
     ) {
-
       return imagePromises.get(
         image
       );
@@ -1569,9 +1157,7 @@
     const source =
       image.dataset.src;
 
-
     if (!source) {
-
       return Promise.resolve();
     }
 
@@ -1581,10 +1167,8 @@
         (resolve) => {
 
           try {
-
             image.fetchPriority =
               priority;
-
           } catch (_) {}
 
 
@@ -1595,18 +1179,11 @@
                 typeof image.decode ===
                 "function"
               ) {
-
                 image
                   .decode()
-                  .catch(
-                    () => {}
-                  )
-                  .finally(
-                    resolve
-                  );
-
+                  .catch(() => {})
+                  .finally(resolve);
               } else {
-
                 resolve();
               }
             };
@@ -1620,7 +1197,6 @@
             }
           );
 
-
           image.addEventListener(
             "error",
             resolve,
@@ -1629,20 +1205,14 @@
             }
           );
 
-
           image.src =
             source;
-
 
           image.removeAttribute(
             "data-src"
           );
 
-
-          if (
-            image.complete
-          ) {
-
+          if (image.complete) {
             finish();
           }
         }
@@ -1654,7 +1224,6 @@
       promise
     );
 
-
     return promise;
   }
 
@@ -1663,19 +1232,13 @@
     page,
     priority = "low"
   ) {
-
     if (!page) {
-
       return Promise.resolve();
     }
 
-
     if (
-      pagePromises.has(
-        page
-      )
+      pagePromises.has(page)
     ) {
-
       return pagePromises.get(
         page
       );
@@ -1695,13 +1258,11 @@
 
         const jobs =
           images.map(
-            (image) => {
-
-              return loadImage(
+            (image) =>
+              loadImage(
                 image,
                 priority
-              );
-            }
+              )
           );
 
 
@@ -1711,10 +1272,7 @@
           );
 
 
-        if (
-          spriteHost
-        ) {
-
+        if (spriteHost) {
           const spriteUrl =
             spriteHost
               .dataset
@@ -1722,28 +1280,24 @@
 
 
           jobs.push(
-
             preloadUrl(
               spriteUrl,
               priority
             )
-              .then(
-                () => {
+              .then(() => {
 
-                  spriteHost
-                    .style
-                    .setProperty(
-                      "--p02-confetti-sprite",
-                      `url("${spriteUrl}")`
-                    );
+                spriteHost
+                  .style
+                  .setProperty(
+                    "--p02-confetti-sprite",
+                    `url("${spriteUrl}")`
+                  );
 
-
-                  spriteHost
-                    .removeAttribute(
-                      "data-sprite-src"
-                    );
-                }
-              )
+                spriteHost
+                  .removeAttribute(
+                    "data-sprite-src"
+                  );
+              })
           );
         }
 
@@ -1764,41 +1318,33 @@
       promise
     );
 
-
     return promise;
   }
 
 
   /* =======================================================
-     PAGE 02 GUEST NAME
+     PAGE 02 PERSONALIZED GUEST
   ======================================================= */
 
   function ensureGuestNameElement() {
-
     if (
       personalizedGuestName
     ) {
-
       return personalizedGuestName;
     }
 
-
-    if (
-      !page02Layout
-    ) {
-
+    if (!page02Layout) {
       return null;
     }
 
 
     const invite =
-      page02Layout.querySelector(
-        ".p02-invite"
-      );
-
+      page02Layout
+        .querySelector(
+          ".p02-invite"
+        );
 
     if (!invite) {
-
       return null;
     }
 
@@ -1808,14 +1354,11 @@
         "p"
       );
 
-
     personalizedGuestName.id =
       "personalizedGuestName";
 
-
     personalizedGuestName.className =
       "p02-personalized-guest";
-
 
     invite.insertAdjacentElement(
       "afterend",
@@ -1830,13 +1373,10 @@
   function renderGuestDisplayName(
     value
   ) {
-
     const element =
       ensureGuestNameElement();
 
-
     if (!element) {
-
       return;
     }
 
@@ -1844,17 +1384,13 @@
     const text =
       normalizeText(
         value
-      )
-        .trim();
+      ).trim();
 
 
     if (!text) {
+      element.textContent = "";
 
-      element.textContent =
-        "";
-
-      element.hidden =
-        true;
+      element.hidden = true;
 
       element.style.display =
         "none";
@@ -1866,10 +1402,8 @@
     element.textContent =
       text;
 
-
     element.hidden =
       false;
-
 
     element.removeAttribute(
       "hidden"
@@ -1877,8 +1411,7 @@
 
 
     /*
-      Đúng vị trí bạn đã test
-      và ép thành công trong DevTools.
+      Giữ nguyên style đã test thành công.
     */
 
     element.style.cssText =
@@ -1897,17 +1430,14 @@
         "pointer-events:none",
         "text-align:center",
         "color:#405948",
-        'font-family:"Times New Roman", Times, serif',
+        'font-family:"Times New Roman",Times,serif',
         "font-size:12px",
         "font-weight:400",
         "font-style:italic",
         "line-height:1.25",
         "letter-spacing:0",
         "white-space:normal"
-      ]
-        .join(";")
-      +
-      ";";
+      ].join(";") + ";";
 
 
     console.log(
@@ -1924,14 +1454,10 @@
   function applyGuestData(
     response
   ) {
-
     if (
-      !response
-      ||
-      response.ok !==
-      true
+      !response ||
+      response.ok !== true
     ) {
-
       return;
     }
 
@@ -1939,22 +1465,19 @@
     currentGuestData =
       response;
 
-
     guestDataLoaded =
       true;
 
 
-    /* ===================================================
-       PAGE 2 = F
-    =================================================== */
+    /*
+      PAGE 2
+      F = personalized name
+    */
 
     const displayName =
       normalizeText(
-        response.displayName
-        ||
-        ""
-      )
-        .trim();
+        response.displayName || ""
+      ).trim();
 
 
     renderGuestDisplayName(
@@ -1962,39 +1485,30 @@
     );
 
 
-    if (
-      displayName
-    ) {
-
+    if (displayName) {
       document.title =
         `${displayName} | Bách & Thư`;
     }
 
 
-    /* ===================================================
-       RSVP NAME
+    /*
+      RSVP NAME
 
-       J nếu đã nhập.
-       Nếu chưa thì D.
-    =================================================== */
+      J nếu đã RSVP.
+      Nếu J trống thì lấy D.
+    */
 
-    if (
-      rsvpGuestName
-    ) {
-
+    if (rsvpGuestName) {
       if (
         response.rsvpName
       ) {
-
         rsvpGuestName.value =
           normalizeText(
             response.rsvpName
           );
-
       } else if (
         response.name
       ) {
-
         rsvpGuestName.value =
           normalizeText(
             response.name
@@ -2003,9 +1517,9 @@
     }
 
 
-    /* ===================================================
-       LUCKY
-    =================================================== */
+    /*
+      LUCKY NUMBER
+    */
 
     const existingLucky =
       Number(
@@ -2016,15 +1530,10 @@
     if (
       Number.isInteger(
         existingLucky
-      )
-      &&
-      existingLucky >=
-        LUCKY_MIN
-      &&
-      existingLucky <=
-        LUCKY_MAX
+      ) &&
+      existingLucky >= LUCKY_MIN &&
+      existingLucky <= LUCKY_MAX
     ) {
-
       lockLuckyNumber(
         existingLucky,
         false
@@ -2032,110 +1541,110 @@
     }
 
 
-    /* ===================================================
-       ATTENDANCE
-    =================================================== */
+    /*
+      ATTENDANCE
+    */
 
     if (
       response.attendance ===
       "Không"
     ) {
-
-      if (
-        rsvpAttendanceNo
-      ) {
-
+      if (rsvpAttendanceNo) {
         rsvpAttendanceNo.checked =
           true;
       }
 
-
-      if (
-        rsvpAttendanceYes
-      ) {
-
+      if (rsvpAttendanceYes) {
         rsvpAttendanceYes.checked =
           false;
       }
-
 
     } else if (
       response.attendance ===
       "Có"
     ) {
-
-      if (
-        rsvpAttendanceYes
-      ) {
-
+      if (rsvpAttendanceYes) {
         rsvpAttendanceYes.checked =
           true;
       }
 
-
-      if (
-        rsvpAttendanceNo
-      ) {
-
+      if (rsvpAttendanceNo) {
         rsvpAttendanceNo.checked =
           false;
       }
     }
 
 
-    /* ===================================================
-       COUNT
-    =================================================== */
+    /*
+      GUEST COUNT
+    */
 
     if (
-      response.guestCount !==
-        ""
-      &&
-      response.guestCount !==
-        null
-      &&
-      response.guestCount !==
-        undefined
+      response.guestCount !== "" &&
+      response.guestCount !== null &&
+      response.guestCount !== undefined
     ) {
-
       const savedCount =
         Number(
           response.guestCount
         );
 
-
       if (
         Number.isInteger(
           savedCount
-        )
-        &&
-        savedCount >=
-          0
-        &&
-        savedCount <=
-          10
+        ) &&
+        savedCount >= 0 &&
+        savedCount <= 10
       ) {
-
         rsvpCount =
           savedCount;
       }
     }
 
 
-    /* ===================================================
-       MESSAGE
-    =================================================== */
+    /*
+      MESSAGE
+    */
 
-    if (
-      rsvpMessage
-    ) {
-
+    if (rsvpMessage) {
       rsvpMessage.value =
         normalizeText(
-          response.message
-          ||
-          ""
+          response.message || ""
         );
+    }
+
+
+    /*
+      VIDEO
+
+      N chứa link folder riêng.
+    */
+
+    const videoFolderUrl =
+      String(
+        response.video || ""
+      ).trim();
+
+
+    if (rsvpVideoLink) {
+      if (
+        isDriveFolderUrl(
+          videoFolderUrl
+        )
+      ) {
+        rsvpVideoLink.href =
+          videoFolderUrl;
+
+        rsvpVideoLink.dataset.ready =
+          "true";
+
+      } else {
+        rsvpVideoLink.href =
+          "#";
+
+        rsvpVideoLink.dataset.ready =
+          "false";
+      }
     }
 
 
@@ -2145,13 +1654,9 @@
 
 
     if (
-      response.attendance ===
-        "Có"
-      ||
-      response.attendance ===
-        "Không"
+      response.attendance === "Có" ||
+      response.attendance === "Không"
     ) {
-
       setSubmitText(
         "CẬP NHẬT XÁC NHẬN"
       );
@@ -2160,37 +1665,29 @@
 
 
   /* =======================================================
-     LOAD GUEST
+     LOAD GUEST PERSONALIZATION
   ======================================================= */
 
   async function loadGuestPersonalization(
     force = false
   ) {
-
-    if (
-      !currentGuestSlug
-    ) {
-
+    if (!currentGuestSlug) {
       return null;
     }
 
 
     if (
-      guestDataLoaded
-      &&
+      guestDataLoaded &&
       !force
     ) {
-
       return currentGuestData;
     }
 
 
     if (
-      guestLoadPromise
-      &&
+      guestLoadPromise &&
       !force
     ) {
-
       return guestLoadPromise;
     }
 
@@ -2204,7 +1701,6 @@
           1200
         ];
 
-
         let lastError =
           null;
 
@@ -2214,11 +1710,9 @@
           i < delays.length;
           i += 1
         ) {
-
           if (
             delays[i] > 0
           ) {
-
             await sleep(
               delays[i]
             );
@@ -2226,24 +1720,18 @@
 
 
           try {
-
             const response =
               await requestGuestData();
-
 
             applyGuestData(
               response
             );
 
-
             return response;
 
-
           } catch (error) {
-
             lastError =
               error;
-
 
             console.warn(
               `[Wedding] Sheet load attempt ${i + 1}`,
@@ -2258,17 +1746,13 @@
           lastError
         );
 
-
         return null;
       })();
 
 
     try {
-
       return await guestLoadPromise;
-
     } finally {
-
       guestLoadPromise =
         null;
     }
@@ -2280,11 +1764,7 @@
   ======================================================= */
 
   function playPage02Entrance() {
-
-    if (
-      !page02Layout
-    ) {
-
+    if (!page02Layout) {
       return;
     }
 
@@ -2301,7 +1781,6 @@
 
     requestAnimationFrame(
       () => {
-
         requestAnimationFrame(
           () => {
 
@@ -2314,9 +1793,8 @@
 
             if (
               currentGuestData
-              ?.displayName
+                ?.displayName
             ) {
-
               renderGuestDisplayName(
                 currentGuestData
                   .displayName
@@ -2352,9 +1830,7 @@
       cleanup = 1500
     } = {}
   ) {
-
     if (!target) {
-
       return;
     }
 
@@ -2363,8 +1839,7 @@
 
 
     const fragment =
-      document
-        .createDocumentFragment();
+      document.createDocumentFragment();
 
 
     for (
@@ -2372,33 +1847,25 @@
       i < count;
       i += 1
     ) {
-
       const particle =
         document.createElement(
           "span"
         );
-
 
       particle.className =
         "p06-firework-particle";
 
 
       const angle =
-        Math.random()
-        *
-        Math.PI
-        *
+        Math.random() *
+        Math.PI *
         2;
 
-
       const distance =
-        minDistance
-        +
-        Math.random()
-        *
+        minDistance +
+        Math.random() *
         (
-          maxDistance
-          -
+          maxDistance -
           minDistance
         );
 
@@ -2408,37 +1875,31 @@
         `${Math.cos(angle) * distance}px`
       );
 
-
       particle.style.setProperty(
         "--y",
         `${Math.sin(angle) * distance}px`
       );
-
 
       particle.style.setProperty(
         "--size",
         `${2 + Math.random() * 4}px`
       );
 
-
       particle.style.setProperty(
         "--delay",
         `${Math.random() * 150}ms`
       );
-
 
       particle.style.setProperty(
         "--rotation",
         `${Math.random() * 720}deg`
       );
 
-
       particle.style.setProperty(
         "--particle-color",
         fireworkColors[
           Math.floor(
-            Math.random()
-            *
+            Math.random() *
             fireworkColors.length
           )
         ]
@@ -2458,9 +1919,7 @@
 
     setTimeout(
       () => {
-
         target.replaceChildren();
-
       },
       cleanup
     );
@@ -2468,9 +1927,7 @@
 
 
   function playPage06Entrance() {
-
     if (!page06) {
-
       return;
     }
 
@@ -2490,17 +1947,10 @@
     spawnFireworks(
       page06EntryFireworks,
       {
-        count:
-          115,
-
-        minDistance:
-          60,
-
-        maxDistance:
-          170,
-
-        cleanup:
-          1500
+        count: 115,
+        minDistance: 60,
+        maxDistance: 170,
+        cleanup: 1500
       }
     );
 
@@ -2508,7 +1958,6 @@
     page06EntryTimer =
       setTimeout(
         () => {
-
           if (
             page06
               .classList
@@ -2516,14 +1965,12 @@
                 "is-active"
               )
           ) {
-
             page06
               .classList
               .add(
                 "is-confetti-visible"
               );
           }
-
         },
         600
       );
@@ -2535,7 +1982,6 @@
   ======================================================= */
 
   function activatePage(index) {
-
     const safeIndex =
       Math.max(
         0,
@@ -2553,8 +1999,7 @@
       ) => {
 
         const active =
-          pageIndex ===
-          safeIndex;
+          pageIndex === safeIndex;
 
 
         page.classList.toggle(
@@ -2564,12 +2009,9 @@
 
 
         if (
-          page ===
-          page06
-          &&
+          page === page06 &&
           !active
         ) {
-
           page
             .classList
             .remove(
@@ -2581,19 +2023,13 @@
 
 
     if (
-      pages[
-        safeIndex
-      ] ===
+      pages[safeIndex] ===
       page02Layout
     ) {
-
       playPage02Entrance();
 
 
-      if (
-        !guestDataLoaded
-      ) {
-
+      if (!guestDataLoaded) {
         loadGuestPersonalization(
           true
         );
@@ -2602,9 +2038,8 @@
 
       if (
         currentGuestData
-        ?.displayName
+          ?.displayName
       ) {
-
         renderGuestDisplayName(
           currentGuestData
             .displayName
@@ -2614,12 +2049,9 @@
 
 
     if (
-      pages[
-        safeIndex
-      ] ===
+      pages[safeIndex] ===
       page06
     ) {
-
       requestAnimationFrame(
         playPage06Entrance
       );
@@ -2628,7 +2060,6 @@
 
 
   function setNearbyPages(index) {
-
     const safeIndex =
       Math.max(
         0,
@@ -2648,20 +2079,16 @@
         page.classList.toggle(
           "is-nearby",
           Math.abs(
-            pageIndex
-            -
+            pageIndex -
             safeIndex
-          ) <=
-            1
+          ) <= 1
         );
       }
     );
 
 
     loadPage(
-      pages[
-        safeIndex
-      ],
+      pages[safeIndex],
       "high"
     );
 
@@ -2671,7 +2098,6 @@
         safeIndex + 1
       ]
     ) {
-
       loadPage(
         pages[
           safeIndex + 1
@@ -2683,22 +2109,16 @@
 
 
   function getCurrentPageIndex() {
-
-    if (
-      !pageScroller
-    ) {
-
+    if (!pageScroller) {
       return 0;
     }
-
 
     return Math.max(
       0,
       Math.min(
         pages.length - 1,
         Math.round(
-          pageScroller.scrollTop
-          /
+          pageScroller.scrollTop /
           DESIGN_HEIGHT
         )
       )
@@ -2707,11 +2127,7 @@
 
 
   function onPageScroll() {
-
-    if (
-      scrollRaf
-    ) {
-
+    if (scrollRaf) {
       return;
     }
 
@@ -2720,8 +2136,7 @@
       requestAnimationFrame(
         () => {
 
-          scrollRaf =
-            0;
+          scrollRaf = 0;
 
 
           const index =
@@ -2732,15 +2147,12 @@
             index !==
             activePageIndex
           ) {
-
             activePageIndex =
               index;
-
 
             setNearbyPages(
               index
             );
-
 
             activatePage(
               index
@@ -2766,17 +2178,12 @@
   ======================================================= */
 
   async function enterInvitation() {
-
-    if (
-      pageMode
-    ) {
-
+    if (pageMode) {
       return;
     }
 
 
-    pageMode =
-      true;
+    pageMode = true;
 
 
     loadGuestPersonalization();
@@ -2788,13 +2195,9 @@
     );
 
 
-    if (
-      pageScroller
-    ) {
-
+    if (pageScroller) {
       pageScroller.scrollTop =
         0;
-
 
       pageScroller.setAttribute(
         "aria-hidden",
@@ -2818,7 +2221,6 @@
       0
     );
 
-
     activatePage(
       0
     );
@@ -2826,17 +2228,12 @@
 
     runWhenIdle(
       () => {
-
-        if (
-          pages[1]
-        ) {
-
+        if (pages[1]) {
           loadPage(
             pages[1],
             "low"
           );
         }
-
       },
       600
     );
@@ -2847,7 +2244,6 @@
     ?.addEventListener(
       "pointerdown",
       () => {
-
         loadPage(
           pages[0],
           "high"
@@ -2863,9 +2259,7 @@
     ?.addEventListener(
       "click",
       (event) => {
-
         event.preventDefault();
-
 
         enterInvitation();
       }
@@ -2874,12 +2268,10 @@
 
   runWhenIdle(
     () => {
-
       loadPage(
         pages[0],
         "low"
       );
-
     },
     450
   );
@@ -2890,29 +2282,21 @@
   ======================================================= */
 
   function getLuckyStorageKey() {
-
     return currentGuestSlug
-      ?
-      `bach-thu-lucky-${currentGuestSlug}`
-      :
-      "";
+      ? `bach-thu-lucky-${currentGuestSlug}`
+      : "";
   }
 
 
   function readLocalLuckyNumber() {
-
     const key =
       getLuckyStorageKey();
 
-
     if (!key) {
-
       return null;
     }
 
-
     try {
-
       const value =
         Number(
           localStorage.getItem(
@@ -2920,25 +2304,17 @@
           )
         );
 
-
       if (
         Number.isInteger(
           value
-        )
-        &&
-        value >=
-          LUCKY_MIN
-        &&
-        value <=
-          LUCKY_MAX
+        ) &&
+        value >= LUCKY_MIN &&
+        value <= LUCKY_MAX
       ) {
-
         return value;
       }
 
-
     } catch (_) {}
-
 
     return null;
   }
@@ -2947,26 +2323,18 @@
   function saveLocalLuckyNumber(
     value
   ) {
-
     const key =
       getLuckyStorageKey();
 
-
     if (!key) {
-
       return;
     }
 
-
     try {
-
       localStorage.setItem(
         key,
-        String(
-          value
-        )
+        String(value)
       );
-
     } catch (_) {}
   }
 
@@ -2976,70 +2344,48 @@
   ======================================================= */
 
   function randomLuckyNumber() {
-
     const range =
-      LUCKY_MAX
-      -
-      LUCKY_MIN
-      +
+      LUCKY_MAX -
+      LUCKY_MIN +
       1;
 
 
     if (
       window.crypto
-      ?.getRandomValues
+        ?.getRandomValues
     ) {
-
       const array =
-        new Uint32Array(
-          1
-        );
-
+        new Uint32Array(1);
 
       window.crypto
         .getRandomValues(
           array
         );
 
-
       return (
-        LUCKY_MIN
-        +
-        array[0]
-        %
-        range
+        LUCKY_MIN +
+        array[0] % range
       );
     }
 
 
     return (
-      LUCKY_MIN
-      +
+      LUCKY_MIN +
       Math.floor(
-        Math.random()
-        *
+        Math.random() *
         range
       )
     );
   }
 
 
-  function showLuckyNumber(
-    value
-  ) {
-
-    if (
-      !luckyNumber
-    ) {
-
+  function showLuckyNumber(value) {
+    if (!luckyNumber) {
       return;
     }
 
-
     luckyNumber.textContent =
-      String(
-        value
-      )
+      String(value)
         .padStart(
           2,
           "0"
@@ -3048,16 +2394,12 @@
 
 
   function stopLuckyIdleShuffle() {
-
     if (
-      luckyIdleTimer !==
-      null
+      luckyIdleTimer !== null
     ) {
-
       clearInterval(
         luckyIdleTimer
       );
-
 
       luckyIdleTimer =
         null;
@@ -3073,15 +2415,11 @@
 
 
   function startLuckyIdleShuffle() {
-
     if (
-      !luckyCard
-      ||
-      luckyLocked
-      ||
+      !luckyCard ||
+      luckyLocked ||
       luckyRolling
     ) {
-
       return;
     }
 
@@ -3099,11 +2437,9 @@
     luckyIdleTimer =
       setInterval(
         () => {
-
           showLuckyNumber(
             randomLuckyNumber()
           );
-
         },
         145
       );
@@ -3114,25 +2450,17 @@
     value,
     animate = false
   ) {
-
     const number =
-      Number(
-        value
-      );
+      Number(value);
 
 
     if (
       !Number.isInteger(
         number
-      )
-      ||
-      number <
-        LUCKY_MIN
-      ||
-      number >
-        LUCKY_MAX
+      ) ||
+      number < LUCKY_MIN ||
+      number > LUCKY_MAX
     ) {
-
       return;
     }
 
@@ -3143,7 +2471,6 @@
     luckyLocked =
       true;
 
-
     luckyRolling =
       false;
 
@@ -3151,7 +2478,6 @@
     showLuckyNumber(
       number
     );
-
 
     saveLocalLuckyNumber(
       number
@@ -3167,20 +2493,16 @@
 
 
     if (
-      animate
-      &&
+      animate &&
       luckyCard
     ) {
-
       luckyCard
         .classList
         .remove(
           "is-revealed"
         );
 
-
       void luckyCard.offsetWidth;
-
 
       luckyCard
         .classList
@@ -3190,19 +2512,13 @@
     }
 
 
-    if (
-      luckyHint
-    ) {
-
+    if (luckyHint) {
       luckyHint.textContent =
         LUCKY_HINT_REVEALED;
     }
 
 
-    if (
-      luckyTrigger
-    ) {
-
+    if (luckyTrigger) {
       luckyTrigger.disabled =
         true;
     }
@@ -3210,37 +2526,21 @@
 
 
   function fireLuckyFireworks() {
-
     spawnFireworks(
       luckyFireworks,
       {
-        count:
-          102,
-
-        minDistance:
-          55,
-
-        maxDistance:
-          155,
-
-        cleanup:
-          1700
+        count: 102,
+        minDistance: 55,
+        maxDistance: 155,
+        cleanup: 1700
       }
     );
   }
 
 
-  /* =======================================================
-     READ AUTHORITATIVE LUCKY NUMBER FROM SHEET
-
-     Poll vài lần vì POST có thể ghi xong
-     chậm hơn browser một chút.
-  ======================================================= */
-
   async function readLuckyAfterSave(
     candidate
   ) {
-
     const delays = [
       350,
       700,
@@ -3252,17 +2552,11 @@
     for (
       const delay of delays
     ) {
-
-      await sleep(
-        delay
-      );
-
+      await sleep(delay);
 
       try {
-
         const guest =
           await requestGuestData();
-
 
         const number =
           Number(
@@ -3270,25 +2564,17 @@
               ?.luckyNumber
           );
 
-
         if (
           Number.isInteger(
             number
-          )
-          &&
-          number >=
-            LUCKY_MIN
-          &&
-          number <=
-            LUCKY_MAX
+          ) &&
+          number >= LUCKY_MIN &&
+          number <= LUCKY_MAX
         ) {
-
           return number;
         }
 
-
       } catch (error) {
-
         console.warn(
           "[Wedding] lucky readback:",
           error
@@ -3297,45 +2583,27 @@
     }
 
 
-    /*
-      Chỉ fallback candidate nếu Sheet chưa kịp trả.
-      Backend vẫn là nơi đảm bảo không overwrite
-      lucky number cũ.
-    */
-
     return candidate;
   }
 
 
   /* =======================================================
      ROLL LUCKY
-
-     1. Sinh candidate ở browser.
-     2. POST saveLucky.
-     3. Đọc lại cột I từ Sheet.
-     4. Hiện số authoritative.
   ======================================================= */
 
   function rollLuckyNumber() {
-
     if (
-      luckyRolling
-      ||
+      luckyRolling ||
       luckyLocked
     ) {
-
       return;
     }
 
 
-    if (
-      !currentGuestSlug
-    ) {
-
+    if (!currentGuestSlug) {
       alert(
         "Link thiệp chưa có mã khách mời."
       );
-
       return;
     }
 
@@ -3361,10 +2629,7 @@
       );
 
 
-    if (
-      luckyHint
-    ) {
-
+    if (luckyHint) {
       luckyHint.textContent =
         "Đang tìm số may mắn...";
     }
@@ -3374,17 +2639,10 @@
       randomLuckyNumber();
 
 
-    /*
-      Backend:
-      nếu I đã có -> không overwrite.
-      nếu I trống -> lưu candidate.
-    */
-
     const savePromise =
       postToBackend(
         {
-          action:
-            "saveLucky",
+          action: "saveLucky",
 
           guest:
             currentGuestSlug,
@@ -3398,47 +2656,39 @@
     const start =
       performance.now();
 
-
     const duration =
       1850;
-
 
     let lastUpdate =
       0;
 
 
     function frame(now) {
-
       const progress =
         Math.min(
           (
-            now - start
-          )
-          /
-          duration,
+            now -
+            start
+          ) / duration,
           1
         );
 
 
       const interval =
-        45
-        +
+        45 +
         Math.pow(
           progress,
           3
-        )
-        *
-        145;
+        ) * 145;
 
 
       if (
-        now - lastUpdate >=
+        now -
+        lastUpdate >=
         interval
       ) {
-
         lastUpdate =
           now;
-
 
         showLuckyNumber(
           randomLuckyNumber()
@@ -3447,14 +2697,11 @@
 
 
       if (
-        progress <
-        1
+        progress < 1
       ) {
-
         requestAnimationFrame(
           frame
         );
-
         return;
       }
 
@@ -3464,38 +2711,29 @@
 
 
     async function finishLucky() {
-
       try {
-
         await savePromise;
-
 
         const finalNumber =
           await readLuckyAfterSave(
             candidate
           );
 
-
         lockLuckyNumber(
           finalNumber,
           true
         );
 
-
         fireLuckyFireworks();
 
-
       } catch (error) {
-
         console.error(
           "[Wedding] lucky:",
           error
         );
 
-
         luckyRolling =
           false;
-
 
         luckyCard
           ?.classList
@@ -3503,15 +2741,10 @@
             "is-rolling"
           );
 
-
-        if (
-          luckyHint
-        ) {
-
+        if (luckyHint) {
           luckyHint.textContent =
             "Nhấn để thử lại";
         }
-
 
         startLuckyIdleShuffle();
       }
@@ -3532,15 +2765,11 @@
 
 
   /* =======================================================
-     RSVP
+     RSVP UI
   ======================================================= */
 
   function updateCount() {
-
-    if (
-      rsvpGuestCount
-    ) {
-
+    if (rsvpGuestCount) {
       rsvpGuestCount.textContent =
         String(
           rsvpCount
@@ -3550,40 +2779,34 @@
 
 
   function updateAttendanceNoLabel() {
-
-    if (
-      !rsvpAttendanceNoText
-    ) {
-
+    if (!rsvpAttendanceNoText) {
       return;
     }
 
 
+    /*
+      UI:
+      Không -> Kó khi selected.
+
+      Sheet vẫn lưu "Không".
+    */
+
     rsvpAttendanceNoText.textContent =
       rsvpAttendanceNo
         ?.checked
-        ?
-        "Kó"
-        :
-        "Không";
+        ? "Kó"
+        : "Không";
   }
 
 
-  function setSubmitText(
-    text
-  ) {
-
+  function setSubmitText(text) {
     const span =
       rsvpSubmit
         ?.querySelector(
           "span"
         );
 
-
-    if (
-      span
-    ) {
-
+    if (span) {
       span.textContent =
         text;
     }
@@ -3599,7 +2822,6 @@
           rsvpAttendanceNo
             ?.checked
         ) {
-
           return;
         }
 
@@ -3609,7 +2831,6 @@
             1,
             rsvpCount - 1
           );
-
 
         updateCount();
       }
@@ -3625,7 +2846,6 @@
           rsvpAttendanceNo
             ?.checked
         ) {
-
           return;
         }
 
@@ -3635,7 +2855,6 @@
             10,
             rsvpCount + 1
           );
-
 
         updateCount();
       }
@@ -3650,10 +2869,8 @@
         if (
           rsvpAttendanceNo.checked
         ) {
-
           rsvpCount =
             0;
-
 
           updateCount();
         }
@@ -3670,14 +2887,11 @@
       () => {
 
         if (
-          rsvpAttendanceYes.checked
-          &&
+          rsvpAttendanceYes.checked &&
           rsvpCount < 1
         ) {
-
           rsvpCount =
             1;
-
 
           updateCount();
         }
@@ -3689,76 +2903,237 @@
 
 
   /* =======================================================
-     VIDEO -> GOOGLE DRIVE
+     VIDEO FOLDER
+
+     Mỗi khách dùng folder riêng.
+     URL nằm ở cột N.
   ======================================================= */
 
-  function openVideoDrive(
+  async function waitForVideoFolderUrl() {
+    for (
+      const delay of
+      VIDEO_FOLDER_WAIT_DELAYS
+    ) {
+      await sleep(delay);
+
+
+      try {
+        const response =
+          await requestGuestData();
+
+
+        if (
+          response &&
+          response.ok === true
+        ) {
+          currentGuestData =
+            response;
+
+
+          const videoUrl =
+            String(
+              response.video || ""
+            ).trim();
+
+
+          if (
+            isDriveFolderUrl(
+              videoUrl
+            )
+          ) {
+            if (rsvpVideoLink) {
+              rsvpVideoLink.href =
+                videoUrl;
+
+              rsvpVideoLink.dataset.ready =
+                "true";
+            }
+
+            return videoUrl;
+          }
+        }
+
+      } catch (error) {
+        console.warn(
+          "[Wedding] video folder readback:",
+          error
+        );
+      }
+    }
+
+
+    return "";
+  }
+
+
+  async function openVideoDrive(
     event
   ) {
-
     event
       ?.preventDefault();
 
 
-    window.open(
-      DRIVE_UPLOAD_URL,
-      "_blank",
-      "noopener,noreferrer"
-    );
-  }
+    if (!currentGuestSlug) {
+      alert(
+        "Link thiệp này chưa có mã khách mời."
+      );
+
+      return;
+    }
 
 
-  if (
-    rsvpVideo
-  ) {
+    /*
+      Nếu cột N đã có folder,
+      mở luôn.
+    */
 
-    rsvpVideo.disabled =
-      true;
-
-
-    rsvpVideo.tabIndex =
-      -1;
-  }
-
-
-  if (
-    rsvpVideoField
-  ) {
-
-    rsvpVideoField.setAttribute(
-      "role",
-      "button"
-    );
+    const existingUrl =
+      String(
+        currentGuestData
+          ?.video ||
+        rsvpVideoLink
+          ?.getAttribute(
+            "href"
+          ) ||
+        ""
+      ).trim();
 
 
-    rsvpVideoField.tabIndex =
-      0;
+    if (
+      isDriveFolderUrl(
+        existingUrl
+      )
+    ) {
+      window.open(
+        existingUrl,
+        "_blank",
+        "noopener,noreferrer"
+      );
+
+      return;
+    }
 
 
-    rsvpVideoField.addEventListener(
-      "click",
-      openVideoDrive
-    );
+    /*
+      Mở tab trắng trước để browser
+      không chặn popup sau khi await.
+    */
+
+    const uploadTab =
+      window.open(
+        "about:blank",
+        "_blank"
+      );
 
 
-    rsvpVideoField.addEventListener(
-      "keydown",
-      (event) => {
+    if (!uploadTab) {
+      alert(
+        "Trình duyệt đang chặn tab mới. Bạn cho phép pop-up rồi thử lại giúp chúng mình nhé."
+      );
 
-        if (
-          event.key ===
-            "Enter"
-          ||
-          event.key ===
-            " "
-        ) {
+      return;
+    }
 
-          openVideoDrive(
-            event
-          );
+
+    try {
+      uploadTab.document.title =
+        "Đang chuẩn bị thư mục video...";
+
+      uploadTab.document.body.innerHTML =
+        `
+          <div
+            style="
+              font-family:Arial,sans-serif;
+              padding:32px;
+              text-align:center;
+              color:#405948;
+            "
+          >
+            Đang chuẩn bị thư mục Google Drive dành riêng cho bạn...
+          </div>
+        `;
+    } catch (_) {}
+
+
+    try {
+      /*
+        Backend tạo folder riêng
+        nếu N đang trống.
+      */
+
+      await postToBackend(
+        {
+          action:
+            "ensureVideoFolder",
+
+          guest:
+            currentGuestSlug
         }
+      );
+
+
+      /*
+        Chờ GViz thấy URL mới ở N.
+      */
+
+      const videoUrl =
+        await waitForVideoFolderUrl();
+
+
+      if (!videoUrl) {
+        try {
+          uploadTab.close();
+        } catch (_) {}
+
+
+        alert(
+          "Chưa tạo được thư mục video. Bạn vui lòng thử lại sau ít phút."
+        );
+
+        return;
       }
-    );
+
+
+      currentGuestData =
+        {
+          ...(
+            currentGuestData || {}
+          ),
+
+          video:
+            videoUrl
+        };
+
+
+      uploadTab.location.href =
+        videoUrl;
+
+
+    } catch (error) {
+      console.error(
+        "[Wedding] video folder:",
+        error
+      );
+
+
+      try {
+        uploadTab.close();
+      } catch (_) {}
+
+
+      alert(
+        "Không thể mở thư mục video lúc này. Bạn vui lòng thử lại."
+      );
+    }
+  }
+
+
+  if (rsvpVideoField) {
+    rsvpVideoField
+      .addEventListener(
+        "click",
+        openVideoDrive
+      );
   }
 
 
@@ -3767,25 +3142,20 @@
   ======================================================= */
 
   async function backgroundRefreshGuestData() {
-
     await sleep(
       900
     );
 
 
     try {
-
       const response =
         await requestGuestData();
 
 
       if (
-        !response
-        ||
-        response.ok !==
-          true
+        !response ||
+        response.ok !== true
       ) {
-
         return;
       }
 
@@ -3797,15 +3167,38 @@
       if (
         response.displayName
       ) {
-
         renderGuestDisplayName(
           response.displayName
         );
       }
 
 
-    } catch (error) {
+      /*
+        Nếu backend vừa tạo folder,
+        cập nhật href luôn.
+      */
 
+      const videoUrl =
+        String(
+          response.video || ""
+        ).trim();
+
+
+      if (
+        rsvpVideoLink &&
+        isDriveFolderUrl(
+          videoUrl
+        )
+      ) {
+        rsvpVideoLink.href =
+          videoUrl;
+
+        rsvpVideoLink.dataset.ready =
+          "true";
+      }
+
+
+    } catch (error) {
       console.warn(
         "[Wedding] background refresh:",
         error
@@ -3835,9 +3228,7 @@
           normalizeText(
             rsvpGuestName
               ?.value
-              .trim()
-            ||
-            ""
+              .trim() || ""
           );
 
 
@@ -3845,9 +3236,7 @@
           normalizeText(
             rsvpMessage
               ?.value
-              .trim()
-            ||
-            ""
+              .trim() || ""
           );
 
 
@@ -3860,25 +3249,20 @@
 
         const attendance =
           isNo
-            ?
-            "no"
-            :
-            "yes";
+            ? "no"
+            : "yes";
 
 
         const guestCount =
           isNo
-            ?
-            0
-            :
-            Math.max(
-              1,
-              rsvpCount
-            );
+            ? 0
+            : Math.max(
+                1,
+                rsvpCount
+              );
 
 
         if (!name) {
-
           alert(
             "Bạn nhập tên khách mời giúp chúng mình nhé."
           );
@@ -3887,10 +3271,7 @@
         }
 
 
-        if (
-          !currentGuestSlug
-        ) {
-
+        if (!currentGuestSlug) {
           alert(
             "Link thiệp này chưa có mã khách mời."
           );
@@ -3899,10 +3280,7 @@
         }
 
 
-        if (
-          !rsvpSubmit
-        ) {
-
+        if (!rsvpSubmit) {
           return;
         }
 
@@ -3917,7 +3295,6 @@
 
 
         try {
-
           await postToBackend(
             {
               action:
@@ -3926,17 +3303,13 @@
               guest:
                 currentGuestSlug,
 
-              name:
-                name,
+              name,
 
-              attendance:
-                attendance,
+              attendance,
 
-              guestCount:
-                guestCount,
+              guestCount,
 
-              message:
-                message
+              message
             }
           );
 
@@ -3964,7 +3337,6 @@
                 if (
                   !rsvpSubmit.disabled
                 ) {
-
                   setSubmitText(
                     "CẬP NHẬT XÁC NHẬN"
                   );
@@ -3975,11 +3347,15 @@
             );
 
 
+          /*
+            Refresh ngầm,
+            không block UI.
+          */
+
           backgroundRefreshGuestData();
 
 
         } catch (error) {
-
           console.error(
             "[Wedding] RSVP:",
             error
@@ -4008,11 +3384,7 @@
   ======================================================= */
 
   function markInvitationOpened() {
-
-    if (
-      !currentGuestSlug
-    ) {
-
+    if (!currentGuestSlug) {
       return;
     }
 
@@ -4051,24 +3423,12 @@
     readLocalLuckyNumber();
 
 
-  if (
-    localLucky
-  ) {
-
-    /*
-      Hiện nhanh local trước.
-
-      Khi Sheet load xong,
-      cột I sẽ override bằng giá trị authoritative.
-    */
-
+  if (localLucky) {
     lockLuckyNumber(
       localLucky,
       false
     );
-
   } else {
-
     startLuckyIdleShuffle();
   }
 
@@ -4077,10 +3437,7 @@
     "visibilitychange",
     () => {
 
-      if (
-        document.hidden
-      ) {
-
+      if (document.hidden) {
         stopLuckyIdleShuffle();
 
         return;
@@ -4088,22 +3445,23 @@
 
 
       if (
-        !luckyLocked
-        &&
+        !luckyLocked &&
         !luckyRolling
       ) {
-
         startLuckyIdleShuffle();
       }
     }
   );
 
 
+  /*
+    Đánh dấu khách đã mở thiệp.
+  */
+
   markInvitationOpened();
 
 
   /*
-    Từ đây trở đi:
     READ = Google Sheet GViz
     WRITE = Apps Script POST
   */
