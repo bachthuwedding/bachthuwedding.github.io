@@ -653,6 +653,7 @@ img {
 .p02-personalized-guest,
 .p02-to,
 .p02-wedding-title,
+.p02-wedding-subtitle,
 .p02-couple-names {
   position: absolute;
 
@@ -676,7 +677,7 @@ img {
 }
 
 .p02-invite {
-  top: 45px;
+  top: 37px;
 
   width: 320px;
 
@@ -691,21 +692,20 @@ img {
 /* PERSONALIZED GUEST */
 
 .p02-personalized-guest {
-  top: 70px;
+  top: 82px;
 
-  width: 330px;
+  width: 300px;
 
   transform:
     translateX(-50%);
 
-  color:
-    var(--invitation-red);
+  color: #405948;
 
-  font-size: 13px;
+  font-size: 12px;
 
   font-style: italic;
 
-  line-height: 1.15;
+  line-height: 1.25;
 
   white-space: normal;
 }
@@ -716,21 +716,7 @@ img {
 
 
 .p02-divider {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 100px;
-
-  width: 220px;
-  height: 1px;
-
-  transform:
-    translateX(-50%);
-
-  background:
-    rgba(153, 111, 52, .72);
+  display: none;
 }
 
 .p02-divider::after {
@@ -755,11 +741,11 @@ img {
 }
 
 .p02-to {
-  top: 125px;
+  top: 100px;
 
   width: 320px;
 
-  font-size: 16px;
+  font-size: 14px;
 
   transform:
     translateX(-50%)
@@ -767,11 +753,23 @@ img {
 }
 
 .p02-wedding-title {
-  top: 160px;
+  top: 130px;
 
   width: 330px;
 
-  font-size: 19px;
+  font-size: 18px;
+
+  transform:
+    translateX(-50%)
+    scaleX(.77);
+}
+
+.p02-wedding-subtitle {
+  top: 156px;
+
+  width: 330px;
+
+  font-size: 18px;
 
   transform:
     translateX(-50%)
@@ -779,7 +777,7 @@ img {
 }
 
 .p02-couple-names {
-  top: 200px;
+  top: 193px;
 
   width: 370px;
 
@@ -821,7 +819,7 @@ img {
   color:
     var(--invitation-green);
 
-  font-size: 25px;
+  font-size: 22px;
 }
 
 .p02-date-divider {
@@ -1012,6 +1010,9 @@ img {
 .p02-wedding-title,
 
 .page02-layout
+.p02-wedding-subtitle,
+
+.page02-layout
 .p02-couple-names,
 
 .page02-layout
@@ -1046,6 +1047,9 @@ img {
 
 .page02-layout.is-entering
 .p02-wedding-title,
+
+.page02-layout.is-entering
+.p02-wedding-subtitle,
 
 .page02-layout.is-entering
 .p02-couple-names,
@@ -1689,7 +1693,7 @@ img {
   left: 190px;
   top: 423px;
 
-  width: 115px;
+  width: 136px;
 }
 
 
@@ -1862,7 +1866,7 @@ img {
 .p03-event--02
 .p03-location {
   left: -1px;
-  top: -18px;
+  top: -21px;
 
   width: 185px;
 
@@ -2133,7 +2137,7 @@ img {
 
   z-index: 4;
 
-  left: 20px;
+  left: 18px;
   top: 25px;
 
   width: 350px;
@@ -2295,7 +2299,9 @@ img {
   display: block;
 
   width: 100%;
-  height: auto;
+  height: 364px;
+
+  object-fit: fill;
 
   clip-path:
     inset(0 round 14px);
@@ -2309,7 +2315,7 @@ img {
   z-index: 5;
 
   left: 50%;
-  top: 86px;
+  top: 45px;
 
   width: 230px;
 
@@ -2322,11 +2328,15 @@ img {
 
   text-align: center;
 
-  font-size: 18px;
+  font-size: 26px;
 
   font-weight: 400;
 
-  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.p06-title span {
+  display: block;
 }
 
 .p06-number-slot {
@@ -2335,7 +2345,7 @@ img {
   z-index: 7;
 
   left: 50%;
-  top: 150px;
+  top: 137px;
 
   display: flex;
 
@@ -2470,7 +2480,7 @@ img {
   z-index: 8;
 
   left: 50%;
-  top: 275px;
+  top: 260px;
 
   width: 224px;
 
@@ -2483,7 +2493,7 @@ img {
 
   text-align: center;
 
-  font-size: 10.5px;
+  font-size: 14px;
 
   font-style: italic;
 
@@ -2649,10 +2659,10 @@ img {
 
   z-index: 25;
 
-  left: 35px;
-  bottom: 47px;
+  left: 46px;
+  top: 509px;
 
-  width: 75px;
+  width: 64px;
 
   translate:
     -72px 0;
@@ -2668,10 +2678,10 @@ img {
 
   z-index: 28;
 
-  left: 166px;
-  bottom: 50px;
+  left: 95px;
+  top: 501px;
 
-  width: 80px;
+  width: 73px;
 
   translate:
     -72px 0;
@@ -2687,10 +2697,10 @@ img {
 
   z-index: 26;
 
-  right: 111px;
-  bottom: 46px;
+  left: 263px;
+  top: 490px;
 
-  width: 110px;
+  width: 85px;
 
   translate:
     72px 0;
@@ -2703,10 +2713,10 @@ img {
 
   z-index: 29;
 
-  right: 109px;
-  bottom: 38px;
+  left: 227px;
+  top: 517px;
 
-  width: 53px;
+  width: 62px;
 
   translate:
     72px 0;
@@ -3486,7 +3496,7 @@ input:checked
 
   color: #a8301c;
 
-  font-size: 39px;
+  font-size: 31px;
 
   font-weight: 400;
 
@@ -3580,7 +3590,7 @@ p:nth-child(3) {
 
 .p08-with-love {
   margin:
-    5px 0 0;
+    10px -98px 0 0;
 
   color: #405948;
 
@@ -3591,11 +3601,11 @@ p:nth-child(3) {
 
 .p08-signature {
   margin:
-    1px 0 0;
+    2px -98px 0 0;
 
   color: #a8301c;
 
-  font-size: 26px;
+  font-size: 12px;
 
   font-weight: 400;
 }
@@ -3606,8 +3616,8 @@ p:nth-child(3) {
 .p08-cloud--left {
   width: 77px;
 
-  left: 30px;
-  top: 340px;
+  left: 44px;
+  top: 382px;
 
   opacity: 0;
 
@@ -3628,10 +3638,10 @@ p:nth-child(3) {
 /* DEVTOOLS CLOUD RIGHT */
 
 .p08-cloud--right {
-  width: 68px;
+  width: 60px;
 
-  right: 18px;
-  top: 280px;
+  right: 22px;
+  top: 358px;
 
   opacity: 0;
 
@@ -3824,16 +3834,7 @@ p:nth-child(3) {
 
   height: auto;
 
-  transform-origin:
-    50% 90%;
-
   opacity: 0;
-
-  animation:
-    p08-lotus-sway
-    var(--lotus-speed)
-    ease-in-out
-    infinite;
 
   transition:
     translate
@@ -3847,38 +3848,15 @@ p:nth-child(3) {
     280ms;
 }
 
-@keyframes p08-lotus-sway {
-
-  0%,
-  100% {
-    transform:
-      rotate(
-        calc(
-          var(--lotus-angle) * -1
-        )
-      );
-  }
-
-  50% {
-    transform:
-      rotate(
-        var(--lotus-angle)
-      )
-      translateY(-3px);
-  }
-}
-
 
 /* DEVTOOLS */
 
 .p08-lotus--left {
-  --lotus-angle: 4.5deg;
-  --lotus-speed: 2500ms;
-
   width: 120px;
 
   left: 1px;
-  bottom: 45px;
+  top: 559px;
+  bottom: auto;
 
   translate:
     -65px 0;
@@ -3888,13 +3866,11 @@ p:nth-child(3) {
 /* DEVTOOLS */
 
 .p08-lotus--right {
-  --lotus-angle: 4.2deg;
-  --lotus-speed: 2650ms;
-
   width: 122px;
 
-  right: 80px;
-  bottom: 36px;
+  right: 11px;
+  top: 560px;
+  bottom: auto;
 
   translate:
     65px 0;
