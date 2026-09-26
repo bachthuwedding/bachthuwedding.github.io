@@ -3486,32 +3486,63 @@
       1480;
 
 
+    /*
+      Giữ nhịp đổi số mượt tới cuối.
+
+      Bản cũ tăng interval lên gần 190ms ở cuối,
+      nên mắt thấy số bị khựng/giật trước khi dừng.
+
+      Bản này:
+      - đầu nhanh
+      - cuối chậm vừa phải
+      - interval tối đa chỉ khoảng 98ms
+      - khi hết animation sẽ dừng hẳn ở candidate
+        trong lúc chờ Sheet trả số authoritative
+    */
+
     let lastUpdate =
       0;
 
 
+    let finishStarted =
+      false;
+
+
     function frame(now) {
+
+      const elapsed =
+        now - start;
+
 
       const progress =
         Math.min(
-          (
-            now - start
-          )
+          elapsed
           /
           duration,
           1
         );
 
 
-      const interval =
-        45
-        +
-        Math.pow(
-          progress,
-          3
-        )
+      const smoothProgress =
+        progress
         *
-        145;
+        progress
+        *
+        (
+          3
+          -
+          2
+          *
+          progress
+        );
+
+
+      const interval =
+        42
+        +
+        smoothProgress
+        *
+        56;
 
 
       if (
@@ -3542,7 +3573,26 @@
       }
 
 
-      finishLucky();
+      /*
+        Chốt candidate ngay ở cuối animation để UI không
+        tiếp tục nhảy số hoặc khựng trong lúc chờ backend.
+      */
+
+      showLuckyNumber(
+        candidate
+      );
+
+
+      if (
+        !finishStarted
+      ) {
+
+        finishStarted =
+          true;
+
+
+        finishLucky();
+      }
     }
 
 
