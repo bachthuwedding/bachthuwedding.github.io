@@ -653,7 +653,6 @@ img {
 .p02-personalized-guest,
 .p02-to,
 .p02-wedding-title,
-.p02-wedding-subtitle,
 .p02-couple-names {
   position: absolute;
 
@@ -764,17 +763,6 @@ img {
     scaleX(.77);
 }
 
-.p02-wedding-subtitle {
-  top: 156px;
-
-  width: 330px;
-
-  font-size: 18px;
-
-  transform:
-    translateX(-50%)
-    scaleX(.77);
-}
 
 .p02-couple-names {
   top: 193px;
@@ -1009,8 +997,6 @@ img {
 .page02-layout
 .p02-wedding-title,
 
-.page02-layout
-.p02-wedding-subtitle,
 
 .page02-layout
 .p02-couple-names,
