@@ -4630,3 +4630,22 @@ p:nth-child(3) {
   transform: none;
   transition: none;
 }
+
+
+/* =========================================================
+   V17 — PAGE 08 FONT SIZE
+   Transition giữ nguyên như v16.
+========================================================= */
+
+.p08-vietnamese-copy,
+.p08-vietnamese-copy p:nth-child(1),
+.p08-vietnamese-copy p:nth-child(2),
+.p08-vietnamese-copy p:nth-child(3) {
+  font-size: 10.2px;
+  line-height: 1.25;
+}
+
+.p08-english-copy {
+  font-size: 10px;
+  line-height: 1.25;
+}
