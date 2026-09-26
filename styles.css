@@ -3934,3 +3934,473 @@ p:nth-child(3) {
       .001ms !important;
   }
 }
+
+/* =========================================================
+   V12 — PAGE 02 FINAL DEVTOOLS + MOTION TUNING
+========================================================= */
+
+:root {
+  /* Entrance/transitions chậm hơn để nhìn rõ và mượt hơn. */
+  --entry-duration: 1500ms;
+
+  /* Ambient animation hơi nhanh hơn và biên độ lớn hơn. */
+  --ambient-duration: 2450ms;
+}
+
+
+/* ---------- PAGE 02: EXACT FINAL DEVTOOLS VALUES ---------- */
+
+.p02-invite {
+  top: 37px;
+}
+
+.p02-personalized-guest {
+  top: 62px;
+  width: 300px;
+
+  color: #405948;
+
+  font-size: 18px;
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1.25;
+}
+
+.p02-divider {
+  display: none;
+}
+
+.p02-to {
+  top: 110px;
+  font-size: 14px;
+}
+
+.page02-layout .p02-wedding-title:nth-of-type(4) {
+  top: 139px;
+  font-size: 16px;
+  transform: translateX(-50%) scaleX(.95);
+}
+
+.page02-layout .p02-wedding-title:nth-of-type(5) {
+  top: 161px;
+  font-size: 16px;
+  transform: translateX(-50%) scaleX(.9);
+}
+
+.p02-couple-names {
+  top: 200px;
+  line-height: 1.55;
+}
+
+.p02-name {
+  font-size: 22px;
+  font-weight: 600;
+  transform: scaleX(1);
+}
+
+.p02-ampersand {
+  font-size: 19px;
+  font-weight: 400;
+  transform: scaleX(1);
+}
+
+
+/* Hình người Page 02 đứng yên, không sway liên tục. */
+.p02-procession-item {
+  animation: none !important;
+  transform: none !important;
+}
+
+
+/* ---------- SLOWER PAGE TRANSITIONS ---------- */
+
+.opening-page,
+.page-02 {
+  transition-duration: 700ms;
+}
+
+.page02-layout .p02-cloud,
+.page02-layout .p02-confetti-cluster,
+.page02-layout .p02-procession,
+.page03-layout .p03-cloud,
+.page06-layout .p06-cloud {
+  transition-duration: 1500ms, 900ms;
+}
+
+.page02-layout .p02-invite,
+.page02-layout .p02-personalized-guest,
+.page02-layout .p02-divider,
+.page02-layout .p02-to,
+.page02-layout .p02-wedding-title,
+.page02-layout .p02-couple-names,
+.page02-layout .p02-date-divider,
+.page02-layout .p02-ceremony-info,
+.page02-layout .p02-family-info {
+  transition-duration: 850ms, 1250ms;
+}
+
+.p03-title {
+  transition-duration: 1250ms, 850ms;
+}
+
+.p03-title-divider {
+  transition-duration: 850ms, 1250ms;
+  transition-delay: 190ms, 190ms;
+}
+
+.p03-timeline {
+  transition-duration: 2100ms, 800ms;
+  transition-delay: 220ms, 220ms;
+}
+
+.page03-layout .p03-event--02,
+.page03-layout .p03-mam-co,
+.page03-layout .p03-event--04,
+.page03-layout .p03-kieu,
+.page03-layout .p03-event--03,
+.page03-layout .p03-cheers {
+  transition-duration: 1500ms, 900ms;
+}
+
+.page03-layout .p03-event--02,
+.page03-layout .p03-kieu {
+  transition-delay: 380ms;
+}
+
+.page03-layout .p03-mam-co,
+.page03-layout .p03-event--03 {
+  transition-delay: 760ms;
+}
+
+.page03-layout .p03-event--04,
+.page03-layout .p03-cheers {
+  transition-delay: 1140ms;
+}
+
+.p03-dress-code {
+  transition-duration: 1350ms, 800ms;
+  transition-delay: 1750ms, 1750ms;
+}
+
+.p06-confetti {
+  transition-duration: 900ms, 1300ms;
+}
+
+.p06-card-wrap {
+  transition-duration: 1450ms, 900ms;
+  transition-delay: 190ms, 190ms;
+}
+
+.p06-lucky-item {
+  transition-duration: 1500ms, 900ms;
+}
+
+.page07-layout .p07-top-left-decoration,
+.page07-layout .p07-butterfly,
+.page07-layout .p07-rsvp-title,
+.page07-layout .p07-divider-ornament--top,
+.page07-layout .p07-rsvp-subtitle,
+.page07-layout .p07-rsvp-form {
+  transition-duration: 900ms, 1450ms;
+}
+
+.p08-cloud--left,
+.p08-cloud--right {
+  transition-duration: 1500ms, 900ms;
+}
+
+.p08-water-ground--base {
+  transition-duration: 1550ms, 900ms;
+  transition-delay: 230ms, 230ms;
+}
+
+.p08-masion {
+  transition-duration: 1650ms, 900ms;
+  transition-delay: 230ms, 230ms;
+}
+
+.p08-water-ground--front {
+  transition-duration: 1450ms, 900ms;
+  transition-delay: 440ms, 440ms;
+}
+
+.p08-couple {
+  transition-duration: 1500ms, 900ms;
+  transition-delay: 260ms, 260ms;
+}
+
+.p08-lotus {
+  transition-duration: 1500ms, 900ms;
+  transition-delay: 340ms, 340ms;
+}
+
+
+/* ---------- STRONGER / SLIGHTLY FASTER AMBIENT ANIMATION ---------- */
+
+@keyframes wedding-ambient-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+.opening-card-image {
+  animation-duration: 2250ms;
+}
+
+@keyframes opening-card-shake {
+  0%,
+  50%,
+  100% {
+    transform: translate3d(0, 24px, 0) rotate(0);
+  }
+
+  57% {
+    transform: translate3d(-7px, 20px, 0) rotate(-2.7deg);
+  }
+
+  64% {
+    transform: translate3d(8px, 21px, 0) rotate(2.9deg);
+  }
+
+  71% {
+    transform: translate3d(-7px, 20px, 0) rotate(-2.8deg);
+  }
+
+  78% {
+    transform: translate3d(7px, 22px, 0) rotate(2.5deg);
+  }
+
+  92% {
+    transform: translate3d(0, 24px, 0) rotate(0);
+  }
+}
+
+.monogram-pulse::before,
+.monogram-pulse::after {
+  animation-duration: 2400ms;
+}
+
+.monogram-pulse::after {
+  animation-delay: 1200ms;
+}
+
+@keyframes tap-ring {
+  0% {
+    transform: scale(.45);
+    opacity: 0;
+  }
+
+  18% {
+    opacity: .64;
+  }
+
+  100% {
+    transform: scale(1.32);
+    opacity: 0;
+  }
+}
+
+.p02-confetti-piece {
+  animation-duration: 1900ms;
+}
+
+@keyframes tiny-element-sway {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-7deg);
+  }
+
+  50% {
+    transform: translateY(-6px) rotate(7deg);
+  }
+}
+
+@keyframes p03-element-sway {
+  0%,
+  100% {
+    transform: rotate(calc(var(--p03-angle) * -1)) translateY(0);
+  }
+
+  50% {
+    transform: rotate(var(--p03-angle)) translateY(-5px);
+  }
+}
+
+.p03-kieu {
+  --p03-angle: 3.8deg;
+  --p03-speed: 2600ms;
+}
+
+.p03-mam-co {
+  --p03-angle: 4.2deg;
+  --p03-speed: 2400ms;
+}
+
+.p03-cheers {
+  --p03-angle: 6deg;
+  --p03-speed: 2100ms;
+}
+
+.p06-card-wrap.is-idle-shuffling .p06-number-slot {
+  animation-duration: 390ms;
+}
+
+@keyframes lucky-idle-jitter {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0) rotate(-1.4deg);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(-3px) rotate(1.4deg);
+  }
+}
+
+.p06-card-wrap.is-rolling .p06-number-slot {
+  animation-duration: 120ms;
+}
+
+@keyframes lucky-rolling-chaos {
+  0% {
+    transform: translateX(-50%) translate(-5px, -3px);
+  }
+
+  25% {
+    transform: translateX(-50%) translate(5px, 2px);
+  }
+
+  50% {
+    transform: translateX(-50%) translate(-4px, 4px);
+  }
+
+  75% {
+    transform: translateX(-50%) translate(6px, -2px);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.p06-card-wrap.is-revealed .p06-number-slot {
+  animation-duration: 1000ms;
+}
+
+@keyframes lucky-number-reveal {
+  0% {
+    transform: translateX(-50%) scale(.68);
+    opacity: .25;
+  }
+
+  40% {
+    transform: translateX(-50%) scale(1.26);
+    opacity: 1;
+  }
+
+  65% {
+    transform: translateX(-50%) scale(.94);
+  }
+
+  100% {
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+.p06-ingots {
+  --p06-start: 7deg;
+  --p06-end: -7deg;
+  --p06-speed: 2200ms;
+}
+
+.p06-knot {
+  --p06-start: 9deg;
+  --p06-end: -9deg;
+  --p06-speed: 2000ms;
+}
+
+.p06-bag {
+  --p06-start: -6deg;
+  --p06-end: 6deg;
+  --p06-speed: 2500ms;
+}
+
+.p06-coins {
+  --p06-start: -10deg;
+  --p06-end: 10deg;
+  --p06-speed: 1900ms;
+}
+
+.p07-top-left-decoration {
+  animation-duration: 2500ms;
+}
+
+@keyframes p07-branch-sway {
+  0%,
+  100% {
+    transform: rotate(-3.5deg);
+  }
+
+  50% {
+    transform: rotate(3.5deg);
+  }
+}
+
+.p07-butterfly {
+  animation-duration: 1950ms;
+}
+
+@keyframes p07-butterfly-float {
+  0%,
+  100% {
+    translate: 0 0;
+    rotate: -3deg;
+  }
+
+  50% {
+    translate: -7px -12px;
+    rotate: 5deg;
+  }
+}
+
+
+/* ---------- PAGE 08: TEXT REVEALS ONE LINE AT A TIME ---------- */
+
+.p08-content,
+.page08-layout.is-active .p08-content {
+  opacity: 1;
+  translate: 0 0;
+  transition: none;
+}
+
+.p08-reveal-item,
+.p08-reveal-line,
+.p08-reveal-decoration {
+  opacity: 0;
+  transform: translateY(-8px);
+
+  transition:
+    opacity 850ms ease var(--p08-delay, 0ms),
+    transform 1100ms var(--entry-ease) var(--p08-delay, 0ms);
+}
+
+.p08-reveal-line {
+  display: block;
+}
+
+.page08-layout.is-active .p08-reveal-item,
+.page08-layout.is-active .p08-reveal-line,
+.page08-layout.is-active .p08-reveal-decoration {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Lotus Page 08 vẫn đứng yên như đã chốt. */
+.p08-lotus {
+  animation: none !important;
+}
+
