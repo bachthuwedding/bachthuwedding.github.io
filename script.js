@@ -6,18 +6,11 @@
      CONFIG
   ======================================================= */
 
-  const DESIGN_WIDTH =
-    390;
+  const DESIGN_WIDTH = 390;
+  const DESIGN_HEIGHT = 680;
 
-  const DESIGN_HEIGHT =
-    680;
-
-
-  const LUCKY_MIN =
-    1;
-
-  const LUCKY_MAX =
-    99;
+  const LUCKY_MIN = 1;
+  const LUCKY_MAX = 99;
 
 
   const WEDDING_API_URL =
@@ -33,7 +26,7 @@
 
 
   /* =======================================================
-     GUEST PARAM
+     GUEST
   ======================================================= */
 
   const urlParams =
@@ -44,17 +37,11 @@
 
   const currentGuestSlug =
     normalizeGuestSlug(
-      urlParams.get(
-        "guest"
-      )
-      ||
-      ""
+      urlParams.get("guest") || ""
     );
 
 
-  function normalizeGuestSlug(
-    value
-  ) {
+  function normalizeGuestSlug(value) {
 
     return String(
       value || ""
@@ -68,9 +55,7 @@
   }
 
 
-  function normalizeText(
-    value
-  ) {
+  function normalizeText(value) {
 
     return String(
       value ?? ""
@@ -81,16 +66,14 @@
   }
 
 
-  function sleep(
-    milliseconds
-  ) {
+  function sleep(ms) {
 
     return new Promise(
       (resolve) => {
 
         setTimeout(
           resolve,
-          milliseconds
+          ms
         );
       }
     );
@@ -181,9 +164,7 @@
 
     page08
 
-  ].filter(
-    Boolean
-  );
+  ].filter(Boolean);
 
 
   let personalizedGuestName =
@@ -316,72 +297,46 @@
     new Map();
 
 
-  let pageMode =
-    false;
+  let pageMode = false;
 
+  let resizeRaf = 0;
 
-  let resizeRaf =
-    0;
+  let scrollRaf = 0;
 
+  let activePageIndex = -1;
 
-  let scrollRaf =
-    0;
+  let luckyIdleTimer = null;
 
+  let luckyRolling = false;
 
-  let activePageIndex =
-    -1;
+  let luckyLocked = false;
 
+  let rsvpCount = 1;
 
-  let luckyIdleTimer =
-    null;
+  let page06EntryTimer = null;
 
+  let submitResetTimer = null;
 
-  let luckyRolling =
-    false;
+  let currentGuestData = null;
 
+  let guestDataLoaded = false;
 
-  let luckyLocked =
-    false;
-
-
-  let rsvpCount =
-    1;
-
-
-  let page06EntryTimer =
-    null;
-
-
-  let submitResetTimer =
-    null;
-
-
-  let currentGuestData =
-    null;
-
-
-  let guestDataLoaded =
-    false;
-
-
-  let guestLoadPromise =
-    null;
+  let guestLoadPromise = null;
 
 
   /* =======================================================
-     APPS SCRIPT BRIDGE
+     JSONP
 
-     Không JSONP.
-     Không fetch GET.
-     Không phụ thuộc CORS.
+     Google Apps Script ContentService hỗ trợ chính thức
+     JSONP bằng parameter "prefix".
 
-     Website tạo iframe ẩn.
-     Apps Script postMessage kết quả về.
+     KHÔNG iframe.
+     KHÔNG transport=bridge.
   ======================================================= */
 
-  function bridgeRequest(
+  function jsonpRequest(
     params = {},
-    timeout = 15000
+    timeout = 20000
   ) {
 
     return new Promise(
@@ -390,12 +345,10 @@
         reject
       ) => {
 
-        const requestId =
-          "wedding_"
+        const callbackName =
+          "__bachThuWedding"
           +
           Date.now()
-          +
-          "_"
           +
           Math.random()
             .toString(36)
@@ -418,11 +371,9 @@
             ) => {
 
               if (
-                value ===
-                undefined
+                value === undefined
                 ||
-                value ===
-                null
+                value === null
               ) {
 
                 return;
@@ -431,113 +382,59 @@
 
               query.set(
                 key,
-                String(
-                  value
-                )
+                String(value)
               );
             }
           );
 
 
+        /*
+          Quan trọng:
+          dùng PREFIX theo tài liệu Apps Script.
+        */
+
         query.set(
-          "transport",
-          "bridge"
+          "prefix",
+          callbackName
         );
 
 
-        query.set(
-          "requestId",
-          requestId
-        );
+        /*
+          Cache bust bằng parameter t.
+          Không dùng bridge nữa.
+        */
 
-
         query.set(
-          "_",
+          "t",
           String(
             Date.now()
           )
         );
 
 
-        const iframe =
+        const script =
           document.createElement(
-            "iframe"
+            "script"
           );
 
 
-        iframe.setAttribute(
-          "aria-hidden",
-          "true"
-        );
-
-
-        iframe.tabIndex =
-          -1;
-
-
-        iframe.style.position =
-          "fixed";
-
-
-        iframe.style.left =
-          "-10000px";
-
-
-        iframe.style.top =
-          "-10000px";
-
-
-        iframe.style.width =
-          "1px";
-
-
-        iframe.style.height =
-          "1px";
-
-
-        iframe.style.border =
-          "0";
-
-
-        iframe.style.opacity =
-          "0";
-
-
-        iframe.style.pointerEvents =
-          "none";
-
-
-        let finished =
-          false;
-
-
-        let timer =
-          null;
+        let timer = null;
+        let finished = false;
 
 
         function cleanup() {
 
-          if (
-            finished
-          ) {
+          if (finished) {
 
             return;
           }
 
 
-          finished =
-            true;
-
-
-          window.removeEventListener(
-            "message",
-            handleMessage
-          );
+          finished = true;
 
 
           if (
-            timer !==
-            null
+            timer !== null
           ) {
 
             clearTimeout(
@@ -546,67 +443,39 @@
           }
 
 
-          iframe.remove();
+          script.remove();
+
+
+          try {
+
+            delete window[
+              callbackName
+            ];
+
+          } catch (_) {
+
+            window[
+              callbackName
+            ] = undefined;
+          }
         }
 
 
-        function handleMessage(
-          event
-        ) {
+        window[
+          callbackName
+        ] =
+          (response) => {
 
-          const data =
-            event.data;
-
-
-          if (
-            !data
-            ||
-            typeof data !==
-              "object"
-          ) {
-
-            return;
-          }
+            cleanup();
 
 
-          if (
-            data.source !==
-            "bach-thu-wedding-bridge"
-          ) {
-
-            return;
-          }
+            resolve(
+              response
+            );
+          };
 
 
-          if (
-            data.requestId !==
-            requestId
-          ) {
-
-            return;
-          }
-
-
-          const payload =
-            data.payload;
-
-
-          cleanup();
-
-
-          resolve(
-            payload
-          );
-        }
-
-
-        window.addEventListener(
-          "message",
-          handleMessage
-        );
-
-
-        iframe.onerror =
+        script.onerror =
           () => {
 
             cleanup();
@@ -614,10 +483,21 @@
 
             reject(
               new Error(
-                "Không tải được Wedding Bridge."
+                "Không tải được dữ liệu từ Google Apps Script."
               )
             );
           };
+
+
+        script.async = true;
+
+
+        script.src =
+          WEDDING_API_URL
+          +
+          "?"
+          +
+          query.toString();
 
 
         timer =
@@ -629,7 +509,7 @@
 
               reject(
                 new Error(
-                  "Wedding Bridge phản hồi quá lâu."
+                  "Google Apps Script phản hồi quá lâu."
                 )
               );
 
@@ -638,16 +518,8 @@
           );
 
 
-        iframe.src =
-          WEDDING_API_URL
-          +
-          "?"
-          +
-          query.toString();
-
-
-        document.body.appendChild(
-          iframe
+        document.head.appendChild(
+          script
         );
       }
     );
@@ -656,14 +528,9 @@
 
   /* =======================================================
      POST
-
-     RSVP của bạn đang chạy tốt.
-     Giữ nguyên cơ chế này.
   ======================================================= */
 
-  async function postToBackend(
-    data
-  ) {
+  async function postToBackend(data) {
 
     const body =
       new URLSearchParams();
@@ -681,11 +548,9 @@
         ) => {
 
           if (
-            value ===
-            undefined
+            value === undefined
             ||
-            value ===
-            null
+            value === null
           ) {
 
             return;
@@ -694,9 +559,7 @@
 
           body.append(
             key,
-            String(
-              value
-            )
+            String(value)
           );
         }
       );
@@ -760,9 +623,7 @@
 
     root.style.setProperty(
       "--design-scale",
-      String(
-        scale
-      )
+      String(scale)
     );
 
 
@@ -807,8 +668,7 @@
     "resize",
     scheduleScale,
     {
-      passive:
-        true
+      passive: true
     }
   );
 
@@ -818,14 +678,13 @@
       "resize",
       scheduleScale,
       {
-        passive:
-          true
+        passive: true
       }
     );
 
 
   /* =======================================================
-     SCROLL KHI CHUỘT Ở NGOÀI THIỆP
+     OUTSIDE SCROLL
   ======================================================= */
 
   window.addEventListener(
@@ -875,8 +734,7 @@
         event.deltaY;
     },
     {
-      passive:
-        false
+      passive: false
     }
   );
 
@@ -987,8 +845,7 @@
             "load",
             finish,
             {
-              once:
-                true
+              once: true
             }
           );
 
@@ -997,8 +854,7 @@
             "error",
             resolve,
             {
-              once:
-                true
+              once: true
             }
           );
 
@@ -1100,8 +956,7 @@
             "load",
             finish,
             {
-              once:
-                true
+              once: true
             }
           );
 
@@ -1110,8 +965,7 @@
             "error",
             resolve,
             {
-              once:
-                true
+              once: true
             }
           );
 
@@ -1256,9 +1110,7 @@
 
 
   /* =======================================================
-     PAGE 02 - TÊN KHÁCH
-
-     Chỉ lấy response.displayName = cột F.
+     PAGE 2 GUEST NAME
   ======================================================= */
 
   function ensureGuestNameElement() {
@@ -1338,13 +1190,9 @@
 
     if (!text) {
 
-      element.textContent =
-        "";
+      element.textContent = "";
 
-
-      element.hidden =
-        true;
-
+      element.hidden = true;
 
       return;
     }
@@ -1364,8 +1212,8 @@
 
 
     /*
-      Đây chính là style bạn vừa test
-      trong DevTools và đã thấy đúng.
+      Đây là vị trí bạn vừa test bằng DevTools
+      và đã nhìn thấy đúng.
     */
 
     element.style.cssText =
@@ -1392,22 +1240,20 @@
         "letter-spacing:0",
         "white-space:normal"
       ]
-        .join(
-          ";"
-        )
+        .join(";")
       +
       ";";
 
 
     console.log(
-      "[Wedding] Page 2 displayName:",
+      "[Wedding] Page 2 name from column F:",
       text
     );
   }
 
 
   /* =======================================================
-     GET GUEST DATA VIA BRIDGE
+     READ GUEST
   ======================================================= */
 
   async function requestGuestData() {
@@ -1421,23 +1267,21 @@
 
 
     const response =
-      await bridgeRequest(
+      await jsonpRequest(
         {
           action:
             "guest",
 
           guest:
             currentGuestSlug
-        },
-        20000
+        }
       );
 
 
     if (
       !response
       ||
-      response.ok !==
-        true
+      response.ok !== true
     ) {
 
       throw new Error(
@@ -1463,8 +1307,7 @@
     if (
       !response
       ||
-      response.ok !==
-        true
+      response.ok !== true
     ) {
 
       return;
@@ -1480,46 +1323,35 @@
 
 
     /*
-      =====================================================
-      PAGE 2
-
-      Chỉ cột F.
-      =====================================================
+      PAGE 2:
+      chỉ response.displayName = cột F.
     */
 
-    const displayNameFromColumnF =
+    const displayName =
       normalizeText(
-        response.displayName
-        ||
-        ""
+        response.displayName || ""
       )
         .trim();
 
 
     renderGuestDisplayName(
-      displayNameFromColumnF
+      displayName
     );
 
 
     if (
-      displayNameFromColumnF
+      displayName
     ) {
 
       document.title =
-        `${displayNameFromColumnF} | Bách & Thư`;
+        `${displayName} | Bách & Thư`;
     }
 
 
     /*
-      =====================================================
-      PAGE 7 - NAME
-
-      Nếu đã RSVP:
-      lấy J.
-
-      Nếu chưa:
-      lấy D.
-      =====================================================
+      PAGE 7 NAME:
+      J đã có -> J.
+      Chưa có -> D.
     */
 
     if (
@@ -1548,7 +1380,7 @@
 
 
     /*
-      Lucky number.
+      LUCKY.
     */
 
     const existingLucky =
@@ -1577,7 +1409,7 @@
 
 
     /*
-      RSVP attendance.
+      RSVP ATTENDANCE.
     */
 
     if (
@@ -1601,7 +1433,6 @@
         rsvpAttendanceYes.checked =
           false;
       }
-
 
     } else if (
       response.attendance ===
@@ -1628,18 +1459,15 @@
 
 
     /*
-      RSVP count.
+      RSVP COUNT.
     */
 
     if (
-      response.guestCount !==
-        ""
+      response.guestCount !== ""
       &&
-      response.guestCount !==
-        null
+      response.guestCount !== null
       &&
-      response.guestCount !==
-        undefined
+      response.guestCount !== undefined
     ) {
 
       const savedCount =
@@ -1653,11 +1481,9 @@
           savedCount
         )
         &&
-        savedCount >=
-          0
+        savedCount >= 0
         &&
-        savedCount <=
-          10
+        savedCount <= 10
       ) {
 
         rsvpCount =
@@ -1667,7 +1493,7 @@
 
 
     /*
-      RSVP message.
+      MESSAGE.
     */
 
     if (
@@ -1676,9 +1502,7 @@
 
       rsvpMessage.value =
         normalizeText(
-          response.message
-          ||
-          ""
+          response.message || ""
         );
     }
 
@@ -1689,11 +1513,9 @@
 
 
     if (
-      response.attendance ===
-        "Có"
+      response.attendance === "Có"
       ||
-      response.attendance ===
-        "Không"
+      response.attendance === "Không"
     ) {
 
       setSubmitText(
@@ -1704,7 +1526,7 @@
 
 
   /* =======================================================
-     LOAD GUEST
+     LOAD PERSONALIZATION
   ======================================================= */
 
   async function loadGuestPersonalization(
@@ -1743,13 +1565,9 @@
       (async () => {
 
         const delays = [
-
           0,
-
-          450,
-
-          1000
-
+          600,
+          1400
         ];
 
 
@@ -1764,8 +1582,7 @@
         ) {
 
           if (
-            delays[i] >
-            0
+            delays[i] > 0
           ) {
 
             await sleep(
@@ -1778,6 +1595,12 @@
 
             const response =
               await requestGuestData();
+
+
+            console.log(
+              "[Wedding] guest API:",
+              response
+            );
 
 
             applyGuestData(
@@ -1795,7 +1618,7 @@
 
 
             console.warn(
-              `[Wedding] guest bridge attempt ${i + 1}`,
+              `[Wedding] guest attempt ${i + 1}`,
               error
             );
           }
@@ -1803,7 +1626,7 @@
 
 
         console.error(
-          "[Wedding] guest bridge failed",
+          "[Wedding] guest loading failed",
           lastError
         );
 
@@ -1825,7 +1648,7 @@
 
 
   /* =======================================================
-     PAGE 02 ENTRANCE
+     PAGE 2 ENTRANCE
   ======================================================= */
 
   function playPage02Entrance() {
@@ -1883,19 +1706,12 @@
   ======================================================= */
 
   const fireworkColors = [
-
     "#a63019",
-
     "#c99633",
-
     "#e5b747",
-
     "#315747",
-
     "#d76b35",
-
     "#f0d37b"
-
   ];
 
 
@@ -2090,9 +1906,7 @@
      PAGE ACTIVATION
   ======================================================= */
 
-  function activatePage(
-    index
-  ) {
+  function activatePage(index) {
 
     const safeIndex =
       Math.max(
@@ -2111,8 +1925,7 @@
       ) => {
 
         const active =
-          pageIndex ===
-          safeIndex;
+          pageIndex === safeIndex;
 
 
         page.classList.toggle(
@@ -2122,8 +1935,7 @@
 
 
         if (
-          page ===
-          page06
+          page === page06
           &&
           !active
         ) {
@@ -2181,9 +1993,7 @@
   }
 
 
-  function setNearbyPages(
-    index
-  ) {
+  function setNearbyPages(index) {
 
     const safeIndex =
       Math.max(
@@ -2204,20 +2014,15 @@
         page.classList.toggle(
           "is-nearby",
           Math.abs(
-            pageIndex
-            -
-            safeIndex
-          ) <=
-            1
+            pageIndex - safeIndex
+          ) <= 1
         );
       }
     );
 
 
     loadPage(
-      pages[
-        safeIndex
-      ],
+      pages[safeIndex],
       "high"
     );
 
@@ -2276,8 +2081,7 @@
       requestAnimationFrame(
         () => {
 
-          scrollRaf =
-            0;
+          scrollRaf = 0;
 
 
           const index =
@@ -2312,14 +2116,13 @@
       "scroll",
       onPageScroll,
       {
-        passive:
-          true
+        passive: true
       }
     );
 
 
   /* =======================================================
-     OPEN INVITATION
+     OPEN
   ======================================================= */
 
   async function enterInvitation() {
@@ -2332,8 +2135,7 @@
     }
 
 
-    pageMode =
-      true;
+    pageMode = true;
 
 
     loadGuestPersonalization();
@@ -2349,8 +2151,7 @@
       pageScroller
     ) {
 
-      pageScroller.scrollTop =
-        0;
+      pageScroller.scrollTop = 0;
 
 
       pageScroller.setAttribute(
@@ -2367,8 +2168,7 @@
       );
 
 
-    activePageIndex =
-      0;
+    activePageIndex = 0;
 
 
     setNearbyPages(
@@ -2379,23 +2179,6 @@
     activatePage(
       0
     );
-
-
-    if (
-      currentGuestData
-      ?.displayName
-    ) {
-
-      requestAnimationFrame(
-        () => {
-
-          renderGuestDisplayName(
-            currentGuestData
-              .displayName
-          );
-        }
-      );
-    }
 
 
     runWhenIdle(
@@ -2428,8 +2211,7 @@
         );
       },
       {
-        passive:
-          true
+        passive: true
       }
     );
 
@@ -2501,11 +2283,9 @@
           value
         )
         &&
-        value >=
-          LUCKY_MIN
+        value >= LUCKY_MIN
         &&
-        value <=
-          LUCKY_MAX
+        value <= LUCKY_MAX
       ) {
 
         return value;
@@ -2519,9 +2299,7 @@
   }
 
 
-  function saveLocalLuckyNumber(
-    value
-  ) {
+  function saveLocalLuckyNumber(value) {
 
     const key =
       getLuckyStorageKey();
@@ -2537,9 +2315,7 @@
 
       localStorage.setItem(
         key,
-        String(
-          value
-        )
+        String(value)
       );
 
     } catch (_) {}
@@ -2599,9 +2375,7 @@
   }
 
 
-  function showLuckyNumber(
-    value
-  ) {
+  function showLuckyNumber(value) {
 
     if (
       !luckyNumber
@@ -2612,9 +2386,7 @@
 
 
     luckyNumber.textContent =
-      String(
-        value
-      )
+      String(value)
         .padStart(
           2,
           "0"
@@ -2625,8 +2397,7 @@
   function stopLuckyIdleShuffle() {
 
     if (
-      luckyIdleTimer !==
-      null
+      luckyIdleTimer !== null
     ) {
 
       clearInterval(
@@ -2634,8 +2405,7 @@
       );
 
 
-      luckyIdleTimer =
-        null;
+      luckyIdleTimer = null;
     }
 
 
@@ -2701,11 +2471,9 @@
         number
       )
       ||
-      number <
-        LUCKY_MIN
+      number < LUCKY_MIN
       ||
-      number >
-        LUCKY_MAX
+      number > LUCKY_MAX
     ) {
 
       return;
@@ -2715,12 +2483,9 @@
     stopLuckyIdleShuffle();
 
 
-    luckyLocked =
-      true;
+    luckyLocked = true;
 
-
-    luckyRolling =
-      false;
+    luckyRolling = false;
 
 
     showLuckyNumber(
@@ -2789,54 +2554,33 @@
     spawnFireworks(
       luckyFireworks,
       {
-        count:
-          102,
-
-        minDistance:
-          55,
-
-        maxDistance:
-          155,
-
-        cleanup:
-          1700
+        count: 102,
+        minDistance: 55,
+        maxDistance: 155,
+        cleanup: 1700
       }
     );
   }
 
 
-  /* =======================================================
-     REQUEST LUCKY VIA BRIDGE
-  ======================================================= */
-
   async function requestGuestLuckyNumber() {
 
-    if (
-      !currentGuestSlug
-    ) {
-
-      return null;
-    }
-
-
     const response =
-      await bridgeRequest(
+      await jsonpRequest(
         {
           action:
             "lucky",
 
           guest:
             currentGuestSlug
-        },
-        20000
+        }
       );
 
 
     if (
       !response
       ||
-      response.ok !==
-        true
+      response.ok !== true
     ) {
 
       throw new Error(
@@ -2880,15 +2624,7 @@
     stopLuckyIdleShuffle();
 
 
-    luckyRolling =
-      true;
-
-
-    luckyCard
-      ?.classList
-      .remove(
-        "is-revealed"
-      );
+    luckyRolling = true;
 
 
     luckyCard
@@ -2919,20 +2655,15 @@
       1850;
 
 
-    let lastUpdate =
-      0;
+    let lastUpdate = 0;
 
 
-    function frame(
-      now
-    ) {
+    function frame(now) {
 
       const progress =
         Math.min(
           (
-            now
-            -
-            start
+            now - start
           )
           /
           duration,
@@ -2952,15 +2683,11 @@
 
 
       if (
-        now
-        -
-        lastUpdate
-        >=
+        now - lastUpdate >=
         interval
       ) {
 
-        lastUpdate =
-          now;
+        lastUpdate = now;
 
 
         showLuckyNumber(
@@ -2970,8 +2697,7 @@
 
 
       if (
-        progress <
-        1
+        progress < 1
       ) {
 
         requestAnimationFrame(
@@ -3006,13 +2732,12 @@
       } catch (error) {
 
         console.error(
-          "[Wedding] Lucky error",
+          "[Wedding] lucky:",
           error
         );
 
 
-        luckyRolling =
-          false;
+        luckyRolling = false;
 
 
         luckyCard
@@ -3077,14 +2802,6 @@
     }
 
 
-    /*
-      UI:
-      chọn Không -> Kó.
-
-      Sheet:
-      backend vẫn ghi Không.
-    */
-
     rsvpAttendanceNoText.textContent =
       rsvpAttendanceNo
         ?.checked
@@ -3095,9 +2812,7 @@
   }
 
 
-  function setSubmitText(
-    text
-  ) {
+  function setSubmitText(text) {
 
     const span =
       rsvpSubmit
@@ -3110,8 +2825,7 @@
       span
     ) {
 
-      span.textContent =
-        text;
+      span.textContent = text;
     }
   }
 
@@ -3177,8 +2891,7 @@
           rsvpAttendanceNo.checked
         ) {
 
-          rsvpCount =
-            0;
+          rsvpCount = 0;
 
 
           updateCount();
@@ -3198,12 +2911,10 @@
         if (
           rsvpAttendanceYes.checked
           &&
-          rsvpCount <
-            1
+          rsvpCount < 1
         ) {
 
-          rsvpCount =
-            1;
+          rsvpCount = 1;
 
 
           updateCount();
@@ -3216,12 +2927,10 @@
 
 
   /* =======================================================
-     VIDEO -> GOOGLE DRIVE
+     VIDEO -> DRIVE
   ======================================================= */
 
-  function openVideoDrive(
-    event
-  ) {
+  function openVideoDrive(event) {
 
     event
       ?.preventDefault();
@@ -3239,16 +2948,9 @@
     rsvpVideo
   ) {
 
-    /*
-      Không mở file picker máy.
-    */
+    rsvpVideo.disabled = true;
 
-    rsvpVideo.disabled =
-      true;
-
-
-    rsvpVideo.tabIndex =
-      -1;
+    rsvpVideo.tabIndex = -1;
   }
 
 
@@ -3262,8 +2964,7 @@
     );
 
 
-    rsvpVideoField.tabIndex =
-      0;
+    rsvpVideoField.tabIndex = 0;
 
 
     rsvpVideoField.addEventListener(
@@ -3277,11 +2978,9 @@
       (event) => {
 
         if (
-          event.key ===
-          "Enter"
+          event.key === "Enter"
           ||
-          event.key ===
-          " "
+          event.key === " "
         ) {
 
           openVideoDrive(
@@ -3295,16 +2994,12 @@
 
   /* =======================================================
      BACKGROUND REFRESH
-
-     Sau submit đọc lại ngầm.
-     Không block UI.
-     Không popup.
   ======================================================= */
 
   async function backgroundRefreshGuestData() {
 
     await sleep(
-      1000
+      1200
     );
 
 
@@ -3315,41 +3010,30 @@
 
 
       if (
-        !response
-        ||
-        response.ok !==
-          true
+        response
+        &&
+        response.ok === true
       ) {
 
-        return;
-      }
+        currentGuestData =
+          response;
 
 
-      currentGuestData =
-        response;
-
-
-      /*
-        Chỉ refresh tên Page 2.
-
-        Không overwrite form khách
-        đang tiếp tục chỉnh.
-      */
-
-      if (
-        response.displayName
-      ) {
-
-        renderGuestDisplayName(
+        if (
           response.displayName
-        );
+        ) {
+
+          renderGuestDisplayName(
+            response.displayName
+          );
+        }
       }
 
 
     } catch (error) {
 
       console.warn(
-        "[Wedding] background refresh skipped",
+        "[Wedding] background sync:",
         error
       );
     }
@@ -3363,9 +3047,7 @@
   rsvpForm
     ?.addEventListener(
       "submit",
-      async (
-        event
-      ) => {
+      async (event) => {
 
         event.preventDefault();
 
@@ -3451,8 +3133,7 @@
         }
 
 
-        rsvpSubmit.disabled =
-          true;
+        rsvpSubmit.disabled = true;
 
 
         setSubmitText(
@@ -3470,13 +3151,17 @@
               guest:
                 currentGuestSlug,
 
-              name,
+              name:
+                name,
 
-              attendance,
+              attendance:
+                attendance,
 
-              guestCount,
+              guestCount:
+                guestCount,
 
-              message
+              message:
+                message
             }
           );
 
@@ -3515,17 +3200,13 @@
             );
 
 
-          /*
-            Chạy ngầm.
-          */
-
           backgroundRefreshGuestData();
 
 
         } catch (error) {
 
           console.error(
-            "[Wedding] RSVP POST failed",
+            "[Wedding] RSVP:",
             error
           );
 
@@ -3549,9 +3230,6 @@
 
   /* =======================================================
      MARK OPENED
-
-     POST no-cors.
-     Không cần response.
   ======================================================= */
 
   function markInvitationOpened() {
@@ -3577,7 +3255,7 @@
         (error) => {
 
           console.warn(
-            "[Wedding] mark opened failed",
+            "[Wedding] mark opened:",
             error
           );
         }
@@ -3586,7 +3264,7 @@
 
 
   /* =======================================================
-     INITIAL UI
+     INIT
   ======================================================= */
 
   updateCount();
@@ -3639,20 +3317,7 @@
   );
 
 
-  /* =======================================================
-     INIT
-  ======================================================= */
-
   markInvitationOpened();
-
-
-  /*
-    Đây là request đọc mới.
-
-    Không còn JSONP nên lỗi
-    "[Wedding] guest load attempt..."
-    cũ sẽ biến mất.
-  */
 
   loadGuestPersonalization();
 
