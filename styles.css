@@ -1,4739 +1,4245 @@
-:root {
-  --design-width: 390px;
-  --design-height: 680px;
+(() => {
+  "use strict";
 
-  --design-scale: 1;
-  --render-width: 390px;
-  --render-height: 680px;
 
-  --paper: #ead5ad;
-  --page-background: #d8c59f;
-  --invitation-paper: #efe0bc;
+  /* =======================================================
+     CONFIG
+  ======================================================= */
 
-  --invitation-green: #28513f;
-  --invitation-red: #a63019;
-  --invitation-gold: #a78042;
+  const DESIGN_WIDTH = 390;
+  const DESIGN_HEIGHT = 680;
 
-  --p07-red: #a52f21;
-  --p07-green: #2f6d6a;
+  const LUCKY_MIN = 1;
+  const LUCKY_MAX = 99;
 
-  --ambient-duration: 2240ms;
-  --entry-duration: 1045ms;
 
-  --entry-ease:
-    cubic-bezier(.18, .82, .25, 1);
-}
+  const WEDDING_API_URL =
+    "https://script.google.com/macros/s/AKfycbzZgGDz-UI1bGQI8M4FoYe1GzxUWCI9V1k_hK6N_9WftwU9qyH-Utm9csjz9NkdW6Axhg/exec";
 
 
-/* =========================================================
-   RESET
-========================================================= */
+  const SPREADSHEET_ID =
+    "1Met6W9whg2I9Ho_GVBgpp4QZOrBF_24pKOk0lPiC7Yo";
 
-* {
-  box-sizing: border-box;
-}
 
-html,
-body {
-  width: 100%;
-  height: 100%;
+  const SHEET_NAME =
+    "Danh sách khách mời";
 
-  margin: 0;
-  padding: 0;
-}
 
-html {
-  background: var(--page-background);
-}
+  const LUCKY_HINT_REVEALED =
+    "Hãy giữ con số may mắn của bạn tới ngày cưới của chúng mình nhé!";
 
-body {
-  display: grid;
-  place-items: center;
 
-  overflow: hidden;
+  /*
+    Ta đọc:
 
-  background: var(--page-background);
+    D = guest name
+    F = display name
+    G = invitation URL
+    H = opened
+    I = lucky number
+    J = RSVP name
+    K = attendance
+    L = guest count
+    M = message
+    N = video
 
-  font-family:
-    Georgia,
-    "Times New Roman",
-    serif;
+    Theo thứ tự select bên dưới:
 
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  -webkit-tap-highlight-color: transparent;
-}
+    index 0 = D
+    index 1 = F
+    index 2 = G
+    index 3 = H
+    index 4 = I
+    index 5 = J
+    index 6 = K
+    index 7 = L
+    index 8 = M
+    index 9 = N
+  */
 
-button,
-input,
-textarea,
-a {
-  font: inherit;
-}
+  const GVIZ_QUERY =
+    "select D,F,G,H,I,J,K,L,M,N";
 
-img {
-  -webkit-user-drag: none;
-}
 
+  /* =======================================================
+     URL GUEST
+  ======================================================= */
 
-/* =========================================================
-   FIXED ARTBOARD
-========================================================= */
-
-.site-shell {
-  position: relative;
-
-  width: var(--render-width);
-  height: var(--render-height);
-
-  flex: 0 0 auto;
-
-  overflow: hidden;
-
-  background: var(--paper);
-
-  opacity: 0;
-
-  isolation: isolate;
-
-  box-shadow:
-    0 0 40px
-    rgba(80, 46, 24, .12);
-
-  transition:
-    opacity 91ms linear;
-}
-
-.site-shell.is-scale-ready {
-  opacity: 1;
-}
-
-.site-scale {
-  position: absolute;
-
-  left: 0;
-  top: 0;
-
-  width: 390px;
-  height: 680px;
-
-  transform-origin: left top;
-
-  transform:
-    scale(var(--design-scale));
-}
-
-.design-stage {
-  position: relative;
-
-  width: 390px;
-  height: 680px;
-
-  overflow: hidden;
-
-  background: var(--paper);
-
-  isolation: isolate;
-}
-
-
-/* =========================================================
-   PAGE 01
-========================================================= */
-
-.opening-page {
-  position: absolute;
-
-  inset: 0;
-
-  z-index: 2;
-
-  overflow: hidden;
-
-  background-color: #ead5ad;
-
-  background-image:
-    url("./assets/page01-bg-optimized.webp");
-
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-
-  opacity: 1;
-
-  transition:
-    opacity 473ms ease;
-}
-
-.opening-card-button {
-  position: absolute;
-
-  left: 50%;
-  top: calc(14.5% + 18px);
-
-  width: 82%;
-  max-width: 352px;
-
-  aspect-ratio: 2 / 3;
-
-  transform:
-    translateX(-50%);
-
-  margin: 0;
-  padding: 0;
-
-  border: 0;
-  outline: none;
-
-  background: transparent;
-
-  cursor: pointer;
-}
-
-.opening-card-image {
-  position: absolute;
-
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-
-  transform:
-    translate3d(0, 24px, 0);
-
-  transform-origin:
-    50% 55%;
-
-  filter:
-    drop-shadow(
-      0 12px 9px
-      rgba(62, 24, 14, .16)
+  const urlParams =
+    new URLSearchParams(
+      window.location.search
     );
 
-  animation:
-    opening-card-shake
-    2000ms
-    cubic-bezier(.36, .07, .19, .97)
-    infinite;
 
-  pointer-events: none;
-}
+  const currentGuestSlug =
+    normalizeGuestSlug(
+      urlParams.get("guest") || ""
+    );
 
-@keyframes opening-card-shake {
 
-  0%,
-  50%,
-  100% {
-    transform:
-      translate3d(0, 24px, 0)
-      rotate(0);
+  function normalizeGuestSlug(value) {
+
+    return String(
+      value || ""
+    )
+      .trim()
+      .toLowerCase()
+      .replace(
+        /[^a-z0-9-]/g,
+        ""
+      );
   }
 
-  57% {
-    transform:
-      translate3d(-5px, 21px, 0)
-      rotate(-2deg);
+
+  function slugifyGuestName(value) {
+
+    return String(
+      value || ""
+    )
+      .trim()
+
+      .replace(
+        /Đ/g,
+        "D"
+      )
+
+      .replace(
+        /đ/g,
+        "d"
+      )
+
+      .normalize(
+        "NFD"
+      )
+
+      .replace(
+        /[\u0300-\u036f]/g,
+        ""
+      )
+
+      .toLowerCase()
+
+      .replace(
+        /[^a-z0-9]+/g,
+        "-"
+      )
+
+      .replace(
+        /^-+|-+$/g,
+        ""
+      )
+
+      .replace(
+        /-+/g,
+        "-"
+      );
   }
 
-  64% {
-    transform:
-      translate3d(6px, 22px, 0)
-      rotate(2.2deg);
+
+  function normalizeText(value) {
+
+    return String(
+      value ?? ""
+    )
+      .normalize(
+        "NFC"
+      );
   }
 
-  71% {
-    transform:
-      translate3d(-5px, 21px, 0)
-      rotate(-2.1deg);
+
+  function sleep(ms) {
+
+    return new Promise(
+      (resolve) => {
+
+        setTimeout(
+          resolve,
+          ms
+        );
+      }
+    );
   }
 
-  78% {
-    transform:
-      translate3d(5px, 23px, 0)
-      rotate(1.8deg);
+
+  function isDriveFolderUrl(value) {
+
+    return /^https:\/\/drive\.google\.com\/drive\/folders\/[A-Za-z0-9_-]+/i
+      .test(
+        String(
+          value || ""
+        ).trim()
+      );
   }
 
-  92% {
-    transform:
-      translate3d(0, 24px, 0)
-      rotate(0);
-  }
-}
 
-.monogram-pulse {
-  position: absolute;
+  /* =======================================================
+     DOM
+  ======================================================= */
 
-  z-index: 5;
+  const root =
+    document.documentElement;
 
-  left: 50%;
-  top: calc(60.5% + 24px);
 
-  width: 31%;
+  const siteShell =
+    document.getElementById(
+      "siteShell"
+    );
 
-  aspect-ratio: 1;
 
-  border-radius: 50%;
+  const openingCardButton =
+    document.getElementById(
+      "openingCardButton"
+    );
 
-  transform:
-    translate(-50%, -50%);
 
-  pointer-events: none;
-}
+  const pageScroller =
+    document.getElementById(
+      "page02"
+    );
 
-.monogram-pulse::before,
-.monogram-pulse::after {
-  content: "";
 
-  position: absolute;
+  const page02Layout =
+    document.getElementById(
+      "page02Layout"
+    );
 
-  inset: 0;
 
-  border:
-    1.5px solid
-    rgba(237, 196, 96, .52);
+  const page03 =
+    document.getElementById(
+      "page03"
+    );
 
-  border-radius: 50%;
 
-  opacity: 0;
+  const page04 =
+    document.getElementById(
+      "page04"
+    );
 
-  animation:
-    tap-ring
-    2160ms
-    ease-out
-    infinite;
-}
 
-.monogram-pulse::after {
-  animation-delay: 1080ms;
-}
+  const page05 =
+    document.getElementById(
+      "page05"
+    );
 
-@keyframes tap-ring {
 
-  0% {
-    transform: scale(.5);
-    opacity: 0;
-  }
+  const page06 =
+    document.getElementById(
+      "page06"
+    );
 
-  18% {
-    opacity: .58;
-  }
 
-  100% {
-    transform: scale(1.22);
-    opacity: 0;
-  }
-}
+  const page07 =
+    document.getElementById(
+      "page07"
+    );
 
 
-/* =========================================================
-   FLOW
-========================================================= */
+  const page08 =
+    document.getElementById(
+      "page08"
+    );
 
-.page-02 {
-  position: absolute;
 
-  inset: 0;
+  const pages = [
 
-  z-index: 1;
+    page02Layout,
 
-  width: 390px;
-  height: 680px;
+    page03,
 
-  overflow-x: hidden;
-  overflow-y: auto;
+    page04,
 
-  background: var(--invitation-paper);
+    page05,
 
-  opacity: 0;
+    page06,
 
-  pointer-events: none;
+    page07,
 
-  scrollbar-width: none;
+    page08
 
-  overscroll-behavior: contain;
+  ].filter(Boolean);
 
-  touch-action: pan-y;
 
-  -webkit-overflow-scrolling: touch;
+  let personalizedGuestName =
+    document.getElementById(
+      "personalizedGuestName"
+    );
 
-  transition:
-    opacity 473ms ease;
-}
 
-.page-02::-webkit-scrollbar {
-  display: none;
-}
+  const page06EntryFireworks =
+    document.getElementById(
+      "page06EntryFireworks"
+    );
 
-.site-shell.is-page-02
-.opening-page {
-  opacity: 0;
 
-  pointer-events: none;
-}
+  const luckyCard =
+    document.getElementById(
+      "luckyCard"
+    );
 
-.site-shell.is-page-02
-.page-02 {
-  z-index: 3;
 
-  opacity: 1;
+  const luckyNumber =
+    document.getElementById(
+      "luckyNumber"
+    );
 
-  pointer-events: auto;
-}
 
-.invitation-flow {
-  position: relative;
+  const luckyHint =
+    document.getElementById(
+      "luckyHint"
+    );
 
-  width: 390px;
 
-  height: auto;
-}
+  const luckyTrigger =
+    document.getElementById(
+      "luckyTrigger"
+    );
 
-.invitation-page {
-  position: relative;
 
-  width: 390px;
-  height: 680px;
+  const luckyFireworks =
+    document.getElementById(
+      "luckyFireworks"
+    );
 
-  overflow: hidden;
 
-  background: #f1dfbd;
+  const rsvpForm =
+    document.getElementById(
+      "rsvpForm"
+    );
 
-  isolation: isolate;
-}
 
+  const rsvpGuestName =
+    document.getElementById(
+      "rsvpGuestName"
+    );
 
-/* =========================================================
-   COMMON BACKGROUND
-========================================================= */
 
-.p02-background,
-.p03-background,
-.p06-background,
-.p07-background,
-.p08-background {
-  position: absolute;
+  const rsvpAttendanceYes =
+    document.getElementById(
+      "rsvpAttendanceYes"
+    );
 
-  inset: 0;
 
-  z-index: 0;
+  const rsvpAttendanceNo =
+    document.getElementById(
+      "rsvpAttendanceNo"
+    );
 
-  width: 100%;
-  height: 100%;
 
-  object-fit: cover;
+  const rsvpAttendanceNoText =
+    document.getElementById(
+      "rsvpAttendanceNoText"
+    );
 
-  pointer-events: none;
-}
 
+  const rsvpGuestCount =
+    document.getElementById(
+      "rsvpGuestCount"
+    );
 
-/* =========================================================
-   COMMON FRAME
-========================================================= */
 
-.p02-frame,
-.p03-frame,
-.p06-frame,
-.p07-frame,
-.p08-frame {
-  position: absolute;
+  const rsvpMinus =
+    document.getElementById(
+      "rsvpMinus"
+    );
 
-  display: block;
 
-  max-width: none;
+  const rsvpPlus =
+    document.getElementById(
+      "rsvpPlus"
+    );
 
-  object-fit: fill;
 
-  pointer-events: none;
-}
+  const rsvpMessage =
+    document.getElementById(
+      "rsvpMessage"
+    );
 
-.p02-frame,
-.p03-frame {
-  z-index: 5;
 
-  inset: 0;
+  const rsvpSubmit =
+    document.getElementById(
+      "rsvpSubmit"
+    );
 
-  width: 100%;
-  height: 100%;
-}
 
-.p06-frame {
-  z-index: 40;
+  const rsvpVideoLink =
+    document.getElementById(
+      "rsvpVideoLink"
+    );
 
-  inset: 0;
 
-  width: 100%;
-  height: 100%;
-}
+  const rsvpVideoField =
+    rsvpVideoLink
+    ||
+    document.querySelector(
+      ".p07-video-field"
+    );
 
-.p07-frame,
-.p08-frame {
-  z-index: 40;
 
-  left: 5px;
-  top: 5px;
+  /* =======================================================
+     STATE
+  ======================================================= */
 
-  width: 380px;
-  height: 670px;
-}
+  const imagePromises =
+    new WeakMap();
 
 
-/* =========================================================
-   BOTTOM ORNAMENT
-========================================================= */
+  const pagePromises =
+    new WeakMap();
 
-.p02-bottom-ornament,
-.p03-bottom-ornament,
-.p06-bottom-ornament,
-.p07-bottom-ornament,
-.p08-bottom-ornament {
-  position: absolute;
 
-  z-index: 36;
+  const urlPromises =
+    new Map();
 
-  left: 50%;
-  bottom: -1px;
 
-  display: block;
+  let pageMode = false;
 
-  width: 120px;
-  height: auto;
+  let resizeRaf = 0;
 
-  transform:
-    translateX(-50%);
+  let scrollRaf = 0;
 
-  pointer-events: none;
-}
+  let activePageIndex = -1;
 
-.p07-bottom-ornament,
-.p08-bottom-ornament {
-  bottom: 3px;
-}
+  let luckyIdleTimer = null;
 
+  let luckyRolling = false;
 
-/* =========================================================
-   AMBIENT
-========================================================= */
+  let luckyLocked = false;
 
-@keyframes wedding-ambient-float {
+  let rsvpCount = 1;
 
-  0%,
-  100% {
-    transform:
-      translateY(0);
-  }
+  let page06EntryTimer = null;
 
-  50% {
-    transform:
-      translateY(-6px);
-  }
-}
+  let submitResetTimer = null;
 
-.p02-cloud,
-.p03-cloud,
-.p06-cloud,
-.p08-cloud {
-  position: absolute;
+  let currentGuestData = null;
 
-  z-index: 60;
+  let guestDataLoaded = false;
 
-  height: auto;
+  let guestLoadPromise = null;
 
-  pointer-events: none;
 
-  animation:
-    wedding-ambient-float
-    var(--ambient-duration)
-    ease-in-out
-    infinite;
-}
+  /* =======================================================
+     GOOGLE SHEET GVIZ READ
 
+     Đây là phần thay cho Apps Script JSONP.
 
-/* =========================================================
-   PAGE 02
-========================================================= */
+     docs.google.com/spreadsheets/.../gviz/tq
+     -> script injection
+     -> responseHandler(...)
+  ======================================================= */
 
-.p02-cloud--01 {
-  left: 28px;
-  top: 116px;
+  function gvizRequest(
+    timeout = 20000
+  ) {
 
-  width: 88px;
-}
+    return new Promise(
+      (
+        resolve,
+        reject
+      ) => {
 
-.p02-cloud--02 {
-  right: 19px;
-  top: 133px;
+        const callbackName =
+          "__bachThuSheet"
+          +
+          Date.now()
+          +
+          Math.random()
+            .toString(36)
+            .slice(2);
 
-  width: 80px;
-}
 
-.p02-cloud--03 {
-  left: 18px;
-  top: 219px;
+        const script =
+          document.createElement(
+            "script"
+          );
 
-  width: 65px;
-}
 
-.p02-cloud--04 {
-  right: 28px;
-  top: 265px;
+        let timer = null;
+        let finished = false;
 
-  width: 65px;
-}
 
+        function cleanup() {
 
-/* PAGE 02 ENTRY */
+          if (
+            finished
+          ) {
 
-.page02-layout
-.p02-cloud,
+            return;
+          }
 
-.page02-layout
-.p02-confetti-cluster,
 
-.page02-layout
-.p02-procession {
-  opacity: 0;
+          finished = true;
 
-  transition:
-    translate
-    var(--entry-duration)
-    var(--entry-ease),
 
-    opacity
-    636ms
-    ease;
-}
+          if (
+            timer !== null
+          ) {
 
-.page02-layout
-.p02-cloud--01,
+            clearTimeout(
+              timer
+            );
+          }
 
-.page02-layout
-.p02-cloud--03 {
-  translate:
-    -85px 0;
-}
 
-.page02-layout
-.p02-cloud--02,
+          script.remove();
 
-.page02-layout
-.p02-cloud--04 {
-  translate:
-    85px 0;
-}
 
-.page02-layout
-.p02-confetti-cluster,
+          try {
 
-.page02-layout
-.p02-procession {
-  translate:
-    0 46px;
-}
+            delete window[
+              callbackName
+            ];
 
-.page02-layout.is-entering
-.p02-cloud,
+          } catch (_) {
 
-.page02-layout.is-entering
-.p02-confetti-cluster,
+            window[
+              callbackName
+            ] = undefined;
+          }
+        }
 
-.page02-layout.is-entering
-.p02-procession {
-  opacity: 1;
 
-  translate:
-    0 0;
-}
+        window[
+          callbackName
+        ] =
+          (response) => {
 
+            cleanup();
 
-/* PAGE 02 TEXT */
 
-.p02-invite,
-.p02-personalized-guest,
-.p02-to,
-.p02-wedding-title,
-.p02-couple-names {
-  position: absolute;
+            if (
+              !response
+            ) {
 
-  z-index: 20;
+              reject(
+                new Error(
+                  "Google Sheet không trả dữ liệu."
+                )
+              );
 
-  left: 50%;
+              return;
+            }
 
-  margin: 0;
 
-  text-align: center;
+            if (
+              response.status
+              &&
+              response.status !== "ok"
+            ) {
 
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
+              console.error(
+                "[Wedding] GViz response:",
+                response
+              );
 
-  font-weight: 400;
 
-  color:
-    var(--invitation-green);
-}
+              reject(
+                new Error(
+                  "Google Sheet trả về lỗi truy vấn."
+                )
+              );
 
-.p02-invite {
-  top: 37px;
+              return;
+            }
 
-  width: 320px;
 
-  font-size: 15px;
+            resolve(
+              response
+            );
+          };
 
-  transform:
-    translateX(-50%)
-    scaleX(.94);
-}
 
+        script.onerror =
+          () => {
 
-/* PERSONALIZED GUEST */
+            cleanup();
 
-.p02-personalized-guest {
-  top: 82px;
 
-  width: 300px;
+            reject(
+              new Error(
+                "Không tải được dữ liệu trực tiếp từ Google Sheet."
+              )
+            );
+          };
 
-  transform:
-    translateX(-50%);
 
-  color: #405948;
+        /*
+          tqx responseHandler là cơ chế callback
+          của Google Visualization.
+        */
 
-  font-size: 12px;
+        const tqx =
+          `responseHandler:${callbackName}`;
 
-  font-style: italic;
 
-  line-height: 1.25;
+        const url =
+          "https://docs.google.com/spreadsheets/d/"
+          +
+          encodeURIComponent(
+            SPREADSHEET_ID
+          )
+          +
+          "/gviz/tq"
+          +
+          "?sheet="
+          +
+          encodeURIComponent(
+            SHEET_NAME
+          )
+          +
+          "&headers=1"
+          +
+          "&tq="
+          +
+          encodeURIComponent(
+            GVIZ_QUERY
+          )
+          +
+          "&tqx="
+          +
+          encodeURIComponent(
+            tqx
+          )
+          +
+          "&t="
+          +
+          Date.now();
 
-  white-space: normal;
-}
 
-.p02-personalized-guest[hidden] {
-  display: none;
-}
+        script.async =
+          true;
 
 
-.p02-divider {
-  display: none;
-}
+        script.src =
+          url;
 
-.p02-divider::after {
-  content: "•••";
 
-  position: absolute;
+        timer =
+          setTimeout(
+            () => {
 
-  left: 50%;
-  top: 50%;
+              cleanup();
 
-  padding: 0 4px;
 
-  transform:
-    translate(-50%, -56%);
+              reject(
+                new Error(
+                  "Google Sheet phản hồi quá lâu."
+                )
+              );
 
-  background: #f1dfbd;
+            },
+            timeout
+          );
 
-  color:
-    var(--invitation-gold);
 
-  font-size: 7px;
-}
-
-.p02-to {
-  top: 100px;
-
-  width: 320px;
-
-  font-size: 14px;
-
-  transform:
-    translateX(-50%)
-    scaleX(.8);
-}
-
-.p02-wedding-title {
-  top: 130px;
-
-  width: 330px;
-
-  font-size: 18px;
-
-  transform:
-    translateX(-50%)
-    scaleX(.77);
-}
-
-
-.p02-couple-names {
-  top: 193px;
-
-  width: 370px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  line-height: .87;
-
-  color:
-    var(--invitation-red);
-
-  transform:
-    translateX(-50%);
-}
-
-.p02-name {
-  width: 100%;
-
-  color:
-    var(--invitation-red);
-
-  font-size: 25px;
-
-  line-height: .95;
-
-  white-space: nowrap;
-
-  transform:
-    scaleX(.82);
-}
-
-.p02-ampersand {
-  margin:
-    4px 0 3px;
-
-  color:
-    var(--invitation-green);
-
-  font-size: 22px;
-}
-
-.p02-date-divider {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 297px;
-
-  width: 64px;
-  height: 1px;
-
-  transform:
-    translateX(-50%);
-
-  background:
-    rgba(153, 111, 52, .56);
-}
-
-.p02-date-divider::after {
-  content: "◇";
-
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  padding: 0 3px;
-
-  transform:
-    translate(-50%, -51%);
-
-  background: #f1dfbd;
-
-  color:
-    var(--invitation-gold);
-
-  font-size: 8px;
-}
-
-.p02-ceremony-info {
-  position: absolute;
-
-  z-index: 21;
-
-  left: 50%;
-  top: 315px;
-
-  width: 345px;
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-}
-
-.p02-ceremony-info p {
-  margin: 0;
-}
-
-.p02-time-line {
-  color:
-    var(--invitation-green);
-
-  font-size: 13px;
-}
-
-.p02-time-line strong {
-  color:
-    var(--invitation-red);
-
-  font-size: 14px;
-
-  font-weight: 400;
-}
-
-.p02-lunar-date {
-  margin-top:
-    5px !important;
-
-  color:
-    var(--invitation-green);
-
-  font-size: 10.5px;
-}
-
-.p02-at {
-  margin-top:
-    11px !important;
-
-  color:
-    var(--invitation-green);
-
-  font-size: 13px;
-}
-
-.p02-at strong {
-  color:
-    var(--invitation-red);
-
-  font-size: 14px;
-
-  font-weight: 400;
-}
-
-.p02-venue-address {
-  margin-top:
-    5px !important;
-
-  color:
-    var(--invitation-green);
-
-  font-size: 10.5px;
-}
-
-.p02-family-info {
-  position: absolute;
-
-  z-index: 22;
-
-  left: 50%;
-  top: 406px;
-
-  display: grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  column-gap: 28px;
-
-  width: 330px;
-
-  transform:
-    translateX(-50%);
-
-  color:
-    var(--invitation-green);
-
-  text-align: center;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-}
-
-.p02-family-title {
-  margin:
-    0 0 7px;
-
-  font-size: 11px;
-
-  font-weight: 600;
-}
-
-.p02-family p {
-  margin: 0;
-
-  font-size: 10px;
-
-  line-height: 1.35;
-
-  white-space: nowrap;
-}
-
-
-/* PAGE 02 TEXT ENTRY */
-
-.page02-layout
-.p02-invite,
-
-.page02-layout
-.p02-personalized-guest,
-
-.page02-layout
-.p02-divider,
-
-.page02-layout
-.p02-to,
-
-.page02-layout
-.p02-wedding-title,
-
-
-.page02-layout
-.p02-couple-names,
-
-.page02-layout
-.p02-date-divider,
-
-.page02-layout
-.p02-ceremony-info,
-
-.page02-layout
-.p02-family-info {
-  opacity: 0;
-
-  translate:
-    0 -10px;
-
-  transition:
-    opacity 564ms ease,
-    translate 836ms cubic-bezier(.2, .78, .28, 1);
-}
-
-.page02-layout.is-entering
-.p02-invite,
-
-.page02-layout.is-entering
-.p02-personalized-guest,
-
-.page02-layout.is-entering
-.p02-divider,
-
-.page02-layout.is-entering
-.p02-to,
-
-.page02-layout.is-entering
-.p02-wedding-title,
-
-.page02-layout.is-entering
-.p02-wedding-subtitle,
-
-.page02-layout.is-entering
-.p02-couple-names,
-
-.page02-layout.is-entering
-.p02-date-divider,
-
-.page02-layout.is-entering
-.p02-ceremony-info,
-
-.page02-layout.is-entering
-.p02-family-info {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-/* CONFETTI */
-
-.p02-confetti-cluster {
-  position: absolute;
-
-  z-index: 14;
-
-  inset: 0;
-
-  top: 65px;
-  left: -5px;
-
-  scale: .8;
-
-  transform-origin: center;
-
-  pointer-events: none;
-}
-
-.p02-confetti-piece {
-  position: absolute;
-
-  display: block;
-
-  background-image:
-    var(--p02-confetti-sprite, none);
-
-  background-repeat:
-    no-repeat;
-
-  background-size:
-    361.25px 780.93px;
-
-  filter:
-    saturate(1.18)
-    brightness(1.02)
-    contrast(1.03);
-
-  animation:
-    tiny-element-sway
-    1680ms
-    ease-in-out
-    infinite;
-}
-
-@keyframes tiny-element-sway {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(-5deg);
+        document.head.appendChild(
+          script
+        );
+      }
+    );
   }
 
-  50% {
-    transform:
-      translateY(-4px)
-      rotate(5deg);
+
+  /* =======================================================
+     GVIZ VALUE HELPERS
+  ======================================================= */
+
+  function getGvizCell(
+    row,
+    columnIndex
+  ) {
+
+    if (
+      !row
+      ||
+      !Array.isArray(
+        row.c
+      )
+    ) {
+
+      return "";
+    }
+
+
+    const cell =
+      row.c[
+        columnIndex
+      ];
+
+
+    if (
+      !cell
+    ) {
+
+      return "";
+    }
+
+
+    /*
+      .v = raw value
+      .f = formatted value
+
+      Với text, ưu tiên .v.
+      Với date, .f dễ đọc hơn nhưng ta không dùng H ở frontend.
+    */
+
+    if (
+      cell.v !==
+      undefined
+      &&
+      cell.v !==
+      null
+    ) {
+
+      return cell.v;
+    }
+
+
+    if (
+      cell.f !==
+      undefined
+      &&
+      cell.f !==
+      null
+    ) {
+
+      return cell.f;
+    }
+
+
+    return "";
   }
-}
-
-.p02-confetti-piece--01 {
-  left: 9px;
-  top: 451px;
-  width: 11.01px;
-  height: 11.43px;
-  background-position: -116.46px -37.27px;
-}
-
-.p02-confetti-piece--02 {
-  left: 338px;
-  top: 485px;
-  width: 11.01px;
-  height: 10.59px;
-  background-position: -68.61px -65.64px;
-}
-
-.p02-confetti-piece--03 {
-  left: 244px;
-  top: 433px;
-  width: 12.28px;
-  height: 11.43px;
-  background-position: -154.58px -94.86px;
-}
-
-.p02-confetti-piece--04 {
-  left: 164px;
-  top: 430px;
-  width: 11.01px;
-  height: 10.59px;
-  background-position: -74.54px -112.65px;
-}
-
-.p02-confetti-piece--05 {
-  left: 125px;
-  top: 438px;
-  width: 11.01px;
-  height: 8.47px;
-  background-position: -302.38px -114.77px;
-}
-
-.p02-confetti-piece--06 {
-  left: 215px;
-  top: 435px;
-  width: 11.43px;
-  height: 11.43px;
-  background-position: -196.08px -132.98px;
-}
-
-.p02-confetti-piece--07 {
-  left: 325px;
-  top: 455px;
-  width: 8.05px;
-  height: 8.05px;
-  background-position: -112.23px -146.53px;
-}
-
-.p02-confetti-piece--08 {
-  left: 43px;
-  top: 454px;
-  width: 10.59px;
-  height: 10.59px;
-  background-position: -32.19px -413.76px;
-}
-
-.p02-confetti-piece--09 {
-  left: 183px;
-  top: 456px;
-  width: 11.01px;
-  height: 10.59px;
-  background-position: -33.46px -267.65px;
-}
-
-.p02-confetti-piece--10 {
-  left: 300px;
-  top: 438px;
-  width: 11.01px;
-  height: 10.59px;
-  background-position: -318.05px -327.79px;
-}
-
-.p02-confetti-piece--11 {
-  left: 140px;
-  top: 460px;
-  width: 10.59px;
-  height: 10.59px;
-  background-position: -32.19px -413.76px;
-}
-
-.p02-confetti-piece--12 {
-  left: 207px;
-  top: 477px;
-  width: 10.59px;
-  height: 10.16px;
-  background-position: -312.12px -486.18px;
-}
-
-.p02-confetti-piece--13 {
-  left: 73px;
-  top: 475px;
-  width: 11.01px;
-  height: 10.59px;
-  background-position: -37.27px -578.08px;
-}
-
-.p02-confetti-piece--14 {
-  left: 85px;
-  top: 444px;
-  width: 11.86px;
-  height: 9.74px;
-  background-position: -57.60px -739.01px;
-}
-
-.p02-confetti-piece--15 {
-  left: 236px;
-  top: 465px;
-  width: 11.01px;
-  height: 10.59px;
-  background-position: -68.61px -65.64px;
-}
-
-.p02-confetti-piece--16 {
-  left: 377px;
-  top: 478px;
-  width: 11.01px;
-  height: 10.59px;
-  background-position: -37.27px -578.08px;
-}
-
-.p02-confetti-piece--17 {
-  left: 116px;
-  top: 474px;
-  width: 10.59px;
-  height: 10.59px;
-  background-position: -32.19px -413.76px;
-}
-
-.p02-confetti-piece--18 {
-  left: 156px;
-  top: 486px;
-  width: 11.01px;
-  height: 10.59px;
-  background-position: -318.05px -327.79px;
-}
-
-.p02-confetti-piece--19 {
-  left: 271px;
-  top: 446px;
-  width: 11.43px;
-  height: 11.43px;
-  background-position: -196.08px -132.98px;
-}
-
-.p02-confetti-piece--20 {
-  left: 354px;
-  top: 448px;
-  width: 11.01px;
-  height: 8.47px;
-  background-position: -302.38px -114.77px;
-}
 
 
-/* PROCESSION */
+  function getGvizDisplayCell(
+    row,
+    columnIndex
+  ) {
 
-.p02-procession {
-  position: absolute;
+    if (
+      !row
+      ||
+      !Array.isArray(
+        row.c
+      )
+    ) {
 
-  z-index: 30;
+      return "";
+    }
 
-  left: 11px;
-  bottom: 30px;
 
-  width: 390px;
-  height: 196px;
+    const cell =
+      row.c[
+        columnIndex
+      ];
 
-  pointer-events: none;
-}
 
-.p02-procession-item {
-  position: absolute;
+    if (!cell) {
 
-  width: auto;
+      return "";
+    }
 
-  max-width: none;
 
-  object-fit: contain;
+    if (
+      cell.f !==
+      undefined
+      &&
+      cell.f !==
+      null
+    ) {
 
-  transform-origin:
-    50% 90%;
+      return cell.f;
+    }
 
-  pointer-events: none;
 
-  animation:
-    procession-sway
-    var(--procession-speed)
-    ease-in-out
-    infinite;
-}
+    if (
+      cell.v !==
+      undefined
+      &&
+      cell.v !==
+      null
+    ) {
 
-@keyframes procession-sway {
+      return cell.v;
+    }
 
-  0%,
-  100% {
-    transform:
-      rotate(
-        calc(
-          var(--procession-angle) * -1
+
+    return "";
+  }
+
+
+  /* =======================================================
+     EXTRACT ?guest FROM COLUMN G
+  ======================================================= */
+
+  function extractGuestSlugFromLink(
+    link
+  ) {
+
+    const text =
+      String(
+        link || ""
+      );
+
+
+    const match =
+      text.match(
+        /[?&]guest=([^&#]+)/
+      );
+
+
+    if (!match) {
+
+      return "";
+    }
+
+
+    try {
+
+      return normalizeGuestSlug(
+        decodeURIComponent(
+          match[1]
         )
       );
-  }
 
-  50% {
-    transform:
-      rotate(
-        var(--procession-angle)
+    } catch (_) {
+
+      return normalizeGuestSlug(
+        match[1]
       );
+    }
   }
-}
 
-.p02-flag-bearer {
-  --procession-angle: 2deg;
-  --procession-speed: 2480ms;
 
-  z-index: 31;
+  /* =======================================================
+     FIND CURRENT GUEST IN SHEET
 
-  left: -9px;
-  bottom: 0;
+     Ưu tiên G = Link thiệp.
+     Fallback D = tên khách.
+  ======================================================= */
 
-  height: 150px;
-}
+  function findGuestInGvizResponse(
+    response
+  ) {
 
-.p02-couple {
-  --procession-angle: 2.5deg;
-  --procession-speed: 2320ms;
+    const rows =
+      response
+        ?.table
+        ?.rows;
 
-  z-index: 34;
 
-  left: 74px;
-  bottom: 0;
-
-  height: 125px;
-}
-
-.p02-lion-dance {
-  --procession-angle: 2.3deg;
-  --procession-speed: 2400ms;
-
-  z-index: 33;
-
-  left: 120px;
-  bottom: 3px;
-
-  height: 150px;
-}
-
-.p02-drummer {
-  --procession-angle: 4deg;
-  --procession-speed: 2040ms;
-
-  z-index: 32;
-
-  right: 35px;
-  bottom: 1px;
-
-  height: 110px;
-}
-
-
-/* =========================================================
-   PAGE 03
-========================================================= */
-
-.page03-layout {
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-}
-
-.p03-title-divider,
-.p03-timeline,
-.p03-illustration {
-  position: absolute;
-
-  display: block;
-
-  height: auto;
-
-  max-width: none;
-
-  pointer-events: none;
-}
-
-
-/* DEVTOOLS VALUES */
-
-.p03-cloud--01 {
-  left: 33px;
-  top: 78px;
-
-  width: 81px;
-}
-
-.p03-cloud--02 {
-  left: 19px;
-  top: 395px;
-
-  width: 53px;
-}
-
-.p03-cloud--03 {
-  right: 18px;
-  top: 100px;
-
-  width: 56px;
-}
-
-.p03-cloud--04 {
-  right: 42px;
-  top: 545px;
-
-  width: 63px;
-}
-
-
-.page03-layout
-.p03-cloud--01,
-
-.page03-layout
-.p03-cloud--02 {
-  opacity: 0;
-
-  translate:
-    -75px 0;
-
-  transition:
-    translate
-    var(--entry-duration)
-    var(--entry-ease),
-
-    opacity
-    636ms
-    ease;
-}
-
-.page03-layout
-.p03-cloud--03,
-
-.page03-layout
-.p03-cloud--04 {
-  opacity: 0;
-
-  translate:
-    75px 0;
-
-  transition:
-    translate
-    var(--entry-duration)
-    var(--entry-ease),
-
-    opacity
-    636ms
-    ease;
-}
-
-.page03-layout.is-active
-.p03-cloud {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-.p03-title {
-  position: absolute;
-
-  z-index: 20;
-
-  left: 50%;
-  top: 38px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  color: #405d48;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-
-  font-size: 26px;
-
-  font-weight: 400;
-
-  line-height: 1;
-
-  letter-spacing: .03em;
-
-  white-space: nowrap;
-
-  opacity: 0;
-
-  translate:
-    0 -16px;
-
-  transition:
-    translate
-    864ms
-    var(--entry-ease),
-
-    opacity
-    591ms
-    ease;
-}
-
-.page03-layout.is-active
-.p03-title {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-.p03-title-divider {
-  z-index: 20;
-
-  left: 50%;
-  top: 81px;
-
-  width: 112px;
-
-  transform:
-    translateX(-50%);
-
-  opacity: 0;
-
-  scale:
-    .72 1;
-
-  transition:
-    opacity
-    591ms
-    ease
-    136ms,
-
-    scale
-    864ms
-    ease
-    136ms;
-}
-
-.page03-layout.is-active
-.p03-title-divider {
-  opacity: 1;
-
-  scale:
-    1 1;
-}
-
-
-/* DEVTOOLS: LEFT 114 */
-
-.p03-timeline {
-  z-index: 14;
-
-  left: 114px;
-  top: 95px;
-
-  width: 168px;
-
-  object-fit: contain;
-
-  clip-path:
-    inset(0 0 100% 0);
-
-  opacity: .15;
-
-  transition:
-    clip-path
-    1545ms
-    cubic-bezier(.22, .8, .2, 1)
-    164ms,
-
-    opacity
-    545ms
-    ease
-    164ms;
-}
-
-.page03-layout.is-active
-.p03-timeline {
-  clip-path:
-    inset(0 0 0 0);
-
-  opacity: 1;
-}
-
-
-.p03-illustration {
-  z-index: 12;
-
-  object-fit: contain;
-
-  transform-origin:
-    50% 86%;
-
-  animation:
-    p03-element-sway
-    var(--p03-speed)
-    ease-in-out
-    infinite;
-}
-
-@keyframes p03-element-sway {
-
-  0%,
-  100% {
-    transform:
-      rotate(
-        calc(var(--p03-angle) * -1)
+    if (
+      !Array.isArray(
+        rows
       )
-      translateY(0);
-  }
+    ) {
 
-  50% {
-    transform:
-      rotate(
-        var(--p03-angle)
-      )
-      translateY(-3px);
-  }
-}
-
-.p03-kieu {
-  --p03-angle: 3deg;
-  --p03-speed: 2320ms;
-
-  left: 210px;
-  top: 145px;
-
-  width: 140px;
-}
-
-.p03-mam-co {
-  --p03-angle: 3.5deg;
-  --p03-speed: 2160ms;
-
-  left: 38px;
-  top: 285px;
-
-  width: 135px;
-}
-
-.p03-cheers {
-  --p03-angle: 5deg;
-  --p03-speed: 1880ms;
-
-  left: 190px;
-  top: 423px;
-
-  width: 136px;
-}
-
-
-.page03-layout
-.p03-event--02,
-
-.page03-layout
-.p03-mam-co,
-
-.page03-layout
-.p03-event--04 {
-  opacity: 0;
-
-  translate:
-    -72px 0;
-
-  transition:
-    translate
-    1045ms
-    var(--entry-ease),
-
-    opacity
-    636ms
-    ease;
-}
-
-.page03-layout
-.p03-kieu,
-
-.page03-layout
-.p03-event--03,
-
-.page03-layout
-.p03-cheers {
-  opacity: 0;
-
-  translate:
-    72px 0;
-
-  transition:
-    translate
-    1045ms
-    var(--entry-ease),
-
-    opacity
-    636ms
-    ease;
-}
-
-.page03-layout
-.p03-event--02,
-
-.page03-layout
-.p03-kieu {
-  transition-delay:
-    273ms;
-}
-
-.page03-layout
-.p03-mam-co,
-
-.page03-layout
-.p03-event--03 {
-  transition-delay:
-    545ms;
-}
-
-.page03-layout
-.p03-event--04,
-
-.page03-layout
-.p03-cheers {
-  transition-delay:
-    818ms;
-}
-
-.page03-layout.is-active
-.p03-event,
-
-.page03-layout.is-active
-.p03-illustration {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-.p03-event {
-  position: absolute;
-
-  z-index: 22;
-
-  width: 165px;
-
-  color: #304c3c;
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-}
-
-.p03-event h3,
-.p03-event p {
-  margin: 0;
-}
-
-.p03-event-title {
-  margin-bottom:
-    8px !important;
-
-  color: #ad4629;
-
-  font-size: 17px;
-
-  font-weight: 400;
-
-  line-height: 1;
-
-  white-space: nowrap;
-}
-
-.p03-event-date {
-  margin-bottom:
-    5px !important;
-
-  color: #ad4629;
-
-  font-size: 12px;
-
-  line-height: 1.1;
-
-  white-space: nowrap;
-}
-
-.p03-event-time {
-  position: relative;
-
-  left: 60px;
-  top: -17px;
-
-  margin-bottom:
-    10px !important;
-
-  color: #304c3c;
-
-  font-size: 11px;
-
-  line-height: 1.1;
-
-  white-space: nowrap;
-}
-
-
-/* DEVTOOLS EVENT 02 */
-
-.p03-event--02 {
-  left: 88px;
-  top: 177px;
-
-  width: 170px;
-}
-
-.p03-event--02
-.p03-event-time {
-  top: -18px;
-}
-
-.p03-event--02
-.p03-location {
-  left: -1px;
-  top: -21px;
-
-  width: 185px;
-
-  font-size: 8.7px;
-}
-
-.p03-event--02
-.p03-location strong {
-  font-size: 9.5px;
-}
-
-
-/* Bạn đã hide hai dòng địa chỉ này trong DevTools */
-
-.p03-event--02
-.p03-location
-> div
-> span {
-  display: none;
-}
-
-
-.p03-event--03 {
-  left: 215px;
-  top: 307px;
-}
-
-.p03-event--04 {
-  left: 50px;
-  top: 445px;
-}
-
-
-.p03-location {
-  position: relative;
-
-  top: -20px;
-
-  display: flex;
-
-  align-items: flex-start;
-
-  gap: 8px;
-
-  margin-top: 7px;
-
-  color: #304c3c;
-
-  font-size: 9.5px;
-
-  line-height: 1.42;
-}
-
-.p03-location > div {
-  display: flex;
-
-  flex-direction: column;
-
-  min-width: 0;
-}
-
-.p03-location strong {
-  display: block;
-
-  margin-bottom: 2px;
-
-  font-size: 10px;
-
-  font-weight: 400;
-
-  white-space: nowrap;
-}
-
-.p03-location
-> div
-> span {
-  position: relative;
-
-  left: -15px;
-
-  display: block;
-
-  white-space: nowrap;
-}
-
-.p03-event--04
-.p03-location
-> div
-> span {
-  left: 0;
-}
-
-.p03-location-pin {
-  position: relative;
-
-  flex:
-    0 0 auto;
-
-  width: 8px;
-  height: 8px;
-
-  margin-top: 2px;
-
-  border-radius:
-    50% 50% 50% 0;
-
-  background: #b64b2d;
-
-  transform:
-    rotate(-45deg);
-}
-
-.p03-location-pin::after {
-  content: "";
-
-  position: absolute;
-
-  left: 2.5px;
-  top: 2.5px;
-
-  width: 3px;
-  height: 3px;
-
-  border-radius: 50%;
-
-  background: #f3dfb8;
-}
-
-
-.p03-dress-code {
-  position: absolute;
-
-  z-index: 21;
-
-  left: 50%;
-  bottom: 34px;
-
-  width: 285px;
-  height: 68px;
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  clip-path:
-    inset(0 0 100% 0);
-
-  opacity: 0;
-
-  transition:
-    clip-path
-    955ms
-    cubic-bezier(.22, .8, .2, 1)
-    1318ms,
-
-    opacity
-    545ms
-    ease
-    1318ms;
-}
-
-.page03-layout.is-active
-.p03-dress-code {
-  clip-path:
-    inset(0 0 0 0);
-
-  opacity: 1;
-}
-
-.p03-dress-title {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 8px;
-
-  margin:
-    0 0 7px;
-
-  color: #405d48;
-
-  font-size: 12px;
-
-  font-weight: 600;
-}
-
-.p03-dress-title span {
-  color: #c38d31;
-
-  font-size: 9px;
-}
-
-.p03-color-list {
-  display: flex;
-
-  align-items: flex-start;
-
-  justify-content: center;
-
-  gap: 14px;
-}
-
-.p03-color-item {
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  gap: 3px;
-
-  min-width: 37px;
-
-  color: #3e4539;
-
-  font-size: 8.5px;
-
-  line-height: 1;
-}
-
-.p03-color {
-  display: block;
-
-  width: 23px;
-  height: 23px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, .92);
-
-  border-radius: 50%;
-}
-
-.p03-color--brown {
-  background: #85624e;
-}
-
-.p03-color--pink {
-  background: #ce9c95;
-}
-
-.p03-color--beige {
-  background: #dbccb5;
-}
-
-.p03-color--sage {
-  background: #c1d1af;
-}
-
-
-/* =========================================================
-   PAGE 06
-========================================================= */
-
-.page06-layout,
-.page06-layout * {
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-}
-
-.p06-confetti {
-  position: absolute;
-
-  z-index: 4;
-
-  left: 18px;
-  top: 25px;
-
-  width: 350px;
-  height: 600px;
-
-  object-fit: fill;
-
-  opacity: 0;
-
-  pointer-events: none;
-
-  scale: .96;
-
-  transition:
-    opacity 636ms ease,
-    scale 909ms ease;
-}
-
-.page06-layout.is-confetti-visible
-.p06-confetti {
-  opacity: .86;
-
-  scale: 1;
-}
-
-.p06-entry-fireworks {
-  position: absolute;
-
-  z-index: 35;
-
-  left: 50%;
-  top: 48%;
-
-  width: 1px;
-  height: 1px;
-
-  pointer-events: none;
-}
-
-.p06-cloud--01 {
-  right: 35px;
-  top: 37px;
-
-  width: 92px;
-}
-
-.p06-cloud--02 {
-  left: 18px;
-  top: 127px;
-
-  width: 67px;
-}
-
-.p06-cloud--03 {
-  right: -10px;
-  top: 332px;
-
-  width: 74px;
-}
-
-.p06-cloud--04 {
-  left: -5px;
-  top: 409px;
-
-  width: 70px;
-}
-
-.page06-layout
-.p06-cloud--02,
-
-.page06-layout
-.p06-cloud--04 {
-  opacity: 0;
-
-  translate:
-    -75px 0;
-
-  transition:
-    translate
-    var(--entry-duration)
-    var(--entry-ease),
-
-    opacity
-    636ms
-    ease;
-}
-
-.page06-layout
-.p06-cloud--01,
-
-.page06-layout
-.p06-cloud--03 {
-  opacity: 0;
-
-  translate:
-    75px 0;
-
-  transition:
-    translate
-    var(--entry-duration)
-    var(--entry-ease),
-
-    opacity
-    636ms
-    ease;
-}
-
-.page06-layout.is-active
-.p06-cloud {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-.p06-card-wrap {
-  position: absolute;
-
-  z-index: 16;
-
-  left: 50%;
-  top: 50%;
-
-  width: 246px;
-
-  transform:
-    translate(-50%, -50%);
-
-  opacity: 0;
-
-  translate:
-    0 20px;
-
-  transition:
-    translate
-    1000ms
-    var(--entry-ease)
-    136ms,
-
-    opacity
-    636ms
-    ease
-    136ms;
-}
-
-.page06-layout.is-active
-.p06-card-wrap {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-.p06-lucky-card {
-  position: relative;
-
-  z-index: 1;
-
-  display: block;
-
-  width: 100%;
-  height: 364px;
-
-  object-fit: fill;
-
-  clip-path:
-    inset(0 round 14px);
-
-  pointer-events: none;
-}
-
-.p06-title {
-  position: absolute;
-
-  z-index: 5;
-
-  left: 50%;
-  top: 45px;
-
-  width: 230px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  color: #315747;
-
-  text-align: center;
-
-  font-size: 26px;
-
-  font-weight: 400;
-
-  line-height: 1.2;
-}
-
-.p06-title span {
-  display: block;
-}
-
-.p06-number-slot {
-  position: absolute;
-
-  z-index: 7;
-
-  left: 50%;
-  top: 137px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  width: 205px;
-  height: 125px;
-
-  transform:
-    translateX(-50%);
-
-  color: #a52f15;
-
-  font-size: 94px;
-
-  font-variant-numeric:
-    tabular-nums;
-}
-
-.p06-card-wrap.is-idle-shuffling
-.p06-number-slot {
-  animation:
-    lucky-idle-jitter
-    344ms
-    ease-in-out
-    infinite;
-}
-
-@keyframes lucky-idle-jitter {
-
-  0%,
-  100% {
-    transform:
-      translateX(-50%)
-      translateY(0)
-      rotate(-1deg);
-  }
-
-  50% {
-    transform:
-      translateX(-50%)
-      translateY(-2px)
-      rotate(1deg);
-  }
-}
-
-.p06-card-wrap.is-rolling
-.p06-number-slot {
-  animation:
-    lucky-rolling-chaos
-    112ms
-    linear
-    infinite;
-}
-
-@keyframes lucky-rolling-chaos {
-
-  0% {
-    transform:
-      translateX(-50%)
-      translate(-3px, -2px);
-  }
-
-  25% {
-    transform:
-      translateX(-50%)
-      translate(3px, 1px);
-  }
-
-  50% {
-    transform:
-      translateX(-50%)
-      translate(-2px, 3px);
-  }
-
-  75% {
-    transform:
-      translateX(-50%)
-      translate(4px, -1px);
-  }
-
-  100% {
-    transform:
-      translateX(-50%);
-  }
-}
-
-.p06-card-wrap.is-revealed
-.p06-number-slot {
-  animation:
-    lucky-number-reveal
-    880ms
-    cubic-bezier(.16, .85, .25, 1);
-}
-
-@keyframes lucky-number-reveal {
-
-  0% {
-    transform:
-      translateX(-50%)
-      scale(.72);
-
-    opacity: .3;
-  }
-
-  40% {
-    transform:
-      translateX(-50%)
-      scale(1.20);
-
-    opacity: 1;
-  }
-
-  65% {
-    transform:
-      translateX(-50%)
-      scale(.96);
-  }
-
-  100% {
-    transform:
-      translateX(-50%)
-      scale(1);
-  }
-}
-
-.p06-number-hint {
-  position: absolute;
-
-  z-index: 8;
-
-  left: 50%;
-  top: 260px;
-
-  width: 224px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  color: #6b5a3d;
-
-  text-align: center;
-
-  font-size: 14px;
-
-  font-style: italic;
-
-  line-height: 1.25;
-
-  opacity: .82;
-}
-
-.p06-lucky-trigger {
-  position: absolute;
-
-  z-index: 10;
-
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  border: 0;
-
-  background: transparent;
-
-  cursor: pointer;
-}
-
-.p06-lucky-trigger:disabled {
-  cursor: default;
-}
-
-.p06-fireworks {
-  position: absolute;
-
-  z-index: 30;
-
-  left: 50%;
-  top: 214px;
-
-  width: 1px;
-  height: 1px;
-
-  overflow: visible;
-
-  pointer-events: none;
-}
-
-.p06-firework-particle {
-  --x: 0px;
-  --y: 0px;
-  --size: 4px;
-  --delay: 0ms;
-  --rotation: 0deg;
-  --particle-color: #b93b1e;
-
-  position: absolute;
-
-  width: var(--size);
-  height: var(--size);
-
-  border-radius: 50%;
-
-  background:
-    var(--particle-color);
-
-  opacity: 0;
-
-  animation:
-    lucky-firework-burst
-    920ms
-    cubic-bezier(.12, .72, .2, 1)
-    var(--delay)
-    forwards;
-}
-
-@keyframes lucky-firework-burst {
-
-  0% {
-    opacity: 1;
-
-    transform:
-      translate(-50%, -50%)
-      scale(.35);
-  }
-
-  100% {
-    opacity: 0;
-
-    transform:
-      translate(
-        calc(-50% + var(--x)),
-        calc(-50% + var(--y))
-      )
-      scale(.75)
-      rotate(
-        var(--rotation)
+      throw new Error(
+        "Google Sheet không có danh sách khách."
       );
-  }
-}
+    }
 
 
-.p06-bottom-items {
-  position: absolute;
+    /*
+      -----------------------------------------------------
+      PASS 1:
+      tìm chính xác slug trong G.
+      -----------------------------------------------------
+    */
 
-  z-index: 24;
+    for (
+      let i = 0;
+      i < rows.length;
+      i += 1
+    ) {
 
-  inset: 0;
+      const row =
+        rows[i];
 
-  transform:
-    translateY(-25px);
 
-  pointer-events: none;
-}
+      const inviteLink =
+        getGvizDisplayCell(
+          row,
+          2
+        );
 
-.p06-lucky-item {
-  position: absolute;
 
-  height: auto;
+      const slug =
+        extractGuestSlugFromLink(
+          inviteLink
+        );
 
-  transform-origin:
-    50% 90%;
 
-  pointer-events: none;
+      if (
+        slug
+        &&
+        slug ===
+        currentGuestSlug
+      ) {
 
-  opacity: 0;
+        return parseGuestRow(
+          row,
+          i
+        );
+      }
+    }
 
-  animation:
-    p06-item-sway
-    var(--p06-speed)
-    ease-in-out
-    infinite;
 
-  transition:
-    translate
-    1045ms
-    var(--entry-ease),
+    /*
+      -----------------------------------------------------
+      PASS 2:
+      fallback D.
 
-    opacity
-    636ms
-    ease;
-}
+      Có xử lý duplicate:
+      abc
+      abc-2
+      abc-3
+      -----------------------------------------------------
+    */
 
-@keyframes p06-item-sway {
-
-  0%,
-  100% {
-    transform:
-      rotate(
-        var(--p06-start)
+    const duplicateCounter =
+      Object.create(
+        null
       );
+
+
+    for (
+      let i = 0;
+      i < rows.length;
+      i += 1
+    ) {
+
+      const row =
+        rows[i];
+
+
+      const guestName =
+        String(
+          getGvizDisplayCell(
+            row,
+            0
+          )
+          ||
+          ""
+        )
+          .trim();
+
+
+      if (!guestName) {
+
+        continue;
+      }
+
+
+      const baseSlug =
+        slugifyGuestName(
+          guestName
+        );
+
+
+      if (!baseSlug) {
+
+        continue;
+      }
+
+
+      duplicateCounter[
+        baseSlug
+      ] =
+        (
+          duplicateCounter[
+            baseSlug
+          ]
+          ||
+          0
+        )
+        +
+        1;
+
+
+      const occurrence =
+        duplicateCounter[
+          baseSlug
+        ];
+
+
+      const slug =
+        occurrence === 1
+          ?
+          baseSlug
+          :
+          `${baseSlug}-${occurrence}`;
+
+
+      if (
+        slug ===
+        currentGuestSlug
+      ) {
+
+        return parseGuestRow(
+          row,
+          i
+        );
+      }
+    }
+
+
+    throw new Error(
+      `Không tìm thấy khách "${currentGuestSlug}" trong Google Sheet.`
+    );
   }
 
-  50% {
-    transform:
-      rotate(
-        var(--p06-end)
+
+  /* =======================================================
+     MAP GVIZ ROW -> WEBSITE DATA
+  ======================================================= */
+
+  function parseGuestRow(
+    row,
+    rowIndex
+  ) {
+
+    /*
+      select D,F,G,H,I,J,K,L,M,N
+
+      0 D
+      1 F
+      2 G
+      3 H
+      4 I
+      5 J
+      6 K
+      7 L
+      8 M
+      9 N
+    */
+
+    const luckyRaw =
+      getGvizCell(
+        row,
+        4
       );
-  }
-}
-
-.p06-ingots {
-  --p06-start: 5deg;
-  --p06-end: -5deg;
-  --p06-speed: 1960ms;
-
-  z-index: 25;
-
-  left: 46px;
-  top: 509px;
-
-  width: 64px;
-
-  translate:
-    -72px 0;
-}
 
 
-/* DEVTOOLS */
-
-.p06-knot {
-  --p06-start: 7deg;
-  --p06-end: -7deg;
-  --p06-speed: 1800ms;
-
-  z-index: 28;
-
-  left: 95px;
-  top: 501px;
-
-  width: 73px;
-
-  translate:
-    -72px 0;
-}
+    const guestCountRaw =
+      getGvizCell(
+        row,
+        7
+      );
 
 
-/* DEVTOOLS */
-
-.p06-bag {
-  --p06-start: -4deg;
-  --p06-end: 4deg;
-  --p06-speed: 2240ms;
-
-  z-index: 26;
-
-  left: 263px;
-  top: 490px;
-
-  width: 85px;
-
-  translate:
-    72px 0;
-}
-
-.p06-coins {
-  --p06-start: -8deg;
-  --p06-end: 8deg;
-  --p06-speed: 1720ms;
-
-  z-index: 29;
-
-  left: 227px;
-  top: 517px;
-
-  width: 62px;
-
-  translate:
-    72px 0;
-}
-
-.page06-layout.is-active
-.p06-lucky-item {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
+    const luckyNumber =
+      Number(
+        luckyRaw
+      );
 
 
-/* =========================================================
-   PAGE 07
-========================================================= */
-
-.page07-layout {
-  color:
-    var(--p07-green);
-
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-}
-
-.page07-layout * {
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-}
-
-.p07-top-left-decoration,
-.p07-butterfly,
-.p07-divider-ornament,
-.p07-field-lotus {
-  position: absolute;
-
-  height: auto;
-
-  pointer-events: none;
-}
+    const guestCount =
+      Number(
+        guestCountRaw
+      );
 
 
-/* DEVTOOLS */
+    return {
 
-.p07-top-left-decoration {
-  z-index: 8;
+      ok:
+        true,
 
-  left: 12px;
-  top: 22px;
+      guest:
+        currentGuestSlug,
 
-  width: 108px;
+      /*
+        +2 vì:
+        row 1 là header,
+        GViz rows bắt đầu từ dòng data đầu tiên.
+      */
 
-  transform-origin:
-    14% 8%;
+      row:
+        rowIndex + 2,
 
-  animation:
-    p07-branch-sway
-    2240ms
-    ease-in-out
-    infinite;
-}
+      name:
+        normalizeText(
+          getGvizDisplayCell(
+            row,
+            0
+          )
+        )
+          .trim(),
 
-@keyframes p07-branch-sway {
+      /*
+        QUAN TRỌNG:
+        Page 2 chỉ dùng cột F.
+      */
 
-  0%,
-  100% {
-    transform:
-      rotate(-2.5deg);
+      displayName:
+        normalizeText(
+          getGvizDisplayCell(
+            row,
+            1
+          )
+        )
+          .trim(),
+
+      displayNameSource:
+        "F / Google Sheet GViz",
+
+      inviteLink:
+        String(
+          getGvizDisplayCell(
+            row,
+            2
+          )
+          ||
+          ""
+        ),
+
+      luckyNumber:
+        Number.isInteger(
+          luckyNumber
+        )
+          ?
+          luckyNumber
+          :
+          "",
+
+      rsvpName:
+        normalizeText(
+          getGvizDisplayCell(
+            row,
+            5
+          )
+        )
+          .trim(),
+
+      attendance:
+        normalizeText(
+          getGvizDisplayCell(
+            row,
+            6
+          )
+        )
+          .trim(),
+
+      guestCount:
+        Number.isFinite(
+          guestCount
+        )
+          ?
+          guestCount
+          :
+          "",
+
+      message:
+        normalizeText(
+          getGvizDisplayCell(
+            row,
+            8
+          )
+        ),
+
+      video:
+        String(
+          getGvizDisplayCell(
+            row,
+            9
+          )
+          ||
+          ""
+        )
+    };
   }
 
-  50% {
-    transform:
-      rotate(2.5deg);
-  }
-}
 
+  /* =======================================================
+     REQUEST CURRENT GUEST
 
-/* DEVTOOLS */
+     Không chạm Apps Script GET.
+  ======================================================= */
 
-.p07-butterfly {
-  z-index: 8;
+  async function requestGuestData() {
 
-  right: 13px;
-  top: 30px;
+    if (
+      !currentGuestSlug
+    ) {
 
-  width: 90px;
+      return null;
+    }
 
-  animation:
-    p07-butterfly-float
-    1760ms
-    ease-in-out
-    infinite;
-}
 
-@keyframes p07-butterfly-float {
+    const response =
+      await gvizRequest();
 
-  0%,
-  100% {
-    translate:
-      0 0;
 
-    rotate:
-      -2deg;
-  }
+    const guest =
+      findGuestInGvizResponse(
+        response
+      );
 
-  50% {
-    translate:
-      -5px -9px;
 
-    rotate:
-      4deg;
-  }
-}
-
-
-/* DEVTOOLS */
-
-.p07-rsvp-title {
-  position: absolute;
-
-  z-index: 10;
-
-  left: 50%;
-  top: 66px;
-
-  width: 260px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  color:
-    var(--p07-red);
-
-  font-size: 30px;
-
-  font-weight: 400;
-
-  line-height: 1.3;
-
-  text-align: center;
-}
-
-
-/* DEVTOOLS */
-
-.p07-divider-ornament--top {
-  z-index: 9;
-
-  left: 50%;
-  top: 136px;
-
-  width: 143px;
-
-  transform:
-    translateX(-50%);
-}
-
-
-/* DEVTOOLS */
-
-.p07-rsvp-subtitle {
-  position: absolute;
-
-  z-index: 10;
-
-  left: 50%;
-  top: 178px;
-
-  width: 290px;
-
-  margin: 0;
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  font-size: 11px;
-
-  font-style: italic;
-
-  line-height: 1.22;
-}
-
-
-.p07-rsvp-form {
-  position: absolute;
-
-  z-index: 15;
-
-  left: 50%;
-  top: 217px;
-
-  width: 316px;
-  height: 420px;
-
-  transform:
-    translateX(-50%);
-}
-
-.p07-form-group {
-  position: absolute;
-
-  left: 0;
-
-  width: 100%;
-
-  margin: 0;
-  padding: 0;
-
-  border: 0;
-}
-
-.p07-form-group--name {
-  top: 0;
-}
-
-
-/* DEVTOOLS */
-
-.p07-form-group--attendance {
-  top: 69px;
-}
-
-
-/* DEVTOOLS */
-
-.p07-form-group--count {
-  top: 140px;
-}
-
-
-/* DEVTOOLS */
-
-.p07-form-group--message {
-  top: 212px;
-}
-
-
-/* DEVTOOLS */
-
-.p07-form-group--video {
-  top: 301px;
-}
-
-
-.p07-form-label {
-  display: block;
-
-  margin:
-    0 0 5px;
-
-  color:
-    var(--p07-green);
-
-  font-size: 12px;
-}
-
-.p07-field,
-.p07-counter,
-.p07-video-field {
-  position: relative;
-
-  width: 100%;
-
-  border:
-    1px solid
-    rgba(154, 119, 72, .72);
-
-  border-radius: 3px;
-
-  background:
-    rgba(255, 250, 235, .38);
-
-  overflow: hidden;
-}
-
-.p07-field--name {
-  height: 35px;
-}
-
-.p07-text-input {
-  width: 100%;
-  height: 100%;
-
-  padding:
-    0 48px
-    0 14px;
-
-  border: 0;
-  outline: none;
-
-  background: transparent;
-
-  font-size: 11.5px;
-
-  font-style: italic;
-}
-
-.p07-text-input::placeholder,
-.p07-message-input::placeholder {
-  color:
-    rgba(89, 72, 62, .45);
-
-  opacity: 1;
-}
-
-.p07-field-lotus {
-  z-index: 4;
-
-  right: 3px;
-  bottom: -7px;
-
-  width: 39px;
-}
-
-.p07-attendance-options {
-  display: grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap: 12px;
-}
-
-.p07-attendance-option {
-  position: relative;
-
-  display: flex;
-
-  align-items: center;
-
-  height: 39px;
-
-  padding:
-    0 17px;
-
-  border:
-    1px solid
-    rgba(154, 119, 72, .64);
-
-  border-radius: 3px;
-
-  background:
-    rgba(255, 250, 235, .34);
-
-  cursor: pointer;
-}
-
-.p07-attendance-option input {
-  position: absolute;
-
-  opacity: 0;
-}
-
-.p07-radio-mark {
-  position: relative;
-
-  width: 20px;
-  height: 20px;
-
-  margin-right: 14px;
-
-  border:
-    1.4px solid
-    var(--p07-green);
-
-  border-radius: 50%;
-}
-
-.p07-radio-mark::after {
-  content: "";
-
-  position: absolute;
-
-  left: 50%;
-  top: 50%;
-
-  width: 12px;
-  height: 12px;
-
-  border-radius: 50%;
-
-  background:
-    var(--p07-red);
-
-  transform:
-    translate(-50%, -50%)
-    scale(0);
-
-  transition:
-    transform 200ms ease;
-}
-
-.p07-attendance-option
-input:checked
-+
-.p07-radio-mark::after {
-  transform:
-    translate(-50%, -50%)
-    scale(1);
-}
-
-.p07-attendance-text {
-  font-size: 16px;
-}
-
-.p07-counter {
-  display: grid;
-
-  grid-template-columns:
-    1fr 1fr 1fr;
-
-  align-items: center;
-
-  height: 38px;
-}
-
-.p07-counter-button {
-  height: 100%;
-
-  border: 0;
-
-  background: transparent;
-
-  color:
-    var(--p07-green);
-
-  font-size: 22px;
-
-  cursor: pointer;
-}
-
-.p07-counter-value {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  color:
-    var(--p07-green);
-
-  font-size: 18px;
-}
-
-.p07-field--message {
-  height: 57px;
-}
-
-.p07-message-input {
-  width: 100%;
-  height: 100%;
-
-  padding:
-    10px 48px
-    8px 14px;
-
-  border: 0;
-  outline: none;
-
-  resize: none;
-
-  background: transparent;
-
-  font-size: 11px;
-
-  font-style: italic;
-}
-
-.p07-field-lotus--message {
-  right: 1px;
-  bottom: -8px;
-
-  width: 42px;
-}
-
-
-/* VIDEO = GOOGLE DRIVE LINK */
-
-.p07-video-field {
-  display: flex;
-
-  align-items: center;
-
-  height: 38px;
-
-  color:
-    var(--p07-green);
-
-  text-decoration: none;
-
-  cursor: pointer;
-}
-
-.p07-video-field:visited {
-  color:
-    var(--p07-green);
-}
-
-.p07-video-text {
-  width: 100%;
-
-  padding:
-    0 48px
-    0 14px;
-
-  overflow: hidden;
-
-  color:
-    var(--p07-green);
-
-  font-size: 10.5px;
-
-  font-style: italic;
-
-  line-height: 38px;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-}
-
-.p07-field-lotus--video {
-  right: 2px;
-  bottom: -7px;
-
-  width: 36px;
-}
-
-
-/* DEVTOOLS SUBMIT */
-
-.p07-submit {
-  position: absolute;
-
-  left: 50%;
-  top: 362px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 12px;
-
-  width: 236px;
-  height: 40px;
-
-  transform:
-    translateX(-50%);
-
-  border:
-    1px solid #8f2f1c;
-
-  border-radius: 18px;
-
-  background:
-    linear-gradient(
-      180deg,
-      #b83d27,
-      #9f2f20
+    console.log(
+      "[Wedding] Sheet guest:",
+      guest
     );
 
-  color: #fff9e9;
 
-  font-size: 15px;
-
-  cursor: pointer;
-}
-
-.p07-submit:disabled {
-  opacity: .82;
-
-  cursor: default;
-}
-
-.p07-submit-icon {
-  width: 18px;
-  height: 18px;
-
-  fill: none;
-
-  stroke: #fff9e9;
-
-  stroke-width: 1.8;
-}
-
-
-/* PAGE 07 ENTRY */
-
-.page07-layout
-.p07-top-left-decoration,
-
-.page07-layout
-.p07-butterfly,
-
-.page07-layout
-.p07-rsvp-title,
-
-.page07-layout
-.p07-divider-ornament--top,
-
-.page07-layout
-.p07-rsvp-subtitle,
-
-.page07-layout
-.p07-rsvp-form {
-  opacity: 0;
-
-  transition:
-    opacity 636ms ease,
-    translate 1000ms var(--entry-ease);
-}
-
-.page07-layout
-.p07-top-left-decoration {
-  translate:
-    -45px 0;
-}
-
-.page07-layout
-.p07-butterfly {
-  translate:
-    45px 0;
-}
-
-.page07-layout
-.p07-rsvp-title,
-
-.page07-layout
-.p07-divider-ornament--top,
-
-.page07-layout
-.p07-rsvp-subtitle,
-
-.page07-layout
-.p07-rsvp-form {
-  translate:
-    0 -16px;
-}
-
-.page07-layout.is-active
-.p07-top-left-decoration,
-
-.page07-layout.is-active
-.p07-butterfly,
-
-.page07-layout.is-active
-.p07-rsvp-title,
-
-.page07-layout.is-active
-.p07-divider-ornament--top,
-
-.page07-layout.is-active
-.p07-rsvp-subtitle,
-
-.page07-layout.is-active
-.p07-rsvp-form {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-/* =========================================================
-   PAGE 08
-========================================================= */
-
-.page08-layout,
-.page08-layout * {
-  font-family:
-    "Times New Roman",
-    Times,
-    serif;
-}
-
-.page08-layout {
-  color: #345447;
-}
-
-
-/* DEVTOOLS TOP 45 */
-
-.p08-content {
-  position: absolute;
-
-  z-index: 15;
-
-  left: 50%;
-  top: 45px;
-
-  width: 356px;
-
-  transform:
-    translateX(-50%);
-
-  text-align: center;
-
-  pointer-events: none;
-
-  opacity: 0;
-
-  translate:
-    0 -18px;
-
-  transition:
-    opacity 636ms ease,
-    translate 1000ms var(--entry-ease);
-}
-
-.page08-layout.is-active
-.p08-content {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-.p08-thanks-divider {
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  width: 132px;
-
-  margin-left: auto;
-  margin-right: auto;
-
-  color: #a83a22;
-}
-
-.p08-thanks-divider span {
-  display: block;
-
-  width: 46px;
-  height: 1px;
-
-  background:
-    rgba(168, 58, 34, .75);
-}
-
-.p08-thanks-divider b {
-  margin:
-    0 7px;
-
-  color: #a83a22;
-
-  font-size: 13px;
-
-  font-weight: 400;
-}
-
-.p08-thanks-divider--title-bottom {
-  margin-top: 2px;
-}
-
-.p08-thanks-divider--middle {
-  margin-top: 6px;
-  margin-bottom: 6px;
-}
-
-.p08-title {
-  margin:
-    4px 0 0;
-
-  color: #a8301c;
-
-  font-size: 31px;
-
-  font-weight: 400;
-
-  line-height: 1;
-
-  letter-spacing: -.4px;
-}
-
-.p08-english-title {
-  margin:
-    7px 0 0;
-
-  color: #405948;
-
-  font-size: 10.5px;
-
-  letter-spacing: .55px;
-
-  white-space: nowrap;
-}
-
-.p08-vietnamese-copy {
-  width: 350px;
-
-  margin:
-    10px auto 0;
-
-  color: #405948;
-
-  font-size: 9px;
-
-  line-height: 1.25;
-
-  letter-spacing: 0;
-
-  word-spacing: 0;
-}
-
-
-/* DEVTOOLS PARAGRAPH 1 */
-
-.p08-vietnamese-copy
-p:nth-child(1) {
-  margin:
-    9px 6px;
-
-  font-size: 9px;
-
-  line-height: 1.25;
-}
-
-
-/* DEVTOOLS PARAGRAPH 2 */
-
-.p08-vietnamese-copy
-p:nth-child(2) {
-  margin:
-    9px 10px;
-
-  font-size: 9px;
-
-  line-height: 1.25;
-}
-
-
-/* DEVTOOLS PARAGRAPH 3 */
-
-.p08-vietnamese-copy
-p:nth-child(3) {
-  margin:
-    9px 8px
-    9px 2px;
-
-  font-size: 9px;
-
-  line-height: 1.25;
-}
-
-.p08-english-copy {
-  margin:
-    0 auto;
-
-  width: 340px;
-
-  color: #405948;
-
-  font-size: 8.8px;
-
-  line-height: 1.25;
-}
-
-.p08-with-love {
-  margin:
-    10px -98px 0 0;
-
-  color: #405948;
-
-  font-size: 10px;
-
-  font-style: italic;
-}
-
-.p08-signature {
-  margin:
-    2px -98px 0 0;
-
-  color: #a8301c;
-
-  font-size: 12px;
-
-  font-weight: 400;
-}
-
-
-/* DEVTOOLS CLOUD LEFT */
-
-.p08-cloud--left {
-  width: 77px;
-
-  left: 44px;
-  top: 382px;
-
-  opacity: 0;
-
-  translate:
-    -70px 0;
-
-  transition:
-    translate
-    1045ms
-    var(--entry-ease),
-
-    opacity
-    636ms
-    ease;
-}
-
-
-/* DEVTOOLS CLOUD RIGHT */
-
-.p08-cloud--right {
-  width: 60px;
-
-  right: 22px;
-  top: 358px;
-
-  opacity: 0;
-
-  translate:
-    70px 0;
-
-  transition:
-    translate
-    1045ms
-    var(--entry-ease),
-
-    opacity
-    636ms
-    ease;
-}
-
-.page08-layout.is-active
-.p08-cloud {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-/* BASE WATER */
-
-.p08-water-ground--base {
-  position: absolute;
-
-  z-index: 4;
-
-  width: 300px;
-
-  left: 190px;
-  bottom: 32px;
-
-  transform:
-    translateX(-50%);
-
-  opacity: 0;
-
-  translate:
-    0 25px;
-
-  transition:
-    translate
-    1091ms
-    var(--entry-ease)
-    164ms,
-
-    opacity
-    636ms
-    ease
-    164ms;
-}
-
-.page08-layout.is-active
-.p08-water-ground--base {
-  opacity: .47;
-
-  translate:
-    0 0;
-}
-
-
-/* DEVTOOLS MANSION BOTTOM 120 */
-
-.p08-masion {
-  position: absolute;
-
-  z-index: 7;
-
-  width: 233px;
-
-  left: 240px;
-  bottom: 120px;
-
-  transform:
-    translateX(-50%);
-
-  opacity: 0;
-
-  translate:
-    65px 0;
-
-  transition:
-    translate
-    1136ms
-    var(--entry-ease)
-    164ms,
-
-    opacity
-    636ms
-    ease
-    164ms;
-}
-
-.page08-layout.is-active
-.p08-masion {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-/* DEVTOOLS FRONT WATER BOTTOM 110 */
-
-.p08-water-ground--front {
-  position: absolute;
-
-  z-index: 8;
-
-  width: 112px;
-
-  left: 240px;
-  bottom: 110px;
-
-  transform:
-    translateX(-50%);
-
-  opacity: 0;
-
-  translate:
-    0 18px;
-
-  transition:
-    translate
-    1000ms
-    var(--entry-ease)
-    327ms,
-
-    opacity
-    636ms
-    ease
-    327ms;
-}
-
-.page08-layout.is-active
-.p08-water-ground--front {
-  opacity: .5;
-
-  translate:
-    0 0;
-}
-
-
-/* DEVTOOLS COUPLE BOTTOM 63 */
-
-.p08-couple {
-  position: absolute;
-
-  z-index: 10;
-
-  width: 120px;
-
-  left: 63px;
-  bottom: 63px;
-
-  opacity: 0;
-
-  translate:
-    -65px 0;
-
-  transition:
-    translate
-    1045ms
-    var(--entry-ease)
-    182ms,
-
-    opacity
-    636ms
-    ease
-    182ms;
-}
-
-.page08-layout.is-active
-.p08-couple {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-.p08-lotus {
-  position: absolute;
-
-  z-index: 9;
-
-  height: auto;
-
-  opacity: 0;
-
-  transition:
-    translate
-    1045ms
-    var(--entry-ease)
-    255ms,
-
-    opacity
-    636ms
-    ease
-    255ms;
-}
-
-
-/* DEVTOOLS */
-
-.p08-lotus--left {
-  width: 120px;
-
-  left: 1px;
-  top: 559px;
-  bottom: auto;
-
-  translate:
-    -65px 0;
-}
-
-
-/* DEVTOOLS */
-
-.p08-lotus--right {
-  width: 122px;
-
-  right: 11px;
-  top: 560px;
-  bottom: auto;
-
-  translate:
-    65px 0;
-}
-
-.page08-layout.is-active
-.p08-lotus {
-  opacity: 1;
-
-  translate:
-    0 0;
-}
-
-
-/* =========================================================
-   PERFORMANCE
-========================================================= */
-
-.invitation-page:not(.is-nearby)
-.p02-cloud,
-
-.invitation-page:not(.is-nearby)
-.p03-cloud,
-
-.invitation-page:not(.is-nearby)
-.p06-cloud,
-
-.invitation-page:not(.is-nearby)
-.p08-cloud,
-
-.invitation-page:not(.is-nearby)
-.p02-confetti-piece,
-
-.invitation-page:not(.is-nearby)
-.p02-procession-item,
-
-.invitation-page:not(.is-nearby)
-.p03-illustration,
-
-.invitation-page:not(.is-nearby)
-.p06-lucky-item,
-
-.invitation-page:not(.is-nearby)
-.p07-top-left-decoration,
-
-.invitation-page:not(.is-nearby)
-.p07-butterfly,
-
-.invitation-page:not(.is-nearby)
-.p08-lotus {
-  animation-play-state:
-    paused !important;
-}
-
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-@media (
-  prefers-reduced-motion:
-  reduce
-) {
-
-  *,
-  *::before,
-  *::after {
-    animation-duration:
-      .001ms !important;
-
-    animation-iteration-count:
-      1 !important;
-
-    transition-duration:
-      .001ms !important;
-  }
-}
-
-/* =========================================================
-   V12 — PAGE 02 FINAL DEVTOOLS + MOTION TUNING
-========================================================= */
-
-:root {
-  /* Entrance/transitions chậm hơn để nhìn rõ và mượt hơn. */
-  --entry-duration: 1364ms;
-
-  /* Ambient animation hơi nhanh hơn và biên độ lớn hơn. */
-  --ambient-duration: 1960ms;
-}
-
-
-/* ---------- PAGE 02: EXACT FINAL DEVTOOLS VALUES ---------- */
-
-.p02-invite {
-  top: 37px;
-}
-
-.p02-personalized-guest {
-  top: 62px;
-  width: 300px;
-
-  color: #405948;
-
-  font-size: 18px;
-  font-weight: 600;
-  font-style: italic;
-  line-height: 1.25;
-}
-
-.p02-divider {
-  display: none;
-}
-
-.p02-to {
-  top: 109px;
-  font-size: 14px;
-}
-
-.page02-layout .p02-wedding-title:nth-of-type(4) {
-  top: 137px;
-  font-size: 16px;
-  transform: translateX(-50%) scaleX(.95);
-}
-
-.page02-layout .p02-wedding-title:nth-of-type(5) {
-  top: 162px;
-  font-size: 16px;
-  transform: translateX(-50%) scaleX(.9);
-}
-
-.p02-couple-names {
-  top: 198px;
-  line-height: 1.55;
-}
-
-.p02-name {
-  font-size: 22px;
-  font-weight: 400;
-  transform: scaleX(1);
-}
-
-.p02-ampersand {
-  font-size: 19px;
-  font-weight: 400;
-  transform: scaleX(1);
-}
-
-
-/* Hình người Page 02 đứng yên, không sway liên tục. */
-.p02-procession-item {
-  animation: none !important;
-  transform: none !important;
-}
-
-
-/* ---------- SLOWER PAGE TRANSITIONS ---------- */
-
-.opening-page,
-.page-02 {
-  transition-duration: 636ms;
-}
-
-.page02-layout .p02-cloud,
-.page02-layout .p02-confetti-cluster,
-.page02-layout .p02-procession,
-.page03-layout .p03-cloud,
-.page06-layout .p06-cloud {
-  transition-duration: 1364ms, 818ms;
-}
-
-.page02-layout .p02-invite,
-.page02-layout .p02-personalized-guest,
-.page02-layout .p02-divider,
-.page02-layout .p02-to,
-.page02-layout .p02-wedding-title,
-.page02-layout .p02-couple-names,
-.page02-layout .p02-date-divider,
-.page02-layout .p02-ceremony-info,
-.page02-layout .p02-family-info {
-  transition-duration: 773ms, 1136ms;
-}
-
-.p03-title {
-  transition-duration: 1136ms, 773ms;
-}
-
-.p03-title-divider {
-  transition-duration: 773ms, 1136ms;
-  transition-delay: 173ms, 173ms;
-}
-
-.p03-timeline {
-  transition-duration: 1909ms, 727ms;
-  transition-delay: 200ms, 200ms;
-}
-
-.page03-layout .p03-event--02,
-.page03-layout .p03-mam-co,
-.page03-layout .p03-event--04,
-.page03-layout .p03-kieu,
-.page03-layout .p03-event--03,
-.page03-layout .p03-cheers {
-  transition-duration: 1364ms, 818ms;
-}
-
-.page03-layout .p03-event--02,
-.page03-layout .p03-kieu {
-  transition-delay: 345ms;
-}
-
-.page03-layout .p03-mam-co,
-.page03-layout .p03-event--03 {
-  transition-delay: 691ms;
-}
-
-.page03-layout .p03-event--04,
-.page03-layout .p03-cheers {
-  transition-delay: 1036ms;
-}
-
-.p03-dress-code {
-  transition-duration: 1227ms, 727ms;
-  transition-delay: 1591ms, 1591ms;
-}
-
-.p06-confetti {
-  transition-duration: 818ms, 1182ms;
-}
-
-.p06-card-wrap {
-  transition-duration: 1318ms, 818ms;
-  transition-delay: 173ms, 173ms;
-}
-
-.p06-lucky-item {
-  transition-duration: 1364ms, 818ms;
-}
-
-.page07-layout .p07-top-left-decoration,
-.page07-layout .p07-butterfly,
-.page07-layout .p07-rsvp-title,
-.page07-layout .p07-divider-ornament--top,
-.page07-layout .p07-rsvp-subtitle,
-.page07-layout .p07-rsvp-form {
-  transition-duration: 818ms, 1318ms;
-}
-
-.p08-cloud--left,
-.p08-cloud--right {
-  transition-duration: 1364ms, 818ms;
-}
-
-.p08-water-ground--base {
-  transition-duration: 1409ms, 818ms;
-  transition-delay: 209ms, 209ms;
-}
-
-.p08-masion {
-  transition-duration: 1500ms, 818ms;
-  transition-delay: 209ms, 209ms;
-}
-
-.p08-water-ground--front {
-  transition-duration: 1318ms, 818ms;
-  transition-delay: 400ms, 400ms;
-}
-
-.p08-couple {
-  transition-duration: 1364ms, 818ms;
-  transition-delay: 236ms, 236ms;
-}
-
-.p08-lotus {
-  transition-duration: 1364ms, 818ms;
-  transition-delay: 309ms, 309ms;
-}
-
-
-/* ---------- STRONGER / SLIGHTLY FASTER AMBIENT ANIMATION ---------- */
-
-@keyframes wedding-ambient-float {
-  0%,
-  100% {
-    transform: translateY(0);
+    return guest;
   }
 
-  50% {
-    transform: translateY(-9px);
-  }
-}
 
-.opening-card-image {
-  animation-duration: 1800ms;
-}
+  /* =======================================================
+     POST TO APPS SCRIPT
 
-@keyframes opening-card-shake {
-  0%,
-  50%,
-  100% {
-    transform: translate3d(0, 24px, 0) rotate(0);
-  }
+     Phần này của bạn đang chạy đúng.
+     Giữ nguyên.
+  ======================================================= */
 
-  57% {
-    transform: translate3d(-7px, 20px, 0) rotate(-2.7deg);
-  }
+  async function postToBackend(
+    data
+  ) {
 
-  64% {
-    transform: translate3d(8px, 21px, 0) rotate(2.9deg);
-  }
+    const body =
+      new URLSearchParams();
 
-  71% {
-    transform: translate3d(-7px, 20px, 0) rotate(-2.8deg);
-  }
 
-  78% {
-    transform: translate3d(7px, 22px, 0) rotate(2.5deg);
-  }
+    Object.entries(
+      data
+    )
+      .forEach(
+        (
+          [
+            key,
+            value
+          ]
+        ) => {
 
-  92% {
-    transform: translate3d(0, 24px, 0) rotate(0);
-  }
-}
+          if (
+            value === undefined
+            ||
+            value === null
+          ) {
 
-.monogram-pulse::before,
-.monogram-pulse::after {
-  animation-duration: 1920ms;
-}
+            return;
+          }
 
-.monogram-pulse::after {
-  animation-delay: 960ms;
-}
 
-@keyframes tap-ring {
-  0% {
-    transform: scale(.45);
-    opacity: 0;
-  }
+          body.append(
+            key,
+            String(
+              value
+            )
+          );
+        }
+      );
 
-  18% {
-    opacity: .64;
-  }
 
-  100% {
-    transform: scale(1.32);
-    opacity: 0;
-  }
-}
+    await fetch(
+      WEDDING_API_URL,
+      {
+        method:
+          "POST",
 
-.p02-confetti-piece {
-  animation-duration: 1520ms;
-}
+        mode:
+          "no-cors",
 
-@keyframes tiny-element-sway {
-  0%,
-  100% {
-    transform: translateY(0) rotate(-7deg);
+        cache:
+          "no-store",
+
+        redirect:
+          "follow",
+
+        credentials:
+          "omit",
+
+        body
+      }
+    );
   }
 
-  50% {
-    transform: translateY(-6px) rotate(7deg);
-  }
-}
 
-@keyframes p03-element-sway {
-  0%,
-  100% {
-    transform: rotate(calc(var(--p03-angle) * -1)) translateY(0);
-  }
+  /* =======================================================
+     SCALE
+  ======================================================= */
 
-  50% {
-    transform: rotate(var(--p03-angle)) translateY(-5px);
-  }
-}
+  function updateScale() {
 
-.p03-kieu {
-  --p03-angle: 3.8deg;
-  --p03-speed: 2080ms;
-}
+    const viewport =
+      window.visualViewport;
 
-.p03-mam-co {
-  --p03-angle: 4.2deg;
-  --p03-speed: 1920ms;
-}
 
-.p03-cheers {
-  --p03-angle: 6deg;
-  --p03-speed: 1680ms;
-}
+    const viewportWidth =
+      viewport?.width
+      ||
+      window.innerWidth;
 
-.p06-card-wrap.is-idle-shuffling .p06-number-slot {
-  animation-duration: 312ms;
-}
 
-@keyframes lucky-idle-jitter {
-  0%,
-  100% {
-    transform: translateX(-50%) translateY(0) rotate(-1.4deg);
-  }
+    const viewportHeight =
+      viewport?.height
+      ||
+      window.innerHeight;
 
-  50% {
-    transform: translateX(-50%) translateY(-3px) rotate(1.4deg);
-  }
-}
 
-.p06-card-wrap.is-rolling .p06-number-slot {
-  animation-duration: 96ms;
-}
+    const scale =
+      Math.min(
+        viewportWidth /
+        DESIGN_WIDTH,
 
-@keyframes lucky-rolling-chaos {
-  0% {
-    transform: translateX(-50%) translate(-5px, -3px);
-  }
+        viewportHeight /
+        DESIGN_HEIGHT
+      );
 
-  25% {
-    transform: translateX(-50%) translate(5px, 2px);
-  }
 
-  50% {
-    transform: translateX(-50%) translate(-4px, 4px);
+    root.style.setProperty(
+      "--design-scale",
+      String(
+        scale
+      )
+    );
+
+
+    root.style.setProperty(
+      "--render-width",
+      `${DESIGN_WIDTH * scale}px`
+    );
+
+
+    root.style.setProperty(
+      "--render-height",
+      `${DESIGN_HEIGHT * scale}px`
+    );
+
+
+    siteShell
+      ?.classList
+      .add(
+        "is-scale-ready"
+      );
   }
 
-  75% {
-    transform: translateX(-50%) translate(6px, -2px);
+
+  function scheduleScale() {
+
+    cancelAnimationFrame(
+      resizeRaf
+    );
+
+
+    resizeRaf =
+      requestAnimationFrame(
+        updateScale
+      );
   }
 
-  100% {
-    transform: translateX(-50%);
+
+  updateScale();
+
+
+  window.addEventListener(
+    "resize",
+    scheduleScale,
+    {
+      passive: true
+    }
+  );
+
+
+  window.visualViewport
+    ?.addEventListener(
+      "resize",
+      scheduleScale,
+      {
+        passive: true
+      }
+    );
+
+
+  /* =======================================================
+     SCROLL NGOÀI THIỆP
+  ======================================================= */
+
+  window.addEventListener(
+    "wheel",
+    (event) => {
+
+      if (
+        !pageMode
+        ||
+        !pageScroller
+      ) {
+
+        return;
+      }
+
+
+      if (
+        event.target
+        &&
+        pageScroller.contains(
+          event.target
+        )
+      ) {
+
+        return;
+      }
+
+
+      if (
+        Math.abs(
+          event.deltaY
+        )
+        <=
+        Math.abs(
+          event.deltaX
+        )
+      ) {
+
+        return;
+      }
+
+
+      event.preventDefault();
+
+
+      pageScroller.scrollTop +=
+        event.deltaY;
+    },
+    {
+      passive: false
+    }
+  );
+
+
+  /* =======================================================
+     IDLE
+  ======================================================= */
+
+  function runWhenIdle(
+    callback,
+    timeout = 1000
+  ) {
+
+    if (
+      "requestIdleCallback"
+      in window
+    ) {
+
+      return window
+        .requestIdleCallback(
+          callback,
+          {
+            timeout
+          }
+        );
+    }
+
+
+    return window.setTimeout(
+      callback,
+      160
+    );
   }
-}
 
-.p06-card-wrap.is-revealed .p06-number-slot {
-  animation-duration: 800ms;
-}
 
-@keyframes lucky-number-reveal {
-  0% {
-    transform: translateX(-50%) scale(.68);
-    opacity: .25;
+  /* =======================================================
+     PRELOAD
+  ======================================================= */
+
+  function preloadUrl(
+    url,
+    priority = "low"
+  ) {
+
+    if (!url) {
+
+      return Promise.resolve();
+    }
+
+
+    if (
+      urlPromises.has(
+        url
+      )
+    ) {
+
+      return urlPromises.get(
+        url
+      );
+    }
+
+
+    const promise =
+      new Promise(
+        (resolve) => {
+
+          const image =
+            new Image();
+
+
+          image.decoding =
+            "async";
+
+
+          try {
+
+            image.fetchPriority =
+              priority;
+
+          } catch (_) {}
+
+
+          const finish =
+            () => {
+
+              if (
+                typeof image.decode ===
+                "function"
+              ) {
+
+                image
+                  .decode()
+                  .catch(
+                    () => {}
+                  )
+                  .finally(
+                    resolve
+                  );
+
+              } else {
+
+                resolve();
+              }
+            };
+
+
+          image.addEventListener(
+            "load",
+            finish,
+            {
+              once: true
+            }
+          );
+
+
+          image.addEventListener(
+            "error",
+            resolve,
+            {
+              once: true
+            }
+          );
+
+
+          image.src =
+            url;
+
+
+          if (
+            image.complete
+          ) {
+
+            finish();
+          }
+        }
+      );
+
+
+    urlPromises.set(
+      url,
+      promise
+    );
+
+
+    return promise;
   }
 
-  40% {
-    transform: translateX(-50%) scale(1.26);
-    opacity: 1;
+
+  function loadImage(
+    image,
+    priority = "low"
+  ) {
+
+    if (!image) {
+
+      return Promise.resolve();
+    }
+
+
+    if (
+      imagePromises.has(
+        image
+      )
+    ) {
+
+      return imagePromises.get(
+        image
+      );
+    }
+
+
+    const source =
+      image.dataset.src;
+
+
+    if (!source) {
+
+      return Promise.resolve();
+    }
+
+
+    const promise =
+      new Promise(
+        (resolve) => {
+
+          try {
+
+            image.fetchPriority =
+              priority;
+
+          } catch (_) {}
+
+
+          const finish =
+            () => {
+
+              if (
+                typeof image.decode ===
+                "function"
+              ) {
+
+                image
+                  .decode()
+                  .catch(
+                    () => {}
+                  )
+                  .finally(
+                    resolve
+                  );
+
+              } else {
+
+                resolve();
+              }
+            };
+
+
+          image.addEventListener(
+            "load",
+            finish,
+            {
+              once: true
+            }
+          );
+
+
+          image.addEventListener(
+            "error",
+            resolve,
+            {
+              once: true
+            }
+          );
+
+
+          image.src =
+            source;
+
+
+          image.removeAttribute(
+            "data-src"
+          );
+
+
+          if (
+            image.complete
+          ) {
+
+            finish();
+          }
+        }
+      );
+
+
+    imagePromises.set(
+      image,
+      promise
+    );
+
+
+    return promise;
   }
 
-  65% {
-    transform: translateX(-50%) scale(.94);
+
+  function loadPage(
+    page,
+    priority = "low"
+  ) {
+
+    if (!page) {
+
+      return Promise.resolve();
+    }
+
+
+    if (
+      pagePromises.has(
+        page
+      )
+    ) {
+
+      return pagePromises.get(
+        page
+      );
+    }
+
+
+    const promise =
+      (async () => {
+
+        const images =
+          Array.from(
+            page.querySelectorAll(
+              "img[data-src]"
+            )
+          );
+
+
+        const jobs =
+          images.map(
+            (image) => {
+
+              return loadImage(
+                image,
+                priority
+              );
+            }
+          );
+
+
+        const spriteHost =
+          page.querySelector(
+            "[data-sprite-src]"
+          );
+
+
+        if (
+          spriteHost
+        ) {
+
+          const spriteUrl =
+            spriteHost
+              .dataset
+              .spriteSrc;
+
+
+          jobs.push(
+
+            preloadUrl(
+              spriteUrl,
+              priority
+            )
+              .then(
+                () => {
+
+                  spriteHost
+                    .style
+                    .setProperty(
+                      "--p02-confetti-sprite",
+                      `url("${spriteUrl}")`
+                    );
+
+
+                  spriteHost
+                    .removeAttribute(
+                      "data-sprite-src"
+                    );
+                }
+              )
+          );
+        }
+
+
+        await Promise.allSettled(
+          jobs
+        );
+
+
+        page.classList.add(
+          "is-assets-ready"
+        );
+      })();
+
+
+    pagePromises.set(
+      page,
+      promise
+    );
+
+
+    return promise;
   }
 
-  100% {
-    transform: translateX(-50%) scale(1);
+
+  /* =======================================================
+     PAGE 02 GUEST NAME
+  ======================================================= */
+
+  function ensureGuestNameElement() {
+
+    if (
+      personalizedGuestName
+    ) {
+
+      return personalizedGuestName;
+    }
+
+
+    if (
+      !page02Layout
+    ) {
+
+      return null;
+    }
+
+
+    const invite =
+      page02Layout.querySelector(
+        ".p02-invite"
+      );
+
+
+    if (!invite) {
+
+      return null;
+    }
+
+
+    personalizedGuestName =
+      document.createElement(
+        "p"
+      );
+
+
+    personalizedGuestName.id =
+      "personalizedGuestName";
+
+
+    personalizedGuestName.className =
+      "p02-personalized-guest";
+
+
+    invite.insertAdjacentElement(
+      "afterend",
+      personalizedGuestName
+    );
+
+
+    return personalizedGuestName;
   }
-}
 
-.p06-ingots {
-  --p06-start: 7deg;
-  --p06-end: -7deg;
-  --p06-speed: 1760ms;
-}
 
-.p06-knot {
-  --p06-start: 9deg;
-  --p06-end: -9deg;
-  --p06-speed: 1600ms;
-}
+  function renderGuestDisplayName(
+    value
+  ) {
 
-.p06-bag {
-  --p06-start: -6deg;
-  --p06-end: 6deg;
-  --p06-speed: 2000ms;
-}
+    const element =
+      ensureGuestNameElement();
 
-.p06-coins {
-  --p06-start: -10deg;
-  --p06-end: 10deg;
-  --p06-speed: 1520ms;
-}
 
-.p07-top-left-decoration {
-  animation-duration: 2000ms;
-}
+    if (!element) {
 
-@keyframes p07-branch-sway {
-  0%,
-  100% {
-    transform: rotate(-3.5deg);
+      return;
+    }
+
+
+    const text =
+      normalizeText(
+        value
+      )
+        .trim();
+
+
+    if (!text) {
+
+      element.textContent =
+        "";
+
+      element.hidden =
+        true;
+
+      element.style.display =
+        "none";
+
+      return;
+    }
+
+
+    element.textContent =
+      text;
+
+
+    element.hidden =
+      false;
+
+
+    element.removeAttribute(
+      "hidden"
+    );
+
+
+    /*
+      Đúng vị trí bạn đã test
+      và ép thành công trong DevTools.
+    */
+
+    element.style.cssText =
+      [
+        "position:absolute",
+        "z-index:25",
+        "left:50%",
+        "top:62px",
+        "width:300px",
+        "margin:0",
+        "padding:0",
+        "transform:translateX(-50%)",
+        "display:block",
+        "visibility:visible",
+        "pointer-events:none",
+        "text-align:center",
+        "color:#405948",
+        'font-family:"Times New Roman", Times, serif',
+        "font-size:18px",
+        "font-weight:600",
+        "font-style:italic",
+        "line-height:1.25",
+        "letter-spacing:0",
+        "white-space:normal"
+      ]
+        .join(";")
+      +
+      ";";
+
+
+    /*
+      Nếu dữ liệu tên khách về sau khi Page 2 đã bắt đầu hiện,
+      vẫn cho riêng tên khách chạy transition từ trên xuống.
+    */
+    if (
+      page02Layout
+        ?.classList
+        .contains(
+          "is-entering"
+        )
+    ) {
+      element.style.opacity =
+        "0";
+
+      element.style.translate =
+        "0 -16px";
+
+      requestAnimationFrame(
+        () => {
+          requestAnimationFrame(
+            () => {
+              element.style.opacity =
+                "";
+
+              element.style.translate =
+                "";
+            }
+          );
+        }
+      );
+    }
+
+
+    console.log(
+      "[Wedding] Page 2 F:",
+      text
+    );
   }
 
-  50% {
-    transform: rotate(3.5deg);
+
+  /* =======================================================
+     APPLY GUEST DATA
+  ======================================================= */
+
+  function applyGuestData(
+    response
+  ) {
+
+    if (
+      !response
+      ||
+      response.ok !==
+      true
+    ) {
+
+      return;
+    }
+
+
+    currentGuestData =
+      response;
+
+
+    guestDataLoaded =
+      true;
+
+
+    /* ===================================================
+       PAGE 2 = F
+    =================================================== */
+
+    const displayName =
+      normalizeText(
+        response.displayName
+        ||
+        ""
+      )
+        .trim();
+
+
+    renderGuestDisplayName(
+      displayName
+    );
+
+
+    if (
+      displayName
+    ) {
+
+      document.title =
+        `${displayName} | Bách & Thư`;
+    }
+
+
+    /* ===================================================
+       RSVP NAME
+
+       J nếu đã nhập.
+       Nếu chưa thì D.
+    =================================================== */
+
+    if (
+      rsvpGuestName
+    ) {
+
+      if (
+        response.rsvpName
+      ) {
+
+        rsvpGuestName.value =
+          normalizeText(
+            response.rsvpName
+          );
+
+      } else if (
+        response.name
+      ) {
+
+        rsvpGuestName.value =
+          normalizeText(
+            response.name
+          );
+      }
+    }
+
+
+    /* ===================================================
+       LUCKY
+    =================================================== */
+
+    const existingLucky =
+      Number(
+        response.luckyNumber
+      );
+
+
+    if (
+      Number.isInteger(
+        existingLucky
+      )
+      &&
+      existingLucky >=
+        LUCKY_MIN
+      &&
+      existingLucky <=
+        LUCKY_MAX
+    ) {
+
+      lockLuckyNumber(
+        existingLucky,
+        false
+      );
+    }
+
+
+    /* ===================================================
+       ATTENDANCE
+    =================================================== */
+
+    if (
+      response.attendance ===
+      "Không"
+    ) {
+
+      if (
+        rsvpAttendanceNo
+      ) {
+
+        rsvpAttendanceNo.checked =
+          true;
+      }
+
+
+      if (
+        rsvpAttendanceYes
+      ) {
+
+        rsvpAttendanceYes.checked =
+          false;
+      }
+
+
+    } else if (
+      response.attendance ===
+      "Có"
+    ) {
+
+      if (
+        rsvpAttendanceYes
+      ) {
+
+        rsvpAttendanceYes.checked =
+          true;
+      }
+
+
+      if (
+        rsvpAttendanceNo
+      ) {
+
+        rsvpAttendanceNo.checked =
+          false;
+      }
+    }
+
+
+    /* ===================================================
+       COUNT
+    =================================================== */
+
+    if (
+      response.guestCount !==
+        ""
+      &&
+      response.guestCount !==
+        null
+      &&
+      response.guestCount !==
+        undefined
+    ) {
+
+      const savedCount =
+        Number(
+          response.guestCount
+        );
+
+
+      if (
+        Number.isInteger(
+          savedCount
+        )
+        &&
+        savedCount >=
+          0
+        &&
+        savedCount <=
+          10
+      ) {
+
+        rsvpCount =
+          savedCount;
+      }
+    }
+
+
+    /* ===================================================
+       MESSAGE
+    =================================================== */
+
+    if (
+      rsvpMessage
+    ) {
+
+      rsvpMessage.value =
+        normalizeText(
+          response.message
+          ||
+          ""
+        );
+    }
+
+
+    /* ===================================================
+       VIDEO FOLDER
+
+       N = link folder riêng của khách.
+    =================================================== */
+
+    const videoFolderUrl =
+      String(
+        response.video
+        ||
+        ""
+      )
+        .trim();
+
+
+    if (
+      rsvpVideoLink
+    ) {
+
+      if (
+        isDriveFolderUrl(
+          videoFolderUrl
+        )
+      ) {
+
+        rsvpVideoLink.href =
+          videoFolderUrl;
+
+        rsvpVideoLink.dataset.ready =
+          "true";
+
+      } else {
+
+        rsvpVideoLink.href =
+          "#";
+
+        rsvpVideoLink.dataset.ready =
+          "false";
+      }
+    }
+
+
+    updateCount();
+
+    updateAttendanceNoLabel();
+
+
+    if (
+      response.attendance ===
+        "Có"
+      ||
+      response.attendance ===
+        "Không"
+    ) {
+
+      setSubmitText(
+        "CẬP NHẬT XÁC NHẬN"
+      );
+    }
   }
-}
 
-.p07-butterfly {
-  animation-duration: 1560ms;
-}
 
-@keyframes p07-butterfly-float {
-  0%,
-  100% {
-    translate: 0 0;
-    rotate: -3deg;
+  /* =======================================================
+     LOAD GUEST
+  ======================================================= */
+
+  async function loadGuestPersonalization(
+    force = false
+  ) {
+
+    if (
+      !currentGuestSlug
+    ) {
+
+      return null;
+    }
+
+
+    if (
+      guestDataLoaded
+      &&
+      !force
+    ) {
+
+      return currentGuestData;
+    }
+
+
+    if (
+      guestLoadPromise
+      &&
+      !force
+    ) {
+
+      return guestLoadPromise;
+    }
+
+
+    guestLoadPromise =
+      (async () => {
+
+        const delays = [
+          0,
+          500,
+          1200
+        ];
+
+
+        let lastError =
+          null;
+
+
+        for (
+          let i = 0;
+          i < delays.length;
+          i += 1
+        ) {
+
+          if (
+            delays[i] > 0
+          ) {
+
+            await sleep(
+              delays[i]
+            );
+          }
+
+
+          try {
+
+            const response =
+              await requestGuestData();
+
+
+            applyGuestData(
+              response
+            );
+
+
+            return response;
+
+
+          } catch (error) {
+
+            lastError =
+              error;
+
+
+            console.warn(
+              `[Wedding] Sheet load attempt ${i + 1}`,
+              error
+            );
+          }
+        }
+
+
+        console.error(
+          "[Wedding] Sheet load failed",
+          lastError
+        );
+
+
+        return null;
+      })();
+
+
+    try {
+
+      return await guestLoadPromise;
+
+    } finally {
+
+      guestLoadPromise =
+        null;
+    }
   }
 
-  50% {
-    translate: -7px -12px;
-    rotate: 5deg;
+
+  /* =======================================================
+     PAGE 02 ENTRANCE
+  ======================================================= */
+
+  function playPage02Entrance() {
+
+    if (
+      !page02Layout
+    ) {
+
+      return;
+    }
+
+
+    page02Layout
+      .classList
+      .remove(
+        "is-entering"
+      );
+
+
+    void page02Layout.offsetWidth;
+
+
+    requestAnimationFrame(
+      () => {
+
+        requestAnimationFrame(
+          () => {
+
+            page02Layout
+              .classList
+              .add(
+                "is-entering"
+              );
+
+
+            if (
+              currentGuestData
+              ?.displayName
+            ) {
+
+              renderGuestDisplayName(
+                currentGuestData
+                  .displayName
+              );
+            }
+          }
+        );
+      }
+    );
   }
-}
-
-
-/* ---------- PAGE 08: TEXT REVEALS ONE LINE AT A TIME ---------- */
-
-.p08-content,
-.page08-layout.is-active .p08-content {
-  opacity: 1;
-  translate: 0 0;
-  transition: none;
-}
-
-.p08-reveal-item,
-.p08-reveal-line,
-.p08-reveal-decoration {
-  opacity: 0;
-  transform: translateY(-8px);
-
-  transition:
-    opacity 773ms ease var(--p08-delay, 0ms),
-    transform 1000ms var(--entry-ease) var(--p08-delay, 0ms);
-}
-
-.p08-reveal-line {
-  display: block;
-}
-
-.page08-layout.is-active .p08-reveal-item,
-.page08-layout.is-active .p08-reveal-line,
-.page08-layout.is-active .p08-reveal-decoration {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Lotus Page 08 vẫn đứng yên như đã chốt. */
-.p08-lotus {
-  animation: none !important;
-}
-
-
-
-/* =========================================================
-   V13 — FINAL MOTION / PAGE 02 / PAGE 07 / PAGE 08
-========================================================= */
-
-/* PAGE 02: text xuất hiện lần lượt từ trên xuống dưới. */
-.page02-layout .p02-invite,
-.page02-layout .p02-personalized-guest,
-.page02-layout .p02-to,
-.page02-layout .p02-wedding-title,
-.page02-layout .p02-couple-names,
-.page02-layout .p02-date-divider,
-.page02-layout .p02-ceremony-info,
-.page02-layout .p02-family-info {
-  opacity: 0;
-  translate: 0 -16px;
-  transition:
-    opacity 818ms ease,
-    translate 1227ms var(--entry-ease);
-}
-
-.page02-layout.is-entering .p02-invite,
-.page02-layout.is-entering .p02-personalized-guest,
-.page02-layout.is-entering .p02-to,
-.page02-layout.is-entering .p02-wedding-title,
-.page02-layout.is-entering .p02-couple-names,
-.page02-layout.is-entering .p02-date-divider,
-.page02-layout.is-entering .p02-ceremony-info,
-.page02-layout.is-entering .p02-family-info {
-  opacity: 1;
-  translate: 0 0;
-}
-
-.page02-layout .p02-invite { transition-delay: 0ms; }
-.page02-layout .p02-personalized-guest { transition-delay: 136ms; }
-.page02-layout .p02-to { transition-delay: 273ms; }
-.page02-layout .p02-wedding-title:nth-of-type(4) { transition-delay: 409ms; }
-.page02-layout .p02-wedding-title:nth-of-type(5) { transition-delay: 545ms; }
-.page02-layout .p02-couple-names { transition-delay: 691ms; }
-.page02-layout .p02-date-divider { transition-delay: 845ms; }
-.page02-layout .p02-ceremony-info { transition-delay: 991ms; }
-.page02-layout .p02-family-info { transition-delay: 1145ms; }
-
-/* PAGE 07: nội dung form xuất hiện lần lượt từ trên xuống dưới. */
-.page07-layout .p07-rsvp-form {
-  opacity: 1;
-  translate: 0 0;
-  transition: none;
-}
-
-.page07-layout .p07-rsvp-title,
-.page07-layout .p07-divider-ornament--top,
-.page07-layout .p07-rsvp-subtitle,
-.page07-layout .p07-form-group,
-.page07-layout .p07-submit {
-  opacity: 0;
-  translate: 0 -16px;
-  transition:
-    opacity 818ms ease,
-    translate 1227ms var(--entry-ease);
-}
-
-.page07-layout.is-active .p07-rsvp-title,
-.page07-layout.is-active .p07-divider-ornament--top,
-.page07-layout.is-active .p07-rsvp-subtitle,
-.page07-layout.is-active .p07-form-group,
-.page07-layout.is-active .p07-submit {
-  opacity: 1;
-  translate: 0 0;
-}
-
-.page07-layout .p07-rsvp-title { transition-delay: 73ms; }
-.page07-layout .p07-divider-ornament--top { transition-delay: 209ms; }
-.page07-layout .p07-rsvp-subtitle { transition-delay: 345ms; }
-.page07-layout .p07-form-group--name { transition-delay: 500ms; }
-.page07-layout .p07-form-group--attendance { transition-delay: 636ms; }
-.page07-layout .p07-form-group--count { transition-delay: 773ms; }
-.page07-layout .p07-form-group--message { transition-delay: 909ms; }
-.page07-layout .p07-form-group--video { transition-delay: 1045ms; }
-.page07-layout .p07-submit { transition-delay: 1182ms; }
-
-/* PAGE 08: body text gọn hơn. */
-.p08-vietnamese-copy,
-.p08-vietnamese-copy p:nth-child(1),
-.p08-vietnamese-copy p:nth-child(2),
-.p08-vietnamese-copy p:nth-child(3),
-.p08-english-copy {
-  line-height: 1.25;
-}
-
-
-/* =========================================================
-   V14 — MOTION SPEED TUNING
-   Transition speed: +10%
-   Animation speed: +25%
-========================================================= */
-
-/*
-  Timing đã được rút ngắn trực tiếp trên toàn bộ transition/animation
-  phía trên để giữ nguyên biên độ, easing và thứ tự hiệu ứng.
-*/
-
-
-/* =========================================================
-   V15 — PAGE 08 MOTION BALANCE
-   - Text reveal nhanh hơn, theo từng đoạn.
-   - Các visual element vào chậm hơn để match phần chữ.
-========================================================= */
-
-/* TEXT: reveal theo đoạn, nhanh và gọn hơn. */
-.p08-reveal-item,
-.p08-reveal-decoration,
-.p08-reveal-paragraph {
-  opacity: 0;
-  transform: translateY(-6px);
-
-  transition:
-    opacity 480ms ease var(--p08-delay, 0ms),
-    transform 620ms var(--entry-ease) var(--p08-delay, 0ms);
-}
-
-.page08-layout.is-active .p08-reveal-item,
-.page08-layout.is-active .p08-reveal-decoration,
-.page08-layout.is-active .p08-reveal-paragraph {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Không còn reveal từng dòng ở Page 08. */
-.p08-reveal-line {
-  display: inline;
-  opacity: 1;
-  transform: none;
-  transition: none;
-}
-
-/* VISUAL ELEMENTS: chậm hơn, kéo dài mềm hơn để đi cùng phần text. */
-.p08-cloud--left,
-.p08-cloud--right {
-  transition-duration:
-    1650ms,
-    1000ms;
-}
-
-.p08-water-ground--base {
-  transition-duration:
-    1750ms,
-    1050ms;
-
-  transition-delay:
-    150ms,
-    150ms;
-}
-
-.p08-masion {
-  transition-duration:
-    1850ms,
-    1050ms;
-
-  transition-delay:
-    180ms,
-    180ms;
-}
-
-.p08-water-ground--front {
-  transition-duration:
-    1700ms,
-    1000ms;
-
-  transition-delay:
-    340ms,
-    340ms;
-}
-
-.p08-couple {
-  transition-duration:
-    1750ms,
-    1000ms;
-
-  transition-delay:
-    210ms,
-    210ms;
-}
-
-.p08-lotus {
-  transition-duration:
-    1700ms,
-    1000ms;
-
-  transition-delay:
-    270ms,
-    270ms;
-
-  animation: none !important;
-}
-
-
-/* =========================================================
-   V16 — PAGE 08 TEXT WRAP REVIEW
-========================================================= */
-
-.p08-vietnamese-copy,
-.p08-vietnamese-copy p:nth-child(1),
-.p08-vietnamese-copy p:nth-child(2),
-.p08-vietnamese-copy p:nth-child(3) {
-  font-size: 9.5px;
-  line-height: 1.25;
-}
-
-.p08-english-copy {
-  font-size: 9.3px;
-  line-height: 1.25;
-}
-
-.p08-copy-line {
-  display: block;
-  white-space: nowrap;
-}
-
-/* Reveal vẫn theo từng đoạn; line chỉ giữ cách xuống dòng đẹp. */
-.p08-reveal-paragraph .p08-copy-line {
-  opacity: 1;
-  transform: none;
-  transition: none;
-}
-
-
-/* =========================================================
-   V17 — PAGE 08 FONT SIZE
-   Transition giữ nguyên như v16.
-========================================================= */
-
-.p08-vietnamese-copy,
-.p08-vietnamese-copy p:nth-child(1),
-.p08-vietnamese-copy p:nth-child(2),
-.p08-vietnamese-copy p:nth-child(3) {
-  font-size: 10.2px;
-  line-height: 1.25;
-}
-
-.p08-english-copy {
-  font-size: 10px;
-  line-height: 1.25;
-}
-
-
-/* =========================================================
-   V18 — PAGE 08 LINE HEIGHT
-   Font size và transition giữ nguyên v17.
-========================================================= */
-
-.p08-vietnamese-copy,
-.p08-vietnamese-copy p:nth-child(1),
-.p08-vietnamese-copy p:nth-child(2),
-.p08-vietnamese-copy p:nth-child(3),
-.p08-english-copy {
-  line-height: 1.3;
-}
-
-
-/* =========================================================
-   V19 — AMBIENT ANIMATION BALANCE
-   - Chỉ chỉnh animation lặp liên tục.
-   - Không đổi transition đã chốt.
-   - Các element cùng page dùng cùng nhịp.
-   - Tốc độ tối thiểu nhanh hơn ~15% so với element nhanh nhất
-     của page ở bản trước.
-========================================================= */
-
-/* PAGE 01 — card + pulse cùng nhịp */
-.opening-card-image,
-.monogram-pulse::before,
-.monogram-pulse::after {
-  animation-duration: 1560ms;
-}
-
-.monogram-pulse::after {
-  animation-delay: 780ms;
-}
-
-
-/* PAGE 02 — mây + confetti cùng nhịp */
-.page02-layout .p02-cloud,
-.page02-layout .p02-confetti-piece {
-  animation-duration: 1320ms;
-}
-
-
-/* PAGE 03 — mây + 3 illustration cùng nhịp */
-.page03-layout .p03-cloud,
-.page03-layout .p03-illustration {
-  animation-duration: 1460ms;
-}
-
-.p03-kieu,
-.p03-mam-co,
-.p03-cheers {
-  --p03-speed: 1460ms;
-}
-
-
-/* PAGE 06 — mây + lucky decorative items cùng nhịp
-   Lucky-number rolling/reveal KHÔNG chỉnh ở bước này. */
-.page06-layout .p06-cloud,
-.page06-layout .p06-lucky-item {
-  animation-duration: 1320ms;
-}
-
-.p06-ingots,
-.p06-knot,
-.p06-bag,
-.p06-coins {
-  --p06-speed: 1320ms;
-}
-
-
-/* PAGE 07 — branch + butterfly cùng nhịp */
-.page07-layout .p07-top-left-decoration,
-.page07-layout .p07-butterfly {
-  animation-duration: 1360ms;
-}
-
-
-/* PAGE 08 — chỉ mây có ambient animation.
-   Hai bông sen vẫn đứng yên như đã chốt. */
-.page08-layout .p08-cloud {
-  animation-duration: 1700ms;
-}
-
-.page08-layout .p08-lotus {
-  animation: none !important;
-}
+
+
+  /* =======================================================
+     FIREWORKS
+  ======================================================= */
+
+  const fireworkColors = [
+    "#a63019",
+    "#c99633",
+    "#e5b747",
+    "#315747",
+    "#d76b35",
+    "#f0d37b"
+  ];
+
+
+  function spawnFireworks(
+    target,
+    {
+      count = 90,
+      minDistance = 45,
+      maxDistance = 135,
+      cleanup = 1200
+    } = {}
+  ) {
+
+    if (!target) {
+
+      return;
+    }
+
+
+    target.replaceChildren();
+
+
+    const fragment =
+      document
+        .createDocumentFragment();
+
+
+    for (
+      let i = 0;
+      i < count;
+      i += 1
+    ) {
+
+      const particle =
+        document.createElement(
+          "span"
+        );
+
+
+      particle.className =
+        "p06-firework-particle";
+
+
+      const angle =
+        Math.random()
+        *
+        Math.PI
+        *
+        2;
+
+
+      const distance =
+        minDistance
+        +
+        Math.random()
+        *
+        (
+          maxDistance
+          -
+          minDistance
+        );
+
+
+      particle.style.setProperty(
+        "--x",
+        `${Math.cos(angle) * distance}px`
+      );
+
+
+      particle.style.setProperty(
+        "--y",
+        `${Math.sin(angle) * distance}px`
+      );
+
+
+      particle.style.setProperty(
+        "--size",
+        `${3 + Math.random() * 5}px`
+      );
+
+
+      particle.style.setProperty(
+        "--delay",
+        `${Math.random() * 120}ms`
+      );
+
+
+      particle.style.setProperty(
+        "--rotation",
+        `${Math.random() * 720}deg`
+      );
+
+
+      particle.style.setProperty(
+        "--particle-color",
+        fireworkColors[
+          Math.floor(
+            Math.random()
+            *
+            fireworkColors.length
+          )
+        ]
+      );
+
+
+      fragment.appendChild(
+        particle
+      );
+    }
+
+
+    target.appendChild(
+      fragment
+    );
+
+
+    setTimeout(
+      () => {
+
+        target.replaceChildren();
+
+      },
+      cleanup
+    );
+  }
+
+
+  function playPage06Entrance() {
+
+    if (!page06) {
+
+      return;
+    }
+
+
+    clearTimeout(
+      page06EntryTimer
+    );
+
+
+    page06
+      .classList
+      .remove(
+        "is-confetti-visible"
+      );
+
+
+    spawnFireworks(
+      page06EntryFireworks,
+      {
+        count:
+          145,
+
+        minDistance:
+          75,
+
+        maxDistance:
+          240,
+
+        cleanup:
+          1750
+      }
+    );
+
+
+    page06EntryTimer =
+      setTimeout(
+        () => {
+
+          if (
+            page06
+              .classList
+              .contains(
+                "is-active"
+              )
+          ) {
+
+            page06
+              .classList
+              .add(
+                "is-confetti-visible"
+              );
+          }
+
+        },
+        480
+      );
+  }
+
+
+  /* =======================================================
+     PAGE ACTIVATION
+  ======================================================= */
+
+  function activatePage(index) {
+
+    const safeIndex =
+      Math.max(
+        0,
+        Math.min(
+          index,
+          pages.length - 1
+        )
+      );
+
+
+    pages.forEach(
+      (
+        page,
+        pageIndex
+      ) => {
+
+        const active =
+          pageIndex ===
+          safeIndex;
+
+
+        page.classList.toggle(
+          "is-active",
+          active
+        );
+
+
+        if (
+          page ===
+          page06
+          &&
+          !active
+        ) {
+
+          page
+            .classList
+            .remove(
+              "is-confetti-visible"
+            );
+        }
+      }
+    );
+
+
+    if (
+      pages[
+        safeIndex
+      ] ===
+      page02Layout
+    ) {
+
+      playPage02Entrance();
+
+
+      if (
+        !guestDataLoaded
+      ) {
+
+        loadGuestPersonalization(
+          true
+        );
+      }
+
+
+      if (
+        currentGuestData
+        ?.displayName
+      ) {
+
+        renderGuestDisplayName(
+          currentGuestData
+            .displayName
+        );
+      }
+    }
+
+
+    if (
+      pages[
+        safeIndex
+      ] ===
+      page06
+    ) {
+
+      requestAnimationFrame(
+        playPage06Entrance
+      );
+    }
+  }
+
+
+  function setNearbyPages(index) {
+
+    const safeIndex =
+      Math.max(
+        0,
+        Math.min(
+          index,
+          pages.length - 1
+        )
+      );
+
+
+    pages.forEach(
+      (
+        page,
+        pageIndex
+      ) => {
+
+        page.classList.toggle(
+          "is-nearby",
+          Math.abs(
+            pageIndex
+            -
+            safeIndex
+          ) <=
+            1
+        );
+      }
+    );
+
+
+    loadPage(
+      pages[
+        safeIndex
+      ],
+      "high"
+    );
+
+
+    if (
+      pages[
+        safeIndex + 1
+      ]
+    ) {
+
+      loadPage(
+        pages[
+          safeIndex + 1
+        ],
+        "low"
+      );
+    }
+  }
+
+
+  function getCurrentPageIndex() {
+
+    if (
+      !pageScroller
+    ) {
+
+      return 0;
+    }
+
+
+    return Math.max(
+      0,
+      Math.min(
+        pages.length - 1,
+        Math.round(
+          pageScroller.scrollTop
+          /
+          DESIGN_HEIGHT
+        )
+      )
+    );
+  }
+
+
+  function onPageScroll() {
+
+    if (
+      scrollRaf
+    ) {
+
+      return;
+    }
+
+
+    scrollRaf =
+      requestAnimationFrame(
+        () => {
+
+          scrollRaf =
+            0;
+
+
+          const index =
+            getCurrentPageIndex();
+
+
+          if (
+            index !==
+            activePageIndex
+          ) {
+
+            activePageIndex =
+              index;
+
+
+            setNearbyPages(
+              index
+            );
+
+
+            activatePage(
+              index
+            );
+          }
+        }
+      );
+  }
+
+
+  pageScroller
+    ?.addEventListener(
+      "scroll",
+      onPageScroll,
+      {
+        passive: true
+      }
+    );
+
+
+  /* =======================================================
+     OPEN INVITATION
+  ======================================================= */
+
+  async function enterInvitation() {
+
+    if (
+      pageMode
+    ) {
+
+      return;
+    }
+
+
+    pageMode =
+      true;
+
+
+    loadGuestPersonalization();
+
+
+    await loadPage(
+      pages[0],
+      "high"
+    );
+
+
+    if (
+      pageScroller
+    ) {
+
+      pageScroller.scrollTop =
+        0;
+
+
+      pageScroller.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+    }
+
+
+    siteShell
+      ?.classList
+      .add(
+        "is-page-02"
+      );
+
+
+    activePageIndex =
+      0;
+
+
+    setNearbyPages(
+      0
+    );
+
+
+    activatePage(
+      0
+    );
+
+
+    runWhenIdle(
+      () => {
+
+        if (
+          pages[1]
+        ) {
+
+          loadPage(
+            pages[1],
+            "low"
+          );
+        }
+
+      },
+      600
+    );
+  }
+
+
+  openingCardButton
+    ?.addEventListener(
+      "pointerdown",
+      () => {
+
+        loadPage(
+          pages[0],
+          "high"
+        );
+      },
+      {
+        passive: true
+      }
+    );
+
+
+  openingCardButton
+    ?.addEventListener(
+      "click",
+      (event) => {
+
+        event.preventDefault();
+
+
+        enterInvitation();
+      }
+    );
+
+
+  runWhenIdle(
+    () => {
+
+      loadPage(
+        pages[0],
+        "low"
+      );
+
+    },
+    450
+  );
+
+
+  /* =======================================================
+     LUCKY STORAGE
+  ======================================================= */
+
+  function getLuckyStorageKey() {
+
+    return currentGuestSlug
+      ?
+      `bach-thu-lucky-${currentGuestSlug}`
+      :
+      "";
+  }
+
+
+  function readLocalLuckyNumber() {
+
+    const key =
+      getLuckyStorageKey();
+
+
+    if (!key) {
+
+      return null;
+    }
+
+
+    try {
+
+      const value =
+        Number(
+          localStorage.getItem(
+            key
+          )
+        );
+
+
+      if (
+        Number.isInteger(
+          value
+        )
+        &&
+        value >=
+          LUCKY_MIN
+        &&
+        value <=
+          LUCKY_MAX
+      ) {
+
+        return value;
+      }
+
+
+    } catch (_) {}
+
+
+    return null;
+  }
+
+
+  function saveLocalLuckyNumber(
+    value
+  ) {
+
+    const key =
+      getLuckyStorageKey();
+
+
+    if (!key) {
+
+      return;
+    }
+
+
+    try {
+
+      localStorage.setItem(
+        key,
+        String(
+          value
+        )
+      );
+
+    } catch (_) {}
+  }
+
+
+  /* =======================================================
+     LUCKY UI
+  ======================================================= */
+
+  function randomLuckyNumber() {
+
+    const range =
+      LUCKY_MAX
+      -
+      LUCKY_MIN
+      +
+      1;
+
+
+    if (
+      window.crypto
+      ?.getRandomValues
+    ) {
+
+      const array =
+        new Uint32Array(
+          1
+        );
+
+
+      window.crypto
+        .getRandomValues(
+          array
+        );
+
+
+      return (
+        LUCKY_MIN
+        +
+        array[0]
+        %
+        range
+      );
+    }
+
+
+    return (
+      LUCKY_MIN
+      +
+      Math.floor(
+        Math.random()
+        *
+        range
+      )
+    );
+  }
+
+
+  function showLuckyNumber(
+    value
+  ) {
+
+    if (
+      !luckyNumber
+    ) {
+
+      return;
+    }
+
+
+    luckyNumber.textContent =
+      String(
+        value
+      )
+        .padStart(
+          2,
+          "0"
+        );
+  }
+
+
+  function stopLuckyIdleShuffle() {
+
+    if (
+      luckyIdleTimer !==
+      null
+    ) {
+
+      clearInterval(
+        luckyIdleTimer
+      );
+
+
+      luckyIdleTimer =
+        null;
+    }
+
+
+    luckyCard
+      ?.classList
+      .remove(
+        "is-idle-shuffling"
+      );
+  }
+
+
+  function startLuckyIdleShuffle() {
+
+    if (
+      !luckyCard
+      ||
+      luckyLocked
+      ||
+      luckyRolling
+    ) {
+
+      return;
+    }
+
+
+    stopLuckyIdleShuffle();
+
+
+    luckyCard
+      .classList
+      .add(
+        "is-idle-shuffling"
+      );
+
+
+    luckyIdleTimer =
+      setInterval(
+        () => {
+
+          showLuckyNumber(
+            randomLuckyNumber()
+          );
+
+        },
+        116
+      );
+  }
+
+
+  function lockLuckyNumber(
+    value,
+    animate = false
+  ) {
+
+    const number =
+      Number(
+        value
+      );
+
+
+    if (
+      !Number.isInteger(
+        number
+      )
+      ||
+      number <
+        LUCKY_MIN
+      ||
+      number >
+        LUCKY_MAX
+    ) {
+
+      return;
+    }
+
+
+    stopLuckyIdleShuffle();
+
+
+    luckyLocked =
+      true;
+
+
+    luckyRolling =
+      false;
+
+
+    showLuckyNumber(
+      number
+    );
+
+
+    saveLocalLuckyNumber(
+      number
+    );
+
+
+    luckyCard
+      ?.classList
+      .remove(
+        "is-rolling",
+        "is-idle-shuffling"
+      );
+
+
+    if (
+      animate
+      &&
+      luckyCard
+    ) {
+
+      luckyCard
+        .classList
+        .remove(
+          "is-revealed"
+        );
+
+
+      void luckyCard.offsetWidth;
+
+
+      luckyCard
+        .classList
+        .add(
+          "is-revealed"
+        );
+    }
+
+
+    if (
+      luckyHint
+    ) {
+
+      luckyHint.textContent =
+        LUCKY_HINT_REVEALED;
+    }
+
+
+    if (
+      luckyTrigger
+    ) {
+
+      luckyTrigger.disabled =
+        true;
+    }
+  }
+
+
+  function fireLuckyFireworks() {
+
+    spawnFireworks(
+      luckyFireworks,
+      {
+        count:
+          125,
+
+        minDistance:
+          65,
+
+        maxDistance:
+          210,
+
+        cleanup:
+          1850
+      }
+    );
+  }
+
+
+  /* =======================================================
+     READ AUTHORITATIVE LUCKY NUMBER FROM SHEET
+
+     Poll vài lần vì POST có thể ghi xong
+     chậm hơn browser một chút.
+  ======================================================= */
+
+  async function readLuckyAfterSave(
+    candidate
+  ) {
+
+    const delays = [
+      350,
+      700,
+      1200,
+      1800
+    ];
+
+
+    for (
+      const delay of delays
+    ) {
+
+      await sleep(
+        delay
+      );
+
+
+      try {
+
+        const guest =
+          await requestGuestData();
+
+
+        const number =
+          Number(
+            guest
+              ?.luckyNumber
+          );
+
+
+        if (
+          Number.isInteger(
+            number
+          )
+          &&
+          number >=
+            LUCKY_MIN
+          &&
+          number <=
+            LUCKY_MAX
+        ) {
+
+          return number;
+        }
+
+
+      } catch (error) {
+
+        console.warn(
+          "[Wedding] lucky readback:",
+          error
+        );
+      }
+    }
+
+
+    /*
+      Chỉ fallback candidate nếu Sheet chưa kịp trả.
+      Backend vẫn là nơi đảm bảo không overwrite
+      lucky number cũ.
+    */
+
+    return candidate;
+  }
+
+
+  /* =======================================================
+     ROLL LUCKY
+
+     1. Sinh candidate ở browser.
+     2. POST saveLucky.
+     3. Đọc lại cột I từ Sheet.
+     4. Hiện số authoritative.
+  ======================================================= */
+
+  function rollLuckyNumber() {
+
+    if (
+      luckyRolling
+      ||
+      luckyLocked
+    ) {
+
+      return;
+    }
+
+
+    if (
+      !currentGuestSlug
+    ) {
+
+      alert(
+        "Link thiệp chưa có mã khách mời."
+      );
+
+      return;
+    }
+
+
+    stopLuckyIdleShuffle();
+
+
+    luckyRolling =
+      true;
+
+
+    luckyCard
+      ?.classList
+      .remove(
+        "is-revealed"
+      );
+
+
+    luckyCard
+      ?.classList
+      .add(
+        "is-rolling"
+      );
+
+
+    if (
+      luckyHint
+    ) {
+
+      luckyHint.textContent =
+        "Đang tìm số may mắn...";
+    }
+
+
+    const candidate =
+      randomLuckyNumber();
+
+
+    /*
+      Backend:
+      nếu I đã có -> không overwrite.
+      nếu I trống -> lưu candidate.
+    */
+
+    const savePromise =
+      postToBackend(
+        {
+          action:
+            "saveLucky",
+
+          guest:
+            currentGuestSlug,
+
+          luckyNumber:
+            candidate
+        }
+      );
+
+
+    const start =
+      performance.now();
+
+
+    const duration =
+      1480;
+
+
+    /*
+      Giữ nhịp đổi số mượt tới cuối.
+
+      Bản cũ tăng interval lên gần 190ms ở cuối,
+      nên mắt thấy số bị khựng/giật trước khi dừng.
+
+      Bản này:
+      - đầu nhanh
+      - cuối chậm vừa phải
+      - interval tối đa chỉ khoảng 98ms
+      - khi hết animation sẽ dừng hẳn ở candidate
+        trong lúc chờ Sheet trả số authoritative
+    */
+
+    let lastUpdate =
+      0;
+
+
+    let finishStarted =
+      false;
+
+
+    function frame(now) {
+
+      const elapsed =
+        now - start;
+
+
+      const progress =
+        Math.min(
+          elapsed
+          /
+          duration,
+          1
+        );
+
+
+      const smoothProgress =
+        progress
+        *
+        progress
+        *
+        (
+          3
+          -
+          2
+          *
+          progress
+        );
+
+
+      const interval =
+        42
+        +
+        smoothProgress
+        *
+        56;
+
+
+      if (
+        now - lastUpdate >=
+        interval
+      ) {
+
+        lastUpdate =
+          now;
+
+
+        showLuckyNumber(
+          randomLuckyNumber()
+        );
+      }
+
+
+      if (
+        progress <
+        1
+      ) {
+
+        requestAnimationFrame(
+          frame
+        );
+
+        return;
+      }
+
+
+      /*
+        Chốt candidate ngay ở cuối animation để UI không
+        tiếp tục nhảy số hoặc khựng trong lúc chờ backend.
+      */
+
+      showLuckyNumber(
+        candidate
+      );
+
+
+      if (
+        !finishStarted
+      ) {
+
+        finishStarted =
+          true;
+
+
+        finishLucky();
+      }
+    }
+
+
+    async function finishLucky() {
+
+      try {
+
+        await savePromise;
+
+
+        const finalNumber =
+          await readLuckyAfterSave(
+            candidate
+          );
+
+
+        lockLuckyNumber(
+          finalNumber,
+          true
+        );
+
+
+        fireLuckyFireworks();
+
+
+      } catch (error) {
+
+        console.error(
+          "[Wedding] lucky:",
+          error
+        );
+
+
+        luckyRolling =
+          false;
+
+
+        luckyCard
+          ?.classList
+          .remove(
+            "is-rolling"
+          );
+
+
+        if (
+          luckyHint
+        ) {
+
+          luckyHint.textContent =
+            "Nhấn để thử lại";
+        }
+
+
+        startLuckyIdleShuffle();
+      }
+    }
+
+
+    requestAnimationFrame(
+      frame
+    );
+  }
+
+
+  luckyTrigger
+    ?.addEventListener(
+      "click",
+      rollLuckyNumber
+    );
+
+
+  /* =======================================================
+     RSVP
+  ======================================================= */
+
+  function updateCount() {
+
+    if (
+      rsvpGuestCount
+    ) {
+
+      rsvpGuestCount.textContent =
+        String(
+          rsvpCount
+        );
+    }
+  }
+
+
+  function updateAttendanceNoLabel() {
+
+    if (
+      !rsvpAttendanceNoText
+    ) {
+
+      return;
+    }
+
+
+    rsvpAttendanceNoText.textContent =
+      rsvpAttendanceNo
+        ?.checked
+        ?
+        "Kó"
+        :
+        "Không";
+  }
+
+
+  function setSubmitText(
+    text
+  ) {
+
+    const span =
+      rsvpSubmit
+        ?.querySelector(
+          "span"
+        );
+
+
+    if (
+      span
+    ) {
+
+      span.textContent =
+        text;
+    }
+  }
+
+
+  rsvpMinus
+    ?.addEventListener(
+      "click",
+      () => {
+
+        if (
+          rsvpAttendanceNo
+            ?.checked
+        ) {
+
+          return;
+        }
+
+
+        rsvpCount =
+          Math.max(
+            1,
+            rsvpCount - 1
+          );
+
+
+        updateCount();
+      }
+    );
+
+
+  rsvpPlus
+    ?.addEventListener(
+      "click",
+      () => {
+
+        if (
+          rsvpAttendanceNo
+            ?.checked
+        ) {
+
+          return;
+        }
+
+
+        rsvpCount =
+          Math.min(
+            10,
+            rsvpCount + 1
+          );
+
+
+        updateCount();
+      }
+    );
+
+
+  rsvpAttendanceNo
+    ?.addEventListener(
+      "change",
+      () => {
+
+        if (
+          rsvpAttendanceNo.checked
+        ) {
+
+          rsvpCount =
+            0;
+
+
+          updateCount();
+        }
+
+
+        updateAttendanceNoLabel();
+      }
+    );
+
+
+  rsvpAttendanceYes
+    ?.addEventListener(
+      "change",
+      () => {
+
+        if (
+          rsvpAttendanceYes.checked
+          &&
+          rsvpCount < 1
+        ) {
+
+          rsvpCount =
+            1;
+
+
+          updateCount();
+        }
+
+
+        updateAttendanceNoLabel();
+      }
+    );
+
+
+  /* =======================================================
+     VIDEO -> FOLDER DRIVE RIÊNG CỦA TỪNG KHÁCH
+
+     Folder đã được tạo sẵn bằng Apps Script và URL đã nằm
+     trong cột N. Khi khách bấm, trình duyệt mở link đó ngay.
+  ======================================================= */
+
+  function handleVideoLinkClick(event) {
+
+    if (
+      !currentGuestSlug
+    ) {
+
+      event.preventDefault();
+
+      alert(
+        "Link thiệp này chưa có mã khách mời."
+      );
+
+      return;
+    }
+
+
+    const videoUrl =
+      String(
+        currentGuestData
+          ?.video
+        ||
+        rsvpVideoLink
+          ?.getAttribute(
+            "href"
+          )
+        ||
+        ""
+      )
+        .trim();
+
+
+    if (
+      isDriveFolderUrl(
+        videoUrl
+      )
+    ) {
+
+      /*
+        Không preventDefault ở đây.
+        Anchor đã có target=_blank nên folder mở ngay,
+        không phải chờ backend và không có popup trung gian.
+      */
+
+      return;
+    }
+
+
+    event.preventDefault();
+
+    alert(
+      "Thư mục video của bạn chưa được tạo. Cô dâu chú rể vui lòng chạy menu tạo folder video trong Google Sheet."
+    );
+  }
+
+
+  if (
+    rsvpVideoField
+  ) {
+
+    rsvpVideoField.addEventListener(
+      "click",
+      handleVideoLinkClick
+    );
+  }
+
+
+  /* =======================================================
+     BACKGROUND REFRESH
+  ======================================================= */
+
+  async function backgroundRefreshGuestData() {
+
+    await sleep(
+      900
+    );
+
+
+    try {
+
+      const response =
+        await requestGuestData();
+
+
+      if (
+        !response
+        ||
+        response.ok !==
+          true
+      ) {
+
+        return;
+      }
+
+
+      currentGuestData =
+        response;
+
+
+      if (
+        response.displayName
+      ) {
+
+        renderGuestDisplayName(
+          response.displayName
+        );
+      }
+
+
+    } catch (error) {
+
+      console.warn(
+        "[Wedding] background refresh:",
+        error
+      );
+    }
+  }
+
+
+  /* =======================================================
+     RSVP SUBMIT
+  ======================================================= */
+
+  rsvpForm
+    ?.addEventListener(
+      "submit",
+      async (event) => {
+
+        event.preventDefault();
+
+
+        clearTimeout(
+          submitResetTimer
+        );
+
+
+        const name =
+          normalizeText(
+            rsvpGuestName
+              ?.value
+              .trim()
+            ||
+            ""
+          );
+
+
+        const message =
+          normalizeText(
+            rsvpMessage
+              ?.value
+              .trim()
+            ||
+            ""
+          );
+
+
+        const isNo =
+          Boolean(
+            rsvpAttendanceNo
+              ?.checked
+          );
+
+
+        const attendance =
+          isNo
+            ?
+            "no"
+            :
+            "yes";
+
+
+        const guestCount =
+          isNo
+            ?
+            0
+            :
+            Math.max(
+              1,
+              rsvpCount
+            );
+
+
+        if (!name) {
+
+          alert(
+            "Bạn nhập tên khách mời giúp chúng mình nhé."
+          );
+
+          return;
+        }
+
+
+        if (
+          !currentGuestSlug
+        ) {
+
+          alert(
+            "Link thiệp này chưa có mã khách mời."
+          );
+
+          return;
+        }
+
+
+        if (
+          !rsvpSubmit
+        ) {
+
+          return;
+        }
+
+
+        rsvpSubmit.disabled =
+          true;
+
+
+        setSubmitText(
+          "ĐANG GỬI..."
+        );
+
+
+        try {
+
+          await postToBackend(
+            {
+              action:
+                "rsvp",
+
+              guest:
+                currentGuestSlug,
+
+              name:
+                name,
+
+              attendance:
+                attendance,
+
+              guestCount:
+                guestCount,
+
+              message:
+                message
+            }
+          );
+
+
+          rsvpCount =
+            guestCount;
+
+
+          updateCount();
+
+
+          setSubmitText(
+            "ĐÃ GỬI XÁC NHẬN"
+          );
+
+
+          rsvpSubmit.disabled =
+            false;
+
+
+          submitResetTimer =
+            setTimeout(
+              () => {
+
+                if (
+                  !rsvpSubmit.disabled
+                ) {
+
+                  setSubmitText(
+                    "CẬP NHẬT XÁC NHẬN"
+                  );
+                }
+
+              },
+              1800
+            );
+
+
+          backgroundRefreshGuestData();
+
+
+        } catch (error) {
+
+          console.error(
+            "[Wedding] RSVP:",
+            error
+          );
+
+
+          rsvpSubmit.disabled =
+            false;
+
+
+          setSubmitText(
+            "GỬI XÁC NHẬN"
+          );
+
+
+          alert(
+            "Không thể kết nối để gửi xác nhận. Bạn vui lòng thử lại."
+          );
+        }
+      }
+    );
+
+
+  /* =======================================================
+     MARK OPENED
+  ======================================================= */
+
+  function markInvitationOpened() {
+
+    if (
+      !currentGuestSlug
+    ) {
+
+      return;
+    }
+
+
+    postToBackend(
+      {
+        action:
+          "markOpened",
+
+        guest:
+          currentGuestSlug
+      }
+    )
+      .catch(
+        (error) => {
+
+          console.warn(
+            "[Wedding] mark opened:",
+            error
+          );
+        }
+      );
+  }
+
+
+  /* =======================================================
+     INIT
+  ======================================================= */
+
+  updateCount();
+
+  updateAttendanceNoLabel();
+
+
+  const localLucky =
+    readLocalLuckyNumber();
+
+
+  if (
+    localLucky
+  ) {
+
+    /*
+      Hiện nhanh local trước.
+
+      Khi Sheet load xong,
+      cột I sẽ override bằng giá trị authoritative.
+    */
+
+    lockLuckyNumber(
+      localLucky,
+      false
+    );
+
+  } else {
+
+    startLuckyIdleShuffle();
+  }
+
+
+  document.addEventListener(
+    "visibilitychange",
+    () => {
+
+      if (
+        document.hidden
+      ) {
+
+        stopLuckyIdleShuffle();
+
+        return;
+      }
+
+
+      if (
+        !luckyLocked
+        &&
+        !luckyRolling
+      ) {
+
+        startLuckyIdleShuffle();
+      }
+    }
+  );
+
+
+  markInvitationOpened();
+
+
+  /*
+    Từ đây trở đi:
+    READ = Google Sheet GViz
+    WRITE = Apps Script POST
+  */
+
+  loadGuestPersonalization();
+
+})();
