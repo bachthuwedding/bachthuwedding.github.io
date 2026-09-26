@@ -6,11 +6,18 @@
      CONFIG
   ======================================================= */
 
-  const DESIGN_WIDTH = 390;
-  const DESIGN_HEIGHT = 680;
+  const DESIGN_WIDTH =
+    390;
 
-  const LUCKY_MIN = 1;
-  const LUCKY_MAX = 99;
+  const DESIGN_HEIGHT =
+    680;
+
+
+  const LUCKY_MIN =
+    1;
+
+  const LUCKY_MAX =
+    99;
 
 
   const WEDDING_API_URL =
@@ -22,7 +29,7 @@
 
 
   /* =======================================================
-     URL GUEST
+     GUEST
   ======================================================= */
 
   const urlParams =
@@ -33,18 +40,20 @@
 
   const currentGuestSlug =
     normalizeGuestSlug(
-      urlParams.get("guest") || ""
+      urlParams.get("guest")
+      ||
+      ""
     );
 
 
-  let currentGuestData =
-    null;
-
-
-  function normalizeGuestSlug(value) {
+  function normalizeGuestSlug(
+    value
+  ) {
 
     return String(
-      value || ""
+      value
+      ||
+      ""
     )
       .trim()
       .toLowerCase()
@@ -55,24 +64,14 @@
   }
 
 
-  function isBackendConfigured() {
-
-    return (
-      WEDDING_API_URL.startsWith(
-        "https://script.google.com/macros/s/"
-      )
-      &&
-      WEDDING_API_URL.includes(
-        "/exec"
-      )
-    );
-  }
-
-
-  function normalizeText(value) {
+  function normalizeText(
+    value
+  ) {
 
     return String(
-      value ?? ""
+      value
+      ??
+      ""
     )
       .normalize(
         "NFC"
@@ -142,7 +141,10 @@
     page06,
     page07,
     page08
-  ].filter(Boolean);
+  ]
+    .filter(
+      Boolean
+    );
 
 
   const personalizedGuestName =
@@ -299,8 +301,15 @@
     null;
 
 
+  let submitResetTimer =
+    null;
+
+
   /* =======================================================
-     JSONP GET
+     JSONP
+
+     Đây là cơ chế chính cho cả READ + WRITE.
+     Không còn dùng no-cors fetch cho RSVP.
   ======================================================= */
 
   function jsonpRequest(
@@ -309,21 +318,10 @@
   ) {
 
     return new Promise(
-      (resolve, reject) => {
-
-        if (
-          !isBackendConfigured()
-        ) {
-
-          reject(
-            new Error(
-              "Backend chưa được cấu hình."
-            )
-          );
-
-          return;
-        }
-
+      (
+        resolve,
+        reject
+      ) => {
 
         const callbackName =
           "__wedding_"
@@ -345,7 +343,12 @@
           params
         )
           .forEach(
-            ([key, value]) => {
+            (
+              [
+                key,
+                value
+              ]
+            ) => {
 
               if (
                 value ===
@@ -361,7 +364,9 @@
 
               query.set(
                 key,
-                String(value)
+                String(
+                  value
+                )
               );
             }
           );
@@ -372,6 +377,10 @@
           callbackName
         );
 
+
+        /*
+          Chống browser cache Apps Script response.
+        */
 
         query.set(
           "_",
@@ -391,48 +400,48 @@
           null;
 
 
-        const cleanup =
-          () => {
+        function cleanup() {
 
-            if (
-              timer !==
-              null
-            ) {
+          if (
+            timer !==
+            null
+          ) {
 
-              clearTimeout(
-                timer
-              );
-            }
-
-
-            try {
-
-              delete window[
-                callbackName
-              ];
-
-            } catch (_) {
-
-              window[
-                callbackName
-              ] =
-                undefined;
-            }
+            clearTimeout(
+              timer
+            );
+          }
 
 
-            script.remove();
-          };
+          try {
+
+            delete window[
+              callbackName
+            ];
+
+          } catch (_) {
+
+            window[
+              callbackName
+            ] =
+              undefined;
+          }
+
+
+          script.remove();
+        }
 
 
         window[
           callbackName
         ] =
-          (data) => {
+          (response) => {
 
             cleanup();
 
+
             resolve(
-              data
+              response
             );
           };
 
@@ -442,9 +451,10 @@
 
             cleanup();
 
+
             reject(
               new Error(
-                "Không thể đọc dữ liệu từ Apps Script."
+                "Không kết nối được Apps Script."
               )
             );
           };
@@ -468,11 +478,13 @@
 
               cleanup();
 
+
               reject(
                 new Error(
                   "Apps Script phản hồi quá lâu."
                 )
               );
+
             },
             timeout
           );
@@ -483,119 +495,6 @@
         );
       }
     );
-  }
-
-
-  /* =======================================================
-     POST
-  ======================================================= */
-
-  async function postToBackend(
-    data
-  ) {
-
-    if (
-      !isBackendConfigured()
-    ) {
-
-      throw new Error(
-        "Backend chưa được cấu hình."
-      );
-    }
-
-
-    const body =
-      new URLSearchParams();
-
-
-    Object.entries(
-      data
-    )
-      .forEach(
-        ([key, value]) => {
-
-          if (
-            value ===
-              undefined
-            ||
-            value ===
-              null
-          ) {
-
-            return;
-          }
-
-
-          body.append(
-            key,
-            String(value)
-          );
-        }
-      );
-
-
-    await fetch(
-      WEDDING_API_URL,
-      {
-        method:
-          "POST",
-
-        mode:
-          "no-cors",
-
-        body,
-
-        keepalive:
-          true
-      }
-    );
-  }
-
-
-  function sleep(ms) {
-
-    return new Promise(
-      (resolve) =>
-        setTimeout(
-          resolve,
-          ms
-        )
-    );
-  }
-
-
-  /* =======================================================
-     MARK OPENED
-  ======================================================= */
-
-  function markInvitationOpened() {
-
-    if (
-      !currentGuestSlug
-    ) {
-
-      return;
-    }
-
-
-    postToBackend(
-      {
-        action:
-          "markOpened",
-
-        guest:
-          currentGuestSlug
-      }
-    )
-      .catch(
-        (error) => {
-
-          console.warn(
-            "Không ghi được Đã đọc:",
-            error
-          );
-        }
-      );
   }
 
 
@@ -623,17 +522,21 @@
 
     const scale =
       Math.min(
-        viewportWidth /
+        viewportWidth
+        /
         DESIGN_WIDTH,
 
-        viewportHeight /
+        viewportHeight
+        /
         DESIGN_HEIGHT
       );
 
 
     root.style.setProperty(
       "--design-scale",
-      String(scale)
+      String(
+        scale
+      )
     );
 
 
@@ -696,12 +599,14 @@
 
 
   /* =======================================================
-     SCROLL FROM OUTSIDE INVITATION
+     SCROLL WHEN MOUSE IS OUTSIDE
   ======================================================= */
 
   window.addEventListener(
     "wheel",
-    (event) => {
+    (
+      event
+    ) => {
 
       if (
         !pageMode
@@ -712,11 +617,6 @@
         return;
       }
 
-
-      /*
-        Chuột đang nằm bên trong thiệp:
-        để browser scroll bình thường.
-      */
 
       if (
         event.target
@@ -758,7 +658,7 @@
 
 
   /* =======================================================
-     IDLE HELPER
+     IDLE
   ======================================================= */
 
   function runWhenIdle(
@@ -789,7 +689,7 @@
 
 
   /* =======================================================
-     IMAGE PRELOAD
+     IMAGE LOAD
   ======================================================= */
 
   function preloadUrl(
@@ -819,7 +719,9 @@
 
     const promise =
       new Promise(
-        (resolve) => {
+        (
+          resolve
+        ) => {
 
           const image =
             new Image();
@@ -944,7 +846,9 @@
 
     const promise =
       new Promise(
-        (resolve) => {
+        (
+          resolve
+        ) => {
 
           try {
 
@@ -1065,7 +969,9 @@
 
         const jobs =
           images.map(
-            (image) =>
+            (
+              image
+            ) =>
               loadImage(
                 image,
                 priority
@@ -1090,6 +996,7 @@
 
 
           jobs.push(
+
             preloadUrl(
               spriteUrl,
               priority
@@ -1137,7 +1044,7 @@
 
 
   /* =======================================================
-     PAGE 02 ENTRY
+     PAGE 02
   ======================================================= */
 
   function playPage02Entrance() {
@@ -1179,7 +1086,7 @@
 
 
   /* =======================================================
-     FIREWORKS
+     FIREWORK
   ======================================================= */
 
   const fireworkColors = [
@@ -1311,6 +1218,7 @@
       () => {
 
         target.replaceChildren();
+
       },
       cleanup
     );
@@ -1375,6 +1283,7 @@
                 "is-confetti-visible"
               );
           }
+
         },
         600
       );
@@ -1417,7 +1326,8 @@
 
 
         if (
-          page === page06
+          page ===
+          page06
           &&
           !active
         ) {
@@ -1433,7 +1343,9 @@
 
 
     if (
-      pages[safeIndex] ===
+      pages[
+        safeIndex
+      ] ===
       page02Layout
     ) {
 
@@ -1442,7 +1354,9 @@
 
 
     if (
-      pages[safeIndex] ===
+      pages[
+        safeIndex
+      ] ===
       page06
     ) {
 
@@ -1486,7 +1400,9 @@
 
 
     loadPage(
-      pages[safeIndex],
+      pages[
+        safeIndex
+      ],
       "high"
     );
 
@@ -1588,7 +1504,7 @@
 
 
   /* =======================================================
-     OPEN INVITATION
+     OPEN CARD
   ======================================================= */
 
   async function enterInvitation() {
@@ -1611,23 +1527,18 @@
     );
 
 
-    if (
-      pageScroller
-    ) {
-
-      pageScroller.scrollTop =
-        0;
+    pageScroller.scrollTop =
+      0;
 
 
-      pageScroller.setAttribute(
-        "aria-hidden",
-        "false"
-      );
-    }
+    pageScroller.setAttribute(
+      "aria-hidden",
+      "false"
+    );
 
 
     siteShell
-      ?.classList
+      .classList
       .add(
         "is-page-02"
       );
@@ -1659,6 +1570,7 @@
             "low"
           );
         }
+
       },
       600
     );
@@ -1685,9 +1597,12 @@
   openingCardButton
     ?.addEventListener(
       "click",
-      (event) => {
+      (
+        event
+      ) => {
 
         event.preventDefault();
+
 
         enterInvitation();
       }
@@ -1701,30 +1616,23 @@
         pages[0],
         "low"
       );
+
     },
     450
   );
 
 
   /* =======================================================
-     LUCKY LOCAL STORAGE
+     LUCKY STORAGE
   ======================================================= */
 
   function getLuckyStorageKey() {
 
-    if (
-      !currentGuestSlug
-    ) {
-
-      return "";
-    }
-
-
-    return (
-      "bach-thu-lucky-"
-      +
-      currentGuestSlug
-    );
+    return currentGuestSlug
+      ?
+      `bach-thu-lucky-${currentGuestSlug}`
+      :
+      "";
   }
 
 
@@ -1752,7 +1660,7 @@
         );
 
 
-      if (
+      return (
         Number.isInteger(
           value
         )
@@ -1762,15 +1670,16 @@
         &&
         value <=
           LUCKY_MAX
-      ) {
+      )
+        ?
+        value
+        :
+        null;
 
-        return value;
-      }
+    } catch (_) {
 
-    } catch (_) {}
-
-
-    return null;
+      return null;
+    }
   }
 
 
@@ -1794,7 +1703,9 @@
 
       localStorage.setItem(
         key,
-        String(value)
+        String(
+          value
+        )
       );
 
     } catch (_) {}
@@ -1802,7 +1713,7 @@
 
 
   /* =======================================================
-     LUCKY NUMBER UI
+     LUCKY UI
   ======================================================= */
 
   function randomLuckyNumber() {
@@ -1815,26 +1726,27 @@
       1;
 
 
+    const array =
+      new Uint32Array(
+        1
+      );
+
+
     if (
-      crypto
+      window.crypto
       ?.getRandomValues
     ) {
 
-      const data =
-        new Uint32Array(
-          1
+      window.crypto
+        .getRandomValues(
+          array
         );
-
-
-      crypto.getRandomValues(
-        data
-      );
 
 
       return (
         LUCKY_MIN
         +
-        data[0]
+        array[0]
         %
         range
       );
@@ -1853,63 +1765,9 @@
   }
 
 
-  function deterministicLuckyNumber(
-    slug
-  ) {
-
-    let hash =
-      2166136261;
-
-
-    const value =
-      String(
-        slug || ""
-      );
-
-
-    for (
-      let i = 0;
-      i < value.length;
-      i += 1
-    ) {
-
-      hash ^=
-        value.charCodeAt(
-          i
-        );
-
-
-      hash =
-        Math.imul(
-          hash,
-          16777619
-        );
-    }
-
-
-    return (
-      (
-        hash >>> 0
-      )
-      %
-      99
-    )
-    +
-    1;
-  }
-
-
   function showLuckyNumber(
     value
   ) {
-
-    if (
-      !luckyNumber
-    ) {
-
-      return;
-    }
-
 
     luckyNumber.textContent =
       String(
@@ -1950,11 +1808,11 @@
   function startLuckyIdleShuffle() {
 
     if (
-      !luckyCard
-      ||
       luckyLocked
       ||
       luckyRolling
+      ||
+      !luckyCard
     ) {
 
       return;
@@ -1978,6 +1836,7 @@
           showLuckyNumber(
             randomLuckyNumber()
           );
+
         },
         145
       );
@@ -2051,12 +1910,7 @@
         );
 
 
-      if (
-        luckyCard
-      ) {
-
-        void luckyCard.offsetWidth;
-      }
+      void luckyCard.offsetWidth;
 
 
       luckyCard
@@ -2067,30 +1921,12 @@
     }
 
 
-    if (
-      luckyHint
-    ) {
-
-      luckyHint.textContent =
-        normalizeText(
-          LUCKY_HINT_REVEALED
-        );
-    }
+    luckyHint.textContent =
+      LUCKY_HINT_REVEALED;
 
 
-    if (
-      luckyTrigger
-    ) {
-
-      luckyTrigger.disabled =
-        true;
-
-
-      luckyTrigger.setAttribute(
-        "aria-label",
-        "Bạn đã nhận số may mắn"
-      );
-    }
+    luckyTrigger.disabled =
+      true;
   }
 
 
@@ -2125,91 +1961,40 @@
     }
 
 
-    try {
+    const response =
+      await jsonpRequest(
+        {
+          action:
+            "lucky",
 
-      const response =
-        await jsonpRequest(
-          {
-            action:
-              "lucky",
-
-            guest:
-              currentGuestSlug
-          }
-        );
-
-
-      const number =
-        Number(
-          response
-            ?.luckyNumber
-        );
-
-
-      if (
-        response?.ok ===
-          true
-        &&
-        Number.isInteger(
-          number
-        )
-        &&
-        number >=
-          LUCKY_MIN
-        &&
-        number <=
-          LUCKY_MAX
-      ) {
-
-        return number;
-      }
-
-    } catch (error) {
-
-      console.warn(
-        "Lucky GET failed:",
-        error
-      );
-    }
-
-
-    return null;
-  }
-
-
-  function saveLuckyFallback(
-    number
-  ) {
-
-    if (
-      !currentGuestSlug
-    ) {
-
-      return;
-    }
-
-
-    postToBackend(
-      {
-        action:
-          "saveLucky",
-
-        guest:
-          currentGuestSlug,
-
-        luckyNumber:
-          number
-      }
-    )
-      .catch(
-        (error) => {
-
-          console.warn(
-            "Lucky fallback POST failed:",
-            error
-          );
+          guest:
+            currentGuestSlug
         }
       );
+
+
+    if (
+      !response
+      ||
+      response.ok !==
+        true
+    ) {
+
+      throw new Error(
+        response?.error
+        ||
+        "Không lấy được số may mắn."
+      );
+    }
+
+
+    const number =
+      Number(
+        response.luckyNumber
+      );
+
+
+    return number;
   }
 
 
@@ -2225,6 +2010,18 @@
     }
 
 
+    if (
+      !currentGuestSlug
+    ) {
+
+      alert(
+        "Link thiệp chưa có mã khách mời."
+      );
+
+      return;
+    }
+
+
     stopLuckyIdleShuffle();
 
 
@@ -2233,29 +2030,24 @@
 
 
     luckyCard
-      ?.classList
+      .classList
       .remove(
         "is-revealed"
       );
 
 
     luckyCard
-      ?.classList
+      .classList
       .add(
         "is-rolling"
       );
 
 
-    if (
-      luckyHint
-    ) {
-
-      luckyHint.textContent =
-        "Đang tìm số may mắn...";
-    }
+    luckyHint.textContent =
+      "Đang tìm số may mắn...";
 
 
-    const serverPromise =
+    const resultPromise =
       requestGuestLuckyNumber();
 
 
@@ -2271,7 +2063,9 @@
       0;
 
 
-    function frame(now) {
+    function frame(
+      now
+    ) {
 
       const progress =
         Math.min(
@@ -2324,50 +2118,54 @@
           frame
         );
 
-
         return;
       }
 
 
-      finish();
+      finishLucky();
     }
 
 
-    async function finish() {
+    async function finishLucky() {
 
-      let finalNumber =
-        await serverPromise;
+      try {
 
-
-      if (
-        !Number.isInteger(
-          finalNumber
-        )
-      ) {
-
-        finalNumber =
-          currentGuestSlug
-            ?
-            deterministicLuckyNumber(
-              currentGuestSlug
-            )
-            :
-            randomLuckyNumber();
+        const finalNumber =
+          await resultPromise;
 
 
-        saveLuckyFallback(
-          finalNumber
+        lockLuckyNumber(
+          finalNumber,
+          true
         );
+
+
+        fireLuckyFireworks();
+
+      } catch (error) {
+
+        console.error(
+          error
+        );
+
+
+        luckyRolling =
+          false;
+
+
+        luckyCard
+          .classList
+          .remove(
+            "is-rolling"
+          );
+
+
+        luckyHint.textContent =
+          "Nhấn để thử lại";
+
+
+        startLuckyIdleShuffle();
       }
-
-
-      lockLuckyNumber(
-        finalNumber,
-        true
-      );
-
-
-      fireLuckyFireworks();
     }
 
 
@@ -2385,41 +2183,22 @@
 
 
   /* =======================================================
-     RSVP
+     RSVP UI
   ======================================================= */
 
   function updateCount() {
 
-    if (
-      rsvpGuestCount
-    ) {
-
-      rsvpGuestCount.textContent =
-        String(
-          rsvpCount
-        );
-    }
+    rsvpGuestCount.textContent =
+      String(
+        rsvpCount
+      );
   }
 
 
   function updateAttendanceNoLabel() {
 
-    if (
-      !rsvpAttendanceNoText
-    ) {
-
-      return;
-    }
-
-
-    /*
-      UI giữ hiệu ứng Kó.
-      Sheet vẫn lưu Không.
-    */
-
     rsvpAttendanceNoText.textContent =
-      rsvpAttendanceNo
-        ?.checked
+      rsvpAttendanceNo.checked
         ?
         "Kó"
         :
@@ -2433,7 +2212,7 @@
 
     const span =
       rsvpSubmit
-        ?.querySelector(
+        .querySelector(
           "span"
         );
 
@@ -2454,8 +2233,7 @@
       () => {
 
         if (
-          rsvpAttendanceNo
-            ?.checked
+          rsvpAttendanceNo.checked
         ) {
 
           return;
@@ -2480,8 +2258,7 @@
       () => {
 
         if (
-          rsvpAttendanceNo
-            ?.checked
+          rsvpAttendanceNo.checked
         ) {
 
           return;
@@ -2505,9 +2282,6 @@
       "change",
       () => {
 
-        updateAttendanceNoLabel();
-
-
         if (
           rsvpAttendanceNo.checked
         ) {
@@ -2518,6 +2292,9 @@
 
           updateCount();
         }
+
+
+        updateAttendanceNoLabel();
       }
     );
 
@@ -2526,9 +2303,6 @@
     ?.addEventListener(
       "change",
       () => {
-
-        updateAttendanceNoLabel();
-
 
         if (
           rsvpAttendanceYes.checked
@@ -2543,9 +2317,21 @@
 
           updateCount();
         }
+
+
+        updateAttendanceNoLabel();
       }
     );
 
+
+  /* =======================================================
+     RSVP SUBMIT
+
+     Không dùng fetch no-cors nữa.
+
+     Apps Script trả response JSONP thật.
+     Gửi lại -> overwrite lần cũ.
+  ======================================================= */
 
   rsvpForm
     ?.addEventListener(
@@ -2557,23 +2343,26 @@
         event.preventDefault();
 
 
+        clearTimeout(
+          submitResetTimer
+        );
+
+
         const name =
           rsvpGuestName
-            ?.value
+            .value
             .trim();
 
 
         const message =
           rsvpMessage
-            ?.value
-            .trim()
-          ||
-          "";
+            .value
+            .trim();
 
 
         const attendance =
           rsvpAttendanceNo
-            ?.checked
+            .checked
             ?
             "no"
             :
@@ -2588,7 +2377,6 @@
             "Bạn nhập tên khách mời giúp chúng mình nhé."
           );
 
-
           return;
         }
 
@@ -2598,9 +2386,8 @@
         ) {
 
           alert(
-            "Link thiệp chưa có mã khách mời."
+            "Link thiệp này chưa có mã khách mời."
           );
-
 
           return;
         }
@@ -2617,70 +2404,68 @@
 
         try {
 
-          await postToBackend(
-            {
-              action:
-                "rsvp",
+          const response =
+            await jsonpRequest(
+              {
+                action:
+                  "rsvp",
 
-              guest:
-                currentGuestSlug,
+                guest:
+                  currentGuestSlug,
 
-              name,
+                name,
 
-              attendance,
+                attendance,
 
-              guestCount:
-                rsvpCount,
+                guestCount:
+                  rsvpCount,
 
-              message
-            }
-          );
-
-
-          /*
-            no-cors không đọc response được,
-            nên GET lại guest để kiểm tra
-            Apps Script thực sự đã ghi Sheet.
-          */
-
-          await sleep(
-            700
-          );
-
-
-          let confirmed =
-            false;
-
-
-          try {
-
-            const verify =
-              await jsonpRequest(
-                {
-                  action:
-                    "guest",
-
-                  guest:
-                    currentGuestSlug
-                }
-              );
-
-
-            confirmed =
-              verify?.ok ===
-              true;
-
-          } catch (_) {}
+                message
+              },
+              20000
+            );
 
 
           if (
-            !confirmed
+            !response
+            ||
+            response.ok !==
+              true
           ) {
 
             throw new Error(
-              "Không xác nhận được dữ liệu."
+              response?.error
+              ||
+              "Apps Script không xác nhận được dữ liệu."
             );
           }
+
+
+          /*
+            Response đã là dữ liệu thật
+            được Apps Script ghi vào Sheet.
+          */
+
+          if (
+            response.attendance ===
+            "Không"
+          ) {
+
+            rsvpCount =
+              0;
+
+          } else {
+
+            rsvpCount =
+              Number(
+                response.guestCount
+              )
+              ||
+              1;
+          }
+
+
+          updateCount();
 
 
           setSubmitText(
@@ -2688,20 +2473,56 @@
           );
 
 
+          /*
+            QUAN TRỌNG:
+            bật nút lại ngay để khách có thể
+            sửa và gửi xác nhận lần nữa.
+          */
+
+          rsvpSubmit.disabled =
+            false;
+
+
+          /*
+            Sau 1.6 giây chuyển thành
+            CẬP NHẬT XÁC NHẬN.
+
+            Không có dòng text status bên dưới.
+          */
+
+          submitResetTimer =
+            setTimeout(
+              () => {
+
+                if (
+                  !rsvpSubmit.disabled
+                ) {
+
+                  setSubmitText(
+                    "CẬP NHẬT XÁC NHẬN"
+                  );
+                }
+
+              },
+              1600
+            );
+
+
         } catch (error) {
 
           console.error(
+            "RSVP error:",
             error
-          );
-
-
-          setSubmitText(
-            "GỬI XÁC NHẬN"
           );
 
 
           rsvpSubmit.disabled =
             false;
+
+
+          setSubmitText(
+            "GỬI XÁC NHẬN"
+          );
 
 
           alert(
@@ -2713,7 +2534,7 @@
 
 
   /* =======================================================
-     LOAD GUEST DATA
+     LOAD GUEST
   ======================================================= */
 
   async function loadGuestPersonalization() {
@@ -2748,23 +2569,17 @@
       ) {
 
         console.warn(
-          "Không tìm thấy khách:",
-          currentGuestSlug,
+          "Guest not found:",
           response
         );
-
 
         return;
       }
 
 
-      currentGuestData =
-        response;
-
-
-      /* ===============================================
-         F -> TÊN HIỂN THỊ TRÊN THIỆP
-      =============================================== */
+      /*
+        F -> tên hiển thị trên thiệp
+      */
 
       const displayName =
         normalizeText(
@@ -2778,8 +2593,6 @@
 
       if (
         displayName
-        &&
-        personalizedGuestName
       ) {
 
         personalizedGuestName.textContent =
@@ -2788,52 +2601,43 @@
 
         personalizedGuestName.hidden =
           false;
-      }
 
-
-      if (
-        displayName
-      ) {
 
         document.title =
-          displayName
-          +
-          " | Bách & Thư";
+          `${displayName} | Bách & Thư`;
       }
 
 
-      /* ===============================================
-         D / J -> TÊN RSVP
-      =============================================== */
+      /*
+        Nếu đã RSVP trước đó:
+        ưu tiên J.
+        Nếu chưa thì lấy D.
+      */
 
       if (
-        rsvpGuestName
+        response.rsvpName
       ) {
 
-        if (
-          response.rsvpName
-        ) {
+        rsvpGuestName.value =
+          normalizeText(
+            response.rsvpName
+          );
 
-          rsvpGuestName.value =
-            normalizeText(
-              response.rsvpName
-            );
+      } else if (
+        response.name
+      ) {
 
-        } else if (
-          response.name
-        ) {
-
-          rsvpGuestName.value =
-            normalizeText(
-              response.name
-            );
-        }
+        rsvpGuestName.value =
+          normalizeText(
+            response.name
+          );
       }
 
 
-      /* ===============================================
-         I -> LUCKY NUMBER
-      =============================================== */
+      /*
+        Lucky đã có ở I:
+        hiện lại đúng số cũ.
+      */
 
       const existingLucky =
         Number(
@@ -2854,15 +2658,14 @@
       ) {
 
         lockLuckyNumber(
-          existingLucky,
-          false
+          existingLucky
         );
       }
 
 
-      /* ===============================================
-         EXISTING RSVP
-      =============================================== */
+      /*
+        Prefill RSVP gần nhất.
+      */
 
       if (
         response.attendance ===
@@ -2876,7 +2679,10 @@
         rsvpAttendanceYes.checked =
           false;
 
-      } else {
+      } else if (
+        response.attendance ===
+        "Có"
+      ) {
 
         rsvpAttendanceYes.checked =
           true;
@@ -2887,36 +2693,40 @@
       }
 
 
-      const savedCount =
-        Number(
-          response.guestCount
-        );
-
-
       if (
-        Number.isInteger(
-          savedCount
-        )
+        response.guestCount !==
+        ""
         &&
-        savedCount >=
-          0
-        &&
-        savedCount <=
-          10
+        response.guestCount !==
+        null
       ) {
 
-        rsvpCount =
-          savedCount;
+        const count =
+          Number(
+            response.guestCount
+          );
 
 
-        updateCount();
+        if (
+          Number.isInteger(
+            count
+          )
+          &&
+          count >=
+            0
+          &&
+          count <=
+            10
+        ) {
+
+          rsvpCount =
+            count;
+        }
       }
 
 
       if (
         response.message
-        &&
-        rsvpMessage
       ) {
 
         rsvpMessage.value =
@@ -2926,13 +2736,34 @@
       }
 
 
+      updateCount();
+
       updateAttendanceNoLabel();
+
+
+      /*
+        Nếu đã từng RSVP:
+        button thể hiện có thể update.
+      */
+
+      if (
+        response.attendance ===
+        "Có"
+        ||
+        response.attendance ===
+        "Không"
+      ) {
+
+        setSubmitText(
+          "CẬP NHẬT XÁC NHẬN"
+        );
+      }
 
 
     } catch (error) {
 
-      console.warn(
-        "Guest load failed:",
+      console.error(
+        "Guest load error:",
         error
       );
     }
@@ -2940,20 +2771,62 @@
 
 
   /* =======================================================
-     INITIAL LUCKY STATE
+     MARK OPENED
+
+     JSONP luôn nhận được response thật.
   ======================================================= */
 
-  const locallySavedLucky =
+  async function markInvitationOpened() {
+
+    if (
+      !currentGuestSlug
+    ) {
+
+      return;
+    }
+
+
+    try {
+
+      await jsonpRequest(
+        {
+          action:
+            "markOpened",
+
+          guest:
+            currentGuestSlug
+        }
+      );
+
+    } catch (error) {
+
+      console.warn(
+        "Mark opened error:",
+        error
+      );
+    }
+  }
+
+
+  /* =======================================================
+     INITIAL STATE
+  ======================================================= */
+
+  updateCount();
+
+  updateAttendanceNoLabel();
+
+
+  const localLucky =
     readLocalLuckyNumber();
 
 
   if (
-    locallySavedLucky
+    localLucky
   ) {
 
     lockLuckyNumber(
-      locallySavedLucky,
-      false
+      localLucky
     );
 
   } else {
@@ -2976,7 +2849,11 @@
 
         stopLuckyIdleShuffle();
 
-      } else if (
+        return;
+      }
+
+
+      if (
         !luckyLocked
         &&
         !luckyRolling
@@ -2989,16 +2866,7 @@
 
 
   /* =======================================================
-     INITIAL RSVP
-  ======================================================= */
-
-  updateCount();
-
-  updateAttendanceNoLabel();
-
-
-  /* =======================================================
-     INIT BACKEND
+     INIT
   ======================================================= */
 
   markInvitationOpened();
