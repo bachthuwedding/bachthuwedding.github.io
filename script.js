@@ -22,7 +22,7 @@
 
 
   /* =======================================================
-     GUEST PARAM
+     URL GUEST
   ======================================================= */
 
   const urlParams =
@@ -319,14 +319,17 @@
           params
         )
           .forEach(
-            ([key, value]) => {
+            (
+              [
+                key,
+                value
+              ]
+            ) => {
 
               if (
-                value ===
-                undefined
+                value === undefined
                 ||
-                value ===
-                null
+                value === null
               ) {
 
                 return;
@@ -361,15 +364,13 @@
           );
 
 
-        let timer =
-          null;
+        let timer = null;
 
 
         function cleanup() {
 
           if (
-            timer !==
-            null
+            timer !== null
           ) {
 
             clearTimeout(
@@ -388,8 +389,7 @@
 
             window[
               callbackName
-            ] =
-              undefined;
+            ] = undefined;
           }
 
 
@@ -433,8 +433,7 @@
           query.toString();
 
 
-        script.async =
-          true;
+        script.async = true;
 
 
         timer =
@@ -477,14 +476,17 @@
       data
     )
       .forEach(
-        ([key, value]) => {
+        (
+          [
+            key,
+            value
+          ]
+        ) => {
 
           if (
-            value ===
-            undefined
+            value === undefined
             ||
-            value ===
-            null
+            value === null
           ) {
 
             return;
@@ -602,8 +604,7 @@
     "resize",
     scheduleScale,
     {
-      passive:
-        true
+      passive: true
     }
   );
 
@@ -613,14 +614,13 @@
       "resize",
       scheduleScale,
       {
-        passive:
-          true
+        passive: true
       }
     );
 
 
   /* =======================================================
-     OUTSIDE SCROLL
+     SCROLL NGOÀI THIỆP
   ======================================================= */
 
   window.addEventListener(
@@ -670,8 +670,7 @@
         event.deltaY;
     },
     {
-      passive:
-        false
+      passive: false
     }
   );
 
@@ -784,8 +783,7 @@
             "load",
             finish,
             {
-              once:
-                true
+              once: true
             }
           );
 
@@ -794,14 +792,12 @@
             "error",
             resolve,
             {
-              once:
-                true
+              once: true
             }
           );
 
 
-          image.src =
-            url;
+          image.src = url;
 
 
           if (
@@ -901,8 +897,7 @@
             "load",
             finish,
             {
-              once:
-                true
+              once: true
             }
           );
 
@@ -911,14 +906,12 @@
             "error",
             resolve,
             {
-              once:
-                true
+              once: true
             }
           );
 
 
-          image.src =
-            source;
+          image.src = source;
 
 
           image.removeAttribute(
@@ -1057,9 +1050,9 @@
 
 
   /* =======================================================
-     PAGE 02 GUEST DISPLAY
+     PAGE 02 — GUEST DISPLAY NAME
 
-     CHỈ CỘT F.
+     CHỈ HIỂN THỊ response.displayName = CỘT F
   ======================================================= */
 
   function ensureGuestNameElement() {
@@ -1142,17 +1135,21 @@
         .trim();
 
 
+    /*
+      Nếu cột F trống:
+      không hiện fallback nào.
+    */
+
     if (
       !text
     ) {
 
-      element.textContent =
-        "";
+      element.textContent = "";
 
+      element.hidden = true;
 
-      element.hidden =
-        true;
-
+      element.style.display =
+        "none";
 
       return;
     }
@@ -1171,8 +1168,109 @@
     );
 
 
+    /*
+      QUAN TRỌNG
+
+      Các phần khác của Page 2 đều là absolute layer.
+      Nếu guest name không absolute + z-index,
+      nó có thể nằm SAU background.
+
+      Ép style ở đây để chắc chắn luôn nhìn thấy.
+    */
+
+    element.style.position =
+      "absolute";
+
+
+    element.style.zIndex =
+      "25";
+
+
+    element.style.left =
+      "50%";
+
+
+    /*
+      Nằm dưới "TRÂN TRỌNG KÍNH MỜI",
+      trên divider.
+    */
+
+    element.style.top =
+      "82px";
+
+
+    element.style.width =
+      "300px";
+
+
+    element.style.margin =
+      "0";
+
+
+    element.style.padding =
+      "0";
+
+
+    element.style.transform =
+      "translateX(-50%)";
+
+
     element.style.display =
       "block";
+
+
+    element.style.visibility =
+      "visible";
+
+
+    element.style.opacity =
+      "1";
+
+
+    element.style.pointerEvents =
+      "none";
+
+
+    element.style.textAlign =
+      "center";
+
+
+    element.style.color =
+      "#405948";
+
+
+    element.style.fontFamily =
+      '"Times New Roman", Times, serif';
+
+
+    element.style.fontSize =
+      "12px";
+
+
+    element.style.fontWeight =
+      "400";
+
+
+    element.style.fontStyle =
+      "normal";
+
+
+    element.style.lineHeight =
+      "1.25";
+
+
+    element.style.letterSpacing =
+      "0";
+
+
+    element.style.whiteSpace =
+      "normal";
+
+
+    console.log(
+      "[Wedding] Page 2 displayName from column F:",
+      text
+    );
   }
 
 
@@ -1206,8 +1304,7 @@
     if (
       !response
       ||
-      response.ok !==
-        true
+      response.ok !== true
     ) {
 
       throw new Error(
@@ -1223,7 +1320,7 @@
 
 
   /* =======================================================
-     APPLY GUEST
+     APPLY GUEST DATA
   ======================================================= */
 
   function applyGuestData(
@@ -1233,8 +1330,7 @@
     if (
       !response
       ||
-      response.ok !==
-        true
+      response.ok !== true
     ) {
 
       return;
@@ -1249,22 +1345,33 @@
       true;
 
 
-    /*
-      =====================================================
-      PAGE 2
+    /* ===================================================
+       PAGE 2
 
-      response.displayName = CỘT F.
-      KHÔNG FALLBACK.
-      =====================================================
-    */
+       BACKEND:
+       response.displayName = CỘT F
+
+       Ví dụ:
+       "Bạn ABC cùng sự cô đơn"
+    =================================================== */
 
     const displayNameFromColumnF =
       normalizeText(
-        response.displayName
-        ||
-        ""
+        response.displayName || ""
       )
         .trim();
+
+
+    console.log(
+      "[Wedding] API response:",
+      response
+    );
+
+
+    console.log(
+      "[Wedding] displayName F:",
+      displayNameFromColumnF
+    );
 
 
     renderGuestDisplayName(
@@ -1281,11 +1388,12 @@
     }
 
 
-    /*
-      RSVP NAME:
-      ưu tiên dữ liệu J đã điền,
-      sau đó mới tới tên gốc D.
-    */
+    /* ===================================================
+       RSVP NAME
+
+       J nếu khách từng nhập.
+       Nếu chưa có J thì dùng tên gốc D.
+    =================================================== */
 
     if (
       rsvpGuestName
@@ -1300,7 +1408,6 @@
             response.rsvpName
           );
 
-
       } else if (
         response.name
       ) {
@@ -1313,9 +1420,9 @@
     }
 
 
-    /*
-      Lucky number
-    */
+    /* ===================================================
+       LUCKY NUMBER
+    =================================================== */
 
     const existingLucky =
       Number(
@@ -1328,11 +1435,9 @@
         existingLucky
       )
       &&
-      existingLucky >=
-        LUCKY_MIN
+      existingLucky >= LUCKY_MIN
       &&
-      existingLucky <=
-        LUCKY_MAX
+      existingLucky <= LUCKY_MAX
     ) {
 
       lockLuckyNumber(
@@ -1342,9 +1447,9 @@
     }
 
 
-    /*
-      RSVP state
-    */
+    /* ===================================================
+       RSVP GẦN NHẤT
+    =================================================== */
 
     if (
       response.attendance ===
@@ -1367,7 +1472,6 @@
         rsvpAttendanceYes.checked =
           false;
       }
-
 
     } else if (
       response.attendance ===
@@ -1394,14 +1498,11 @@
 
 
     if (
-      response.guestCount !==
-      ""
+      response.guestCount !== ""
       &&
-      response.guestCount !==
-      null
+      response.guestCount !== null
       &&
-      response.guestCount !==
-      undefined
+      response.guestCount !== undefined
     ) {
 
       const savedCount =
@@ -1415,11 +1516,9 @@
           savedCount
         )
         &&
-        savedCount >=
-          0
+        savedCount >= 0
         &&
-        savedCount <=
-          10
+        savedCount <= 10
       ) {
 
         rsvpCount =
@@ -1434,9 +1533,7 @@
 
       rsvpMessage.value =
         normalizeText(
-          response.message
-          ||
-          ""
+          response.message || ""
         );
     }
 
@@ -1447,11 +1544,9 @@
 
 
     if (
-      response.attendance ===
-      "Có"
+      response.attendance === "Có"
       ||
-      response.attendance ===
-      "Không"
+      response.attendance === "Không"
     ) {
 
       setSubmitText(
@@ -1515,8 +1610,7 @@
         ) {
 
           if (
-            delays[i] >
-            0
+            delays[i] > 0
           ) {
 
             await sleep(
@@ -1557,7 +1651,6 @@
 
       return await guestLoadPromise;
 
-
     } finally {
 
       guestLoadPromise =
@@ -1567,7 +1660,7 @@
 
 
   /* =======================================================
-     PAGE 02 ENTRY
+     PAGE 02 ENTRANCE
   ======================================================= */
 
   function playPage02Entrance() {
@@ -1601,6 +1694,21 @@
               .add(
                 "is-entering"
               );
+
+
+            /*
+              Re-apply tên khách sau animation
+              để tránh CSS entrance ghi đè opacity.
+            */
+
+            if (
+              currentGuestData?.displayName
+            ) {
+
+              renderGuestDisplayName(
+                currentGuestData.displayName
+              );
+            }
           }
         );
       }
@@ -1773,17 +1881,10 @@
     spawnFireworks(
       page06EntryFireworks,
       {
-        count:
-          115,
-
-        minDistance:
-          60,
-
-        maxDistance:
-          170,
-
-        cleanup:
-          1500
+        count: 115,
+        minDistance: 60,
+        maxDistance: 170,
+        cleanup: 1500
       }
     );
 
@@ -1817,9 +1918,7 @@
      PAGE ACTIVATION
   ======================================================= */
 
-  function activatePage(
-    index
-  ) {
+  function activatePage(index) {
 
     const safeIndex =
       Math.max(
@@ -1849,8 +1948,7 @@
 
 
         if (
-          page ===
-          page06
+          page === page06
           &&
           !active
         ) {
@@ -1881,6 +1979,21 @@
           true
         );
       }
+
+
+      /*
+        Nếu data đã có sẵn,
+        render lại tên ngay khi Page 2 active.
+      */
+
+      if (
+        currentGuestData?.displayName
+      ) {
+
+        renderGuestDisplayName(
+          currentGuestData.displayName
+        );
+      }
     }
 
 
@@ -1896,9 +2009,7 @@
   }
 
 
-  function setNearbyPages(
-    index
-  ) {
+  function setNearbyPages(index) {
 
     const safeIndex =
       Math.max(
@@ -1987,8 +2098,7 @@
       requestAnimationFrame(
         () => {
 
-          scrollRaf =
-            0;
+          scrollRaf = 0;
 
 
           const index =
@@ -2023,8 +2133,7 @@
       "scroll",
       onPageScroll,
       {
-        passive:
-          true
+        passive: true
       }
     );
 
@@ -2043,9 +2152,12 @@
     }
 
 
-    pageMode =
-      true;
+    pageMode = true;
 
+
+    /*
+      Guest API chạy song song.
+    */
 
     loadGuestPersonalization();
 
@@ -2060,8 +2172,7 @@
       pageScroller
     ) {
 
-      pageScroller.scrollTop =
-        0;
+      pageScroller.scrollTop = 0;
 
 
       pageScroller.setAttribute(
@@ -2078,8 +2189,7 @@
       );
 
 
-    activePageIndex =
-      0;
+    activePageIndex = 0;
 
 
     setNearbyPages(
@@ -2090,6 +2200,25 @@
     activatePage(
       0
     );
+
+
+    /*
+      Render thêm một lần sau khi chuyển Page 1 -> 2.
+    */
+
+    if (
+      currentGuestData?.displayName
+    ) {
+
+      requestAnimationFrame(
+        () => {
+
+          renderGuestDisplayName(
+            currentGuestData.displayName
+          );
+        }
+      );
+    }
 
 
     runWhenIdle(
@@ -2122,8 +2251,7 @@
         );
       },
       {
-        passive:
-          true
+        passive: true
       }
     );
 
@@ -2197,11 +2325,9 @@
           value
         )
         &&
-        value >=
-          LUCKY_MIN
+        value >= LUCKY_MIN
         &&
-        value <=
-          LUCKY_MAX
+        value <= LUCKY_MAX
       ) {
 
         return value;
@@ -2215,9 +2341,7 @@
   }
 
 
-  function saveLocalLuckyNumber(
-    value
-  ) {
+  function saveLocalLuckyNumber(value) {
 
     const key =
       getLuckyStorageKey();
@@ -2293,9 +2417,7 @@
   }
 
 
-  function showLuckyNumber(
-    value
-  ) {
+  function showLuckyNumber(value) {
 
     if (
       !luckyNumber
@@ -2317,8 +2439,7 @@
   function stopLuckyIdleShuffle() {
 
     if (
-      luckyIdleTimer !==
-      null
+      luckyIdleTimer !== null
     ) {
 
       clearInterval(
@@ -2326,8 +2447,7 @@
       );
 
 
-      luckyIdleTimer =
-        null;
+      luckyIdleTimer = null;
     }
 
 
@@ -2383,9 +2503,7 @@
   ) {
 
     const number =
-      Number(
-        value
-      );
+      Number(value);
 
 
     if (
@@ -2393,11 +2511,9 @@
         number
       )
       ||
-      number <
-        LUCKY_MIN
+      number < LUCKY_MIN
       ||
-      number >
-        LUCKY_MAX
+      number > LUCKY_MAX
     ) {
 
       return;
@@ -2407,12 +2523,9 @@
     stopLuckyIdleShuffle();
 
 
-    luckyLocked =
-      true;
+    luckyLocked = true;
 
-
-    luckyRolling =
-      false;
+    luckyRolling = false;
 
 
     showLuckyNumber(
@@ -2470,8 +2583,7 @@
       luckyTrigger
     ) {
 
-      luckyTrigger.disabled =
-        true;
+      luckyTrigger.disabled = true;
     }
   }
 
@@ -2481,17 +2593,10 @@
     spawnFireworks(
       luckyFireworks,
       {
-        count:
-          102,
-
-        minDistance:
-          55,
-
-        maxDistance:
-          155,
-
-        cleanup:
-          1700
+        count: 102,
+        minDistance: 55,
+        maxDistance: 155,
+        cleanup: 1700
       }
     );
   }
@@ -2522,8 +2627,7 @@
     if (
       !response
       ||
-      response.ok !==
-        true
+      response.ok !== true
     ) {
 
       throw new Error(
@@ -2567,8 +2671,7 @@
     stopLuckyIdleShuffle();
 
 
-    luckyRolling =
-      true;
+    luckyRolling = true;
 
 
     luckyCard
@@ -2606,8 +2709,7 @@
       1850;
 
 
-    let lastUpdate =
-      0;
+    let lastUpdate = 0;
 
 
     function frame(now) {
@@ -2635,12 +2737,11 @@
 
 
       if (
-        now - lastUpdate >=
-        interval
+        now - lastUpdate
+        >= interval
       ) {
 
-        lastUpdate =
-          now;
+        lastUpdate = now;
 
 
         showLuckyNumber(
@@ -2650,8 +2751,7 @@
 
 
       if (
-        progress <
-        1
+        progress < 1
       ) {
 
         requestAnimationFrame(
@@ -2685,8 +2785,13 @@
 
       } catch (error) {
 
-        luckyRolling =
-          false;
+        console.error(
+          "Lucky number error:",
+          error
+        );
+
+
+        luckyRolling = false;
 
 
         luckyCard
@@ -2761,9 +2866,7 @@
   }
 
 
-  function setSubmitText(
-    text
-  ) {
+  function setSubmitText(text) {
 
     const span =
       rsvpSubmit
@@ -2776,8 +2879,7 @@
       span
     ) {
 
-      span.textContent =
-        text;
+      span.textContent = text;
     }
   }
 
@@ -2843,8 +2945,7 @@
           rsvpAttendanceNo.checked
         ) {
 
-          rsvpCount =
-            0;
+          rsvpCount = 0;
 
 
           updateCount();
@@ -2864,12 +2965,10 @@
         if (
           rsvpAttendanceYes.checked
           &&
-          rsvpCount <
-            1
+          rsvpCount < 1
         ) {
 
-          rsvpCount =
-            1;
+          rsvpCount = 1;
 
 
           updateCount();
@@ -2882,7 +2981,7 @@
 
 
   /* =======================================================
-     BACKGROUND REFRESH
+     BACKGROUND SYNC
   ======================================================= */
 
   async function backgroundRefreshGuestData() {
@@ -2904,14 +3003,32 @@
 
         currentGuestData =
           response;
+
+
+        /*
+          Không update form ở đây,
+          tránh ghi đè thao tác khách đang nhập.
+
+          Chỉ cập nhật lại Page 2.
+        */
+
+        if (
+          response.displayName
+        ) {
+
+          renderGuestDisplayName(
+            response.displayName
+          );
+        }
       }
 
 
-    } catch (_) {
+    } catch (error) {
 
-      /*
-        Không báo lỗi cho khách.
-      */
+      console.warn(
+        "[Wedding] background refresh skipped",
+        error
+      );
     }
   }
 
@@ -3003,8 +3120,15 @@
         }
 
 
-        rsvpSubmit.disabled =
-          true;
+        if (
+          !rsvpSubmit
+        ) {
+
+          return;
+        }
+
+
+        rsvpSubmit.disabled = true;
 
 
         setSubmitText(
@@ -3073,6 +3197,7 @@
         } catch (error) {
 
           console.error(
+            "[Wedding] POST failed",
             error
           );
 
@@ -3121,12 +3246,18 @@
       );
 
 
-    } catch (_) {}
+    } catch (error) {
+
+      console.warn(
+        "[Wedding] mark opened failed",
+        error
+      );
+    }
   }
 
 
   /* =======================================================
-     INIT
+     INITIAL
   ======================================================= */
 
   updateCount();
@@ -3146,7 +3277,6 @@
       localLucky,
       false
     );
-
 
   } else {
 
@@ -3179,6 +3309,10 @@
     }
   );
 
+
+  /* =======================================================
+     INIT
+  ======================================================= */
 
   markInvitationOpened();
 
