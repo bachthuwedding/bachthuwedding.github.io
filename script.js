@@ -1895,7 +1895,7 @@
         "position:absolute",
         "z-index:25",
         "left:50%",
-        "top:82px",
+        "top:62px",
         "width:300px",
         "margin:0",
         "padding:0",
@@ -1907,8 +1907,8 @@
         "text-align:center",
         "color:#405948",
         'font-family:"Times New Roman", Times, serif',
-        "font-size:12px",
-        "font-weight:400",
+        "font-size:18px",
+        "font-weight:600",
         "font-style:italic",
         "line-height:1.25",
         "letter-spacing:0",
@@ -2548,7 +2548,7 @@
           60,
 
         maxDistance:
-          170,
+          190,
 
         cleanup:
           1500
@@ -3272,7 +3272,7 @@
           55,
 
         maxDistance:
-          155,
+          172,
 
         cleanup:
           1700
