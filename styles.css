@@ -4600,3 +4600,33 @@ p:nth-child(3) {
 
   animation: none !important;
 }
+
+
+/* =========================================================
+   V16 — PAGE 08 TEXT WRAP REVIEW
+========================================================= */
+
+.p08-vietnamese-copy,
+.p08-vietnamese-copy p:nth-child(1),
+.p08-vietnamese-copy p:nth-child(2),
+.p08-vietnamese-copy p:nth-child(3) {
+  font-size: 9.5px;
+  line-height: 1.25;
+}
+
+.p08-english-copy {
+  font-size: 9.3px;
+  line-height: 1.25;
+}
+
+.p08-copy-line {
+  display: block;
+  white-space: nowrap;
+}
+
+/* Reveal vẫn theo từng đoạn; line chỉ giữ cách xuống dòng đẹp. */
+.p08-reveal-paragraph .p08-copy-line {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
