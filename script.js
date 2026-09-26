@@ -257,61 +257,35 @@
     new Map();
 
 
-  let pageMode =
-    false;
+  let pageMode = false;
 
+  let resizeRaf = 0;
 
-  let resizeRaf =
-    0;
+  let scrollRaf = 0;
 
+  let activePageIndex = -1;
 
-  let scrollRaf =
-    0;
+  let luckyIdleTimer = null;
 
+  let luckyRolling = false;
 
-  let activePageIndex =
-    -1;
+  let luckyLocked = false;
 
+  let rsvpCount = 1;
 
-  let luckyIdleTimer =
-    null;
+  let page06EntryTimer = null;
 
+  let submitResetTimer = null;
 
-  let luckyRolling =
-    false;
+  let currentGuestData = null;
 
+  let guestDataLoaded = false;
 
-  let luckyLocked =
-    false;
-
-
-  let rsvpCount =
-    1;
-
-
-  let page06EntryTimer =
-    null;
-
-
-  let submitResetTimer =
-    null;
-
-
-  let currentGuestData =
-    null;
-
-
-  let guestDataLoaded =
-    false;
-
-
-  let guestLoadPromise =
-    null;
+  let guestLoadPromise = null;
 
 
   /* =======================================================
      JSONP
-     DÙNG CHO CÁC REQUEST CẦN ĐỌC RESPONSE
   ======================================================= */
 
   function jsonpRequest(
@@ -376,10 +350,6 @@
         );
 
 
-        /*
-          Chống cache.
-        */
-
         query.set(
           "_",
           String(
@@ -394,8 +364,7 @@
           );
 
 
-        let timer =
-          null;
+        let timer = null;
 
 
         function cleanup() {
@@ -420,8 +389,7 @@
 
             window[
               callbackName
-            ] =
-              undefined;
+            ] = undefined;
           }
 
 
@@ -435,7 +403,6 @@
           (response) => {
 
             cleanup();
-
 
             resolve(
               response
@@ -465,8 +432,7 @@
           query.toString();
 
 
-        script.async =
-          true;
+        script.async = true;
 
 
         timer =
@@ -497,9 +463,6 @@
 
   /* =======================================================
      POST
-
-     Sheet của bạn đã chứng minh phần này hoạt động.
-     KHÔNG chờ đọc lại Sheet nữa.
   ======================================================= */
 
   async function postToBackend(data) {
@@ -664,7 +627,7 @@
 
 
   /* =======================================================
-     SCROLL KHI CHUỘT NẰM NGOÀI THIỆP
+     SCROLL KHI CHUỘT Ở NGOÀI THIỆP
   ======================================================= */
 
   window.addEventListener(
@@ -751,7 +714,7 @@
 
 
   /* =======================================================
-     IMAGE PRELOAD
+     PRELOAD IMAGE
   ======================================================= */
 
   function preloadUrl(
@@ -841,8 +804,7 @@
           );
 
 
-          image.src =
-            url;
+          image.src = url;
 
 
           if (
@@ -956,8 +918,7 @@
           );
 
 
-          image.src =
-            source;
+          image.src = source;
 
 
           image.removeAttribute(
@@ -1096,41 +1057,10 @@
 
 
   /* =======================================================
-     PAGE 02 GUEST NAME
+     PAGE 02 — DISPLAY NAME
+
+     CHỈ ĐƯỢC PHÉP HIỂN THỊ GIÁ TRỊ CỘT F.
   ======================================================= */
-
-  function humanizeGuestSlug(
-    slug
-  ) {
-
-    return String(
-      slug || ""
-    )
-      .split("-")
-      .filter(Boolean)
-      .map(
-        (word) => {
-
-          if (
-            word.length <= 3
-          ) {
-
-            return word
-              .toUpperCase();
-          }
-
-
-          return (
-            word.charAt(0)
-              .toUpperCase()
-            +
-            word.slice(1)
-          );
-        }
-      )
-      .join(" ");
-  }
-
 
   function ensureGuestNameElement() {
 
@@ -1190,7 +1120,7 @@
 
 
   function renderGuestDisplayName(
-    value
+    displayName
   ) {
 
     const element =
@@ -1205,9 +1135,14 @@
     }
 
 
+    /*
+      QUAN TRỌNG:
+      displayName ở đây PHẢI là giá trị cột F.
+    */
+
     const text =
       normalizeText(
-        value
+        displayName
       )
         .trim();
 
@@ -1216,67 +1151,36 @@
       !text
     ) {
 
+      element.textContent = "";
+
+      element.hidden = true;
+
       return;
     }
 
 
-    element.textContent =
-      text;
+    element.textContent = text;
 
-
-    element.hidden =
-      false;
-
+    element.hidden = false;
 
     element.removeAttribute(
       "hidden"
     );
 
 
-    /*
-      Nếu HTML/CSS cũ còn display:none
-      thì ép phần tử trở lại.
-    */
-
     element.style.display =
       "block";
 
 
     console.log(
-      "[Wedding] Page 2 guest:",
+      "[Wedding] Display name from column F:",
       text
     );
   }
 
 
-  /*
-    Hiện tạm tên từ URL ngay lập tức.
-
-    Ví dụ:
-    ?guest=abc
-    -> ABC
-
-    ?guest=tran-trung-hieu
-    -> Tran Trung Hieu
-
-    Khi API trả về cột F,
-    nội dung này sẽ được thay lại.
-  */
-
-  if (
-    currentGuestSlug
-  ) {
-
-    renderGuestDisplayName(
-      humanizeGuestSlug(
-        currentGuestSlug
-      )
-    );
-  }
-
-
   /* =======================================================
-     LOAD GUEST DATA WITH RETRY
+     GET GUEST DATA
   ======================================================= */
 
   async function requestGuestData() {
@@ -1320,6 +1224,10 @@
   }
 
 
+  /* =======================================================
+     APPLY GUEST DATA
+  ======================================================= */
+
   function applyGuestData(
     response
   ) {
@@ -1343,39 +1251,65 @@
 
 
     /* ===================================================
-       PAGE 2:
-       F -> DISPLAY NAME
+       PAGE 2
+
+       CHỈ dùng response.displayName = CỘT F.
+
+       TUYỆT ĐỐI không:
+       || response.name
+       || URL slug
     =================================================== */
 
-    const displayName =
+    const displayNameFromColumnF =
       normalizeText(
-        response.displayName
-        ||
-        response.name
-        ||
-        ""
+        response.displayName || ""
       )
         .trim();
 
 
+    console.log(
+      "[Wedding] API guest response:",
+      response
+    );
+
+
+    console.log(
+      "[Wedding] Column F displayName:",
+      displayNameFromColumnF
+    );
+
+
     if (
-      displayName
+      displayNameFromColumnF
     ) {
 
       renderGuestDisplayName(
-        displayName
+        displayNameFromColumnF
       );
 
 
       document.title =
-        `${displayName} | Bách & Thư`;
+        `${displayNameFromColumnF} | Bách & Thư`;
+
+    } else {
+
+      /*
+        Nếu cột F trống thì Page 2 để trống.
+        Không lấy D để bù.
+      */
+
+      renderGuestDisplayName(
+        ""
+      );
     }
 
 
     /* ===================================================
-       RSVP NAME:
-       ưu tiên J cũ,
-       chưa có thì lấy D.
+       RSVP NAME
+
+       Phần form vẫn:
+       J đã từng nhập -> ưu tiên J
+       chưa có J -> lấy tên gốc D.
     =================================================== */
 
     if (
@@ -1541,6 +1475,10 @@
   }
 
 
+  /* =======================================================
+     LOAD GUEST WITH RETRY
+  ======================================================= */
+
   async function loadGuestPersonalization(
     force = false
   ) {
@@ -1584,8 +1522,7 @@
         ];
 
 
-        let lastError =
-          null;
+        let lastError = null;
 
 
         for (
@@ -1653,8 +1590,7 @@
 
     } finally {
 
-      guestLoadPromise =
-        null;
+      guestLoadPromise = null;
     }
   }
 
@@ -1702,7 +1638,7 @@
 
 
   /* =======================================================
-     FIREWORKS
+     FIREWORK
   ======================================================= */
 
   const fireworkColors = [
@@ -1956,11 +1892,6 @@
       playPage02Entrance();
 
 
-      /*
-        Nếu lần load đầu API bị chậm,
-        mở thiệp sẽ thử lấy tên một lần nữa.
-      */
-
       if (
         !guestDataLoaded
       ) {
@@ -2073,8 +2004,7 @@
       requestAnimationFrame(
         () => {
 
-          scrollRaf =
-            0;
+          scrollRaf = 0;
 
 
           const index =
@@ -2128,14 +2058,8 @@
     }
 
 
-    pageMode =
-      true;
+    pageMode = true;
 
-
-    /*
-      Không bắt người dùng phải chờ API.
-      Tên khách chạy song song.
-    */
 
     loadGuestPersonalization();
 
@@ -2150,8 +2074,7 @@
       pageScroller
     ) {
 
-      pageScroller.scrollTop =
-        0;
+      pageScroller.scrollTop = 0;
 
 
       pageScroller.setAttribute(
@@ -2168,8 +2091,7 @@
       );
 
 
-    activePageIndex =
-      0;
+    activePageIndex = 0;
 
 
     setNearbyPages(
@@ -2408,8 +2330,7 @@
       );
 
 
-      luckyIdleTimer =
-        null;
+      luckyIdleTimer = null;
     }
 
 
@@ -2485,12 +2406,9 @@
     stopLuckyIdleShuffle();
 
 
-    luckyLocked =
-      true;
+    luckyLocked = true;
 
-
-    luckyRolling =
-      false;
+    luckyRolling = false;
 
 
     showLuckyNumber(
@@ -2548,8 +2466,7 @@
       luckyTrigger
     ) {
 
-      luckyTrigger.disabled =
-        true;
+      luckyTrigger.disabled = true;
 
 
       luckyTrigger.setAttribute(
@@ -2643,8 +2560,7 @@
     stopLuckyIdleShuffle();
 
 
-    luckyRolling =
-      true;
+    luckyRolling = true;
 
 
     luckyCard
@@ -2682,8 +2598,7 @@
       1850;
 
 
-    let lastUpdate =
-      0;
+    let lastUpdate = 0;
 
 
     function frame(now) {
@@ -2715,8 +2630,7 @@
         >= interval
       ) {
 
-        lastUpdate =
-          now;
+        lastUpdate = now;
 
 
         showLuckyNumber(
@@ -2766,8 +2680,7 @@
         );
 
 
-        luckyRolling =
-          false;
+        luckyRolling = false;
 
 
         luckyCard
@@ -2832,11 +2745,6 @@
     }
 
 
-    /*
-      Chọn Không -> hiện "Kó".
-      Bỏ chọn -> "Không".
-    */
-
     rsvpAttendanceNoText.textContent =
       rsvpAttendanceNo
         ?.checked
@@ -2860,8 +2768,7 @@
       span
     ) {
 
-      span.textContent =
-        text;
+      span.textContent = text;
     }
   }
 
@@ -2927,8 +2834,7 @@
           rsvpAttendanceNo.checked
         ) {
 
-          rsvpCount =
-            0;
+          rsvpCount = 0;
 
 
           updateCount();
@@ -2951,8 +2857,7 @@
           rsvpCount < 1
         ) {
 
-          rsvpCount =
-            1;
+          rsvpCount = 1;
 
 
           updateCount();
@@ -2965,10 +2870,7 @@
 
 
   /* =======================================================
-     BACKGROUND SYNC
-
-     Chỉ chạy ngầm.
-     Tuyệt đối không popup nếu đọc lại chưa kịp.
+     BACKGROUND REFRESH
   ======================================================= */
 
   async function backgroundRefreshGuestData() {
@@ -3001,12 +2903,6 @@
 
     } catch (error) {
 
-      /*
-        Không báo lỗi cho khách.
-        POST đã được gửi và Sheet của bạn
-        thực tế vẫn ghi thành công.
-      */
-
       console.warn(
         "[Wedding] background refresh skipped",
         error
@@ -3017,10 +2913,6 @@
 
   /* =======================================================
      RSVP SUBMIT
-
-     MỖI LẦN:
-     POST -> THÀNH CÔNG UI NGAY
-     KHÔNG POLL SHEET
   ======================================================= */
 
   rsvpForm
@@ -3114,8 +3006,7 @@
         }
 
 
-        rsvpSubmit.disabled =
-          true;
+        rsvpSubmit.disabled = true;
 
 
         setSubmitText(
@@ -3124,10 +3015,6 @@
 
 
         try {
-
-          /*
-            Đây là bước duy nhất phải chờ.
-          */
 
           await postToBackend(
             {
@@ -3148,11 +3035,6 @@
           );
 
 
-          /*
-            POST đã được browser gửi thành công.
-            Không chờ Sheet phản hồi nữa.
-          */
-
           rsvpCount =
             guestCount;
 
@@ -3168,10 +3050,6 @@
           rsvpSubmit.disabled =
             false;
 
-
-          /*
-            1.8 giây sau chuyển thành nút update.
-          */
 
           submitResetTimer =
             setTimeout(
@@ -3190,12 +3068,6 @@
               1800
             );
 
-
-          /*
-            Đọc lại Sheet ở background.
-            Không block nút.
-            Không popup.
-          */
 
           backgroundRefreshGuestData();
 
@@ -3217,11 +3089,6 @@
           );
 
 
-          /*
-            Chỉ hiện alert nếu browser thật sự
-            không gửi nổi request POST.
-          */
-
           alert(
             "Không thể kết nối để gửi xác nhận. Bạn vui lòng thử lại."
           );
@@ -3232,8 +3099,6 @@
 
   /* =======================================================
      MARK OPENED
-
-     Dùng JSONP GET để có response rõ ràng.
   ======================================================= */
 
   async function markInvitationOpened() {
@@ -3248,21 +3113,14 @@
 
     try {
 
-      const response =
-        await jsonpRequest(
-          {
-            action:
-              "markOpened",
+      await jsonpRequest(
+        {
+          action:
+            "markOpened",
 
-            guest:
-              currentGuestSlug
-          }
-        );
-
-
-      console.log(
-        "[Wedding] opened:",
-        response
+          guest:
+            currentGuestSlug
+        }
       );
 
 
@@ -3277,7 +3135,7 @@
 
 
   /* =======================================================
-     INITIAL LUCKY
+     INITIAL
   ======================================================= */
 
   updateCount();
@@ -3303,10 +3161,6 @@
     startLuckyIdleShuffle();
   }
 
-
-  /* =======================================================
-     VISIBILITY
-  ======================================================= */
 
   document.addEventListener(
     "visibilitychange",
@@ -3335,15 +3189,17 @@
 
 
   /* =======================================================
-     INITIAL API
+     INIT
   ======================================================= */
 
   markInvitationOpened();
 
 
   /*
-    Lấy tên khách ngay từ lúc mở URL,
-    không đợi người dùng mở phong bì.
+    Từ đây Page 2 sẽ chờ response.displayName,
+    tức giá trị cột F.
+
+    KHÔNG còn tự tạo ABC từ ?guest=abc.
   */
 
   loadGuestPersonalization();
