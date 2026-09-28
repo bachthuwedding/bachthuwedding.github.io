@@ -4737,3 +4737,86 @@ p:nth-child(3) {
 .page08-layout .p08-lotus {
   animation: none !important;
 }
+
+
+/* =========================================================
+   V21 — PAGE 07 TRANSITION + PAGE 06 LUCKY MOTION
+========================================================= */
+
+/* Page 07: entry transition nhanh hơn khoảng 10%. */
+.page07-layout .p07-top-left-decoration,
+.page07-layout .p07-butterfly,
+.page07-layout .p07-rsvp-title,
+.page07-layout .p07-divider-ornament--top,
+.page07-layout .p07-rsvp-subtitle,
+.page07-layout .p07-rsvp-form {
+  transition-duration: 578ms, 909ms;
+}
+
+.page07-layout .p07-rsvp-title,
+.page07-layout .p07-divider-ornament--top,
+.page07-layout .p07-rsvp-subtitle,
+.page07-layout .p07-form-group,
+.page07-layout .p07-submit {
+  transition-duration: 744ms, 1115ms;
+}
+
+
+/* Page 06: lucky number chuyển động mạnh hơn nhưng vẫn mượt. */
+.p06-card-wrap.is-rolling .p06-number-slot {
+  transform-origin: 50% 55%;
+  will-change: transform, filter;
+  animation: p06LuckyRollStrong 440ms cubic-bezier(.45, 0, .55, 1) infinite;
+}
+
+.p06-card-wrap.is-revealed .p06-number-slot {
+  transform-origin: 50% 55%;
+  will-change: transform, filter;
+  animation: p06LuckyRevealStrong 720ms cubic-bezier(.18, .82, .24, 1.18) both;
+}
+
+@keyframes p06LuckyRollStrong {
+  0% {
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 0 0 rgba(132, 28, 18, 0));
+  }
+  25% {
+    transform: translateY(-4px) scale(1.07);
+    filter: drop-shadow(0 5px 7px rgba(132, 28, 18, .14));
+  }
+  50% {
+    transform: translateY(1px) scale(.985);
+    filter: drop-shadow(0 2px 4px rgba(132, 28, 18, .08));
+  }
+  75% {
+    transform: translateY(-3px) scale(1.055);
+    filter: drop-shadow(0 4px 6px rgba(132, 28, 18, .12));
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 0 0 rgba(132, 28, 18, 0));
+  }
+}
+
+@keyframes p06LuckyRevealStrong {
+  0% {
+    transform: translateY(2px) scale(.88);
+    filter: drop-shadow(0 0 0 rgba(132, 28, 18, 0));
+  }
+  42% {
+    transform: translateY(-7px) scale(1.16);
+    filter: drop-shadow(0 8px 10px rgba(132, 28, 18, .18));
+  }
+  68% {
+    transform: translateY(1px) scale(.97);
+    filter: drop-shadow(0 2px 4px rgba(132, 28, 18, .08));
+  }
+  84% {
+    transform: translateY(-2px) scale(1.045);
+    filter: drop-shadow(0 4px 6px rgba(132, 28, 18, .10));
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 0 0 rgba(132, 28, 18, 0));
+  }
+}
