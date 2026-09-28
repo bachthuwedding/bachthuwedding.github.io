@@ -4820,3 +4820,151 @@ p:nth-child(3) {
     filter: drop-shadow(0 0 0 rgba(132, 28, 18, 0));
   }
 }
+
+
+/* =========================================================
+   V22 — TRANSITION SPEED + MOBILE RSVP + FASTER LUCKY
+========================================================= */
+
+/* ---------------------------------------------------------
+   "PAGE 1" nội dung thiệp = Page 02 trong code.
+   Text transition nhanh hơn khoảng 10%.
+--------------------------------------------------------- */
+
+.page02-layout .p02-invite,
+.page02-layout .p02-personalized-guest,
+.page02-layout .p02-to,
+.page02-layout .p02-wedding-title,
+.page02-layout .p02-couple-names,
+.page02-layout .p02-date-divider,
+.page02-layout .p02-ceremony-info,
+.page02-layout .p02-family-info {
+  transition-duration: 744ms, 1115ms;
+}
+
+.page02-layout .p02-invite {
+  transition-delay: 0ms;
+}
+
+.page02-layout .p02-personalized-guest {
+  transition-delay: 124ms;
+}
+
+.page02-layout .p02-to {
+  transition-delay: 248ms;
+}
+
+.page02-layout .p02-wedding-title:nth-of-type(4) {
+  transition-delay: 372ms;
+}
+
+.page02-layout .p02-wedding-title:nth-of-type(5) {
+  transition-delay: 495ms;
+}
+
+.page02-layout .p02-couple-names {
+  transition-delay: 628ms;
+}
+
+.page02-layout .p02-date-divider {
+  transition-delay: 768ms;
+}
+
+.page02-layout .p02-ceremony-info {
+  transition-delay: 901ms;
+}
+
+.page02-layout .p02-family-info {
+  transition-delay: 1041ms;
+}
+
+
+/* ---------------------------------------------------------
+   "PAGE 2" timeline = Page 03 trong code.
+   Toàn bộ transition của timeline nhanh hơn khoảng 20%.
+--------------------------------------------------------- */
+
+.page03-layout .p03-cloud {
+  transition-duration: 1137ms, 682ms;
+}
+
+.p03-title {
+  transition-duration: 947ms, 644ms;
+}
+
+.p03-title-divider {
+  transition-duration: 644ms, 947ms;
+  transition-delay: 144ms, 144ms;
+}
+
+.p03-timeline {
+  transition-duration: 1591ms, 606ms;
+  transition-delay: 167ms, 167ms;
+}
+
+.page03-layout .p03-event--02,
+.page03-layout .p03-mam-co,
+.page03-layout .p03-event--04,
+.page03-layout .p03-kieu,
+.page03-layout .p03-event--03,
+.page03-layout .p03-cheers {
+  transition-duration: 1137ms, 682ms;
+}
+
+.page03-layout .p03-event--02,
+.page03-layout .p03-kieu {
+  transition-delay: 288ms;
+}
+
+.page03-layout .p03-mam-co,
+.page03-layout .p03-event--03 {
+  transition-delay: 576ms;
+}
+
+.page03-layout .p03-event--04,
+.page03-layout .p03-cheers {
+  transition-delay: 863ms;
+}
+
+.p03-dress-code {
+  transition-duration: 1023ms, 606ms;
+  transition-delay: 1326ms, 1326ms;
+}
+
+
+/* ---------------------------------------------------------
+   Page 06 lucky number:
+   giữ biên độ mạnh của v21 nhưng chạy nhanh hơn rõ rệt.
+--------------------------------------------------------- */
+
+.p06-card-wrap.is-rolling .p06-number-slot {
+  animation-duration: 300ms;
+}
+
+.p06-card-wrap.is-revealed .p06-number-slot {
+  animation-duration: 520ms;
+}
+
+
+/* ---------------------------------------------------------
+   Mobile / Messenger / iOS RSVP viewport protection.
+--------------------------------------------------------- */
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  /*
+    iOS thường tự zoom input nếu computed font-size < 16px.
+    Chỉ nâng font trong lúc focus; khi blur sẽ quay lại design cũ.
+  */
+  .p07-text-input:focus,
+  .p07-message-input:focus {
+    font-size: 16px;
+  }
+}
