@@ -1274,24 +1274,158 @@
 
   /* =======================================================
      SCALE
+     Mobile-safe: không rescale artboard theo chiều cao bàn phím.
   ======================================================= */
+
+  let viewportInputLocked =
+    false;
+
+
+  let stableViewportWidth =
+    document.documentElement.clientWidth
+    ||
+    window.innerWidth
+    ||
+    DESIGN_WIDTH;
+
+
+  let stableViewportHeight =
+    document.documentElement.clientHeight
+    ||
+    window.innerHeight
+    ||
+    DESIGN_HEIGHT;
+
+
+  let keyboardRestoreTimerA =
+    null;
+
+
+  let keyboardRestoreTimerB =
+    null;
+
+
+  function isKeyboardInput(
+    target
+  ) {
+
+    if (
+      !target
+      ||
+      typeof target.matches !==
+        "function"
+    ) {
+
+      return false;
+    }
+
+
+    return target.matches(
+      [
+        "textarea",
+        "input:not([type])",
+        'input[type="text"]',
+        'input[type="email"]',
+        'input[type="tel"]',
+        'input[type="number"]',
+        'input[type="search"]',
+        'input[type="url"]'
+      ].join(",")
+    );
+  }
+
+
+  function readLayoutViewport() {
+
+    const width =
+      document.documentElement.clientWidth
+      ||
+      window.innerWidth
+      ||
+      stableViewportWidth
+      ||
+      DESIGN_WIDTH;
+
+
+    const height =
+      document.documentElement.clientHeight
+      ||
+      window.innerHeight
+      ||
+      stableViewportHeight
+      ||
+      DESIGN_HEIGHT;
+
+
+    if (
+      !viewportInputLocked
+    ) {
+
+      stableViewportWidth =
+        width;
+
+
+      stableViewportHeight =
+        height;
+    }
+
+
+    return {
+      width:
+        viewportInputLocked
+        ?
+        stableViewportWidth
+        :
+        width,
+
+      height:
+        viewportInputLocked
+        ?
+        stableViewportHeight
+        :
+        height
+    };
+  }
+
+
+  function resetHorizontalViewport() {
+
+    root.scrollLeft =
+      0;
+
+
+    if (
+      document.body
+    ) {
+
+      document.body.scrollLeft =
+        0;
+    }
+
+
+    if (
+      window.scrollX !==
+        0
+    ) {
+
+      window.scrollTo(
+        0,
+        0
+      );
+    }
+  }
+
 
   function updateScale() {
 
-    const viewport =
-      window.visualViewport;
+    const {
+      width:
+        viewportWidth,
 
-
-    const viewportWidth =
-      viewport?.width
-      ||
-      window.innerWidth;
-
-
-    const viewportHeight =
-      viewport?.height
-      ||
-      window.innerHeight;
+      height:
+        viewportHeight
+    } =
+      readLayoutViewport();
 
 
     const scale =
@@ -1346,12 +1480,172 @@
   }
 
 
+  function restoreViewportAfterKeyboard() {
+
+    if (
+      keyboardRestoreTimerA !==
+        null
+    ) {
+
+      clearTimeout(
+        keyboardRestoreTimerA
+      );
+    }
+
+
+    if (
+      keyboardRestoreTimerB !==
+        null
+    ) {
+
+      clearTimeout(
+        keyboardRestoreTimerB
+      );
+    }
+
+
+    const restore =
+      () => {
+
+        if (
+          isKeyboardInput(
+            document.activeElement
+          )
+        ) {
+
+          return;
+        }
+
+
+        viewportInputLocked =
+          false;
+
+
+        stableViewportWidth =
+          document.documentElement.clientWidth
+          ||
+          window.innerWidth
+          ||
+          stableViewportWidth;
+
+
+        stableViewportHeight =
+          document.documentElement.clientHeight
+          ||
+          window.innerHeight
+          ||
+          stableViewportHeight;
+
+
+        resetHorizontalViewport();
+
+
+        scheduleScale();
+      };
+
+
+    /*
+      Messenger/iOS có thể trả visual viewport về kích thước cũ
+      theo hai nhịp sau khi bàn phím đóng, nên restore hai lần.
+    */
+
+    keyboardRestoreTimerA =
+      window.setTimeout(
+        restore,
+        180
+      );
+
+
+    keyboardRestoreTimerB =
+      window.setTimeout(
+        restore,
+        620
+      );
+  }
+
+
+  document.addEventListener(
+    "focusin",
+    (event) => {
+
+      if (
+        !isKeyboardInput(
+          event.target
+        )
+      ) {
+
+        return;
+      }
+
+
+      /*
+        Khóa kích thước artboard trước khi keyboard làm thay đổi
+        visual viewport. Nhờ vậy thiệp không co/nhảy sang ngang.
+      */
+
+      stableViewportWidth =
+        document.documentElement.clientWidth
+        ||
+        window.innerWidth
+        ||
+        stableViewportWidth;
+
+
+      stableViewportHeight =
+        document.documentElement.clientHeight
+        ||
+        window.innerHeight
+        ||
+        stableViewportHeight;
+
+
+      viewportInputLocked =
+        true;
+
+
+      resetHorizontalViewport();
+    },
+    true
+  );
+
+
+  document.addEventListener(
+    "focusout",
+    (event) => {
+
+      if (
+        !isKeyboardInput(
+          event.target
+        )
+      ) {
+
+        return;
+      }
+
+
+      restoreViewportAfterKeyboard();
+    },
+    true
+  );
+
+
   updateScale();
 
 
   window.addEventListener(
     "resize",
-    scheduleScale,
+    () => {
+
+      if (
+        viewportInputLocked
+      ) {
+
+        return;
+      }
+
+
+      scheduleScale();
+    },
     {
       passive: true
     }
@@ -1361,7 +1655,39 @@
   window.visualViewport
     ?.addEventListener(
       "resize",
-      scheduleScale,
+      () => {
+
+        if (
+          viewportInputLocked
+        ) {
+
+          return;
+        }
+
+
+        scheduleScale();
+      },
+      {
+        passive: true
+      }
+    );
+
+
+  window.visualViewport
+    ?.addEventListener(
+      "scroll",
+      () => {
+
+        if (
+          viewportInputLocked
+        ) {
+
+          return;
+        }
+
+
+        resetHorizontalViewport();
+      },
       {
         passive: true
       }
@@ -3533,7 +3859,7 @@
 
 
     const duration =
-      1480;
+      1050;
 
 
     /*
@@ -3543,9 +3869,9 @@
       nên mắt thấy số bị khựng/giật trước khi dừng.
 
       Bản này:
-      - đầu nhanh
-      - cuối chậm vừa phải
-      - interval tối đa chỉ khoảng 98ms
+      - đầu rất nhanh
+      - cuối vẫn giảm nhịp nhẹ để nhìn thấy điểm dừng
+      - interval tối đa chỉ khoảng 62ms
       - khi hết animation sẽ dừng hẳn ở candidate
         trong lúc chờ Sheet trả số authoritative
     */
@@ -3588,11 +3914,11 @@
 
 
       const interval =
-        42
+        28
         +
         smoothProgress
         *
-        56;
+        34;
 
 
       if (
