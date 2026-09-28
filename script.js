@@ -77,6 +77,22 @@
     );
 
 
+  function isLuckyTestGuest() {
+
+    return (
+      String(
+        currentGuestSlug ||
+        ""
+      )
+        .trim()
+        .toLowerCase()
+      ===
+      "test"
+    );
+  }
+
+
+
   function normalizeGuestSlug(value) {
 
     return String(
@@ -2055,6 +2071,8 @@
 
 
     if (
+      !isLuckyTestGuest()
+      &&
       Number.isInteger(
         existingLucky
       )
@@ -2984,6 +3002,14 @@
 
   function readLocalLuckyNumber() {
 
+    if (
+      isLuckyTestGuest()
+    ) {
+
+      return null;
+    }
+
+
     const key =
       getLuckyStorageKey();
 
@@ -3030,6 +3056,14 @@
   function saveLocalLuckyNumber(
     value
   ) {
+
+    if (
+      isLuckyTestGuest()
+    ) {
+
+      return;
+    }
+
 
     const key =
       getLuckyStorageKey();
@@ -3463,7 +3497,23 @@
       nếu I trống -> lưu candidate.
     */
 
+    const testRoll =
+      isLuckyTestGuest();
+
+
     const savePromise =
+      testRoll
+      ?
+      Promise.resolve(
+        {
+          ok: true,
+          luckyNumber:
+            candidate,
+          testMode:
+            true
+        }
+      )
+      :
       postToBackend(
         {
           action:
@@ -3601,6 +3651,72 @@
       try {
 
         await savePromise;
+
+
+        if (
+          testRoll
+        ) {
+
+          luckyRolling =
+            false;
+
+
+          luckyLocked =
+            false;
+
+
+          luckyCard
+            ?.classList
+            .remove(
+              "is-rolling"
+            );
+
+
+          luckyCard
+            ?.classList
+            .remove(
+              "is-revealed"
+            );
+
+
+          void luckyCard?.offsetWidth;
+
+
+          luckyCard
+            ?.classList
+            .add(
+              "is-revealed"
+            );
+
+
+          showLuckyNumber(
+            candidate
+          );
+
+
+          if (
+            luckyHint
+          ) {
+
+            luckyHint.textContent =
+              "Chế độ test — nhấn để roll lại";
+          }
+
+
+          if (
+            luckyTrigger
+          ) {
+
+            luckyTrigger.disabled =
+              false;
+          }
+
+
+          fireLuckyFireworks();
+
+
+          return;
+        }
 
 
         const finalNumber =
