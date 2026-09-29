@@ -2003,6 +2003,7 @@
       ".p02-background",
       ".p02-frame",
       ".p02-bottom-ornament",
+      ".p02-procession-item",
       ".p03-background",
       ".p03-frame",
       ".p03-bottom-ornament",
@@ -3441,8 +3442,9 @@
 
     /*
       Bắt đầu tải toàn bộ page 02 ngay khi mở thiệp,
-      nhưng chỉ chờ background / frame / bottom ornament.
-      Các asset trang trí tiếp tục decode ở background.
+      nhưng chỉ chờ background / frame / bottom ornament
+      + 4 hình đoàn rước ở cuối Page 02.
+      Mây/confetti và decoration khác tiếp tục decode ở background.
     */
 
     loadPage(
@@ -3527,8 +3529,9 @@
     () => {
 
       /*
-        Trước khi khách mở thiệp chỉ warm cache các asset dùng chung
-        và quan trọng nhất. Không tải cả đoàn rước / cloud / confetti.
+        Trước khi khách mở thiệp chỉ warm cache asset quan trọng:
+        background / frame / bottom ornament + 4 hình đoàn rước.
+        Mây/confetti vẫn chưa tải sớm để tránh tranh network.
       */
       loadPageCritical(
         pages[0],
