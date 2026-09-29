@@ -45,10 +45,10 @@
 
   <link
     rel="stylesheet"
-    href="./styles.css?v=20260929-28"
+    href="./styles.css?v=20260929-29"
   />
 
-  <script src="./script.js?v=20260929-28" defer></script>
+  <script src="./script.js?v=20260929-29" defer></script>
 </head>
 
 
@@ -1365,6 +1365,32 @@
     </div>
 
   </main>
+
+
+  <!-- BACKGROUND MUSIC -->
+  <button
+    class="music-toggle"
+    id="musicToggle"
+    type="button"
+    aria-label="Tắt nhạc"
+    aria-pressed="true"
+    hidden
+  >
+    <span
+      class="music-toggle-note"
+      aria-hidden="true"
+    >
+      ♫
+    </span>
+  </button>
+
+  <audio
+    id="weddingMusic"
+    preload="none"
+    loop
+    playsinline
+    data-src="./assets/wedding-music.mp3"
+  ></audio>
 
 </body>
 
