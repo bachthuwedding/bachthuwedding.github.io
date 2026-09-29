@@ -224,20 +224,6 @@
     document.getElementById(
       "page03"
     );
-
-
-  const page04 =
-    document.getElementById(
-      "page04"
-    );
-
-
-  const page05 =
-    document.getElementById(
-      "page05"
-    );
-
-
   const page06 =
     document.getElementById(
       "page06"
@@ -261,11 +247,6 @@
     page02Layout,
 
     page03,
-
-    page04,
-
-    page05,
-
     page06,
 
     page07,
@@ -2017,6 +1998,76 @@
   }
 
 
+  const CRITICAL_PAGE_IMAGE_SELECTOR =
+    [
+      ".p02-background",
+      ".p02-frame",
+      ".p02-bottom-ornament",
+      ".p03-background",
+      ".p03-frame",
+      ".p03-bottom-ornament",
+      ".p06-background",
+      ".p06-frame",
+      ".p06-bottom-ornament",
+      ".p07-background",
+      ".p07-frame",
+      ".p07-bottom-ornament",
+      ".p08-background",
+      ".p08-frame",
+      ".p08-bottom-ornament"
+    ].join(",");
+
+
+  function isCriticalPageImage(
+    image
+  ) {
+
+    return Boolean(
+      image
+      &&
+      image.matches(
+        CRITICAL_PAGE_IMAGE_SELECTOR
+      )
+    );
+  }
+
+
+  function loadPageCritical(
+    page,
+    priority = "high"
+  ) {
+
+    if (!page) {
+
+      return Promise.resolve();
+    }
+
+
+    const criticalImages =
+      Array.from(
+        page.querySelectorAll(
+          "img[data-src]"
+        )
+      )
+        .filter(
+          isCriticalPageImage
+        );
+
+
+    return Promise.allSettled(
+      criticalImages.map(
+        (image) => {
+
+          return loadImage(
+            image,
+            priority
+          );
+        }
+      )
+    );
+  }
+
+
   function loadPage(
     page,
     priority = "low"
@@ -2057,7 +2108,13 @@
 
               return loadImage(
                 image,
+                isCriticalPageImage(
+                  image
+                )
+                ?
                 priority
+                :
+                "low"
               );
             }
           );
@@ -2083,7 +2140,7 @@
 
             preloadUrl(
               spriteUrl,
-              priority
+              "low"
             )
               .then(
                 () => {
@@ -2109,12 +2166,7 @@
         await Promise.allSettled(
           jobs
         );
-
-
-        page.classList.add(
-          "is-assets-ready"
-        );
-      })();
+})();
 
 
     pagePromises.set(
@@ -3267,11 +3319,21 @@
       ]
     ) {
 
-      loadPage(
-        pages[
-          safeIndex + 1
-        ],
-        "low"
+      /*
+        Stagger next-page preloading a little so decorative assets
+        của page hiện tại không phải cạnh tranh network ngay lập tức.
+      */
+      runWhenIdle(
+        () => {
+
+          loadPage(
+            pages[
+              safeIndex + 1
+            ],
+            "low"
+          );
+        },
+        420
       );
     }
   }
@@ -3377,7 +3439,19 @@
     loadGuestPersonalization();
 
 
-    await loadPage(
+    /*
+      Bắt đầu tải toàn bộ page 02 ngay khi mở thiệp,
+      nhưng chỉ chờ background / frame / bottom ornament.
+      Các asset trang trí tiếp tục decode ở background.
+    */
+
+    loadPage(
+      pages[0],
+      "high"
+    );
+
+
+    await loadPageCritical(
       pages[0],
       "high"
     );
@@ -3417,25 +3491,7 @@
     activatePage(
       0
     );
-
-
-    runWhenIdle(
-      () => {
-
-        if (
-          pages[1]
-        ) {
-
-          loadPage(
-            pages[1],
-            "low"
-          );
-        }
-
-      },
-      600
-    );
-  }
+}
 
 
   openingCardButton
@@ -3470,13 +3526,17 @@
   runWhenIdle(
     () => {
 
-      loadPage(
+      /*
+        Trước khi khách mở thiệp chỉ warm cache các asset dùng chung
+        và quan trọng nhất. Không tải cả đoàn rước / cloud / confetti.
+      */
+      loadPageCritical(
         pages[0],
         "low"
       );
 
     },
-    450
+    650
   );
 
 
