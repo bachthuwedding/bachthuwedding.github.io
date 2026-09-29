@@ -2047,7 +2047,7 @@
     const criticalImages =
       Array.from(
         page.querySelectorAll(
-          "img[data-src]"
+          "img"
         )
       )
         .filter(
@@ -3441,21 +3441,35 @@
 
 
     /*
-      Bắt đầu tải toàn bộ page 02 ngay khi mở thiệp,
-      nhưng chỉ chờ background / frame / bottom ornament
-      + 4 hình đoàn rước ở cuối Page 02.
-      Mây/confetti và decoration khác tiếp tục decode ở background.
+      V26: ưu tiên ổn định hiển thị.
+
+      Bắt đầu tải toàn bộ Page 02 và chờ:
+      - toàn bộ ảnh / sprite của Page 02
+      - mọi critical image đang preload dở từ trước
+
+      Chỉ sau khi tất cả đã load + decode xong mới activate page.
+      Nhờ vậy đoàn rước, mây và confetti không còn "pop" / giật sau khi page đã hiện.
     */
 
-    loadPage(
-      pages[0],
-      "high"
-    );
+    const fullPage02Promise =
+      loadPage(
+        pages[0],
+        "high"
+      );
 
 
-    await loadPageCritical(
-      pages[0],
-      "high"
+    const criticalPage02Promise =
+      loadPageCritical(
+        pages[0],
+        "high"
+      );
+
+
+    await Promise.all(
+      [
+        fullPage02Promise,
+        criticalPage02Promise
+      ]
     );
 
 
