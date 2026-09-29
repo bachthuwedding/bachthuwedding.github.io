@@ -3643,6 +3643,10 @@
     }
 
 
+    weddingMusic.preload =
+      "auto";
+
+
     weddingMusic.src =
       src;
 
@@ -3670,7 +3674,7 @@
 
 
     weddingMusic.volume =
-      .02;
+      .12;
 
 
     const playPromise =
@@ -3699,7 +3703,7 @@
 
             fadeWeddingMusic(
               MUSIC_VOLUME,
-              1800
+              480
             );
           }
         )
@@ -3729,7 +3733,7 @@
 
       fadeWeddingMusic(
         MUSIC_VOLUME,
-        1800
+        480
       );
     }
   }
@@ -3812,7 +3816,7 @@
 
             fadeWeddingMusic(
               MUSIC_VOLUME,
-              900
+              420
             );
           }
         )
@@ -3838,7 +3842,7 @@
 
       fadeWeddingMusic(
         MUSIC_VOLUME,
-        900
+        420
       );
     }
   }
@@ -5597,6 +5601,20 @@
 
 
   markInvitationOpened();
+
+
+  /*
+    Warm audio sớm trong lúc khách còn đang ở trang mở đầu.
+    Không play trước user gesture; chỉ bắt đầu tải/buffer để khi
+    khách bấm mở thiệp thì nhạc vào gần như ngay lập tức.
+  */
+  runWhenIdle(
+    () => {
+
+      ensureWeddingMusicSource();
+    },
+    450
+  );
 
 
   /*
