@@ -3441,14 +3441,11 @@
 
 
     /*
-      V26: ưu tiên ổn định hiển thị.
+      V27: Page 02 đã được nén còn khoảng 0.45 MB.
 
-      Bắt đầu tải toàn bộ Page 02 và chờ:
-      - toàn bộ ảnh / sprite của Page 02
-      - mọi critical image đang preload dở từ trước
-
-      Chỉ sau khi tất cả đã load + decode xong mới activate page.
-      Nhờ vậy đoàn rước, mây và confetti không còn "pop" / giật sau khi page đã hiện.
+      Vẫn chờ toàn bộ ảnh / sprite load + decode xong trước khi
+      activate page để giữ hiển thị tuyệt đối ổn định, nhưng khối
+      lượng tải nhỏ hơn rất nhiều so với PNG gốc.
     */
 
     const fullPage02Promise =
@@ -3543,11 +3540,13 @@
     () => {
 
       /*
-        Trước khi khách mở thiệp chỉ warm cache asset quan trọng:
-        background / frame / bottom ornament + 4 hình đoàn rước.
-        Mây/confetti vẫn chưa tải sớm để tránh tranh network.
+        V27: asset Page 02 sau tối ưu chỉ còn khoảng 0.45 MB.
+        Vì vậy có thể preload toàn bộ page ở low priority ngay khi
+        opening page đã ổn định. Khi khách bấm mở thiệp, toàn bộ
+        background / frame / cloud / confetti / procession thường
+        đã có sẵn trong cache và transition sẽ không bị pop/giật.
       */
-      loadPageCritical(
+      loadPage(
         pages[0],
         "low"
       );
