@@ -5173,3 +5173,210 @@ body {
       rotate(0);
   }
 }
+
+
+/* =========================================================
+   V29 — BACKGROUND MUSIC
+========================================================= */
+
+.music-toggle {
+  position: fixed;
+
+  z-index: 9999;
+
+  left:
+    calc(
+      50%
+      +
+      (
+        var(--render-width)
+        /
+        2
+      )
+      -
+      43px
+    );
+
+  top:
+    calc(
+      50%
+      -
+      (
+        var(--render-height)
+        /
+        2
+      )
+      +
+      12px
+    );
+
+  width: 34px;
+  height: 34px;
+
+  margin: 0;
+  padding: 0;
+
+  border:
+    1px solid
+    rgba(166, 48, 25, .64);
+
+  border-radius: 50%;
+
+  background:
+    rgba(239, 224, 188, .92);
+
+  color:
+    var(--invitation-red);
+
+  box-shadow:
+    0 4px 12px
+    rgba(77, 45, 24, .14);
+
+  display: grid;
+  place-items: center;
+
+  cursor: pointer;
+
+  opacity: 0;
+
+  transform:
+    translateY(-4px)
+    scale(.9);
+
+  transition:
+    opacity 360ms ease,
+    transform 520ms var(--entry-ease),
+    background-color 220ms ease;
+
+  -webkit-backdrop-filter:
+    blur(5px);
+
+  backdrop-filter:
+    blur(5px);
+
+  -webkit-tap-highlight-color:
+    transparent;
+}
+
+.music-toggle[hidden] {
+  display: none !important;
+}
+
+.music-toggle.is-visible {
+  opacity: 1;
+
+  transform:
+    translateY(0)
+    scale(1);
+}
+
+.music-toggle:active {
+  transform:
+    translateY(0)
+    scale(.92);
+}
+
+.music-toggle-note {
+  display: block;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: 20px;
+  line-height: 1;
+
+  transform:
+    translateY(-1px);
+
+  transform-origin:
+    50% 50%;
+}
+
+.music-toggle.is-playing
+.music-toggle-note {
+  animation:
+    musicNoteBounce
+    900ms
+    ease-in-out
+    infinite;
+}
+
+.music-toggle.is-muted::after {
+  content: "";
+
+  position: absolute;
+
+  left: 8px;
+  top: 16px;
+
+  width: 18px;
+  height: 1.5px;
+
+  border-radius: 999px;
+
+  background:
+    var(--invitation-red);
+
+  transform:
+    rotate(-45deg);
+
+  transform-origin:
+    center;
+}
+
+@keyframes musicNoteBounce {
+  0%,
+  100% {
+    transform:
+      translateY(-1px)
+      rotate(-4deg)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(-3px)
+      rotate(5deg)
+      scale(1.08);
+  }
+}
+
+@media (max-width: 430px) {
+
+  .music-toggle {
+    width: 32px;
+    height: 32px;
+
+    left:
+      calc(
+        50%
+        +
+        (
+          var(--render-width)
+          /
+          2
+        )
+        -
+        40px
+      );
+
+    top:
+      calc(
+        50%
+        -
+        (
+          var(--render-height)
+          /
+          2
+        )
+        +
+        10px
+      );
+  }
+
+  .music-toggle-note {
+    font-size: 19px;
+  }
+}
