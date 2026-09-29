@@ -4950,3 +4950,226 @@ body {
    Loading logic nằm trong script.js.
    Visual / transition giữ nguyên V25.
 ========================================================= */
+
+
+/* =========================================================
+   V28 — LUCKY NUMBER PARTY
+   Random nhanh + vui hơn, nhưng text số không còn bị transform liên tục.
+========================================================= */
+
+/*
+  Quan trọng:
+  Trong lúc số đang thay đổi liên tục, KHÔNG translate/scale/filter chính text.
+  Như vậy browser chỉ repaint glyph mới, tránh compositing giật.
+*/
+.p06-card-wrap.is-rolling .p06-number-slot {
+  isolation: isolate;
+  animation: p06LuckyNumberFlicker 150ms steps(2, end) infinite;
+  filter: none;
+  will-change: opacity, color;
+}
+
+/* Vòng quay phía sau số — chuyển động độc lập, không kéo text đi theo. */
+.p06-card-wrap.is-rolling .p06-number-slot::before,
+.p06-card-wrap.is-rolling .p06-number-slot::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.p06-card-wrap.is-rolling .p06-number-slot::before {
+  width: 126px;
+  height: 126px;
+  margin-left: -63px;
+  margin-top: -63px;
+
+  border:
+    2px dashed
+    rgba(165, 47, 21, .46);
+
+  animation:
+    p06LuckyPartySpin
+    460ms
+    linear
+    infinite;
+}
+
+.p06-card-wrap.is-rolling .p06-number-slot::after {
+  width: 156px;
+  height: 156px;
+  margin-left: -78px;
+  margin-top: -78px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(223, 166, 53, .16) 0 24%,
+      rgba(223, 166, 53, 0) 25% 100%
+    );
+
+  box-shadow:
+    0 -72px 0 -68px rgba(165, 47, 21, .75),
+    51px -51px 0 -68px rgba(212, 145, 35, .72),
+    72px 0 0 -68px rgba(64, 89, 72, .72),
+    51px 51px 0 -68px rgba(165, 47, 21, .72),
+    0 72px 0 -68px rgba(212, 145, 35, .72),
+    -51px 51px 0 -68px rgba(64, 89, 72, .72),
+    -72px 0 0 -68px rgba(165, 47, 21, .72),
+    -51px -51px 0 -68px rgba(212, 145, 35, .72);
+
+  animation:
+    p06LuckyPartyPulse
+    300ms
+    ease-in-out
+    infinite
+    alternate;
+}
+
+@keyframes p06LuckyNumberFlicker {
+  0%,
+  100% {
+    color: #a52f15;
+    opacity: 1;
+  }
+
+  50% {
+    color: #c74720;
+    opacity: .76;
+  }
+}
+
+@keyframes p06LuckyPartySpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes p06LuckyPartyPulse {
+  from {
+    transform: scale(.92) rotate(-8deg);
+    opacity: .42;
+  }
+
+  to {
+    transform: scale(1.08) rotate(8deg);
+    opacity: .95;
+  }
+}
+
+
+/* 4 lucky items "nhảy múa" khi đang roll. */
+.p06-card-wrap.is-rolling .p06-ingots,
+.p06-card-wrap.is-rolling .p06-bag {
+  animation:
+    p06LuckyDanceA
+    280ms
+    ease-in-out
+    infinite
+    alternate;
+}
+
+.p06-card-wrap.is-rolling .p06-knot,
+.p06-card-wrap.is-rolling .p06-coins {
+  animation:
+    p06LuckyDanceB
+    280ms
+    ease-in-out
+    infinite
+    alternate;
+}
+
+@keyframes p06LuckyDanceA {
+  from {
+    transform:
+      translateY(2px)
+      rotate(-7deg)
+      scale(.98);
+  }
+
+  to {
+    transform:
+      translateY(-5px)
+      rotate(7deg)
+      scale(1.04);
+  }
+}
+
+@keyframes p06LuckyDanceB {
+  from {
+    transform:
+      translateY(-4px)
+      rotate(6deg)
+      scale(1.03);
+  }
+
+  to {
+    transform:
+      translateY(2px)
+      rotate(-6deg)
+      scale(.98);
+  }
+}
+
+
+/*
+  Reveal chỉ chạy một lần SAU KHI text đã ngừng random,
+  nên lúc này có thể bounce mạnh mà vẫn mượt.
+*/
+.p06-card-wrap.is-revealed .p06-number-slot {
+  filter: none;
+  will-change: transform;
+  animation:
+    p06LuckyFinalPop
+    620ms
+    cubic-bezier(.16, .88, .22, 1.22)
+    both;
+}
+
+@keyframes p06LuckyFinalPop {
+  0% {
+    transform:
+      translateX(-50%)
+      scale(.72)
+      rotate(-5deg);
+  }
+
+  38% {
+    transform:
+      translateX(-50%)
+      translateY(-7px)
+      scale(1.24)
+      rotate(4deg);
+  }
+
+  62% {
+    transform:
+      translateX(-50%)
+      translateY(1px)
+      scale(.94)
+      rotate(-2deg);
+  }
+
+  82% {
+    transform:
+      translateX(-50%)
+      translateY(-2px)
+      scale(1.07)
+      rotate(1deg);
+  }
+
+  100% {
+    transform:
+      translateX(-50%)
+      translateY(0)
+      scale(1)
+      rotate(0);
+  }
+}
