@@ -5380,3 +5380,125 @@ body {
     font-size: 19px;
   }
 }
+
+
+/* =========================================================
+   V30 — MUSIC BUTTON POSITION / ALIGNMENT
+========================================================= */
+
+.music-toggle {
+  left:
+    calc(
+      50%
+      -
+      (
+        var(--render-width)
+        /
+        2
+      )
+      +
+      12px
+    );
+
+  top: auto;
+
+  bottom:
+    calc(
+      50%
+      -
+      (
+        var(--render-height)
+        /
+        2
+      )
+      +
+      12px
+    );
+
+  width: 30px;
+  height: 30px;
+}
+
+.music-toggle-note {
+  display: grid;
+  place-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  font-size: 15px;
+  line-height: 1;
+
+  transform: none;
+}
+
+.music-toggle.is-playing
+.music-toggle-note {
+  animation:
+    musicNoteBounceV30
+    820ms
+    ease-in-out
+    infinite;
+}
+
+@keyframes musicNoteBounceV30 {
+  0%,
+  100% {
+    transform:
+      rotate(-3deg)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      rotate(4deg)
+      scale(1.06);
+  }
+}
+
+.music-toggle.is-muted::after {
+  left: 7px;
+  top: 14px;
+  width: 16px;
+}
+
+@media (max-width: 430px) {
+
+  .music-toggle {
+    left:
+      calc(
+        50%
+        -
+        (
+          var(--render-width)
+          /
+          2
+        )
+        +
+        10px
+      );
+
+    top: auto;
+
+    bottom:
+      calc(
+        50%
+        -
+        (
+          var(--render-height)
+          /
+          2
+        )
+        +
+        10px
+      );
+
+    width: 29px;
+    height: 29px;
+  }
+
+  .music-toggle-note {
+    font-size: 14px;
+  }
+}
+\n\n/* =========================================================\n   V31 — MUSIC-SYNCED MOTION\n   Photograph intro mềm hơn:\n   - page transitions chậm hơn khoảng 20%\n   - ambient animations chậm hơn khoảng 15%\n   - giữ nguyên toàn bộ keyframe/amplitude\n   - lucky roll party giữ nguyên tốc độ vui nhộn đã chốt\n========================================================= */\n\n/* ---------- GLOBAL PAGE / OPENING TRANSITION ---------- */\n\n.opening-page,\n.page-02 {\n  transition-duration: 760ms;\n}\n\n/* ---------- PAGE 02 ---------- */\n\n.page02-layout .p02-cloud,\n.page02-layout .p02-confetti-cluster,\n.page02-layout .p02-procession {\n  transition-duration: 1640ms, 980ms;\n}\n\n.page02-layout .p02-invite,\n.page02-layout .p02-personalized-guest,\n.page02-layout .p02-to,\n.page02-layout .p02-wedding-title,\n.page02-layout .p02-couple-names,\n.page02-layout .p02-date-divider,\n.page02-layout .p02-ceremony-info,\n.page02-layout .p02-family-info {\n  transition-duration: 895ms, 1340ms;\n}\n\n/* ---------- PAGE 03 / TIMELINE ---------- */\n\n.page03-layout .p03-cloud {\n  transition-duration: 1365ms, 820ms;\n}\n\n.p03-title {\n  transition-duration: 1140ms, 775ms;\n}\n\n.p03-title-divider {\n  transition-duration: 775ms, 1140ms;\n}\n\n.p03-timeline {\n  transition-duration: 1910ms, 730ms;\n}\n\n.page03-layout .p03-event--02,\n.page03-layout .p03-mam-co,\n.page03-layout .p03-event--04,\n.page03-layout .p03-kieu,\n.page03-layout .p03-event--03,\n.page03-layout .p03-cheers {\n  transition-duration: 1365ms, 820ms;\n}\n\n.p03-dress-code {\n  transition-duration: 1020ms, 600ms;\n}\n\n/* ---------- PAGE 06 ---------- */\n\n.p06-confetti {\n  transition-duration: 980ms, 1420ms;\n}\n\n.p06-card-wrap {\n  transition-duration: 1580ms, 980ms;\n}\n\n.p06-lucky-item {\n  transition-duration: 1640ms, 980ms;\n}\n\n/* ---------- PAGE 07 ---------- */\n\n.page07-layout .p07-top-left-decoration,\n.page07-layout .p07-butterfly,\n.page07-layout .p07-rsvp-title,\n.page07-layout .p07-divider-ornament--top,\n.page07-layout .p07-rsvp-subtitle,\n.page07-layout .p07-rsvp-form {\n  transition-duration: 695ms, 1090ms;\n}\n\n.page07-layout .p07-rsvp-title,\n.page07-layout .p07-divider-ornament--top,\n.page07-layout .p07-rsvp-subtitle,\n.page07-layout .p07-form-group,\n.page07-layout .p07-submit {\n  transition-duration: 895ms, 1340ms;\n}\n\n/* ---------- PAGE 08 ---------- */\n\n.p08-reveal-item,\n.p08-reveal-decoration,\n.p08-reveal-paragraph {\n  transition-duration: 575ms, 745ms;\n}\n\n.p08-cloud--left,\n.p08-cloud--right {\n  transition-duration: 1980ms, 1200ms;\n}\n\n.p08-water-ground--base {\n  transition-duration: 2100ms, 1260ms;\n}\n\n.p08-masion {\n  transition-duration: 2220ms, 1260ms;\n}\n\n.p08-water-ground--front {\n  transition-duration: 2040ms, 1200ms;\n}\n\n.p08-couple {\n  transition-duration: 2100ms, 1200ms;\n}\n\n.p08-lotus {\n  transition-duration: 2040ms, 1200ms;\n}\n\n/* =========================================================\n   AMBIENT ANIMATION — slower, amplitude unchanged\n========================================================= */\n\n.opening-card-image,\n.monogram-pulse::before,\n.monogram-pulse::after {\n  animation-duration: 1840ms;\n}\n\n.monogram-pulse::after {\n  animation-delay: 920ms;\n}\n\n.page02-layout .p02-cloud,\n.page02-layout .p02-confetti-piece {\n  animation-duration: 1560ms;\n}\n\n.page03-layout .p03-cloud,\n.page03-layout .p03-illustration {\n  animation-duration: 1720ms;\n}\n\n.p03-kieu,\n.p03-mam-co,\n.p03-cheers {\n  --p03-speed: 1720ms;\n}\n\n.page06-layout .p06-cloud,\n.page06-layout .p06-lucky-item {\n  animation-duration: 1560ms;\n}\n\n.p06-ingots,\n.p06-knot,\n.p06-bag,\n.p06-coins {\n  --p06-speed: 1560ms;\n}\n\n.page07-layout .p07-top-left-decoration,\n.page07-layout .p07-butterfly {\n  animation-duration: 1600ms;\n}\n\n.page08-layout .p08-cloud {\n  animation-duration: 2000ms;\n}\n\n.page08-layout .p08-lotus {\n  animation: none !important;\n}\n
