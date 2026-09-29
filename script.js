@@ -208,6 +208,18 @@
     );
 
 
+  const weddingMusic =
+    document.getElementById(
+      "weddingMusic"
+    );
+
+
+  const musicToggle =
+    document.getElementById(
+      "musicToggle"
+    );
+
+
   const pageScroller =
     document.getElementById(
       "page02"
@@ -389,6 +401,12 @@
 
 
   let pageMode = false;
+
+  let musicStarted = false;
+
+  let musicFadeRaf = 0;
+
+  const MUSIC_VOLUME = .36;
 
   let resizeRaf = 0;
 
@@ -3420,6 +3438,435 @@
 
 
   /* =======================================================
+     BACKGROUND MUSIC
+  ======================================================= */
+
+  function updateMusicToggle(
+    playing
+  ) {
+
+    if (
+      !musicToggle
+    ) {
+
+      return;
+    }
+
+
+    musicToggle.hidden =
+      false;
+
+
+    musicToggle
+      .classList
+      .toggle(
+        "is-playing",
+        Boolean(
+          playing
+        )
+      );
+
+
+    musicToggle
+      .classList
+      .toggle(
+        "is-muted",
+        !playing
+      );
+
+
+    musicToggle.setAttribute(
+      "aria-pressed",
+      playing
+      ?
+      "true"
+      :
+      "false"
+    );
+
+
+    musicToggle.setAttribute(
+      "aria-label",
+      playing
+      ?
+      "Tắt nhạc"
+      :
+      "Bật nhạc"
+    );
+
+
+    requestAnimationFrame(
+      () => {
+
+        musicToggle
+          .classList
+          .add(
+            "is-visible"
+          );
+      }
+    );
+  }
+
+
+  function fadeWeddingMusic(
+    targetVolume,
+    duration = 800,
+    onComplete = null
+  ) {
+
+    if (
+      !weddingMusic
+    ) {
+
+      return;
+    }
+
+
+    cancelAnimationFrame(
+      musicFadeRaf
+    );
+
+
+    const from =
+      Number(
+        weddingMusic.volume
+      );
+
+
+    const target =
+      Math.max(
+        0,
+        Math.min(
+          1,
+          Number(
+            targetVolume
+          )
+        )
+      );
+
+
+    const start =
+      performance.now();
+
+
+    function step(now) {
+
+      const progress =
+        Math.min(
+          (
+            now - start
+          )
+          /
+          Math.max(
+            1,
+            duration
+          ),
+          1
+        );
+
+
+      const eased =
+        1
+        -
+        Math.pow(
+          1 - progress,
+          3
+        );
+
+
+      weddingMusic.volume =
+        from
+        +
+        (
+          target - from
+        )
+        *
+        eased;
+
+
+      if (
+        progress <
+        1
+      ) {
+
+        musicFadeRaf =
+          requestAnimationFrame(
+            step
+          );
+
+        return;
+      }
+
+
+      if (
+        typeof onComplete ===
+        "function"
+      ) {
+
+        onComplete();
+      }
+    }
+
+
+    musicFadeRaf =
+      requestAnimationFrame(
+        step
+      );
+  }
+
+
+  function ensureWeddingMusicSource() {
+
+    if (
+      !weddingMusic
+      ||
+      weddingMusic.getAttribute(
+        "src"
+      )
+    ) {
+
+      return;
+    }
+
+
+    const src =
+      String(
+        weddingMusic.dataset.src
+        ||
+        ""
+      ).trim();
+
+
+    if (!src) {
+
+      return;
+    }
+
+
+    weddingMusic.src =
+      src;
+
+
+    weddingMusic.load();
+  }
+
+
+  function startWeddingMusic() {
+
+    if (
+      !weddingMusic
+    ) {
+
+      return;
+    }
+
+
+    ensureWeddingMusicSource();
+
+
+    cancelAnimationFrame(
+      musicFadeRaf
+    );
+
+
+    weddingMusic.volume =
+      .02;
+
+
+    const playPromise =
+      weddingMusic.play();
+
+
+    musicStarted =
+      true;
+
+
+    updateMusicToggle(
+      true
+    );
+
+
+    if (
+      playPromise
+      &&
+      typeof playPromise.then ===
+        "function"
+    ) {
+
+      playPromise
+        .then(
+          () => {
+
+            fadeWeddingMusic(
+              MUSIC_VOLUME,
+              1800
+            );
+          }
+        )
+        .catch(
+          () => {
+
+            /*
+              Một số in-app browser vẫn có thể chặn play().
+              Khi đó giữ nút nhạc visible để khách tự chạm bật.
+            */
+
+            musicStarted =
+              false;
+
+
+            weddingMusic.pause();
+
+
+            updateMusicToggle(
+              false
+            );
+          }
+        );
+
+
+    } else {
+
+      fadeWeddingMusic(
+        MUSIC_VOLUME,
+        1800
+      );
+    }
+  }
+
+
+  function pauseWeddingMusic() {
+
+    if (
+      !weddingMusic
+    ) {
+
+      return;
+    }
+
+
+    updateMusicToggle(
+      false
+    );
+
+
+    fadeWeddingMusic(
+      0,
+      320,
+      () => {
+
+        weddingMusic.pause();
+      }
+    );
+  }
+
+
+  function resumeWeddingMusic() {
+
+    if (
+      !weddingMusic
+    ) {
+
+      return;
+    }
+
+
+    ensureWeddingMusicSource();
+
+
+    cancelAnimationFrame(
+      musicFadeRaf
+    );
+
+
+    weddingMusic.volume =
+      Math.min(
+        weddingMusic.volume,
+        .03
+      );
+
+
+    const playPromise =
+      weddingMusic.play();
+
+
+    updateMusicToggle(
+      true
+    );
+
+
+    if (
+      playPromise
+      &&
+      typeof playPromise.then ===
+        "function"
+    ) {
+
+      playPromise
+        .then(
+          () => {
+
+            musicStarted =
+              true;
+
+
+            fadeWeddingMusic(
+              MUSIC_VOLUME,
+              900
+            );
+          }
+        )
+        .catch(
+          () => {
+
+            musicStarted =
+              false;
+
+
+            updateMusicToggle(
+              false
+            );
+          }
+        );
+
+
+    } else {
+
+      musicStarted =
+        true;
+
+
+      fadeWeddingMusic(
+        MUSIC_VOLUME,
+        900
+      );
+    }
+  }
+
+
+  musicToggle
+    ?.addEventListener(
+      "click",
+      () => {
+
+        if (
+          weddingMusic
+          &&
+          !weddingMusic.paused
+        ) {
+
+          pauseWeddingMusic();
+
+          return;
+        }
+
+
+        resumeWeddingMusic();
+      }
+    );
+
+
+  /* =======================================================
      OPEN INVITATION
   ======================================================= */
 
@@ -3529,6 +3976,13 @@
       (event) => {
 
         event.preventDefault();
+
+
+        /*
+          Gọi play() trực tiếp trong user gesture để iPhone,
+          Chrome và Messenger cho phép phát audio.
+        */
+        startWeddingMusic();
 
 
         enterInvitation();
