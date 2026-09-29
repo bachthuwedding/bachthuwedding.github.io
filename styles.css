@@ -4923,3 +4923,23 @@ body {
    - V24 dọn dead selectors và tối ưu thứ tự tải asset.
 ========================================================= */
 
+
+
+/* =========================================================
+   V25 — PAGE 02 STABILITY + PAGE 03 DRESS CODE TIMING
+========================================================= */
+
+/*
+  Dress code bắt đầu gần nhịp event cuối thay vì chờ quá lâu.
+  Giữ cùng easing với timeline nhưng rút duration/delay để cảm giác
+  cả timeline đi xuống liên tục, không bị "đứng" rồi mới hiện dress code.
+*/
+.p03-dress-code {
+  transition-duration:
+    850ms,
+    500ms;
+
+  transition-delay:
+    960ms,
+    960ms;
+}
