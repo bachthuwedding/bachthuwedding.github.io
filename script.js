@@ -421,6 +421,13 @@
 
   let luckyLocked = false;
 
+  /*
+    Với khách thật, chỉ cho roll sau khi Google Sheet xác nhận
+    cột I hiện đang trống. localStorage chỉ là cache hiển thị nhanh,
+    không còn là nguồn quyết định.
+  */
+  let luckyAuthorityReady = false;
+
   let rsvpCount = 1;
 
   let page06EntryTimer = null;
@@ -2301,6 +2308,145 @@
 
 
   /* =======================================================
+     LUCKY AUTHORITY GATE
+  ======================================================= */
+
+  function isValidLuckyValue(
+    value
+  ) {
+
+    const number =
+      Number(
+        value
+      );
+
+
+    return (
+      Number.isInteger(
+        number
+      )
+      &&
+      number >=
+        LUCKY_MIN
+      &&
+      number <=
+        LUCKY_MAX
+    );
+  }
+
+
+  function setLuckyAuthorityPending(
+    message =
+      "Đang kiểm tra số may mắn..."
+  ) {
+
+    if (
+      isLuckyTestGuest()
+    ) {
+
+      luckyAuthorityReady =
+        true;
+
+
+      if (
+        luckyTrigger
+      ) {
+
+        luckyTrigger.disabled =
+          false;
+      }
+
+
+      return;
+    }
+
+
+    luckyAuthorityReady =
+      false;
+
+
+    if (
+      luckyTrigger
+    ) {
+
+      luckyTrigger.disabled =
+        true;
+    }
+
+
+    if (
+      luckyHint
+      &&
+      !luckyLocked
+      &&
+      !luckyRolling
+    ) {
+
+      luckyHint.textContent =
+        message;
+    }
+  }
+
+
+  function unlockLuckyAfterAuthorityCheck() {
+
+    if (
+      isLuckyTestGuest()
+    ) {
+
+      luckyAuthorityReady =
+        true;
+
+
+      luckyLocked =
+        false;
+
+
+      if (
+        luckyTrigger
+      ) {
+
+        luckyTrigger.disabled =
+          false;
+      }
+
+
+      return;
+    }
+
+
+    luckyAuthorityReady =
+      true;
+
+
+    luckyLocked =
+      false;
+
+
+    if (
+      luckyTrigger
+      &&
+      !luckyRolling
+    ) {
+
+      luckyTrigger.disabled =
+        false;
+    }
+
+
+    if (
+      luckyHint
+      &&
+      !luckyRolling
+    ) {
+
+      luckyHint.textContent =
+        "Nhấn để nhận số may mắn";
+    }
+  }
+
+
+  /* =======================================================
      APPLY GUEST DATA
   ======================================================= */
 
@@ -2397,23 +2543,35 @@
 
 
     if (
-      !isLuckyTestGuest()
-      &&
-      Number.isInteger(
+      isLuckyTestGuest()
+    ) {
+
+      unlockLuckyAfterAuthorityCheck();
+
+
+    } else if (
+      isValidLuckyValue(
         existingLucky
       )
-      &&
-      existingLucky >=
-        LUCKY_MIN
-      &&
-      existingLucky <=
-        LUCKY_MAX
     ) {
+
+      luckyAuthorityReady =
+        true;
+
 
       lockLuckyNumber(
         existingLucky,
         false
       );
+
+
+    } else {
+
+      /*
+        Sheet đã load thành công và I đang trống:
+        bây giờ mới cho khách thật bấm roll.
+      */
+      unlockLuckyAfterAuthorityCheck();
     }
 
 
@@ -2684,6 +2842,16 @@
           "[Wedding] Sheet load failed",
           lastError
         );
+
+
+        if (
+          !isLuckyTestGuest()
+        ) {
+
+          setLuckyAuthorityPending(
+            "Không thể kiểm tra số may mắn. Vui lòng thử lại sau."
+          );
+        }
 
 
         return null;
@@ -3741,12 +3909,14 @@
 
 
     /*
-      Chỉ fallback candidate nếu Sheet chưa kịp trả.
-      Backend vẫn là nơi đảm bảo không overwrite
-      lucky number cũ.
+      Không fallback candidate.
+
+      Nếu hai thiết bị cùng roll gần như đồng thời,
+      backend sẽ chỉ lưu số đầu tiên nhờ LockService.
+      Frontend chỉ khóa số sau khi đọc lại cột I từ Sheet.
     */
 
-    return candidate;
+    return null;
   }
 
 
@@ -3759,7 +3929,7 @@
      4. Hiện số authoritative.
   ======================================================= */
 
-  function rollLuckyNumber() {
+  async function rollLuckyNumber() {
 
     if (
       luckyRolling
@@ -3778,6 +3948,85 @@
       alert(
         "Link thiệp chưa có mã khách mời."
       );
+
+      return;
+    }
+
+
+    /*
+      guest=test bỏ qua khóa để test tự do.
+
+      Khách thật luôn đọc Sheet thêm một lần ngay trước khi roll.
+      Điều này chặn trường hợp mở link trên browser/điện thoại khác
+      trong khi localStorage của thiết bị đó chưa có số.
+    */
+    if (
+      !isLuckyTestGuest()
+    ) {
+
+      setLuckyAuthorityPending(
+        "Đang kiểm tra số may mắn..."
+      );
+
+
+      const latestGuest =
+        await loadGuestPersonalization(
+          true
+        );
+
+
+      if (
+        !latestGuest
+        ||
+        latestGuest.ok !==
+          true
+      ) {
+
+        setLuckyAuthorityPending(
+          "Không thể kiểm tra số may mắn. Vui lòng thử lại sau."
+        );
+
+        return;
+      }
+
+
+      const existingLucky =
+        Number(
+          latestGuest.luckyNumber
+        );
+
+
+      if (
+        isValidLuckyValue(
+          existingLucky
+        )
+      ) {
+
+        luckyAuthorityReady =
+          true;
+
+
+        lockLuckyNumber(
+          existingLucky,
+          false
+        );
+
+        return;
+      }
+
+
+      luckyAuthorityReady =
+        true;
+    }
+
+
+    if (
+      !isLuckyTestGuest()
+      &&
+      !luckyAuthorityReady
+    ) {
+
+      setLuckyAuthorityPending();
 
       return;
     }
@@ -4049,6 +4298,44 @@
           await readLuckyAfterSave(
             candidate
           );
+
+
+        if (
+          !isValidLuckyValue(
+            finalNumber
+          )
+        ) {
+
+          luckyRolling =
+            false;
+
+
+          luckyLocked =
+            false;
+
+
+          luckyAuthorityReady =
+            false;
+
+
+          luckyCard
+            ?.classList
+            .remove(
+              "is-rolling"
+            );
+
+
+          setLuckyAuthorityPending(
+            "Đang đồng bộ số may mắn. Nhấn lại sau vài giây."
+          );
+
+
+          return;
+        }
+
+
+        luckyAuthorityReady =
+          true;
 
 
         lockLuckyNumber(
@@ -4626,24 +4913,55 @@
 
 
   if (
-    localLucky
+    isLuckyTestGuest()
   ) {
 
-    /*
-      Hiện nhanh local trước.
+    luckyAuthorityReady =
+      true;
 
-      Khi Sheet load xong,
-      cột I sẽ override bằng giá trị authoritative.
-    */
 
-    lockLuckyNumber(
-      localLucky,
-      false
-    );
+    luckyLocked =
+      false;
+
+
+    if (
+      luckyTrigger
+    ) {
+
+      luckyTrigger.disabled =
+        false;
+    }
+
+
+    startLuckyIdleShuffle();
+
 
   } else {
 
-    startLuckyIdleShuffle();
+    /*
+      Browser hiện tại có cache thì hiển thị nhanh số cũ.
+      Browser/device mới không có cache vẫn được xem idle shuffle,
+      nhưng nút bị khóa tới khi Sheet xác nhận cột I đang trống.
+    */
+    if (
+      localLucky
+    ) {
+
+      lockLuckyNumber(
+        localLucky,
+        false
+      );
+
+
+    } else {
+
+      startLuckyIdleShuffle();
+
+
+      setLuckyAuthorityPending(
+        "Đang kiểm tra số may mắn..."
+      );
+    }
   }
 
 
@@ -4682,6 +5000,23 @@
     WRITE = Apps Script POST
   */
 
-  loadGuestPersonalization();
+  loadGuestPersonalization()
+    .then(
+      (guest) => {
+
+        if (
+          !guest
+          &&
+          !isLuckyTestGuest()
+          &&
+          !luckyLocked
+        ) {
+
+          setLuckyAuthorityPending(
+            "Không thể kiểm tra số may mắn. Vui lòng thử lại sau."
+          );
+        }
+      }
+    );
 
 })();
