@@ -3917,6 +3917,27 @@
   }
 
 
+  function fireLuckyPartyBurst() {
+
+    spawnFireworks(
+      luckyFireworks,
+      {
+        count:
+          26,
+
+        minDistance:
+          34,
+
+        maxDistance:
+          105,
+
+        cleanup:
+          780
+      }
+    );
+  }
+
+
   /* =======================================================
      READ AUTHORITATIVE LUCKY NUMBER FROM SHEET
 
@@ -4184,7 +4205,35 @@
 
 
     const duration =
-      1050;
+      760;
+
+
+    /*
+      Hai nhịp pháo nhỏ trong lúc random để cảm giác tưng bừng,
+      còn pháo lớn vẫn nổ lúc reveal số cuối.
+    */
+
+    fireLuckyPartyBurst();
+
+
+    window.setTimeout(
+      () => {
+
+        if (
+          luckyRolling
+          &&
+          luckyCard
+            ?.classList
+            .contains(
+              "is-rolling"
+            )
+        ) {
+
+          fireLuckyPartyBurst();
+        }
+      },
+      360
+    );
 
 
     /*
@@ -4194,9 +4243,9 @@
       nên mắt thấy số bị khựng/giật trước khi dừng.
 
       Bản này:
-      - đầu rất nhanh
-      - cuối vẫn giảm nhịp nhẹ để nhìn thấy điểm dừng
-      - interval tối đa chỉ khoảng 62ms
+      - random nhanh gần như đều
+      - không lặp lại cùng một số ở hai nhịp liên tiếp
+      - chỉ chậm rất nhẹ ngay sát điểm dừng
       - khi hết animation sẽ dừng hẳn ở candidate
         trong lúc chờ Sheet trả số authoritative
     */
@@ -4207,6 +4256,39 @@
 
     let finishStarted =
       false;
+
+
+    let rollingNumber =
+      null;
+
+
+    function nextRollingNumber() {
+
+      let next =
+        randomLuckyNumber();
+
+
+      /*
+        Tránh random trùng đúng số vừa hiện.
+        Nếu trùng, mắt sẽ thấy như animation bị khựng dù RAF vẫn chạy.
+      */
+
+      while (
+        next ===
+          rollingNumber
+      ) {
+
+        next =
+          randomLuckyNumber();
+      }
+
+
+      rollingNumber =
+        next;
+
+
+      return next;
+    }
 
 
     function frame(now) {
@@ -4224,26 +4306,19 @@
         );
 
 
-      const smoothProgress =
-        progress
-        *
-        progress
-        *
-        (
-          3
-          -
-          2
-          *
-          progress
-        );
-
+      /*
+        Roll nhanh gần như đều từ đầu tới cuối.
+        Chỉ chậm rất nhẹ ở ~15% cuối để người xem kịp cảm nhận
+        khoảnh khắc "chốt số", nhưng không còn kiểu khựng dần.
+      */
 
       const interval =
-        28
-        +
-        smoothProgress
-        *
-        34;
+        progress <
+          .85
+        ?
+        30
+        :
+        38;
 
 
       if (
@@ -4256,7 +4331,7 @@
 
 
         showLuckyNumber(
-          randomLuckyNumber()
+          nextRollingNumber()
         );
       }
 
