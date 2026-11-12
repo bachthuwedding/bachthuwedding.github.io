@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6f1d36">
+  <meta name="description" content="Thiệp mời lễ thành hôn Nguyễn Anh Thư và Đồng Thanh Bách, 7:00 ngày 24 tháng 11 năm 2026. Trân trọng kính mời!">
+  <meta property="og:title" content="Anh Thư &amp; Thanh Bách | Thiệp mời lễ thành hôn">
+  <meta property="og:description" content="Ngày 24 tháng 11 năm 2026 — Trân trọng kính mời quý khách đến chung vui cùng gia đình.">
+  <title>Anh Thư &amp; Thanh Bách | Thiệp mời lễ thành hôn</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="./assets/fonts/lora-regular.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="./styles.css?v=20261111-3">
+  <script src="./config.js?v=20261111-3" defer></script>
+  <script src="./main.js?v=20261111-3" defer></script>
+</head>
+<body class="is-covered">
+  <div id="cover" class="cover">
+    <div class="petals" aria-hidden="true"></div>
+    <div class="envelope">
+      <img class="cover-flower corner-top" src="./assets/decorations/burgundy-flowers.png" alt="">
+      <img class="cover-flower corner-bottom" src="./assets/decorations/burgundy-flowers.png" alt="">
+      <span class="seal" aria-hidden="true">♥</span>
+      <h1><span data-bind="bride.name"></span><small>&amp;</small><span data-bind="groom.name"></span></h1>
+      <div class="ornament" aria-hidden="true"><span class="ornament-diamond"></span></div>
+      <p id="cover-date"></p>
+      <p class="dear">Thân Mời <span id="guest-name"></span></p>
+      <button id="open-invitation" class="pill">Mở thiệp</button>
+    </div>
+  </div>
+
+  <div id="ambient-petals" class="petals ambient-petals" aria-hidden="true"></div>
+
+  <main id="invitation" class="invitation" inert aria-label="Nội dung thiệp cưới">
+    <section class="announcement floral-section">
+      <h2 class="section-title">HAPPY WEDDING</h2>
+      <div class="families">
+        <div><h3 class="family-side">Nhà gái</h3><p class="family-parents">Ông Bà</p><strong data-bind="bride.father"></strong><strong data-bind="bride.mother"></strong></div>
+        <div><h3 class="family-side">Nhà trai</h3><p class="family-parents">Ông Bà</p><strong data-bind="groom.father"></strong><strong data-bind="groom.mother"></strong></div>
+      </div>
+      <p class="announcement-copy" data-bind="invitation"></p>
+      <h3 class="couple-name" data-bind="bride.fullName"></h3>
+      <div class="ampersand">&amp;</div>
+      <h3 class="couple-name" data-bind="groom.fullName"></h3>
+    </section>
+
+    <section class="event floral-section" aria-labelledby="event-title">
+      <h2 id="event-title" class="section-title">THÔNG TIN LỄ CƯỚI</h2>
+      <h3 class="eyebrow">LỄ CƯỚI SẼ DIỄN RA VÀO LÚC:</h3>
+      <div class="wedding-date">
+        <span id="event-time" class="event-time"></span>
+        <div class="date-columns"><span id="event-weekday"></span><strong id="event-day"></strong><span id="event-month-year"></span></div>
+      </div>
+      <p class="lunar-date">(Tức ngày <span data-bind="lunarDate"></span>)</p>
+    </section>
+
+    <section class="schedule floral-section" aria-labelledby="schedule-title">
+      <h2 id="schedule-title" class="section-title">LỊCH TRÌNH NGÀY CƯỚI</h2>
+      <ol id="timeline" class="timeline"></ol>
+    </section>
+
+    <footer class="floral-section">
+      <p data-bind="closing"></p>
+      <div class="ornament" aria-hidden="true"><span class="ornament-diamond"></span></div>
+      <span>TRÂN TRỌNG CẢM ƠN!</span>
+    </footer>
+  </main>
+
+  <noscript><p class="noscript-note">Vui lòng bật JavaScript để mở thiệp và xem thông tin lễ cưới.</p></noscript>
+</body>
+</html>
