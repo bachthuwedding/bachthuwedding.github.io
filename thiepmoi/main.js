@@ -23,7 +23,6 @@
   }).format(date);
   const params = new URLSearchParams(location.search);
   $('guest-name').textContent = String(params.get('guest') || c.guestName || '').slice(0, 120);
-  $('event-time').textContent = `${Number(parts.hour)}:${parts.minute}`;
   $('event-day').textContent = Number(parts.day);
   $('event-weekday').textContent = new Intl.DateTimeFormat('vi-VN', {
     timeZone: zone, weekday: 'long'

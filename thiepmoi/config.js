@@ -8,7 +8,7 @@ window.WEDDING_CONFIG = {
     name: 'Thanh Bách', fullName: 'Đồng Thanh Bách',
     father: 'Đồng Thanh Tùng', mother: 'Nguyễn Thị Thu Hương'
   },
-  invitation: 'TRÂN TRỌNG BÁO TIN\nLỄ THÀNH HÔN CỦA CON CHÚNG TÔI',
+  invitation: 'TRÂN TRỌNG KÍNH MỜI\nLỄ THÀNH HÔN CỦA HAI CON CHÚNG TÔI',
   date: '2026-11-24T07:00:00+07:00',
   lunarDate: '16 tháng 10 năm Bính Ngọ',
   timeline: [

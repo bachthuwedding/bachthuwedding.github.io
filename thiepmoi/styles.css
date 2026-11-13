@@ -67,6 +67,7 @@ p, h1, h2, h3 { margin: 0; }
 .floral-section::before { width: 600px; height: 730px; left: -330px; top: -50px; transform: rotate(-15deg); opacity: .13; }
 .floral-section::after { width: 550px; height: 720px; right: -320px; bottom: -100px; transform: rotate(175deg); opacity: .4; }
 .section-title { font-size: 25px; line-height: 1.35; font-weight: 600; text-align: center; letter-spacing: .4px; margin-bottom: 34px; }
+.announcement > .section-title { font-size: 29px; margin-bottom: 40px; }
 .announcement { text-align: center; padding: var(--page-edge-space) 45px 75px; }
 .announcement::before { left: -230px; top: -220px; opacity: .35; }
 .announcement::after { opacity: .1; right: -180px; top: -160px; }
@@ -75,7 +76,7 @@ p, h1, h2, h3 { margin: 0; }
 .family-side { font-size: 20px; font-weight: 600; letter-spacing: .6px; margin-bottom: 12px; }
 .families strong { text-wrap: balance; display: block; font-size: 21px; line-height: 1.85; }
 .families .family-parents { color: #987d81; margin-bottom: 6px; }
-.announcement-copy { text-wrap: balance; white-space: pre-line; font-size: 21px; line-height: 1.6; margin: 32px 0; }
+.announcement-copy { text-wrap: balance; white-space: pre-line; font-size: 21px; line-height: 1.85; margin: 36px 0; }
 .couple-name { font-size: 49px; line-height: 1.45; font-weight: 400; overflow-wrap: anywhere; margin: 35px 0 15px; }
 .ampersand { font-size: 40px; margin: 20px auto; color: #ac8881; }
 .event { padding: 10px 65px 60px; text-align: center; }
@@ -83,26 +84,25 @@ p, h1, h2, h3 { margin: 0; }
 .event::after { right: -310px; bottom: -160px; opacity: .14; }
 .event > .section-title { margin-bottom: 36px; }
 .eyebrow { font-size: 21px; font-weight: 400; }
-.wedding-date { margin: 24px auto 15px; }
-.event-time { display: block; font-size: 32px; line-height: 1.2; margin-bottom: 23px; }
-.date-columns { display: grid; grid-template-columns: 1fr 110px 1fr; align-items: center; max-width: 470px; margin: auto; gap: 18px; }
-.date-columns > span { font-size: 16px; letter-spacing: 2px; }
+.wedding-date { margin: 30px auto 18px; }
+.date-columns { display: grid; grid-template-columns: 1fr 110px 1fr; align-items: center; max-width: 520px; margin: auto; gap: 18px; }
+.date-columns > span { font-size: 21px; line-height: 1.65; letter-spacing: 1px; }
 .date-columns > span:last-child { white-space: pre-line; }
 .date-columns strong { font-size: 76px; line-height: 1.2; font-weight: 400; border-left: 1px solid #b98b97; border-right: 1px solid #b98b97; }
-.lunar-date { text-transform: uppercase; font-size: 14px; letter-spacing: 2px; margin: 25px 0 0; color: #956c76; }
+.lunar-date { text-transform: uppercase; font-size: 17px; letter-spacing: 1px; line-height: 1.85; margin: 28px 0 0; color: #956c76; }
 .schedule { padding: 10px 50px 35px; }
 .schedule::before { opacity: .09; left: -130px; top: -100px; }
 .schedule::after { opacity: .12; right: -270px; bottom: -250px; }
 .timeline { list-style: none; max-width: 590px; margin: 42px auto 0; padding: 0; }
-.timeline li { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 53px; position: relative; padding-bottom: 44px; }
-.timeline li::before { content: ''; width: 1px; background: #d0adb5; position: absolute; left: 98px; top: 15px; bottom: -15px; }
+.timeline li { display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 53px; position: relative; padding-bottom: 50px; }
+.timeline li::before { content: ''; width: 1px; background: #d0adb5; position: absolute; left: 104px; top: 15px; bottom: -15px; }
 .timeline li:last-child::before { display: none; }
 .timeline li:last-child { padding-bottom: 0; }
-.timeline li::after { content: ''; position: absolute; left: 93px; top: 9px; width: 10px; height: 10px; border: 2px solid #fff4ed; box-shadow: 0 0 0 1px #d1b2b5; border-radius: 50%; background: var(--burgundy); }
-.timeline time { text-align: right; font-size: 20px; font-variant-numeric: tabular-nums; line-height: 1.5; }
+.timeline li::after { content: ''; position: absolute; left: 99px; top: 9px; width: 10px; height: 10px; border: 2px solid #fff4ed; box-shadow: 0 0 0 1px #d1b2b5; border-radius: 50%; background: var(--burgundy); }
+.timeline time { text-align: right; font-size: 23px; font-variant-numeric: tabular-nums; line-height: 1.5; }
 .timeline-details { min-width: 0; }
-.timeline h3 { font-size: 19px; line-height: 1.5; font-weight: 400; }
-.timeline-address { margin-top: 8px; color: #89646c; font-size: 15px; line-height: 1.65; }
+.timeline h3 { font-size: 22px; line-height: 1.65; font-weight: 400; }
+.timeline-address { margin-top: 12px; color: #89646c; font-size: 18px; line-height: 1.8; overflow-wrap: anywhere; }
 .timeline-address a { color: inherit; text-decoration-color: #c5a1ab; text-underline-offset: 4px; }
 .timeline-address a:hover { color: var(--burgundy); }
 
@@ -111,7 +111,7 @@ footer { text-align: center; padding: 58px 40px var(--page-edge-space); }
 footer::before { display: none; }
 footer::after { width: 390px !important; height: 370px !important; right: -210px !important; bottom: -120px !important; opacity: .2 !important; }
 footer > p { white-space: pre-line; text-wrap: balance; font-size: 22px; line-height: 1.7; max-width: 580px; margin: auto; }
-footer > span { font-size: 12px; letter-spacing: 2px; }
+footer > span { display: block; font-size: 16px; line-height: 1.8; letter-spacing: 2px; }
 footer .ornament { margin-top: 24px; margin-bottom: 20px; }
 .noscript-note { position: fixed; z-index: 101; bottom: 15px; left: 10%; width: 80%; text-align: center; color: white; background: var(--burgundy); padding: 12px; }
 
@@ -127,6 +127,7 @@ footer .ornament { margin-top: 24px; margin-bottom: 20px; }
   .corner-bottom { right: -95px; bottom: -80px; }
   .seal { width: 49px; height: 49px; font-size: 25px; margin-bottom: 22px; }
   .section-title { font-size: 18px; margin-bottom: 27px; }
+  .announcement > .section-title { font-size: 22px; margin-bottom: 33px; }
   .announcement { padding: var(--page-edge-space) 20px 45px; }
   .families { gap: 18px; margin-bottom: 28px; }
   .family-side { font-size: 17px; margin-bottom: 10px; }
@@ -134,41 +135,40 @@ footer .ornament { margin-top: 24px; margin-bottom: 20px; }
   .families .family-parents { font-size: 14px; }
   .announcement::before { width: 390px; height: 580px; left: -190px; top: -170px; }
   .announcement::after { width: 400px; right: -180px; top: -190px; }
-  .announcement-copy { font-size: 16px; margin: 26px 0; }
+  .announcement-copy { font-size: 16px; margin: 30px 0; }
   .couple-name { font-size: 32px; margin: 27px 0 10px; }
   .ampersand { font-size: 32px; margin: 12px 0; }
   .event { padding: 5px 24px 42px; }
   .event > .section-title { margin-bottom: 30px; }
   .eyebrow { font-size: 16px; }
-  .event-time { font-size: 28px; }
-  .date-columns { grid-template-columns: 1fr 85px 1fr; gap: 12px; }
+  .date-columns { grid-template-columns: minmax(0, 1fr) 78px minmax(0, 1fr); gap: 10px; }
   .date-columns strong { font-size: 62px; }
-  .date-columns > span { font-size: 12px; letter-spacing: 1px; }
-  .lunar-date { font-size: 11px; letter-spacing: 1px; line-height: 1.8; margin: 21px 0 0; }
+  .date-columns > span { font-size: 17px; letter-spacing: 0; }
+  .lunar-date { font-size: 14px; letter-spacing: .5px; line-height: 1.9; margin: 26px 0 0; }
   .event::before { width: 390px; left: -250px; top: -140px; }
   .event::after { width: 400px; right: -270px; bottom: -220px; }
   .schedule { padding: 5px 23px 25px; }
   .timeline { margin-top: 32px; }
-  .timeline li { grid-template-columns: 48px minmax(0, 1fr); gap: 34px; padding-bottom: 34px; }
-  .timeline li::before { left: 64px; }
-  .timeline li::after { left: 59px; top: 7px; }
-  .timeline time { font-size: 17px; }
-  .timeline h3 { font-size: 16px; line-height: 1.5; }
-  .timeline-address { font-size: 13px; margin-top: 7px; }
+  .timeline li { grid-template-columns: 58px minmax(0, 1fr); gap: 34px; padding-bottom: 42px; }
+  .timeline li::before { left: 74px; }
+  .timeline li::after { left: 69px; top: 9px; }
+  .timeline time { font-size: 20px; }
+  .timeline h3 { font-size: 19px; line-height: 1.65; }
+  .timeline-address { font-size: 16px; margin-top: 10px; }
 
   footer { padding: 38px 26px var(--page-edge-space); }
   footer > p { font-size: 20px; }
-  footer > span { font-size: 11px; }
+  footer > span { font-size: 15px; }
 }
 @media (max-width: 360px) {
   .families { gap: 13px; }
   .families strong { font-size: 15px; }
   .couple-name { font-size: 29px; }
   .schedule { padding-inline: 18px; }
-  .timeline li { grid-template-columns: 44px minmax(0, 1fr); gap: 30px; }
-  .timeline li::before { left: 58px; }
-  .timeline li::after { left: 53px; }
-  .timeline h3 { font-size: 15px; }
+  .timeline li { grid-template-columns: 58px minmax(0, 1fr); gap: 28px; }
+  .timeline li::before { left: 71px; }
+  .timeline li::after { left: 66px; }
+  .timeline h3 { font-size: 18px; }
 }
 /* Chuyển động dùng translate/rotate độc lập để giữ nguyên góc nghiêng khung ảnh. */
 .cover { transition: opacity .9s ease, visibility .9s; }
