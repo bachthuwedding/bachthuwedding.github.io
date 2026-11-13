@@ -79,18 +79,18 @@ p, h1, h2, h3 { margin: 0; }
 .announcement-copy { text-wrap: balance; white-space: pre-line; font-size: 21px; line-height: 1.85; margin: 36px 0; }
 .couple-name { font-size: 49px; line-height: 1.45; font-weight: 400; overflow-wrap: anywhere; margin: 35px 0 15px; }
 .ampersand { font-size: 40px; margin: 20px auto; color: #ac8881; }
-.event { padding: 10px 65px 60px; text-align: center; }
+.event { padding: 38px 65px 60px; text-align: center; }
 .event::before { width: 530px; left: -330px; top: -140px; opacity: .4; }
 .event::after { right: -310px; bottom: -160px; opacity: .14; }
-.event > .section-title { margin-bottom: 36px; }
+.event > .section-title, .schedule > .section-title { font-size: 30px; line-height: 1.5; margin-bottom: 38px; text-wrap: balance; }
 .eyebrow { font-size: 21px; font-weight: 400; }
 .wedding-date { margin: 30px auto 18px; }
 .date-columns { display: grid; grid-template-columns: 1fr 110px 1fr; align-items: center; max-width: 520px; margin: auto; gap: 18px; }
-.date-columns > span { font-size: 21px; line-height: 1.65; letter-spacing: 1px; }
+.date-columns > span { font-size: 25px; line-height: 1.65; letter-spacing: 1px; }
 .date-columns > span:last-child { white-space: pre-line; }
 .date-columns strong { font-size: 76px; line-height: 1.2; font-weight: 400; border-left: 1px solid #b98b97; border-right: 1px solid #b98b97; }
-.lunar-date { text-transform: uppercase; font-size: 17px; letter-spacing: 1px; line-height: 1.85; margin: 28px 0 0; color: #956c76; }
-.schedule { padding: 10px 50px 35px; }
+.lunar-date { text-transform: uppercase; font-size: 20px; letter-spacing: 1px; line-height: 1.85; margin: 28px 0 0; color: #956c76; }
+.schedule { padding: 38px 50px 35px; }
 .schedule::before { opacity: .09; left: -130px; top: -100px; }
 .schedule::after { opacity: .12; right: -270px; bottom: -250px; }
 .timeline { list-style: none; max-width: 590px; margin: 42px auto 0; padding: 0; }
@@ -111,8 +111,8 @@ footer { text-align: center; padding: 58px 40px var(--page-edge-space); }
 footer::before { display: none; }
 footer::after { width: 390px !important; height: 370px !important; right: -210px !important; bottom: -120px !important; opacity: .2 !important; }
 footer > p { white-space: pre-line; text-wrap: balance; font-size: 22px; line-height: 1.7; max-width: 580px; margin: auto; }
-footer > span { display: block; font-size: 16px; line-height: 1.8; letter-spacing: 2px; }
-footer .ornament { margin-top: 24px; margin-bottom: 20px; }
+footer > span { display: block; font-size: 21px; line-height: 1.8; letter-spacing: 2px; }
+footer .ornament { margin-top: 28px; margin-bottom: 26px; }
 .noscript-note { position: fixed; z-index: 101; bottom: 15px; left: 10%; width: 80%; text-align: center; color: white; background: var(--burgundy); padding: 12px; }
 
 @media (max-width: 600px) {
@@ -138,16 +138,16 @@ footer .ornament { margin-top: 24px; margin-bottom: 20px; }
   .announcement-copy { font-size: 16px; margin: 30px 0; }
   .couple-name { font-size: 32px; margin: 27px 0 10px; }
   .ampersand { font-size: 32px; margin: 12px 0; }
-  .event { padding: 5px 24px 42px; }
-  .event > .section-title { margin-bottom: 30px; }
+  .event { padding: 30px 20px 42px; }
+  .event > .section-title, .schedule > .section-title { font-size: 24px; line-height: 1.5; margin-bottom: 34px; }
   .eyebrow { font-size: 16px; }
   .date-columns { grid-template-columns: minmax(0, 1fr) 78px minmax(0, 1fr); gap: 10px; }
   .date-columns strong { font-size: 62px; }
-  .date-columns > span { font-size: 17px; letter-spacing: 0; }
-  .lunar-date { font-size: 14px; letter-spacing: .5px; line-height: 1.9; margin: 26px 0 0; }
+  .date-columns > span { font-size: 21px; letter-spacing: 0; }
+  .lunar-date { font-size: 17px; letter-spacing: .5px; line-height: 1.9; margin: 26px 0 0; }
   .event::before { width: 390px; left: -250px; top: -140px; }
   .event::after { width: 400px; right: -270px; bottom: -220px; }
-  .schedule { padding: 5px 23px 25px; }
+  .schedule { padding: 30px 23px 25px; }
   .timeline { margin-top: 32px; }
   .timeline li { grid-template-columns: 58px minmax(0, 1fr); gap: 34px; padding-bottom: 42px; }
   .timeline li::before { left: 74px; }
@@ -158,7 +158,7 @@ footer .ornament { margin-top: 24px; margin-bottom: 20px; }
 
   footer { padding: 38px 26px var(--page-edge-space); }
   footer > p { font-size: 20px; }
-  footer > span { font-size: 15px; }
+  footer > span { font-size: 20px; }
 }
 @media (max-width: 360px) {
   .families { gap: 13px; }
