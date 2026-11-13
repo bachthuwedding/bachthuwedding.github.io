@@ -29,6 +29,6 @@ window.WEDDING_CONFIG = {
       mapsUrl: 'https://maps.app.goo.gl/aevq6E3Xpa8hscVQ6'
     }
   ],
-  closing: 'Sự hiện diện của quý khách là niềm vinh hạnh của\ngia đình chúng tôi!',
+  closing: 'Sự hiện diện của ông, bà, cô, dì, chú, bác và quý khách là niềm vinh hạnh của\ngia đình chúng tôi!',
   guestName: ''
 };
