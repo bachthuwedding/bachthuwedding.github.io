@@ -14,7 +14,7 @@ window.WEDDING_CONFIG = {
   timeline: [
     {
       time: '7:00', title: 'Lễ Ăn hỏi tại tư gia nhà gái',
-      address: 'AD-14 Vinhomes Ocean Park 3, Văn Giang, Hưng Yên',
+      address: 'AD-14 Vinhomes Ocean Park 3, Nghĩa Trụ, Hưng Yên',
       mapsQuery: '',
       mapsUrl: 'https://maps.app.goo.gl/aevq6E3Xpa8hscVQ6'
     },
@@ -24,11 +24,11 @@ window.WEDDING_CONFIG = {
     },
     {
       time: '12:00', title: 'Bữa cơm thân mật cùng gia đình',
-      address: 'AD-14 Vinhomes Ocean Park 3, Văn Giang, Hưng Yên',
+      address: 'AD-14 Vinhomes Ocean Park 3, Nghĩa Trụ, Hưng Yên',
       mapsQuery: '',
       mapsUrl: 'https://maps.app.goo.gl/aevq6E3Xpa8hscVQ6'
     }
   ],
-  closing: 'Sự hiện diện của ông, bà, cô, dì, chú, bác và quý khách là niềm vinh hạnh của\ngia đình chúng tôi!',
+  closing: 'Sự hiện diện của Ông, Bà, cô chú, anh, chị, các cháu và quý khách là niềm vinh hạnh của\ngia đình chúng tôi!',
   guestName: ''
 };
