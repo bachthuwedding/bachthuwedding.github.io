@@ -19,7 +19,7 @@ window.WEDDING_CONFIG = {
       mapsUrl: 'https://maps.app.goo.gl/aevq6E3Xpa8hscVQ6'
     },
     {
-      time: '10:00', title: 'Lễ Đón dâu tại tư gia nhà trai',
+      time: '10:00', title: 'Lễ Thành hôn tại tư gia nhà trai',
       address: 'Chùa Bộc, Hà Nội', mapsQuery: '', mapsUrl: ''
     },
     {
